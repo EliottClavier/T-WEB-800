@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: app
+    image: eliottclavier/tripi-app:latest
+    restart: unless-stopped
+    env_file:
+      - ./env/app.env
+    environment:
+      VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${APP_PORT}
+      LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
+    expose:
+      - "${APP_PORT}"
+    networks:
+      - front-net
+      - nginx-proxy
+
+  api:
+    container_name: api
+    image: eliottclavier/tripi-api:latest
+    restart: unless-stopped
+    env_file:
+      - ./env/api.env
+      - ./env/app.env
+      - ./env/database.env
+    environment:
+      VIRTUAL_HOST: ${API_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${API_PORT}
+      LETSENCRYPT_HOST: ${API_VIRTUAL_HOST}
+    expose:
+      - "${API_PORT}"
+    networks:
+      - front-net
+      - back-net
+      - nginx-proxy
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: mariadb:latest
+    restart: unless-stopped
+    env_file:
+      - ./env/database.env
+    volumes:
+      - /data/database:/var/lib/mysql
+    ports:
+      - "${MARIADB_PORT}"
+    networks:
+      - back-net
+
+volumes:
+  database:
+
+networks:
+  front-net:
+  back-net:
+  nginx-proxy:
+    external:
+      name: nginx-proxy
