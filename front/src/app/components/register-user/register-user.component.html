@@ -1,0 +1,21 @@
+<div>
+  <label for="name">Name:</label>
+  <input type="text" id="name" [(ngModel)]="name">
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" [(ngModel)]="email">
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" [(ngModel)]="password">
+
+  <button (click)="createUser()">Create User</button>
+</div>
+
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div *ngIf="newUser">
+  <h2>New User:</h2>
+  <p>Name: {{ newUser.name }}</p>
+  <p>Email: {{ newUser.email }}</p>
+  <p>Password: {{ newUser.password }}</p>
+</div>
