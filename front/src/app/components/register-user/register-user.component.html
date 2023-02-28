@@ -1,15 +1,17 @@
-<div>
-  <label for="name">Name:</label>
-  <input type="text" id="name" [(ngModel)]="name">
+<ng-template #registerModal>
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="name">
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" [(ngModel)]="email">
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="email">
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" [(ngModel)]="password">
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="password">
 
-  <button (click)="createUser()">Create User</button>
-</div>
+    <button (click)="createUser()">Create User</button>
+  </div>
+</ng-template>
 
 <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
 
