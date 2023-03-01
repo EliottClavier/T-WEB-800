@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Register} from "../../models/register.model";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 const ERROR_MESSAGES = {
   EMPTY_FIELDS: 'Please fill in all fields',
@@ -22,7 +21,7 @@ export class RegisterUserComponent {
   newUser: Register;
   errorMessage: string;
 
-  constructor(private modalService: NgbModal) {
+  constructor() {
     this.name = '';
     this.email = '';
     this.password = '';
@@ -31,10 +30,6 @@ export class RegisterUserComponent {
    }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-    this.modalService.open('registerModal');
   }
 
   isFieldEmpty(value: string): boolean {
