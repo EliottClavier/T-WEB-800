@@ -5,22 +5,30 @@ services:
   app:
     container_name: app
     image: eliottclavier/tripi-app:latest
+    command: /bin/bash -c "envsubst '$${APP_PORT},$${API_PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     restart: unless-stopped
     env_file:
       - ./env/app.env
     environment:
+      APP_PORT: ${APP_PORT}
+      API_PORT: ${API_PORT}
       VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
       VIRTUAL_PORT: ${APP_PORT}
       LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
     expose:
       - "${APP_PORT}"
+    volumes:
+      - ./front/nginx.conf:/etc/nginx/nginx.conf.template
     networks:
       - front-net
       - nginx-proxy
+    depends_on:
+      - api
 
   api:
     container_name: api
     image: eliottclavier/tripi-api:latest
+    command: /bin/bash -c "sed -i 's/8080/'"${API_PORT}"'/g' /usr/local/tomcat/conf/server.xml && catalina.sh run"
     restart: unless-stopped
     env_file:
       - ./env/api.env
@@ -54,6 +62,7 @@ services:
 
 volumes:
   database:
+  nginx.conf:
 
 networks:
   front-net:
