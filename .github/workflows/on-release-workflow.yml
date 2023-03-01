@@ -10,15 +10,12 @@ jobs:
   build_publish_api_image:
     name: Build and publish API Image
     uses: ./.github/workflows/build-publish-api-image.yml
-    secrets: inherit
 
   build_publish_app_image:
     name: Build and publish App Image
     uses: ./.github/workflows/build-publish-app-image.yml
-    secrets: inherit
 
   deploy:
     needs: [build_publish_api_image, build_publish_app_image]
     name: Deploy on remote server
     uses: ./.github/workflows/remote-deploy.yml
-    secrets: inherit
