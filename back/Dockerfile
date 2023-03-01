@@ -12,13 +12,5 @@ RUN export LANG='en_US.UTF-8'
 RUN gradle war
 
 # Retrieve built war file from builder image
-FROM tomcat:9.0.69-jdk17-corretto
+FROM tomcat:10.1-jdk17-corretto
 COPY --from=builder ./api-build/build/libs/ROOT.war /usr/local/tomcat/webapps/
-
-# Replace default tomcat port by the one defined in the build arg API_PORT
-ARG API_PORT
-RUN sed -i 's/8080/'"$API_PORT"'/g' /usr/local/tomcat/conf/server.xml
-EXPOSE $API_PORT
-
-# Run tomcat server
-CMD ["catalina.sh", "run"]
