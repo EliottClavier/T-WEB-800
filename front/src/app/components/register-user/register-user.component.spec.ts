@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterUserComponent } from './register-user.component';
 import {Register} from "../../models/register.model";
+import {AppModule} from "../../app.module";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
@@ -9,6 +10,7 @@ describe('RegisterUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RegisterUserComponent ],
+      imports: [ AppModule ]
     })
     .compileComponents();
 
@@ -22,15 +24,16 @@ describe('RegisterUserComponent', () => {
   });
 
   it('should create a new user with name, email and password', () => {
-    component.name = 'John Smith';
-    component.email = 'john@example.com';
-    component.password = 'mypassword';
+    component.name = 'Test';
+    component.email = 'test@gmail.com';
+    component.password = 'Password123';
+    component.confirmPassword = 'Password123';
 
     component.createUser();
 
-    expect(component.newUser.name).toEqual('John Smith');
-    expect(component.newUser.email).toEqual('john@example.com');
-    expect(component.newUser.password).toEqual('mypassword');
+    expect(component.newUser.name).toEqual('Test');
+    expect(component.newUser.email).toEqual('test@gmail.com');
+    expect(component.newUser.password).toEqual('Password123');
   });
 
   it('should create a new register from JSON', () => {
@@ -61,6 +64,7 @@ describe('RegisterUserComponent', () => {
     component.name = 'Test';
     component.email = 'test.com';
     component.password = 'Password123';
+    component.confirmPassword = 'Password123';
 
     component.createUser();
 
@@ -74,6 +78,7 @@ describe('RegisterUserComponent', () => {
     component.name = '';
     component.email = 'test@gmail.com';
     component.password = 'Password123';
+    component.confirmPassword = 'Password123';
 
     component.createUser();
 
@@ -87,6 +92,7 @@ describe('RegisterUserComponent', () => {
     component.name = 'Test';
     component.email = '';
     component.password = 'Password123';
+    component.confirmPassword = 'Password123';
 
     component.createUser();
 
@@ -100,6 +106,21 @@ describe('RegisterUserComponent', () => {
     component.name = 'Test';
     component.email = 'test@gmail.com';
     component.password = '';
+    component.confirmPassword = 'Password123';
+
+    component.createUser();
+
+    expect(component.newUser.name).toBe('');
+    expect(component.newUser.email).toBe('');
+    expect(component.newUser.password).toBe('');
+    expect(component.errorMessage).toBe('Please fill in all fields');
+  });
+
+  it('should create a new user with confirm password is empty', () => {
+    component.name = 'Test';
+    component.email = 'test@gmail.com';
+    component.password = 'Password123';
+    component.confirmPassword = '';
 
     component.createUser();
 
@@ -113,6 +134,7 @@ describe('RegisterUserComponent', () => {
     component.name = 'Test';
     component.email = 'test@gmail.com';
     component.password = 'Passw';
+    component.confirmPassword = 'Passw';
 
     component.createUser();
 
@@ -120,6 +142,20 @@ describe('RegisterUserComponent', () => {
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
     expect(component.errorMessage).toBe('Password must be at least 6 characters');
+  });
+
+  it('should create a new user with password and confirm password as differents', () => {
+    component.name = 'Test';
+    component.email = 'test@gmail.com';
+    component.password = 'Password123';
+    component.confirmPassword = 'Password456';
+
+    component.createUser();
+
+    expect(component.newUser.name).toBe('');
+    expect(component.newUser.email).toBe('');
+    expect(component.newUser.password).toBe('');
+    expect(component.errorMessage).toBe('Passwords not match');
   });
 });
 

@@ -5,6 +5,7 @@ const ERROR_MESSAGES = {
   EMPTY_FIELDS: 'Please fill in all fields',
   SHORT_PASSWORD: 'Password must be at least 6 characters',
   INVALID_EMAIL: 'Invalid email address',
+  DIFFERENTS_PASSWORD: 'Passwords not match',
   NONE: ''
 };
 
@@ -18,6 +19,7 @@ export class RegisterUserComponent {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
   newUser: Register;
   errorMessage: string;
 
@@ -25,6 +27,7 @@ export class RegisterUserComponent {
     this.name = '';
     this.email = '';
     this.password = '';
+    this.confirmPassword = '';
     this.newUser = new Register('', '', '');
     this.errorMessage = '';
    }
@@ -45,13 +48,19 @@ export class RegisterUserComponent {
     return !emailRegex.test(email);
   }
 
+  isFormComplete(): boolean {
+    return !this.isFieldEmpty(this.name) && !this.isFieldEmpty(this.email) && !this.isFieldEmpty(this.password) && !this.isFieldEmpty(this.confirmPassword);
+  }
+
   createUser() {
-    if (this.isFieldEmpty(this.name) || this.isFieldEmpty(this.email) || this.isFieldEmpty(this.password)) {
+    if (!this.isFormComplete()) {
       this.errorMessage = ERROR_MESSAGES.EMPTY_FIELDS;
     } else if (this.isPasswordTooShort(this.password)) {
       this.errorMessage = ERROR_MESSAGES.SHORT_PASSWORD;
     } else if (this.isEmailInvalid(this.email)) {
       this.errorMessage = ERROR_MESSAGES.INVALID_EMAIL;
+    } else if (this.password !== this.confirmPassword) {
+      this.errorMessage = ERROR_MESSAGES.DIFFERENTS_PASSWORD;
     } else {
       this.newUser = new Register(this.name, this.email, this.password);
       this.errorMessage = ERROR_MESSAGES.NONE;
