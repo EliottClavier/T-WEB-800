@@ -11,5 +11,5 @@ public class DemoController {
 
     @RequestMapping("/hello")
     @ResponseBody
-    public String helloWorld() {return "Hello World!";}
+    public String helloWorld() {return "Hello World !";}
 }
