@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/auth")
+@RequestMapping(path = "/auth")
 public class AuthenticationController {
 
     @PostMapping(path = "/register")
     public ResponseEntity<String> register(@RequestBody UserCredentials body) {
+        if(body == null) return ResponseEntity.badRequest().body("Body is null");
+
         return ResponseEntity.ok("Registered successfully");
     }
 

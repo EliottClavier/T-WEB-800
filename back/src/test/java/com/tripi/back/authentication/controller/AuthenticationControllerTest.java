@@ -1,34 +1,43 @@
 package com.tripi.back.authentication.controller;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.*;
-import org.springframework.test.context.TestPropertySource;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@TestPropertySource(value={"classpath:application.properties"})
-@SpringBootTest
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+@WebMvcTest(controllers = AuthenticationController.class)
+@ExtendWith(SpringExtension.class)
 class AuthenticationControllerTest {
-    @Value("${server.url}")
-    private String url;
-    TestRestTemplate.HttpClientOption[] options = new TestRestTemplate.HttpClientOption[]{TestRestTemplate.HttpClientOption.ENABLE_COOKIES};
 
-    private final TestRestTemplate testRestTemplate = new TestRestTemplate(options);
+    @Autowired
+    MockMvc mockMvc;
 
     @Test
-    public void getRequestShouldReturnResponse405Test() {
-        //Arrange
-        String registerUrl = url + "api/auth/register";
-
-        //Act
-        ResponseEntity<String> response = testRestTemplate.getForEntity(registerUrl, String.class);
-
-        //Assert
-        assertEquals(HttpStatusCode.valueOf(405), response.getStatusCode());
+    public void getRegisterRequestShouldReturnResponse405Test() throws Exception {
+        mockMvc.perform(get("/auth/register"))
+                .andExpect(status().isMethodNotAllowed());
     }
+
+    @Test
+    public void postRegisterRequestWithIncorrectUserCredentialsShouldReturnResponse400Test() throws Exception {
+        mockMvc.perform(post("/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"user\":\"test\",\"passwd\":\"test\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postRegisterRequestWithCorrectUserCredentialsShouldReturnResponse200Test() throws Exception {
+        mockMvc.perform(post("/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"test\",\"password\":\"test\",\"firstname\":\"test\",\"lastname\":\"test\"}"))
+                .andExpect(status().isOk());
+    }
+
 
 
 }
