@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { CardItemComponent } from './card-item/card-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from "@angular/material/card";
+import { BarsComponent } from './bars/bars.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardItemComponent
+    CardItemComponent,
+    BarsComponent
   ],
   imports: [
     BrowserModule,

@@ -26,6 +26,17 @@ describe('CardItemComponent', () => {
   });
 });
 
+function InitialazeCardValue(cardItem: CardItem, spectator: Spectator<CardItemComponent>) {
+  cardItem.title = ' test-title ';
+  cardItem.subtitle = 'test-subtitle';
+  cardItem.description = 'test-description';
+  cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+
+  spectator.setInput('cardItem', cardItem);
+
+  spectator.detectChanges();
+}
+
 describe('Card Display', () => {
   let spectator: Spectator<CardItemComponent>;
   let cardItem: CardItem;
@@ -37,7 +48,6 @@ describe('Card Display', () => {
   beforeEach(() => {
     spectator = createComponent();
     cardItem = new CardItem()
-
 
   });
 
@@ -52,21 +62,30 @@ describe('Card Display', () => {
 
   it('should display in card specific title, subtitle, description and image', () => {
 
+    InitialazeCardValue(cardItem, spectator);
 
-    cardItem.title = ' test-title ';
-    cardItem.subtitle = 'test-subtitle';
-    cardItem.description = 'test-description';
-    cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
-
-    spectator.component['_cardItem'] = cardItem;
-    // spectator.setInput('cardItem', cardItem);
-
-    spectator.detectChanges();
-
-    expect(spectator.query('[data-cy-card-item-title]')?.textContent?.trim()).toEqual("test-title");
-    expect(spectator.query('[data-cy-card-item-subtitle]')?.textContent?.trim()).toEqual('test-subtitle');
-    expect(spectator.query('[data-cy-card-item-description]')?.textContent?.trim()).toEqual('test-description');
+    expect(spectator.query('[data-cy-card-item-title]')).toHaveText("test-title");
+    expect(spectator.query('[data-cy-card-item-subtitle]')).toHaveText('test-subtitle');
+    expect(spectator.query('[data-cy-card-item-description]')).toHaveText('test-description');
     expect(spectator.query('[data-cy-card-item-image]')?.getAttribute('src')?.trim()).toEqual('https://material.angular.io/assets/img/examples/shiba2.jpg');
 
+  });
+
+  it('should when click on item emit event', () => {
+    InitialazeCardValue(cardItem, spectator);
+    const spy = spyOn(spectator.component, 'onClickItem');
+    spectator.click('[data-cy-card-item]');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should emit the correct value when button is clicked', () => {
+    InitialazeCardValue(cardItem, spectator);
+    ;
+    let emittedValue: CardItem = new CardItem();
+
+    spectator.component.onItem.subscribe((val) => (emittedValue = val));
+    spectator.component.onClickItem(cardItem);
+    spectator.click('[data-cy-card-item]');
+    expect(emittedValue).toEqual(cardItem);
   });
 });

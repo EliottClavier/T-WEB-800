@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CardItem} from "../model/CardItem";
 
 
@@ -7,11 +7,15 @@ import {CardItem} from "../model/CardItem";
   templateUrl: './card-item.component.html',
   styleUrls: ['./card-item.component.scss']
 })
+
 export class CardItemComponent {
 
-  @Input() private _cardItem: CardItem = new CardItem();
+  @Input() cardItem: CardItem = new CardItem();
+  @Output() onItem =  new EventEmitter<CardItem>();
 
+  onClickItem(cardItem: CardItem): void{
+    this.onItem.emit(cardItem);
+  };
 
 }
 
-8

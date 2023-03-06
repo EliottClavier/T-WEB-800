@@ -1,28 +1,29 @@
 <ng-container>
   <mat-card
     class="card-item"
-    data-cy-card-item>
+    data-cy-card-item
+  (click)="onClickItem(cardItem)">
     <img
       data-cy-card-item-image
       mat-card-image
-      src="{{_cardItem.image}}" alt="Photo of an item">
+      src="{{cardItem.image}}" alt="Photo of an item">
     <div>
       <mat-card-header>
         <mat-card-title
           data-cy-card-item-title>
-         {{_cardItem.title}}
+         {{cardItem.title}}
         </mat-card-title>
 
         <mat-card-subtitle
           data-cy-card-item-subtitle>
 
-          {{_cardItem.subtitle}}
+          {{cardItem.subtitle}}
 
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content
         data-cy-card-item-description>
-        <p>    {{_cardItem.description}}</p>
+        <p>    {{cardItem.description}}</p>
       </mat-card-content>
     </div>
   </mat-card>
