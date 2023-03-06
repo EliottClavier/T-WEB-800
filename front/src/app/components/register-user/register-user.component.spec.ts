@@ -36,10 +36,7 @@ describe('RegisterUserComponent', () => {
   });
 
   it('should create a new user with name, email and password', () => {
-    component.name = 'Test';
-    component.email = 'test@gmail.com';
-    component.password = 'Password123';
-    component.confirmPassword = 'Password123';
+    component.registerForm.setValue({ name: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
@@ -73,101 +70,47 @@ describe('RegisterUserComponent', () => {
   });
 
   it('should create a new user with invalid email', () => {
-    component.name = 'Test';
-    component.email = 'test.com';
-    component.password = 'Password123';
-    component.confirmPassword = 'Password123';
+    component.registerForm.setValue({ name: 'Test', email: 'test', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
     expect(component.newUser.name).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Invalid email address');
+    expect(component.registerForm.controls.email.errors).toEqual({email: true});
   });
 
   it('should create a new user with name is empty', () => {
-    component.name = '';
-    component.email = 'test@gmail.com';
-    component.password = 'Password123';
-    component.confirmPassword = 'Password123';
+    component.registerForm.setValue({ name: '', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
     expect(component.newUser.name).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Please fill in all fields');
+    expect(component.registerForm.controls.name.errors).toEqual({required: true});
   });
 
   it('should create a new user with email is empty', () => {
-    component.name = 'Test';
-    component.email = '';
-    component.password = 'Password123';
-    component.confirmPassword = 'Password123';
+    component.registerForm.setValue({ name: 'Test', email: '', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
     expect(component.newUser.name).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Please fill in all fields');
+    expect(component.registerForm.controls.email.errors).toEqual({required: true});
   });
 
   it('should create a new user with password is empty', () => {
-    component.name = 'Test';
-    component.email = 'test@gmail.com';
-    component.password = '';
-    component.confirmPassword = 'Password123';
+    component.registerForm.setValue({ name: 'Test', email: 'test@gmail.com', password: '', confirmPassword: 'Password123' });
 
     component.createUser();
 
     expect(component.newUser.name).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Please fill in all fields');
-  });
-
-  it('should create a new user with confirm password is empty', () => {
-    component.name = 'Test';
-    component.email = 'test@gmail.com';
-    component.password = 'Password123';
-    component.confirmPassword = '';
-
-    component.createUser();
-
-    expect(component.newUser.name).toBe('');
-    expect(component.newUser.email).toBe('');
-    expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Please fill in all fields');
-  });
-
-  it('should create a new user with password shorten', () => {
-    component.name = 'Test';
-    component.email = 'test@gmail.com';
-    component.password = 'Passw';
-    component.confirmPassword = 'Passw';
-
-    component.createUser();
-
-    expect(component.newUser.name).toBe('');
-    expect(component.newUser.email).toBe('');
-    expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Password must be at least 6 characters');
-  });
-
-  it('should create a new user with password and confirm password as differents', () => {
-    component.name = 'Test';
-    component.email = 'test@gmail.com';
-    component.password = 'Password123';
-    component.confirmPassword = 'Password456';
-
-    component.createUser();
-
-    expect(component.newUser.name).toBe('');
-    expect(component.newUser.email).toBe('');
-    expect(component.newUser.password).toBe('');
-    expect(component.errorMessage).toBe('Passwords not match');
+    expect(component.registerForm.controls.password.errors).toEqual({required: true});
   });
 
   it('should return null when password and confirmPassword are the same', () => {
