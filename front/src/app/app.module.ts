@@ -15,14 +15,19 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
+import { LocationComponent } from './components/inputs/location/location.component';
+import {HttpClientModule} from "@angular/common/http"
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     MatButtonModule,
@@ -31,6 +36,7 @@ import {MatTableModule} from "@angular/material/table";
     MatListModule,
     MatInputModule,
     MatSelectModule,
+    MatAutocompleteModule,
     MatSidenavModule,
     MatCardModule,
     MatTableModule,

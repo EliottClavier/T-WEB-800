@@ -1,0 +1,19 @@
+<mat-form-field location-form-field>
+  <mat-label location-autocomplete-label>Location</mat-label>
+  <input
+    location-search
+    type="text" placeholder="Choose a location ..."
+    [ngModel]="location" (ngModelChange)="onLocationChange($event)"
+    matInput [matAutocomplete]="auto">
+  <mat-autocomplete
+    location-autocomplete
+    #auto="matAutocomplete">
+    <mat-option
+      location-option
+      *ngFor="let option of locationOptions;"
+      [id]="option.getId"
+      (click)="onLocationOptionClick(option)">
+        {{ option.getName }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
