@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  release:
+    branches:
+      - "release/*"
+    types: [published]
+
+jobs:
+  run_app_tests:
+    name: Run App tests
+    uses: ./.github/workflows/run-app-tests.yml
+
+  run_api_tests:
+    name: Run API tests
+    uses: ./.github/workflows/run-api-tests.yml
+
+  build_publish_api_image:
+    needs: [run_api_tests, run_app_tests]
+    name: Build and publish API Image
+    uses: ./.github/workflows/build-publish-api-image.yml
+
+  build_publish_app_image:
+    needs: [run_api_tests, run_app_tests]
+    name: Build and publish App Image
+    uses: ./.github/workflows/build-publish-app-image.yml
+
+  deploy:
+    needs: [build_publish_api_image, build_publish_app_image]
+    name: Deploy on remote server
+    uses: ./.github/workflows/remote-deploy.yml
