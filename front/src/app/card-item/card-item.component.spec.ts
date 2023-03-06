@@ -1,8 +1,8 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {CardItem} from "../model/CardItem";
 
 describe('CardItemComponent', () => {
   let component: CardItemComponent;
@@ -10,11 +10,11 @@ describe('CardItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardItemComponent ],
+      declarations: [CardItemComponent],
       imports: [MatCardModule],
 
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CardItemComponent);
     component = fixture.componentInstance;
@@ -28,6 +28,7 @@ describe('CardItemComponent', () => {
 
 describe('Card Display', () => {
   let spectator: Spectator<CardItemComponent>;
+  let cardItem: CardItem;
   const createComponent = createComponentFactory({
     component: CardItemComponent,
     imports: [MatCardModule],
@@ -35,6 +36,9 @@ describe('Card Display', () => {
 
   beforeEach(() => {
     spectator = createComponent();
+    cardItem = new CardItem()
+
+
   });
 
   it('should appear as the given mockup a card with title, subtile, description and image', () => {
@@ -47,10 +51,15 @@ describe('Card Display', () => {
   });
 
   it('should display in card specific title, subtitle, description and image', () => {
-    spectator.component.cardItem.title = ' test-title ';
-    spectator.component.cardItem.subtitle = 'test-subtitle';
-    spectator.component.cardItem.description = 'test-description';
-    spectator.component.cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+
+
+    cardItem.title = ' test-title ';
+    cardItem.subtitle = 'test-subtitle';
+    cardItem.description = 'test-description';
+    cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+
+    spectator.component['_cardItem'] = cardItem;
+    // spectator.setInput('cardItem', cardItem);
 
     spectator.detectChanges();
 

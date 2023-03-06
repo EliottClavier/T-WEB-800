@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CardItem} from "../model/CardItem";
-
 
 
 @Component({
@@ -10,11 +9,9 @@ import {CardItem} from "../model/CardItem";
 })
 export class CardItemComponent {
 
-  cardItem: CardItem ;
-
-  constructor() {
-  this.cardItem  = new CardItem();
-  }
+  @Input() private _cardItem: CardItem = new CardItem();
 
 
 }
+
+8

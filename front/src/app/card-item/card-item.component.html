@@ -5,24 +5,24 @@
     <img
       data-cy-card-item-image
       mat-card-image
-      src="{{cardItem.image}}" alt="Photo of an item">
+      src="{{_cardItem.image}}" alt="Photo of an item">
     <div>
       <mat-card-header>
         <mat-card-title
           data-cy-card-item-title>
-         {{cardItem.title}}
+         {{_cardItem.title}}
         </mat-card-title>
 
         <mat-card-subtitle
           data-cy-card-item-subtitle>
 
-          {{cardItem.subtitle}}
+          {{_cardItem.subtitle}}
 
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content
         data-cy-card-item-description>
-        <p>    {{cardItem.description}}</p>
+        <p>    {{_cardItem.description}}</p>
       </mat-card-content>
     </div>
   </mat-card>
