@@ -1,5 +1,15 @@
 import {Component} from '@angular/core';
-import {Register} from "../../models/register.model";
+import {Register} from "../../models/register/register.model";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormGroupDirective, NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {ErrorStateMatcher} from "@angular/material/core";
 
 const ERROR_MESSAGES = {
   EMPTY_FIELDS: 'Please fill in all fields',
@@ -22,6 +32,7 @@ export class RegisterUserComponent {
   confirmPassword: string;
   newUser: Register;
   errorMessage: string;
+  matcher = new MyErrorStateMatcher();
 
   constructor() {
     this.name = '';
@@ -34,6 +45,19 @@ export class RegisterUserComponent {
 
   ngOnInit(): void {
   }
+
+  checkPassword: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true }
+  }
+
+  registerForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl(''),
+  }, {validators: this.checkPassword});
 
   isFieldEmpty(value: string): boolean {
     return value.trim() === '';
@@ -65,5 +89,14 @@ export class RegisterUserComponent {
       this.newUser = new Register(this.name, this.email, this.password);
       this.errorMessage = ERROR_MESSAGES.NONE;
     }
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = control?.invalid && control?.dirty || false;
+    const invalidParent = control?.parent?.invalid && control?.parent?.dirty || false;
+
+    return (invalidCtrl || invalidParent);
   }
 }

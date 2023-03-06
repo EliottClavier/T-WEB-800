@@ -1,13 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RegisterUserComponent } from './register-user.component';
-import {Register} from "../../models/register.model";
+import {MyErrorStateMatcher, RegisterUserComponent} from './register-user.component';
+import {Register} from "../../models/register/register.model";
 import {AppModule} from "../../app.module";
+import {FormControl, FormGroup, FormGroupDirective, ValidatorFn, Validators} from "@angular/forms";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
   let fixture: ComponentFixture<RegisterUserComponent>;
+  let formGroup: FormGroup;
+  let control: FormControl;
+  let form: FormGroupDirective;
+  let matcher: MyErrorStateMatcher;
 
   beforeEach(async () => {
+    control = new FormControl('', [Validators.required]);
+    form = new FormGroupDirective([], []);
+    matcher = new MyErrorStateMatcher();
+    formGroup = new FormGroup({
+      password: new FormControl(''),
+      confirmPassword: new FormControl('')
+    });
     await TestBed.configureTestingModule({
       declarations: [ RegisterUserComponent ],
       imports: [ AppModule ]
@@ -156,6 +168,49 @@ describe('RegisterUserComponent', () => {
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
     expect(component.errorMessage).toBe('Passwords not match');
+  });
+
+  it('should return null when password and confirmPassword are the same', () => {
+    formGroup.patchValue({
+      password: 'password',
+      confirmPassword: 'password'
+    });
+
+    const result = component.checkPassword(formGroup);
+
+    expect(result).toBeNull();
+  });
+
+  it('should return a validation error when password and confirmPassword are different', () => {
+    formGroup.patchValue({
+      password: 'password',
+      confirmPassword: 'differentPassword'
+    });
+
+    const result = component.checkPassword(formGroup);
+
+    expect(result).toEqual({ notSame: true });
+  });
+
+  it('should return true if control is invalid and parent is dirty', () => {
+    control.setErrors({required: true});
+    control.markAsDirty();
+    const result = matcher.isErrorState(control, form);
+    expect(result).toBeTrue();
+  });
+
+  it('should return false if control is valid and parent is clean', () => {
+    control.setValue('test');
+    const result = matcher.isErrorState(control, form);
+    expect(result).toBeFalse();
+  });
+
+  it('should return true if parent is invalid and dirty', () => {
+    control.setValue(control);
+    control.setErrors({invalid: true});
+    control.markAsDirty();
+    const result = matcher.isErrorState(control, form);
+    expect(result).toBeTrue();
   });
 });
 
