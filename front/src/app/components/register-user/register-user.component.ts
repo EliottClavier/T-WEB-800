@@ -10,6 +10,8 @@ import {
   Validators
 } from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
+import {RegisterConst} from "../../../assets/register-const";
+
 
 @Component({
   selector: 'app-register-user',
@@ -21,6 +23,8 @@ export class RegisterUserComponent {
   newUser: Register;
   matcher = new MyErrorStateMatcher();
   success = false;
+
+  INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
 
   constructor() {
     this.newUser = new Register('', '', '');

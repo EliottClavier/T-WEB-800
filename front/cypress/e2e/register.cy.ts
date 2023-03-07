@@ -1,3 +1,4 @@
+import {RegisterConst} from "../../src/assets/register-const";
 
 describe('Register', () => {
 
@@ -6,6 +7,8 @@ describe('Register', () => {
   let passwordInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let confirmPasswordInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let registerButton: Cypress.Chainable<JQuery<HTMLElement>>;
+
+  const INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
 
   beforeEach(() => {
     cy.visit('/register-user');
@@ -24,40 +27,40 @@ describe('Register', () => {
     nameInput.click();
     nameInput.clear();
     emailInput.click();
-    cy.get('#name mat-error').invoke('text').should('equal', 'Please enter your name');
+    cy.get('#name mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_NAME);
   });
 
   it('should display required error message if email is empty', () => {
     emailInput.click();
     emailInput.clear();
     passwordInput.click();
-    cy.get('#email mat-error').invoke('text').should('equal', 'Please enter your email');
+    cy.get('#email mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_EMAIL);
   });
 
   it('should display required error message if password is empty', () => {
     passwordInput.click();
     passwordInput.clear();
     confirmPasswordInput.click();
-    cy.get('#password mat-error').invoke('text').should('equal', 'Please enter your new password');
+    cy.get('#password mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_PASSWORD);
   });
 
   it('should display email error message if email format is invalid', () => {
     emailInput.type('test.com');
     passwordInput.click();
-    cy.get('#email mat-error').invoke('text').should('equal', 'Please enter a valid email');
+    cy.get('#email mat-error').invoke('text').should('equal', INFO_MESSAGES.INVALID_EMAIL);
   });
 
   it('should display password error message if password is too short', () => {
     passwordInput.type('pass');
     confirmPasswordInput.click();
-    cy.get('#password mat-error').invoke('text').should('equal', 'Password must be at least 6 characters');
+    cy.get('#password mat-error').invoke('text').should('equal', INFO_MESSAGES.SHORT_PASSWORD);
   });
 
   it('should display confirm password error message if confirm password is not equal to password', () => {
     passwordInput.type('Password123');
     confirmPasswordInput.type('Password');
     confirmPasswordInput.click();
-    cy.get('#confirmPassword mat-error').invoke('text').should('equal', 'Passwords do not match');
+    cy.get('#confirmPassword mat-error').invoke('text').should('equal', INFO_MESSAGES.DIFFERENTS_PASSWORD);
   });
 
   it('should display success message if register is successful', () => {
@@ -66,6 +69,6 @@ describe('Register', () => {
     passwordInput.type('Password123');
     confirmPasswordInput.type('Password123');
     registerButton.click();
-    cy.get('.successRegister mat-card-content').invoke('text').should('equal', 'You are register with success !');
+    cy.get('.successRegister mat-card-content').invoke('text').should('equal', INFO_MESSAGES.SUCCESS_REGISTER);
   });
 });

@@ -1,6 +1,6 @@
 <div class="successRegister" *ngIf="success">
   <mat-card>
-    <mat-card-content>You are register with success !</mat-card-content>
+    <mat-card-content>{{INFO_MESSAGES.SUCCESS_REGISTER}}</mat-card-content>
   </mat-card>
 </div>
 <div class="container">
@@ -16,7 +16,7 @@
                 'is-invalid':
                   registerForm.controls['name'].hasError('required')
               }">
-          <mat-error *ngIf="registerForm.hasError('required', 'name')">Please enter your name</mat-error>
+          <mat-error *ngIf="registerForm.hasError('required', 'name')">{{INFO_MESSAGES.EMPTY_NAME}}</mat-error>
         </mat-form-field>
         <mat-form-field id="email">
           <mat-label for="email">Email:</mat-label>
@@ -25,8 +25,8 @@
                   registerForm.controls['email'].hasError('required') ||
                   registerForm.controls['email'].hasError('email')
               }">
-          <mat-error *ngIf="registerForm.hasError('required', 'email')">Please enter your email</mat-error>
-          <mat-error *ngIf="registerForm.hasError('email', 'email')">Please enter a valid email</mat-error>
+          <mat-error *ngIf="registerForm.hasError('required', 'email')">{{INFO_MESSAGES.EMPTY_EMAIL}}</mat-error>
+          <mat-error *ngIf="registerForm.hasError('email', 'email')">{{INFO_MESSAGES.INVALID_EMAIL}}</mat-error>
         </mat-form-field>
         <mat-form-field id="password">
           <mat-label for="password">Password:</mat-label>
@@ -35,13 +35,13 @@
                   registerForm.controls['password'].hasError('required') ||
                   registerForm.controls['password'].hasError('minlength')
               }">
-          <mat-error *ngIf="registerForm.hasError('required', 'password')">Please enter your new password</mat-error>
-          <mat-error *ngIf="registerForm.hasError('minlength', 'password')">Password must be at least 6 characters</mat-error>
+          <mat-error *ngIf="registerForm.hasError('required', 'password')">{{INFO_MESSAGES.EMPTY_PASSWORD}}</mat-error>
+          <mat-error *ngIf="registerForm.hasError('minlength', 'password')">{{INFO_MESSAGES.SHORT_PASSWORD}}</mat-error>
         </mat-form-field>
         <mat-form-field id="confirmPassword">
           <mat-label for="password">Confirm password:</mat-label>
           <input matInput type="password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="registerForm.hasError('notSame')">Passwords do not match</mat-error>
+          <mat-error *ngIf="registerForm.hasError('notSame')">{{INFO_MESSAGES.DIFFERENTS_PASSWORD}}</mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" class="registerButton" (click)="createUser()">Create User</button>
       </form>
