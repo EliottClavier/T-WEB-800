@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -15,15 +15,19 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
-import { LocationComponent } from './components/inputs/location/location.component';
+import { SearchInputComponent } from './components/inputs/search-input/search-input.component';
 import {HttpClientModule} from "@angular/common/http"
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
-    LocationComponent
+    SearchInputComponent,
+    DateRangeComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,9 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatCardModule,
     MatTableModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   exports: [
     RegisterUserComponent

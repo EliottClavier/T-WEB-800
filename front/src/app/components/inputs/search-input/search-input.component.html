@@ -1,9 +1,9 @@
-<mat-form-field location-form-field>
+<mat-form-field [formGroup]="searchForm" location-form-field>
   <mat-label location-autocomplete-label>Location</mat-label>
   <input
     location-search
+    formControlName="locationSearch"
     type="text" placeholder="Choose a location ..."
-    [ngModel]="location" (ngModelChange)="onLocationChange($event)"
     matInput [matAutocomplete]="auto">
   <mat-autocomplete
     location-autocomplete

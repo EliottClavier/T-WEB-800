@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LocationService } from './location.service';
-import {Location} from "../models/location/location.model";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {Location} from "../../models/location/location.model";
 
 describe('LocationService', () => {
   let service: LocationService;
@@ -41,7 +41,7 @@ describe('LocationService', () => {
   it('should retrieve location options with location search', () => {
     let locationName = "Nan";
 
-    service.getLocations(locationName).subscribe(data => {
+    service.getLocationsBySearch(locationName).subscribe(data => {
       expect(data).toEqual(testLocationOptions.filter(
         (location: Location) => location.getName.toLowerCase().startsWith(locationName.toLowerCase())
       ));
