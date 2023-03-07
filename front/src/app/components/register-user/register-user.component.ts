@@ -20,6 +20,7 @@ import {ErrorStateMatcher} from "@angular/material/core";
 export class RegisterUserComponent {
   newUser: Register;
   matcher = new MyErrorStateMatcher();
+  success = false;
 
   constructor() {
     this.newUser = new Register('', '', '');
@@ -44,7 +45,7 @@ export class RegisterUserComponent {
   createUser() {
     if (this.registerForm.valid) {
       this.newUser = new Register(this.registerForm.get('name')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
-      console.log(this.newUser);
+      this.success = true;
     }
   }
 }

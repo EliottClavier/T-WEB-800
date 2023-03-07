@@ -43,6 +43,7 @@ describe('RegisterUserComponent', () => {
     expect(component.newUser.name).toEqual('Test');
     expect(component.newUser.email).toEqual('test@gmail.com');
     expect(component.newUser.password).toEqual('Password123');
+    expect(component.success).toEqual(true);
   });
 
   it('should create a new register from JSON', () => {
