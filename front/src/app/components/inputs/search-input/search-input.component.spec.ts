@@ -5,7 +5,6 @@ import {AppModule} from "../../../app.module";
 import {BehaviorSubject} from "rxjs";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {FormControl, FormGroup} from "@angular/forms";
-import {By} from "@angular/platform-browser";
 
 describe('LocationComponent', () => {
   let component: SearchInputComponent;
@@ -60,8 +59,8 @@ describe('LocationComponent', () => {
 
   it('should have base location FormControl inside searchForm FormGroup with base value', () => {
     expect(component.searchForm.get("location")).toBeDefined();
-    expect(component.searchForm.get("location")).toBeInstanceOf(FormControl<Location>);
-    expect(component.searchForm.get("location")!.value).toEqual(new Location());
+    expect(component.searchForm.get("location")).toBeInstanceOf(FormControl<Location | null>);
+    expect(component.searchForm.get("location")!.value).toEqual(null);
   });
 
   it('should have base locationOptions attribute defined with base value', () => {
@@ -107,7 +106,7 @@ describe('LocationComponent', () => {
     const locationSearch: string = "";
     component.onLocationChange(locationSearch);
 
-    expect(component.searchForm.get("location")!.value.getName).toEqual(locationSearch);
+    expect(component.searchForm.get("location")!.value).toEqual(null);
     expect(component.locationOptions).toEqual([]);
   });
 
@@ -155,17 +154,6 @@ describe('LocationComponent', () => {
     expect(spectator.query('mat-option')).toBeFalsy();
   });
 
-  it('should be have the input synced with FormControl', () => {
-    let input = spectator.debugElement.query(By.css('[location-search]'));
-    expect(input.nativeElement.value).toHaveText(component.searchForm.get("locationSearch")!.value);
-
-    component.searchForm.get("locationSearch")!.setValue("Nan");
-    spectator.detectChanges();
-
-    // input = spectator.debugElement.query(By.css('[location-search]'));
-    // expect(input.nativeElement.value).toHaveText(component.searchForm.get("locationSearch")!.value);
-  });
-
   it('should trigger event on location input change', () => {
     /*
     * spyOn LocationService.getLocations() is active
@@ -178,6 +166,7 @@ describe('LocationComponent', () => {
     spectator.typeInElement(locationSearch, locationInput!);
 
     expect(component.onLocationChange).toHaveBeenCalled();
+    expect(component.searchForm.get("locationSearch")!.value).toEqual(locationSearch);
     expect(component.searchForm.get("location")!.value.getName).toEqual(locationSearch);
     expect(component.locationOptions).toEqual(
       testLocationOptions.filter((location: Location) =>
@@ -241,6 +230,27 @@ describe('LocationComponent', () => {
 
     // Should be equal to false because location is not a Location object
     expect(component.searchForm.valid).toEqual(true);
+  });
+
+  it('should display an error message when form is not valid', () => {
+    expect(spectator.query('[location-error]')).toBeFalsy();
+
+    const locationInput = spectator.query('[location-search]');
+    spectator.typeInElement("Nan", locationInput!);
+    // Field locationSearch is marked as touched when location input is changed
+    component.searchForm.get("locationSearch")!.markAsTouched();
+
+    expect(spectator.query('[location-error]')).toBeFalsy();
+
+    spectator.typeInElement("", locationInput!);
+
+    expect(spectator.query('[location-error]')).toBeTruthy();
+    expect(spectator.query('[location-error]')).toHaveText("Location is required");
+
+    spectator.typeInElement("Nan", locationInput!);
+
+    // mat-error not displayed again
+    expect(spectator.query('[location-error]')).toBeFalsy();
   });
 
 });

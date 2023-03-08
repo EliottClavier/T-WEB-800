@@ -17,3 +17,7 @@
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
+<mat-error location-error *ngIf="
+   searchForm.get('locationSearch')!.touched && !searchForm.valid">
+  Location is required
+</mat-error>

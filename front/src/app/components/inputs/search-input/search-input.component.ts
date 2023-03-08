@@ -1,4 +1,4 @@
-import {AfterContentChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
@@ -22,7 +22,7 @@ export class SearchInputComponent implements OnInit {
       "locationSearch", new FormControl<string>("")
     );
     this.searchForm.addControl(
-      "location", new FormControl<Location>(new Location("", ""), [ Validators.required, this.isLocation() ])
+      "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
     );
     this.searchForm.get("locationSearch")!.valueChanges.subscribe((value: string) => {
       this.onLocationChange(value);
@@ -44,8 +44,8 @@ export class SearchInputComponent implements OnInit {
 
   public onLocationChange(value: string): void {
     let location: AbstractControl = this.searchForm.get("location")!;
-    location!.setValue(new Location("", value));
-    location.value.getName ? this._getLocationsBySearch(location.value.getName) : this.locationOptions = [];
+    location!.setValue(value ? new Location("", value) : null);
+    location.value && location.value.getName ? this._getLocationsBySearch(location.value.getName) : this.locationOptions = [];
   }
 
   public onLocationOptionClick(location: Location): void {
