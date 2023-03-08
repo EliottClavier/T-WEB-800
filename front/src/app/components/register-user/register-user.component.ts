@@ -10,7 +10,7 @@ import {
   Validators
 } from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
-import {RegisterConst} from "../../../assets/register-const";
+import {RegisterConst} from "../../enums/register-const";
 
 
 @Component({

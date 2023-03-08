@@ -1,4 +1,4 @@
-import {RegisterConst} from "../../src/assets/register-const";
+import {RegisterConst} from "../../src/app/enums/register-const";
 
 describe('Register', () => {
 
