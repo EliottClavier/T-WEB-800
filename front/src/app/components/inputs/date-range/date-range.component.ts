@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
@@ -6,11 +6,17 @@ import {FormControl, FormGroup} from "@angular/forms";
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss']
 })
-export class DateRangeComponent {
+export class DateRangeComponent implements OnInit {
 
-    public dateRange: FormGroup = new FormGroup({
-        start: new FormControl<Date | null>(null),
-        end: new FormControl<Date | null>(null)
-    });
+  @Input() public searchForm: FormGroup = new FormGroup<any>({});
+
+  public ngOnInit(): void {
+    this.searchForm.addControl(
+      "start", new FormControl<Date | null>(null)
+    );
+    this.searchForm.addControl(
+      "end", new FormControl<Date | null>(null)
+    );
+  }
 
 }

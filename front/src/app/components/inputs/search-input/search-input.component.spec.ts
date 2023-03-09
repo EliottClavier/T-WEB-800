@@ -162,7 +162,7 @@ describe('LocationComponent', () => {
     spyOn<SearchInputComponent, any>(component, "onLocationChange").and.callThrough();
 
     const locationSearch: string = "Nan";
-    const locationInput = spectator.query('[location-search]');
+    const locationInput: HTMLElement = spectator.query('[location-search]')!;
     spectator.typeInElement(locationSearch, locationInput!);
 
     expect(component.onLocationChange).toHaveBeenCalled();
@@ -179,7 +179,7 @@ describe('LocationComponent', () => {
     spyOn<SearchInputComponent, any>(component, "onLocationOptionClick").and.callThrough();
 
     const locationSearch: string = "Nan";
-    const locationInput = spectator.query('[location-search]');
+    const locationInput: HTMLElement = spectator.query('[location-search]')!;
     spectator.typeInElement(locationSearch, locationInput!);
     spectator.detectChanges();
 
@@ -235,7 +235,7 @@ describe('LocationComponent', () => {
   it('should display an error message when form is not valid', () => {
     expect(spectator.query('[location-error]')).toBeFalsy();
 
-    const locationInput = spectator.query('[location-search]');
+    const locationInput: HTMLElement = spectator.query('[location-search]')!;
     spectator.typeInElement("Nan", locationInput!);
     // Field locationSearch is marked as touched when location input is changed
     component.searchForm.get("locationSearch")!.markAsTouched();

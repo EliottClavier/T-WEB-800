@@ -1,10 +1,13 @@
 <mat-form-field date-range-form-field appearance="fill">
   <mat-label date-range-label>Enter a date range</mat-label>
-  <mat-date-range-input date-range-input [formGroup]="dateRange" [rangePicker]="picker">
-    <input matStartDate date-range-input-start formControlName="start" placeholder="Start date">
-    <input matEndDate date-range-input-end formControlName="end" placeholder="End date">
+  <mat-date-range-input date-range-input [formGroup]="searchForm" [rangePicker]="picker">
+    <input type="text" matStartDate date-range-input-start formControlName="start" placeholder="Start date">
+    <input type="text" matEndDate date-range-input-end formControlName="end" placeholder="End date">
   </mat-date-range-input>
   <mat-hint date-range-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
   <mat-datepicker-toggle date-range-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker date-range-picker #picker></mat-date-range-picker>
+  <mat-error date-range-picker-error *ngIf="searchForm.get('start')!.invalid || searchForm.get('end')!.invalid">
+    Invalid date range
+  </mat-error>
 </mat-form-field>
