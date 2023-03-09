@@ -21,13 +21,15 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { ValidateButtonComponent } from './components/buttons/validate-button/validate-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
     SearchInputComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    ValidateButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,10 @@
 import { DateRangeComponent } from './date-range.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {AppModule} from "../../../app.module";
-import {FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../../models/location/location.model";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {fakeAsync, tick} from "@angular/core/testing";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 describe('DateRangeComponent', () => {
   let component: DateRangeComponent;
@@ -11,7 +12,13 @@ describe('DateRangeComponent', () => {
 
   const createComponent = createComponentFactory({
     component: DateRangeComponent,
-    imports: [ AppModule ],
+    imports: [
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatFormFieldModule,
+      ReactiveFormsModule,
+      FormsModule
+    ],
   });
 
   beforeEach(async () => {

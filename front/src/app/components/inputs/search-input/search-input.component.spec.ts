@@ -1,10 +1,13 @@
 import {SearchInputComponent} from './search-input.component';
 import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
-import {AppModule} from "../../../app.module";
 import {BehaviorSubject} from "rxjs";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {HttpClientModule} from "@angular/common/http";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 describe('LocationComponent', () => {
   let component: SearchInputComponent;
@@ -13,7 +16,14 @@ describe('LocationComponent', () => {
 
   const createComponent = createComponentFactory({
     component: SearchInputComponent,
-    imports: [ AppModule ],
+    imports: [
+      HttpClientModule,
+      MatAutocompleteModule,
+      MatFormFieldModule,
+      MatInputModule,
+      ReactiveFormsModule,
+      FormsModule
+    ],
     providers: [ LocationService ],
   });
 
