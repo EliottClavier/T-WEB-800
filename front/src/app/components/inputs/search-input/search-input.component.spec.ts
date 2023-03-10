@@ -3,7 +3,7 @@ import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -205,7 +205,7 @@ describe('LocationComponent', () => {
     expect(component.locationOptions).toEqual([]);
   });
 
-  it('should have a validator called isLocation', () => {
+  it('should define a validator called isLocation', () => {
     expect(component["isLocation"]).toBeDefined();
   });
 

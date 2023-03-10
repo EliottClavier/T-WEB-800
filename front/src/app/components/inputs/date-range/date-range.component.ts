@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-date-range',
@@ -12,10 +12,10 @@ export class DateRangeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.searchForm.addControl(
-      "start", new FormControl<Date | null>(null)
+      "start", new FormControl<Date | null>(null, [ Validators.required ])
     );
     this.searchForm.addControl(
-      "end", new FormControl<Date | null>(null)
+      "end", new FormControl<Date | null>(null, [ Validators.required ])
     );
   }
 
