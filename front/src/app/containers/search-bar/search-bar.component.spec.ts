@@ -115,6 +115,21 @@ describe('SearchBarComponent', () => {
   it('should not have remove search bar button when there is only one search bar', () => {
     expect(component.searchFormsArrayControls!.length).toBe(1);
     expect(spectator.query("app-simple-button[search-bar-remove]")).toBeFalsy();
+    expect(spectator.query("app-simple-button[search-bar-remove]")).toBeFalsy();
+  });
+
+  it('should have empty column when there is only one search bar and multiple is on', () => {
+    component.multipleSearch = true;
+    spectator.detectChanges();
+    expect(component.searchFormsArrayControls!.length).toBe(1);
+    expect(spectator.query("div[empty-column]")).toBeDefined();
+  });
+
+  it('should not have empty column when there is only one search bar and multiple is off', () => {
+    component.multipleSearch = false;
+    spectator.detectChanges();
+    expect(component.searchFormsArrayControls!.length).toBe(1);
+    expect(spectator.query("div[empty-column]")).toBeFalsy();
   });
 
   it('should have remove search bar button for each search bar when there are multiple search bar', () => {

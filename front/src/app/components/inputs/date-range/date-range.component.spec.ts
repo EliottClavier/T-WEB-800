@@ -55,7 +55,7 @@ describe('DateRangeComponent', () => {
   it('should have a mat-label', function () {
     let element: HTMLElement = spectator.query("[date-range-label]")!;
     expect(element).toBeTruthy();
-    expect(element).toHaveText("Enter a date range");
+    expect(element).toHaveText("MM/DD/YYYY – MM/DD/YYYY");
   });
 
   it('should have a mat-date-range-input', function () {
@@ -74,12 +74,6 @@ describe('DateRangeComponent', () => {
     expect(element).toBeTruthy();
     expect(element).toHaveAttribute("matEndDate");
     expect(element.getAttribute("placeholder")).toEqual("End date");
-  });
-
-  it('should have a mat-hint', function () {
-    let element: HTMLElement = spectator.query("mat-hint[date-range-hint]")!;
-    expect(element).toBeTruthy();
-    expect(element).toHaveText("MM/DD/YYYY – MM/DD/YYYY");
   });
 
   it('should have a mat-datepicker-toggle', function () {

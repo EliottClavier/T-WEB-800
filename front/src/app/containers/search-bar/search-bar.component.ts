@@ -9,7 +9,7 @@ import {Location} from "../../models/location/location.model";
 })
 export class SearchBarComponent {
 
-  @Input() public multipleSearch: boolean = true;
+  @Input() public multipleSearch: boolean = false;
 
   public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([

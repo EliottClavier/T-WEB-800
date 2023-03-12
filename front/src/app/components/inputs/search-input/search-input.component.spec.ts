@@ -250,7 +250,9 @@ describe('LocationComponent', () => {
     // Field locationSearch is marked as touched when location input is changed
     component.searchForm.get("locationSearch")!.markAsTouched();
 
+    console.log("test")
     expect(spectator.query('[location-error]')).toBeFalsy();
+    console.log("test")
 
     spectator.typeInElement("", locationInput!);
 

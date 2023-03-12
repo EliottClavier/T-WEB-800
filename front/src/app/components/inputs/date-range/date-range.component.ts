@@ -20,4 +20,12 @@ export class DateRangeComponent implements OnInit {
     );
   }
 
+  get start(): FormControl {
+    return this.searchForm.get("start")! as FormControl;
+  }
+
+  get end(): FormControl {
+    return this.searchForm.get("end")! as FormControl;
+  }
+
 }

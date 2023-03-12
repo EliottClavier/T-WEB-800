@@ -20,7 +20,7 @@ export class SearchInputComponent implements OnInit {
   public ngOnInit(): void {
     // Add controls
     this.searchForm.addControl(
-      "locationSearch", new FormControl<string>("")
+      "locationSearch", new FormControl<string>("", [ Validators.required ]),
     );
     this.searchForm.addControl(
       "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
@@ -28,8 +28,17 @@ export class SearchInputComponent implements OnInit {
 
     // Change detection
     this.searchForm.get("locationSearch")!.valueChanges.subscribe((value: string) => {
+      this.location.markAsTouched();
       this.onLocationChange(value);
     });
+  }
+
+  get locationSearch(): FormControl {
+    return this.searchForm.get("locationSearch")! as FormControl;
+  }
+
+  get location(): FormControl {
+    return this.searchForm.get("location")! as FormControl;
   }
 
   private isLocation(): ValidatorFn {
