@@ -23,6 +23,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
 import { SearchBarComponent } from './containers/search-bar/search-bar.component';
+import { MainComponent } from './layouts/main/main.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SearchBarComponent } from './containers/search-bar/search-bar.component
     SearchInputComponent,
     DateRangeComponent,
     SimpleButtonComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

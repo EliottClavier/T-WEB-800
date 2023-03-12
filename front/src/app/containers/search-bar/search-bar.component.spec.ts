@@ -1,5 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchBarComponent } from './search-bar.component';
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
@@ -14,7 +12,6 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {Location} from "../../models/location/location.model";
-import {DebugElement} from "@angular/core";
 import {By} from "@angular/platform-browser";
 
 describe('SearchBarComponent', () => {
