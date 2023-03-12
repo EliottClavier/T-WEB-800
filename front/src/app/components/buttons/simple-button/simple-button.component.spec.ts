@@ -1,19 +1,22 @@
-import { ValidateButtonComponent } from './validate-button.component';
+import { SimpleButtonComponent } from './simple-button.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../../app.module";
 
 describe('ValidateButtonComponent', () => {
-  let component: ValidateButtonComponent;
-  let spectator: Spectator<ValidateButtonComponent>;
+  let component: SimpleButtonComponent;
+  let spectator: Spectator<SimpleButtonComponent>;
 
   const createComponent = createComponentFactory({
-    component: ValidateButtonComponent,
+    component: SimpleButtonComponent,
     imports: [ AppModule ],
   });
 
   beforeEach(async () => {
     spectator = createComponent();
     component = spectator.component;
+
+    component.label = "Test";
+
     spectator.detectChanges();
   });
 
@@ -21,9 +24,9 @@ describe('ValidateButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a mat-button with specific text', () => {
+  it('should have a mat-button with specific label', () => {
     expect(spectator.query('button[mat-stroked-button][validate-button]')).toBeTruthy();
-    expect(spectator.query('button[mat-stroked-button][validate-button]')).toHaveText('Validate');
+    expect(spectator.query('button[mat-stroked-button][validate-button]')).toHaveText(component.label);
   });
 
   it('should emit the validate event when the button is clicked and not disabled', () => {

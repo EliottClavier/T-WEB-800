@@ -4,7 +4,7 @@ import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-location',
+  selector: 'app-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss']
 })
@@ -18,12 +18,15 @@ export class SearchInputComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    // Add controls
     this.searchForm.addControl(
       "locationSearch", new FormControl<string>("")
     );
     this.searchForm.addControl(
       "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
     );
+
+    // Change detection
     this.searchForm.get("locationSearch")!.valueChanges.subscribe((value: string) => {
       this.onLocationChange(value);
     });

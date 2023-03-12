@@ -1,13 +1,15 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-validate-button',
-  templateUrl: './validate-button.component.html',
-  styleUrls: ['./validate-button.component.scss']
+  selector: 'app-simple-button',
+  templateUrl: './simple-button.component.html',
+  styleUrls: ['./simple-button.component.scss']
 })
-export class ValidateButtonComponent {
+export class SimpleButtonComponent {
 
   @Input() public isDisabled: boolean = false;
+  @Input() public label: string = '';
+
   @Output() public validate: EventEmitter<void> = new EventEmitter<void>();
 
   public onClickButton(): void {

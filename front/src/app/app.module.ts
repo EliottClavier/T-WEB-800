@@ -21,7 +21,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
-import { ValidateButtonComponent } from './components/buttons/validate-button/validate-button.component';
+import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
+import { SearchBarComponent } from './containers/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ValidateButtonComponent } from './components/buttons/validate-button/va
     RegisterUserComponent,
     SearchInputComponent,
     DateRangeComponent,
-    ValidateButtonComponent
+    SimpleButtonComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ import { ValidateButtonComponent } from './components/buttons/validate-button/va
     ReactiveFormsModule,
   ],
   exports: [
-    RegisterUserComponent
+    RegisterUserComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

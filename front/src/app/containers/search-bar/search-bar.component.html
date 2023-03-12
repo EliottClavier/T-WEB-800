@@ -1,0 +1,26 @@
+<form [formGroup]="searchForms">
+  <div formArrayName="searchFormsArray">
+    <div search-bars *ngFor="let searchForm of searchFormsArrayControls; let i = index" [formGroupName]="i">
+      <app-search-input [searchForm]="searchForm">
+      </app-search-input>
+      <app-date-range [searchForm]="searchForm">
+      </app-date-range>
+      <app-simple-button
+        search-bar-remove
+        *ngIf="searchFormsArrayControls.length > 1" [label]="'-'"
+        (click)="removeSearchBar(i)">
+      </app-simple-button>
+    </div>
+  </div>
+  <app-simple-button
+    search-bar-add
+    *ngIf="multipleSearch" [label]="'+'"
+    (click)="addSearchBar()">
+  </app-simple-button>
+  <app-simple-button
+    search-bar-validate
+    *ngIf="searchForms" [label]="'Validate'"
+    [isDisabled]="searchForms.invalid"
+    (validate)="validate()">
+  </app-simple-button>
+</form>
