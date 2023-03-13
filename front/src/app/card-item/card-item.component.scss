@@ -1,6 +1,12 @@
 .card-item {
   display: flex;
   flex-direction: row; //align-items: center;
+  cursor: pointer;
+}
+img {
+  max-width: 350px;
+  margin: 10px;
+  border-radius: 4px;
 }
 
 mat-card-title{
@@ -26,5 +32,6 @@ mat-card-content{
   letter-spacing: 0.01071em;
   color: #000;
 }
+
 
 

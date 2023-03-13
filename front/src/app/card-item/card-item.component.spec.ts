@@ -2,7 +2,8 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {CardItem} from "../model/CardItem";
+import {ItemModel} from "../model/ItemModel";
+import {AppModule} from "../app.module";
 
 describe('CardItemComponent', () => {
   let component: CardItemComponent;
@@ -11,8 +12,7 @@ describe('CardItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CardItemComponent],
-      imports: [MatCardModule],
-
+      imports: [MatCardModule, AppModule]
     })
       .compileComponents();
 
@@ -26,7 +26,7 @@ describe('CardItemComponent', () => {
   });
 });
 
-function InitialazeCardValue(cardItem: CardItem, spectator: Spectator<CardItemComponent>) {
+function InitialazeCardValue(cardItem: ItemModel, spectator: Spectator<CardItemComponent>) {
   cardItem.title = ' test-title ';
   cardItem.subtitle = 'test-subtitle';
   cardItem.description = 'test-description';
@@ -39,7 +39,7 @@ function InitialazeCardValue(cardItem: CardItem, spectator: Spectator<CardItemCo
 
 describe('Card Display', () => {
   let spectator: Spectator<CardItemComponent>;
-  let cardItem: CardItem;
+  let cardItem: ItemModel;
   const createComponent = createComponentFactory({
     component: CardItemComponent,
     imports: [MatCardModule],
@@ -47,7 +47,7 @@ describe('Card Display', () => {
 
   beforeEach(() => {
     spectator = createComponent();
-    cardItem = new CardItem()
+    cardItem = new ItemModel()
 
   });
 
@@ -70,8 +70,22 @@ describe('Card Display', () => {
     expect(spectator.query('[data-cy-card-item-image]')?.getAttribute('src')?.trim()).toEqual('https://material.angular.io/assets/img/examples/shiba2.jpg');
 
   });
+});
 
-  it('should when click on item emit event', () => {
+describe('Card Interaction', () => {
+  let spectator: Spectator<CardItemComponent>;
+  let cardItem: ItemModel;
+  const createComponent = createComponentFactory({
+    component: CardItemComponent,
+    imports: [MatCardModule],
+  });
+
+  beforeEach(() => {
+    spectator = createComponent();
+    cardItem = new ItemModel()
+
+  });
+  it('should emit event when click on item' , () => {
     InitialazeCardValue(cardItem, spectator);
     const spy = spyOn(spectator.component, 'onClickItem');
     spectator.click('[data-cy-card-item]');
@@ -81,11 +95,12 @@ describe('Card Display', () => {
   it('should emit the correct value when button is clicked', () => {
     InitialazeCardValue(cardItem, spectator);
     ;
-    let emittedValue: CardItem = new CardItem();
+    let emittedValue: ItemModel = new ItemModel();
 
     spectator.component.onItem.subscribe((val) => (emittedValue = val));
-    spectator.component.onClickItem(cardItem);
+
     spectator.click('[data-cy-card-item]');
     expect(emittedValue).toEqual(cardItem);
+
   });
 });
