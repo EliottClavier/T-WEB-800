@@ -2,8 +2,8 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {ItemModel} from "../model/ItemModel";
-import {AppModule} from "../app.module";
+import {ItemModel} from "../../model/ItemModel";
+import {AppModule} from "../../app.module";
 
 describe('CardItemComponent', () => {
   let component: CardItemComponent;
@@ -26,7 +26,7 @@ describe('CardItemComponent', () => {
   });
 });
 
-function InitialazeCardValue(cardItem: ItemModel, spectator: Spectator<CardItemComponent>) {
+function InitializeCardValue(cardItem: ItemModel, spectator: Spectator<CardItemComponent>) {
   cardItem.title = ' test-title ';
   cardItem.subtitle = 'test-subtitle';
   cardItem.description = 'test-description';
@@ -62,7 +62,7 @@ describe('Card Display', () => {
 
   it('should display in card specific title, subtitle, description and image', () => {
 
-    InitialazeCardValue(cardItem, spectator);
+    InitializeCardValue(cardItem, spectator);
 
     expect(spectator.query('[data-cy-card-item-title]')).toHaveText("test-title");
     expect(spectator.query('[data-cy-card-item-subtitle]')).toHaveText('test-subtitle');
@@ -86,14 +86,14 @@ describe('Card Interaction', () => {
 
   });
   it('should emit event when click on item' , () => {
-    InitialazeCardValue(cardItem, spectator);
+    InitializeCardValue(cardItem, spectator);
     const spy = spyOn(spectator.component, 'onClickItem');
     spectator.click('[data-cy-card-item]');
     expect(spy).toHaveBeenCalled();
   });
 
   it('should emit the correct value when button is clicked', () => {
-    InitialazeCardValue(cardItem, spectator);
+    InitializeCardValue(cardItem, spectator);
     ;
     let emittedValue: ItemModel = new ItemModel();
 

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ItemModel} from "../model/ItemModel";
+import {ItemModel} from "../../model/ItemModel";
 
 
 @Component({
@@ -14,13 +14,12 @@ export class CardItemComponent {
   @Input() cardItem: ItemModel;
   @Output() onItem = new EventEmitter<ItemModel>();
 
+
   onClickItem(cardItem: ItemModel): void {
     this.onItem.emit(cardItem);
   };
 
   constructor() {
-
     this.cardItem = new ItemModel();
   }
 }
-

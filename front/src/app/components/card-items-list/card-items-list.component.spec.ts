@@ -1,25 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardItemsComponent } from './card-items.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {CardItemsListComponent} from './card-items-list.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {ItemModel} from "../model/ItemModel";
+import {ItemModel} from "../../model/ItemModel";
 import {MatCardModule} from "@angular/material/card";
-import {AppModule} from "../app.module";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {AppModule, HttpLoaderFactory} from "../../app.module";
+import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
+import {HttpClient} from "@angular/common/http";
 
 
 describe('CardItemsComponent', () => {
-  let component: CardItemsComponent;
-  let fixture: ComponentFixture<CardItemsComponent>;
+  let component: CardItemsListComponent;
+  let fixture: ComponentFixture<CardItemsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardItemsComponent ],
-      imports: [ TranslateModule.forRoot(),
+      declarations: [CardItemsListComponent],
+      imports: [TranslateModule.forRoot(),
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(CardItemsComponent);
+    fixture = TestBed.createComponent(CardItemsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -30,23 +31,32 @@ describe('CardItemsComponent', () => {
 });
 
 describe('Cards Display', () => {
-  let spectator: Spectator<CardItemsComponent>;
+  let spectator: Spectator<CardItemsListComponent>;
   let threeCardItems: ItemModel[];
   const createComponent = createComponentFactory({
-    component: CardItemsComponent,
+    component: CardItemsListComponent,
     imports: [
       MatCardModule,
       AppModule,
-     TranslateModule.forRoot(),
+      TranslateModule.forRoot(
+        {
+          defaultLanguage: 'en',
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        },
+      )
     ],
-    providers: [TranslateService ],
+    providers: [TranslateService],
   });
 
   beforeEach(() => {
     spectator = createComponent();
 
     threeCardItems = new Array<ItemModel>();
-    for(let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       threeCardItems.push(new ItemModel());
     }
   });
@@ -64,10 +74,5 @@ describe('Cards Display', () => {
     expect(spectator.query('[data-cy-card-component-empty]')).toHaveText(translateService.instant('nothing_to_display'));
   });
 
-  // it('should appear at least 6 cards by default', () => {
-  //   expect(spectator.queryAll('[data-cy-card-item]')).toBeGreaterThanOrEqual(6);
-  //
-  //
-  // });
 
-  });
+});
