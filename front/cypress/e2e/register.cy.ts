@@ -35,14 +35,14 @@ describe('Register', () => {
     firstNameInput.click();
     firstNameInput.clear();
     emailInput.click();
-    cy.get('#firstName mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_NAME);
+    cy.get('#firstName mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if last name is empty', () => {
     lastNameInput.click();
     lastNameInput.clear();
     emailInput.click();
-    cy.get('#lastName mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_NAME);
+    cy.get('#lastName mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if email is empty', () => {
@@ -92,7 +92,8 @@ describe('Register', () => {
   });
 
   it('should display error message if bad request', () => {
-    nameInput.type('Test');
+    firstNameInput.type('Albert');
+    lastNameInput.type('Test');
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
     confirmPasswordInput.type('Password123');
