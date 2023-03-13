@@ -3,7 +3,8 @@ import {ApiResponseConst} from "../../src/app/enums/api-response-const";
 
 describe('Register', () => {
 
-  let nameInput: Cypress.Chainable<JQuery<HTMLElement>>;
+  let firstNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
+  let lastNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let emailInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let passwordInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let confirmPasswordInput: Cypress.Chainable<JQuery<HTMLElement>>;
@@ -14,7 +15,8 @@ describe('Register', () => {
 
   beforeEach(() => {
     cy.visit('/register-user');
-    nameInput = cy.get('input[name="name"]');
+    firstNameInput = cy.get('input[name="firstName"]');
+    lastNameInput = cy.get('input[name="lastName"]');
     emailInput = cy.get('input[name="email"]');
     passwordInput = cy.get('input[name="password"]');
     confirmPasswordInput = cy.get('input[name="confirmPassword"]');
@@ -29,11 +31,18 @@ describe('Register', () => {
     cy.get('h1').invoke('text').should('equal', 'Register User');
   });
 
-  it('should display required error message if name is empty', () => {
-    nameInput.click();
-    nameInput.clear();
+  it('should display required error message if first name is empty', () => {
+    firstNameInput.click();
+    firstNameInput.clear();
     emailInput.click();
-    cy.get('#name mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_NAME);
+    cy.get('#firstName mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_NAME);
+  });
+
+  it('should display required error message if last name is empty', () => {
+    lastNameInput.click();
+    lastNameInput.clear();
+    emailInput.click();
+    cy.get('#lastName mat-error').invoke('text').should('equal', INFO_MESSAGES.EMPTY_NAME);
   });
 
   it('should display required error message if email is empty', () => {
@@ -70,7 +79,8 @@ describe('Register', () => {
   });
 
   it('should display success message if register is successful', () => {
-    nameInput.type('Test');
+    firstNameInput.type('Albert');
+    lastNameInput.type('Test');
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
     confirmPasswordInput.type('Password123');

@@ -21,13 +21,15 @@ import {RegisterConst} from "../../enums/register-const";
 
 export class RegisterUserComponent {
   newUser: Register;
-  matcher = new MyErrorStateMatcher();
-  success = false;
+  matcher: MyErrorStateMatcher;
+  success: boolean;
 
   INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
 
   constructor() {
-    this.newUser = new Register('', '', '');
+    this.newUser = new Register('', '', '', '');
+    this.matcher = new MyErrorStateMatcher();
+    this.success = false;
    }
 
   ngOnInit(): void {
@@ -40,7 +42,8 @@ export class RegisterUserComponent {
   }
 
   registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl(''),
@@ -48,7 +51,7 @@ export class RegisterUserComponent {
 
   createUser() {
     if (this.registerForm.valid) {
-      this.newUser = new Register(this.registerForm.get('name')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      this.newUser = new Register(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
       this.success = true;
     }
   }

@@ -1,12 +1,10 @@
 export class Register {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   password: string;
 
-  constructor(firstName: any, lastName: any, email: any, password: any) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+  constructor(name: string, email: string, password: string) {
+    this.name = name;
     this.email = email;
     this.password = password;
   }
@@ -14,8 +12,7 @@ export class Register {
   // This is a static method, so it can be called without instantiating the class
   static fromJson(json: any): Register {
     return new Register(
-      json.firstName,
-      json.lastName,
+      json.name,
       json.email,
       json.password
     );
@@ -24,8 +21,7 @@ export class Register {
   // This is an instance method, so it can only be called after instantiating the class
   toJson(): any {
     return {
-      firstName: this.firstName,
-      lastName: this.lastName,
+      name: this.name,
       email: this.email,
       password: this.password
     };
