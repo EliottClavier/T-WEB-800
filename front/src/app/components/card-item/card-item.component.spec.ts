@@ -2,7 +2,7 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {ItemModel} from "../../model/ItemModel";
+import {ItemModel} from "../../models/item.model";
 import {AppModule} from "../../app.module";
 
 describe('CardItemComponent', () => {

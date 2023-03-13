@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CardItemsListComponent} from './card-items-list.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {ItemModel} from "../../model/ItemModel";
+import {ItemModel} from "../../models/item.model";
 import {MatCardModule} from "@angular/material/card";
 import {AppModule, HttpLoaderFactory} from "../../app.module";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";

@@ -28,6 +28,7 @@ import { CardItemsListComponent } from './components/card-items-list/card-items-
 import {HttpClient} from "@angular/common/http";
 import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,7 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DateRangeComponent,
     SimpleButtonComponent,
     SearchBarComponent,
-    MainComponent
+    MainComponent,
+    CardsContainerComponent
   ],
   imports: [
     BrowserModule,
