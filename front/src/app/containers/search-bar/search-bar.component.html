@@ -3,19 +3,38 @@
     <div search-bars class="row justify-content-center"
          *ngFor="let searchForm of searchFormsArrayControls; let i = index"
          [formGroupName]="i">
-      <app-search-input [searchForm]="searchForm" class="col-5 px-0">
+      <app-simple-button
+        search-bar-up
+        class="col-1 px-0"
+        *ngIf="multipleSearch"
+        [label]="'Up'"
+        [isHidden]="i === 0"
+        (click)="moveSearchBar(i, false)"
+      ></app-simple-button>
+
+      <app-simple-button
+        search-bar-down
+        class="col-1 px-0"
+        *ngIf="multipleSearch"
+        [label]="'Down'"
+        [isHidden]="i === searchFormsArrayControls.length - 1"
+        (click)="moveSearchBar(i, true)"
+      ></app-simple-button>
+
+      <app-search-input [searchForm]="searchForm" class="col-4 px-0">
       </app-search-input>
-      <app-date-range [searchForm]="searchForm" class="col-5 px-0">
+
+      <app-date-range [searchForm]="searchForm" class="col-4 px-0">
       </app-date-range>
+
       <app-simple-button
         search-bar-remove
         class="col-2 px-5"
-        *ngIf="searchFormsArrayControls.length > 1; else emptyColumn" [label]="'-'"
+        *ngIf="multipleSearch"
+        [label]="'-'"
+        [isHidden]="searchFormsArrayControls.length === 1"
         (click)="removeSearchBar(i)">
       </app-simple-button>
-      <ng-template #emptyColumn>
-        <div search-bar-remove-empty *ngIf="multipleSearch" class="col-2 px-0"></div>
-      </ng-template>
     </div>
   </div>
   <div [ngClass]="multipleSearch ? 'col-12' : 'col-3'">

@@ -33,6 +33,14 @@ export class SearchBarComponent {
     this.searchFormsArrayControls.length > 1 && this.searchFormsArray.removeAt(index);
   }
 
+  public moveSearchBar(index: number, down: boolean = true): void {
+    if ((down && index < this.searchFormsArray.length - 1) || (!down && index > 0)) {
+      let searchBar = this.searchFormsArray.at(down ? index + 1 : index);
+      this.removeSearchBar(down ? index + 1 : index);
+      this.searchFormsArray.insert(down ? index : index - 1, searchBar);
+    }
+  }
+
   public validate(): void {
   }
 
