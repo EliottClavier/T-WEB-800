@@ -13,6 +13,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {Location} from "../../models/location/location.model";
 import {By} from "@angular/platform-browser";
+import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -24,7 +26,8 @@ describe('SearchBarComponent', () => {
       SearchBarComponent,
       SearchInputComponent,
       DateRangeComponent,
-      SimpleButtonComponent
+      SimpleButtonComponent,
+      SimpleIconButtonComponent
     ],
     imports: [
       HttpClientModule,
@@ -32,6 +35,7 @@ describe('SearchBarComponent', () => {
       MatFormFieldModule,
       MatDatepickerModule,
       MatInputModule,
+      MatIconModule,
       MatNativeDateModule,
       BrowserAnimationsModule,
       ReactiveFormsModule,
@@ -44,11 +48,6 @@ describe('SearchBarComponent', () => {
     component = spectator.component;
     spectator.detectChanges();
   });
-
-  const getSimpleButtonComponent = (selector: string, index: number = 0): SimpleButtonComponent => {
-    const lastDownButton = spectator.debugElement.queryAll(By.css(selector))[index];
-    return lastDownButton.componentInstance as SimpleButtonComponent;
-  }
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -69,7 +68,7 @@ describe('SearchBarComponent', () => {
     expect(component.searchFormsArrayControls!.length).toBe(1);
   });
 
-  describe('And and remove search bars', () => {
+  describe('Remove search bars', () => {
 
     it('should add a search bar to searchFormsArray', () => {
       component.addSearchBar();
@@ -100,8 +99,8 @@ describe('SearchBarComponent', () => {
     it('should have add search bar button when multipleSearch is true', () => {
       component.multipleSearch = true;
       spectator.detectChanges();
-      expect(spectator.query("app-simple-button[search-bar-add]")).toBeDefined();
-      expect(spectator.query("app-simple-button[search-bar-add]")).toHaveText("+");
+      expect(spectator.query("app-simple-icon-button[search-bar-add]")).toBeDefined();
+      expect(spectator.query("app-simple-icon-button[search-bar-add] mat-icon[simple-icon]")).toHaveText("add");
     });
 
     it('should add search bar when search-bar-add button is clicked', () => {
@@ -110,7 +109,7 @@ describe('SearchBarComponent', () => {
       spectator.detectChanges();
 
       spyOn(component, 'addSearchBar').and.callThrough();
-      spectator.click(spectator.query("app-simple-button[search-bar-add]")!);
+      spectator.click(spectator.query("app-simple-icon-button[search-bar-add]>[simple-icon-button]")!);
       spectator.detectChanges();
       expect(component.addSearchBar).toHaveBeenCalled();
       expect(spectator.queryAll("div[search-bars]").length).toBe(length + 1);
@@ -125,9 +124,8 @@ describe('SearchBarComponent', () => {
       component.multipleSearch = true;
       spectator.detectChanges();
       expect(component.searchFormsArrayControls!.length).toBe(1);
-
-      const buttonComponent: SimpleButtonComponent = getSimpleButtonComponent("app-simple-button[search-bar-remove]");
-      expect(buttonComponent.isHidden).toBeTrue();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!).toBeTruthy();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!).toBeHidden();
     });
 
     it('should not have remove search bar button when there is only one search bar and multiple is off', () => {
@@ -142,8 +140,8 @@ describe('SearchBarComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
 
-      expect(spectator.queryAll("app-simple-button[search-bar-remove]").length).toBe(component.searchFormsArrayControls!.length);
-      expect(spectator.queryAll("app-simple-button[search-bar-remove]").length).toBeGreaterThan(1);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBe(component.searchFormsArrayControls!.length);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBeGreaterThan(1);
       spectator.queryAll("app-simple-button[search-bar-remove]").map((button: Element) => {
         expect(button).toHaveText("-");
       });
@@ -154,16 +152,16 @@ describe('SearchBarComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
       expect(component.searchFormsArrayControls!.length).toBeGreaterThan(1);
-      expect(spectator.queryAll("app-simple-button[search-bar-remove]").length).toBeGreaterThan(1);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBeGreaterThan(1);
 
       spyOn(component, 'removeSearchBar').and.callThrough();
-      spectator.click(spectator.queryLast("app-simple-button[search-bar-remove]")!);
+      spectator.click(spectator.queryLast("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!);
       spectator.detectChanges();
       expect(component.removeSearchBar).toHaveBeenCalled();
       expect(component.searchFormsArrayControls!.length).toBe(1);
 
-      const buttonComponent: SimpleButtonComponent = getSimpleButtonComponent("app-simple-button[search-bar-remove]");
-      expect(buttonComponent.isHidden).toBeTrue();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")).toBeTruthy();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")).toBeHidden();
     });
 
   });
@@ -202,9 +200,10 @@ describe('SearchBarComponent', () => {
 
       spyOn(component, 'validate').and.callThrough();
 
-      const buttonComponent: SimpleButtonComponent = getSimpleButtonComponent("app-simple-button[search-bar-validate]");
-      buttonComponent.onClickButton();
-      expect(buttonComponent.isDisabled).toBeFalse();
+      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
+      spectator.click(button);
+
+      expect(button).not.toBeDisabled();
       expect(component.searchForms.invalid).toBeFalse();
       expect(component.validate).toHaveBeenCalled();
     });
@@ -233,15 +232,17 @@ describe('SearchBarComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
 
-      expect(spectator.queryAll("app-simple-button[search-bar-up]").length).toBe(component.searchFormsArrayControls.length);
-      expect(spectator.queryAll("app-simple-button[search-bar-down]").length).toBe(component.searchFormsArrayControls.length);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toBe(component.searchFormsArrayControls.length);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toBe(component.searchFormsArrayControls.length);
 
-      spectator.queryAll("app-simple-button[search-bar-up]").map((button: Element) => {
-        expect(button).toHaveText("Up");
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]")).toBeTruthy();
+      spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]").map((button: Element) => {
+        expect(button).toHaveText("arrow_upward");
       });
 
-      spectator.queryAll("app-simple-button[search-bar-down]").map((button: Element) => {
-        expect(button).toHaveText("Down");
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]")).toBeTruthy();
+      spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]").map((button: Element) => {
+        expect(button).toHaveText("arrow_downward");
       });
     });
 
@@ -250,9 +251,9 @@ describe('SearchBarComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
 
-      expect(spectator.queryAll("app-simple-button[search-bar-up]").length).toEqual(component.searchFormsArrayControls.length);
-      const buttonComponent: SimpleButtonComponent = getSimpleButtonComponent("app-simple-button[search-bar-up]");
-      expect(buttonComponent.isHidden).toBeTrue();
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toEqual(component.searchFormsArrayControls.length);
+      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeTruthy();
+      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeHidden();
     });
 
     it('should have down button not visible when search bar is the last one', () => {
@@ -260,9 +261,9 @@ describe('SearchBarComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
 
-      expect(spectator.queryAll("app-simple-button[search-bar-down]").length).toEqual(component.searchFormsArrayControls.length);
-      const buttonComponent: SimpleButtonComponent = getSimpleButtonComponent("app-simple-button[search-bar-down]", component.searchFormsArrayControls.length - 1);
-      expect(buttonComponent.isHidden).toBeTrue();
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toEqual(component.searchFormsArrayControls.length);
+      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeTruthy();
+      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeHidden();
     });
 
     it('should move search bar up in FormArray', () => {

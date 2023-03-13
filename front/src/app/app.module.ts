@@ -24,6 +24,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
 import { SearchBarComponent } from './containers/search-bar/search-bar.component';
 import { MainComponent } from './layouts/main/main.component';
+import { SimpleIconButtonComponent } from './components/buttons/simple-icon-button/simple-icon-button.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MainComponent } from './layouts/main/main.component';
     DateRangeComponent,
     SimpleButtonComponent,
     SearchBarComponent,
-    MainComponent
+    MainComponent,
+    SimpleIconButtonComponent
   ],
   imports: [
     BrowserModule,

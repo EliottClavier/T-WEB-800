@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-simple-button',
-  templateUrl: './simple-button.component.html',
-  styleUrls: ['./simple-button.component.scss']
+  selector: 'app-simple-icon-button',
+  templateUrl: './simple-icon-button.component.html',
+  styleUrls: ['./simple-icon-button.component.scss']
 })
-export class SimpleButtonComponent {
+export class SimpleIconButtonComponent {
 
   @Input() public isDisabled: boolean = false;
   @Input() public isHidden: boolean = false;
-  @Input() public label: string = '';
+  @Input() public icon: string = '';
 
   @Output() public buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
