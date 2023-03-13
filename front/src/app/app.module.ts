@@ -6,21 +6,34 @@ import { AppComponent } from './app.component';
 import { CardItemComponent } from './card-item/card-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from "@angular/material/card";
-import { BarsComponent } from './bars/bars.component';
+import { CardItemsComponent } from './card-items/card-items.component';
+import {HttpClient} from "@angular/common/http";
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     CardItemComponent,
-    BarsComponent
+    CardItemsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+    TranslateModule.forRoot(
+      {
+        defaultLanguage: 'en'
+      }
+    )
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [TranslateModule]
 })
 export class AppModule { }
