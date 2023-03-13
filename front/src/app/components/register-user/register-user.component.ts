@@ -1,12 +1,17 @@
 import {Component} from '@angular/core';
-import {Register} from "../../models/register.model";
+import {Register} from "../../models/register/register.model";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormGroupDirective, NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {ErrorStateMatcher} from "@angular/material/core";
+import {RegisterConst} from "../../enums/register-const";
 
-const ERROR_MESSAGES = {
-  EMPTY_FIELDS: 'Please fill in all fields',
-  SHORT_PASSWORD: 'Password must be at least 6 characters',
-  INVALID_EMAIL: 'Invalid email address',
-  NONE: ''
-};
 
 @Component({
   selector: 'app-register-user',
@@ -15,46 +20,48 @@ const ERROR_MESSAGES = {
 })
 
 export class RegisterUserComponent {
-  name: string;
-  email: string;
-  password: string;
   newUser: Register;
-  errorMessage: string;
+  matcher: MyErrorStateMatcher;
+  success: boolean;
+
+  INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
 
   constructor() {
-    this.name = '';
-    this.email = '';
-    this.password = '';
-    this.newUser = new Register('', '', '');
-    this.errorMessage = '';
+    this.newUser = new Register('', '', '', '');
+    this.matcher = new MyErrorStateMatcher();
+    this.success = false;
    }
 
   ngOnInit(): void {
   }
 
-  isFieldEmpty(value: string): boolean {
-    return value.trim() === '';
+  checkPassword: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true }
   }
 
-  isPasswordTooShort(password: string): boolean {
-    return password.length < 6;
-  }
-
-  isEmailInvalid(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return !emailRegex.test(email);
-  }
+  registerForm = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl(''),
+  }, {validators: this.checkPassword});
 
   createUser() {
-    if (this.isFieldEmpty(this.name) || this.isFieldEmpty(this.email) || this.isFieldEmpty(this.password)) {
-      this.errorMessage = ERROR_MESSAGES.EMPTY_FIELDS;
-    } else if (this.isPasswordTooShort(this.password)) {
-      this.errorMessage = ERROR_MESSAGES.SHORT_PASSWORD;
-    } else if (this.isEmailInvalid(this.email)) {
-      this.errorMessage = ERROR_MESSAGES.INVALID_EMAIL;
-    } else {
-      this.newUser = new Register(this.name, this.email, this.password);
-      this.errorMessage = ERROR_MESSAGES.NONE;
+    if (this.registerForm.valid) {
+      this.newUser = new Register(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      this.success = true;
     }
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = control?.invalid && control?.dirty || false;
+    const invalidParent = control?.parent?.invalid && control?.parent?.dirty || false;
+
+    return (invalidCtrl || invalidParent);
   }
 }
