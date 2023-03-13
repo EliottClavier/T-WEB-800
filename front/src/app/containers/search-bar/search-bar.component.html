@@ -1,0 +1,38 @@
+<form [formGroup]="searchForms" class="row justify-content-center">
+  <div formArrayName="searchFormsArray" [ngClass]="multipleSearch ? 'col-12' : 'col-9'">
+    <div search-bars class="row justify-content-center"
+         *ngFor="let searchForm of searchFormsArrayControls; let i = index"
+         [formGroupName]="i">
+      <app-search-input [searchForm]="searchForm" class="col-5 px-0">
+      </app-search-input>
+      <app-date-range [searchForm]="searchForm" class="col-5 px-0">
+      </app-date-range>
+      <app-simple-button
+        search-bar-remove
+        class="col-2 px-5"
+        *ngIf="searchFormsArrayControls.length > 1; else emptyColumn" [label]="'-'"
+        (click)="removeSearchBar(i)">
+      </app-simple-button>
+      <ng-template #emptyColumn>
+        <div search-bar-remove-empty *ngIf="multipleSearch" class="col-2 px-0"></div>
+      </ng-template>
+    </div>
+  </div>
+  <div [ngClass]="multipleSearch ? 'col-12' : 'col-3'">
+    <div class="row justify-content-center">
+      <app-simple-button
+        search-bar-add
+        class="col-1 px-0"
+        *ngIf="multipleSearch" [label]="'+'"
+        (click)="addSearchBar()">
+      </app-simple-button>
+      <app-simple-button
+        search-bar-validate
+        [ngClass]="multipleSearch ? 'col-2 px-0' : 'col-12 px-0'"
+        *ngIf="searchForms" [label]="'Validate'"
+        [isDisabled]="searchForms.invalid"
+        (validate)="validate()">
+      </app-simple-button>
+    </div>
+  </div>
+</form>

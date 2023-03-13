@@ -15,27 +15,45 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
+import { SearchInputComponent } from './components/inputs/search-input/search-input.component';
+import {HttpClientModule} from "@angular/common/http"
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
+import { SearchBarComponent } from './containers/search-bar/search-bar.component';
+import { MainComponent } from './layouts/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    SearchInputComponent,
+    DateRangeComponent,
+    SimpleButtonComponent,
+    SearchBarComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatListModule,
     MatInputModule,
     MatSelectModule,
+    MatAutocompleteModule,
     MatSidenavModule,
     MatCardModule,
     MatTableModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   exports: [
     RegisterUserComponent
