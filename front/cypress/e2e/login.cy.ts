@@ -4,6 +4,7 @@ describe('Login', () => {
 
   let emailInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let passwordInput: Cypress.Chainable<JQuery<HTMLElement>>;
+  let loginButton: Cypress.Chainable<JQuery<HTMLElement>>;
 
   const LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
 
@@ -11,7 +12,7 @@ describe('Login', () => {
     cy.visit('/login');
     emailInput = cy.get('input[name="email"]');
     passwordInput = cy.get('input[name="password"]');
-
+    loginButton = cy.get('button[name="loginButton"]');
   });
 
   it('should display login page', () => {
@@ -41,7 +42,8 @@ describe('Login', () => {
   it('should display success message if login is successful', () => {
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
+    loginButton.click();
 
-    cy.get('.successRegister mat-card-content').invoke('text').should('equal', LOGIN_RESPONSE.SUCCESS_REGISTER);
+    cy.get('.successLogin mat-card-content').invoke('text').should('equal', LOGIN_RESPONSE.SUCCESS_LOGIN);
   });
 });
