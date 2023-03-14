@@ -12,6 +12,12 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {LoginService} from "../../services/login/login.service";
+import {RegisterService} from "../../services/register/register.service";
+import {User} from "../../models/user/User.model";
+import {BehaviorSubject, throwError} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ApiResponseConst} from "../../enums/api-response-const";
 
 describe('RegisterUserComponent', () => {
   let component: LoginUserComponent;
@@ -19,6 +25,10 @@ describe('RegisterUserComponent', () => {
   let control: FormControl;
   let form: FormGroupDirective;
   let spectator: Spectator<LoginUserComponent>;
+  let _loginService: LoginService;
+  let userMock: User;
+
+  const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   const createComponent = createComponentFactory({
     component: LoginUserComponent,
@@ -28,7 +38,8 @@ describe('RegisterUserComponent', () => {
       MatInputModule,
       ReactiveFormsModule,
       FormsModule
-    ]
+    ],
+    providers: [ LoginService ],
   });
 
   beforeEach(async () => {
@@ -36,6 +47,7 @@ describe('RegisterUserComponent', () => {
     form = new FormGroupDirective([], []);
     spectator = createComponent();
     component = spectator.component;
+    _loginService = spectator.inject(LoginService);
 
     spectator.detectChanges()
   });
@@ -46,12 +58,47 @@ describe('RegisterUserComponent', () => {
 
   it('should login with all informations', () => {
     component.loginForm.setValue({ email: 'test@gmail.com', password: 'Password123' });
+    const userMock = {
+      "status": 201,
+      "data": {
+        "id": 1,
+        "firstName": "Albert",
+        "lastName": "Test",
+        "email": "test@gmail.com"
+      }
+    }
+
+    spyOn<LoginService, any>(_loginService, "postLogin").and.callFake((credentials: string) => {
+      return new BehaviorSubject<Object>(userMock);
+    });
 
     component.loginUser();
 
     expect(component.credentials.email).toEqual('test@gmail.com');
     expect(component.credentials.password).toEqual('Password123');
+    expect(component.user.id).toEqual(1);
+    expect(component.user.firstName).toEqual('Albert');
+    expect(component.user.lastName).toEqual('Test');
+    expect(component.user.email).toEqual('test@gmail.com');
     expect(component.success).toEqual(true);
+  });
+
+  it('should login with all informations', () => {
+    component.loginForm.setValue({ email: 'test@gmail.com', password: 'Password123' });
+
+    spyOn<LoginService, any>(_loginService, "postLogin").and.returnValue(
+      throwError(() => new HttpErrorResponse({error: API_RESPONSE.BAD_REQUEST, status: 401}))
+    );
+
+    component.loginUser();
+
+    expect(component.credentials.email).toEqual('test@gmail.com');
+    expect(component.credentials.password).toEqual('Password123');
+    expect(component.user.id).toEqual(0);
+    expect(component.user.firstName).toEqual('');
+    expect(component.user.lastName).toEqual('');
+    expect(component.user.email).toEqual('');
+    expect(component.success).toEqual(false);
   });
 
   it('should not login with empty email', () => {

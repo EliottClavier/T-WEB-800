@@ -12,6 +12,8 @@ import {
 import {ErrorStateMatcher} from "@angular/material/core";
 import {LoginConst} from "../../enums/login-const";
 import {User} from "../../models/user/User.model";
+import {RegisterConst} from "../../enums/register-const";
+import {ApiResponseConst} from "../../enums/api-response-const";
 
 
 @Component({
@@ -24,7 +26,9 @@ export class LoginUserComponent {
   credentials: Credentials;
   loginForm: FormGroup;
   success: boolean;
-  readonly LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
+  user: User;
+  INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
+  API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   constructor() {
     this.credentials = new Credentials('', '');
@@ -33,6 +37,7 @@ export class LoginUserComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
+    this.user = new User(0, '', '', '');
   }
 
   loginUser() {
