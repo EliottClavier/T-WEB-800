@@ -51,7 +51,8 @@
           <input matInput type="password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
           <mat-error *ngIf="registerForm.hasError('notSame')">{{INFO_MESSAGES.DIFFERENTS_PASSWORD}}</mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="registerButton" (click)="createUser()">Create User</button>
+        <mat-error name="errorRequest" *ngIf="this.errorMessage !== ''">{{this.errorMessage}}</mat-error>
+        <button mat-raised-button color="primary" name="registerButton" (click)="createUser()">Create User</button>
       </form>
     </mat-card-content>
   </mat-card>

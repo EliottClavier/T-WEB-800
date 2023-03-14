@@ -13,7 +13,7 @@ export class RegisterService {
     private http: HttpClient,
   ) { }
 
-  public postUserRegister(user: Register): Observable<User[]> {
-    return this.http.post<User[]>('/api/register', user);
+  public postUserRegister(user: Register): Observable<Object> {
+    return this.http.post<Object>('/api/auth/register', user);
   }
 }

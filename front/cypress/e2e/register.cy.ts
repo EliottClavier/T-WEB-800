@@ -20,11 +20,8 @@ describe('Register', () => {
     emailInput = cy.get('input[name="email"]');
     passwordInput = cy.get('input[name="password"]');
     confirmPasswordInput = cy.get('input[name="confirmPassword"]');
-    registerButton = cy.get('.registerButton');
-    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/201_register-user', statusCode: 201}).as('201_register');
-    cy.intercept('POST', '/api/auth/register', {statusCode: 400}).as('400_register');
-    cy.intercept('POST', '/api/auth/register', {statusCode: 403}).as('403_register');
-    cy.intercept('POST', '/api/auth/register', {statusCode: 404}).as('404_register');
+    registerButton = cy.get('button[name="registerButton"]');
+
   });
 
   it('should display register page', () => {
@@ -79,6 +76,8 @@ describe('Register', () => {
   });
 
   it('should display success message if register is successful', () => {
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/201_register-user', statusCode: 201}).as('201_register');
+    registerButton = cy.get('button[name="registerButton"]');
     firstNameInput.type('Albert');
     lastNameInput.type('Test');
     emailInput.type('test@gmail.com');
@@ -86,12 +85,14 @@ describe('Register', () => {
     confirmPasswordInput.type('Password123');
     registerButton.click();
 
-    cy.wait('@201_register');
+    cy.wait('@201_register').its('response.statusCode').should('eq', 201);
 
     cy.get('.successRegister mat-card-content').invoke('text').should('equal', REGISTER_RESPONSE.SUCCESS_REGISTER);
   });
 
   it('should display error message if bad request', () => {
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/400_register-user', statusCode: 400}).as('400_register');
+    registerButton = cy.get('button[name="registerButton"]');
     firstNameInput.type('Albert');
     lastNameInput.type('Test');
     emailInput.type('test@gmail.com');
@@ -99,8 +100,8 @@ describe('Register', () => {
     confirmPasswordInput.type('Password123');
     registerButton.click();
 
-    cy.wait('@400_register');
+    cy.wait('@400_register').its('response.statusCode').should('eq', 400);
 
-    cy.get('.errorRequest').invoke('text').should('equal', API_RESPONSE.BAD_REQUEST);
+    cy.get('mat-error[name="errorRequest"]').invoke('text').should('equal', API_RESPONSE.BAD_REQUEST);
   });
 });

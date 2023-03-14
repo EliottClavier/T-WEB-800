@@ -54,7 +54,7 @@ describe('RegisterService', () => {
       }));
     });
 
-    const req = httpMock.expectOne(`/api/register`);
+    const req = httpMock.expectOne(`/api/auth/register`);
     expect(req.request.method).toEqual('POST');
     req.flush(user, { status: 201, statusText: 'OK' });
   });

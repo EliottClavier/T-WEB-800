@@ -1,6 +1,9 @@
 {
-  "id": 1,
-  "firstName": "Marc",
-  "lastName": "DUTRONC",
-  "email": "test@gmail.com"
+  "status": 201,
+  "data": {
+    "id": 1,
+    "firstName": "Marc",
+    "lastName": "DUTRONC",
+    "email": "test@gmail.com"
+  }
 }
