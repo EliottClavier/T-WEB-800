@@ -47,8 +47,8 @@ export class SearchInputComponent implements OnInit {
     }
   }
 
-  private _getLocationsBySearch(search: string): void {
-    this._locationService.getLocationsBySearch(search).subscribe(
+  private _getLocationSuggestions(search: string): void {
+    this._locationService.getLocationSuggestions(search).subscribe(
       (locations: Location[]) => {
         this.locationOptions = locations;
     });
@@ -57,7 +57,7 @@ export class SearchInputComponent implements OnInit {
   public onLocationChange(value: string): void {
     let location: AbstractControl = this.searchForm.get("location")!;
     location!.setValue(value ? new Location("", value) : null);
-    location.value && location.value.getName ? this._getLocationsBySearch(location.value.getName) : this.locationOptions = [];
+    location.value && location.value.getName ? this._getLocationSuggestions(location.value.getName) : this.locationOptions = [];
   }
 
   public onLocationOptionClick(location: Location): void {

@@ -9,7 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 
-describe('LocationComponent', () => {
+describe('SearchInputComponent', () => {
   let component: SearchInputComponent;
   let spectator: Spectator<SearchInputComponent>;
   let _locationService: LocationService;
@@ -42,7 +42,7 @@ describe('LocationComponent', () => {
     component.locationOptions = [];
 
     // spyOn LocationService.getLocations() to mock API Call
-    spyOn<LocationService, any>(_locationService, "getLocationsBySearch").and.callFake((search: string) => {
+    spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
       return new BehaviorSubject<Location[]>(testLocationOptions.filter(
         (location: Location) => location.getName.toLowerCase().startsWith(search.toLowerCase()))
       );
@@ -90,7 +90,7 @@ describe('LocationComponent', () => {
     */
 
     let search: string = "Nan";
-    component["_getLocationsBySearch"](search);
+    component["_getLocationSuggestions"](search);
 
     expect(component.locationOptions).toEqual(
       testLocationOptions.filter((location: Location) => location.getName.toLowerCase().includes(search.toLowerCase())

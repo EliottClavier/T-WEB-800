@@ -15,10 +15,14 @@ import {Location} from "../../models/location/location.model";
 import {By} from "@angular/platform-browser";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {MatIconModule} from "@angular/material/icon";
+import {Router, RouterModule} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
+import {getDateFromIsoString} from "../../utils/date.utils";
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let spectator: Spectator<SearchBarComponent>;
+  let _router: Router;
 
   const createComponent = createComponentFactory({
     component: SearchBarComponent,
@@ -31,6 +35,8 @@ describe('SearchBarComponent', () => {
     ],
     imports: [
       HttpClientModule,
+      RouterModule,
+      RouterTestingModule,
       MatAutocompleteModule,
       MatFormFieldModule,
       MatDatepickerModule,
@@ -68,7 +74,7 @@ describe('SearchBarComponent', () => {
     expect(component.searchFormsArrayControls!.length).toBe(1);
   });
 
-  describe('Remove search bars', () => {
+  describe('Add and remove search bars', () => {
 
     it('should add a search bar to searchFormsArray', () => {
       component.addSearchBar();
@@ -182,7 +188,21 @@ describe('SearchBarComponent', () => {
 
   });
 
-  describe('Validate research', () => {
+  describe('Validate research and redirection', () => {
+    let locationName: string = "Paris";
+    let start: Date = new Date();
+    let end: Date = new Date();
+
+    beforeEach(() => {
+      _router = spectator.inject(Router);
+      component.searchFormsArray.setControl(0, new FormGroup({
+        location: new FormControl(new Location("1", locationName)),
+        locationSearch: new FormControl(""),
+        start: new FormControl(start),
+        end: new FormControl(end),
+      }));
+      spectator.detectChanges();
+    });
 
     it('should have validate button', () => {
       expect(spectator.query("app-simple-button[search-bar-validate]")).toBeDefined();
@@ -190,14 +210,7 @@ describe('SearchBarComponent', () => {
     });
 
     it('should submit search when validate button is clicked', () => {
-      component.searchFormsArray.setControl(0, new FormGroup({
-        location: new FormControl(new Location("1", "France")),
-        locationSearch: new FormControl(""),
-        start: new FormControl(new Date()),
-        end: new FormControl(new Date()),
-      }));
-      spectator.detectChanges();
-
+      spyOn(component["_router"], 'navigate').and.stub();
       spyOn(component, 'validate').and.callThrough();
 
       let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
@@ -206,6 +219,47 @@ describe('SearchBarComponent', () => {
       expect(button).not.toBeDisabled();
       expect(component.searchForms.invalid).toBeFalse();
       expect(component.validate).toHaveBeenCalled();
+    });
+
+    it('should have Router injected', () => {
+      expect(component["_router"]).toBeDefined();
+      expect(component["_router"]).toBeTruthy();
+      expect(component["_router"]).toEqual(_router);
+    });
+
+    it('should redirect to explore view with params', () => {
+      spyOn(component["_router"], 'navigate').and.stub();
+
+      component.validate();
+
+      expect(component["_router"].navigate).toHaveBeenCalledWith(
+        ["/", "explore", locationName],
+        {
+          queryParams: {
+            start: getDateFromIsoString(start),
+            end: getDateFromIsoString(end)
+          }
+        }
+      );
+    });
+
+    it('should redirect to explore view when validate button is clicked', () => {
+      spyOn(component, 'validate').and.callThrough();
+      spyOn(component["_router"], 'navigate').and.stub();
+
+      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
+      spectator.click(button);
+
+      expect(component.validate).toHaveBeenCalled();
+      expect(component["_router"].navigate).toHaveBeenCalledWith(
+        ["/", "explore", locationName],
+        {
+          queryParams: {
+            start: getDateFromIsoString(start),
+            end: getDateFromIsoString(end)
+          }
+        }
+      );
     });
 
   });

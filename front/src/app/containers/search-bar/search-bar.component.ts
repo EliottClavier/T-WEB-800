@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
+import {Router} from "@angular/router";
+import {getDateFromIsoString} from "../../utils/date.utils";
 
 @Component({
   selector: 'app-search-bar',
@@ -16,6 +18,11 @@ export class SearchBarComponent {
       new FormGroup({}),
     ]),
   });
+
+  constructor(
+    private _router: Router,
+  ) {
+  }
 
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
@@ -42,6 +49,22 @@ export class SearchBarComponent {
   }
 
   public validate(): void {
+    const form: FormGroup = this.searchFormsArrayControls[0];
+    let location: Location = form.get('location')!.value;
+    let start: Date = form.get('start')!.value;
+    let end: Date = form.get('end')!.value;
+
+    if (location && start && end) {
+      this._router.navigate(
+        ['/', 'explore', location.getName],
+        {
+          queryParams: {
+            start: getDateFromIsoString(start),
+            end: getDateFromIsoString(end)
+          }
+        }
+      );
+    }
   }
 
 }

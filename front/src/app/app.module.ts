@@ -25,6 +25,7 @@ import { SimpleButtonComponent } from './components/buttons/simple-button/simple
 import { SearchBarComponent } from './containers/search-bar/search-bar.component';
 import { MainComponent } from './layouts/main/main.component';
 import { SimpleIconButtonComponent } from './components/buttons/simple-icon-button/simple-icon-button.component';
+import { ExploreComponent } from './layouts/explore/explore.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SimpleIconButtonComponent } from './components/buttons/simple-icon-butt
     SimpleButtonComponent,
     SearchBarComponent,
     MainComponent,
-    SimpleIconButtonComponent
+    SimpleIconButtonComponent,
+    ExploreComponent
   ],
   imports: [
     BrowserModule,
