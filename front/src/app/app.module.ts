@@ -24,11 +24,13 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
 import { SearchBarComponent } from './containers/search-bar/search-bar.component';
 import { MainComponent } from './layouts/main/main.component';
+import {LoginUserComponent} from "./containers/login-user/login-user.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
+    LoginUserComponent,
     SearchInputComponent,
     DateRangeComponent,
     SimpleButtonComponent,
@@ -56,7 +58,8 @@ import { MainComponent } from './layouts/main/main.component';
     ReactiveFormsModule,
   ],
   exports: [
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginUserComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
