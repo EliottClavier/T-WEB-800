@@ -12,7 +12,7 @@ import {
 import {ErrorStateMatcher} from "@angular/material/core";
 import {RegisterConst} from "../../enums/register-const";
 import {RegisterService} from "../../services/register/register.service";
-import {User} from "../../models/User/User.model";
+import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 
 

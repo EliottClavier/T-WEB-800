@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Register} from "../../models/register/register.model";
-import {User} from "../../models/User/User.model";
+import {User} from "../../models/user/User.model";
 
 @Injectable({
   providedIn: 'root'

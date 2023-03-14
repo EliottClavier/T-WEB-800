@@ -18,7 +18,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
-import {User} from "../../models/User/User.model";
+import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import any = jasmine.any;
 
