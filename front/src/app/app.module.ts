@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
@@ -22,10 +21,11 @@ import { DateRangeComponent } from './components/inputs/date-range/date-range.co
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { SimpleButtonComponent } from './components/buttons/simple-button/simple-button.component';
-import { SearchBarComponent } from './containers/search-bar/search-bar.component';
+import { MultipleSearchBarsComponent } from './containers/multiple-search-bars/multiple-search-bars.component';
 import { MainComponent } from './layouts/main/main.component';
 import { SimpleIconButtonComponent } from './components/buttons/simple-icon-button/simple-icon-button.component';
 import { ExploreComponent } from './layouts/explore/explore.component';
+import { SingleSearchBarComponent } from './containers/single-search-bar/single-search-bar.component';
 
 @NgModule({
   declarations: [
@@ -34,10 +34,11 @@ import { ExploreComponent } from './layouts/explore/explore.component';
     SearchInputComponent,
     DateRangeComponent,
     SimpleButtonComponent,
-    SearchBarComponent,
+    MultipleSearchBarsComponent,
     MainComponent,
     SimpleIconButtonComponent,
-    ExploreComponent
+    ExploreComponent,
+    SingleSearchBarComponent
   ],
   imports: [
     BrowserModule,

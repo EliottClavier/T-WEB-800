@@ -1,0 +1,24 @@
+<form [formGroup]="searchForm" class="row align-items-center justify-content-center">
+  <div class="col-12">
+    <div class="row justify-content-center">
+      <div class="col-4 mx-1 px-0">
+        <app-search-input search-bar-input [searchForm]="searchForm" class="col-5 px-0">
+        </app-search-input>
+      </div>
+      <div class="col-4 mx-1 px-0">
+        <app-date-range search-bar-date-range [searchForm]="searchForm" class="col-5 px-0">
+        </app-date-range>
+      </div>
+      <div class="col-2 mx-1 px-0">
+        <app-simple-button
+          search-bar-validate
+          class="col-2 px-0"
+          *ngIf="searchForm"
+          [label]="'Validate'"
+          [isDisabled]="searchForm.invalid"
+          (buttonClick)="validate()">
+        </app-simple-button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -139,25 +139,25 @@ describe('SearchInputComponent', () => {
   });
 
   it('should have a mat-form-field', () => {
-    expect(spectator.query('[location-form-field]')).toBeTruthy();
+    expect(spectator.query('[search-input-form-field]')).toBeTruthy();
   });
 
   it('should have a mat-label', () => {
-    let element: HTMLElement = spectator.query('[location-autocomplete-label]')!;
+    let element: HTMLElement = spectator.query('[search-input-autocomplete-label]')!;
     expect(element).toBeTruthy();
-    expect(element).toHaveText("Location");
+    expect(element).toHaveText("Destination");
   });
 
   it('should have a search input', () => {
-    let element: HTMLElement = spectator.query('[location-search]')!;
+    let element: HTMLElement = spectator.query('[search-input]')!;
     expect(element).toBeTruthy();
     expect(element).toHaveAttribute("matInput");
     expect(element.getAttribute("type")).toEqual("text");
-    expect(element.getAttribute("placeholder")).toEqual("Choose a location ...");
+    expect(element.getAttribute("placeholder")).toEqual("Search a destination ...");
   });
 
   it('should have a mat-autocomplete', () => {
-    expect(spectator.query('[location-autocomplete]')).toBeTruthy();
+    expect(spectator.query('[search-input-autocomplete]')).toBeTruthy();
   });
 
   it('should not have any mat-option', () => {
@@ -172,7 +172,7 @@ describe('SearchInputComponent', () => {
     spyOn<SearchInputComponent, any>(component, "onLocationChange").and.callThrough();
 
     const locationSearch: string = "Nan";
-    const locationInput: HTMLElement = spectator.query('[location-search]')!;
+    const locationInput: HTMLElement = spectator.query('[search-input]')!;
     spectator.typeInElement(locationSearch, locationInput!);
 
     expect(component.onLocationChange).toHaveBeenCalled();
@@ -189,12 +189,12 @@ describe('SearchInputComponent', () => {
     spyOn<SearchInputComponent, any>(component, "onLocationOptionClick").and.callThrough();
 
     const locationSearch: string = "Nan";
-    const locationInput: HTMLElement = spectator.query('[location-search]')!;
+    const locationInput: HTMLElement = spectator.query('[search-input]')!;
     spectator.typeInElement(locationSearch, locationInput!);
     spectator.detectChanges();
 
     let locationOption: Location = component.locationOptions[0];
-    spectator.click(spectator.query("[location-autocomplete]")!);
+    spectator.click(spectator.query("[search-input-autocomplete]")!);
     spectator.detectChanges();
 
     spectator.click(spectator.query(`mat-option[id="${locationOption.getId}"]`)!);
@@ -243,24 +243,24 @@ describe('SearchInputComponent', () => {
   });
 
   it('should display an error message when form is not valid', () => {
-    expect(spectator.query('[location-error]')).toBeFalsy();
+    expect(spectator.query('[search-input-error]')).toBeFalsy();
 
-    const locationInput: HTMLElement = spectator.query('[location-search]')!;
+    const locationInput: HTMLElement = spectator.query('[search-input]')!;
     spectator.typeInElement("Nan", locationInput!);
     // Field locationSearch is marked as touched when location input is changed
     component.searchForm.get("locationSearch")!.markAsTouched();
 
-    expect(spectator.query('[location-error]')).toBeFalsy();
+    expect(spectator.query('[search-input-error]')).toBeFalsy();
 
     spectator.typeInElement("", locationInput!);
 
-    expect(spectator.query('[location-error]')).toBeTruthy();
-    expect(spectator.query('[location-error]')).toHaveText("Location is required");
+    expect(spectator.query('[search-input-error]')).toBeTruthy();
+    expect(spectator.query('[search-input-error]')).toHaveText("Location is required");
 
     spectator.typeInElement("Nan", locationInput!);
 
     // mat-error not displayed again
-    expect(spectator.query('[location-error]')).toBeFalsy();
+    expect(spectator.query('[search-input-error]')).toBeFalsy();
   });
 
 });

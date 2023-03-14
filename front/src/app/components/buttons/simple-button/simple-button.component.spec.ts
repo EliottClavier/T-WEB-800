@@ -25,8 +25,8 @@ describe('SimpleButtonComponent', () => {
   });
 
   it('should have a mat-button with specific label', () => {
-    expect(spectator.query('button[mat-stroked-button][simple-button]')).toBeTruthy();
-    expect(spectator.query('button[mat-stroked-button][simple-button]')).toHaveText(component.label);
+    expect(spectator.query('button[mat-flat-button][simple-button]')).toBeTruthy();
+    expect(spectator.query('button[mat-flat-button][simple-button]')).toHaveText(component.label);
   });
 
   it('should emit the buttonClick event when the button is clicked and not disabled', () => {
