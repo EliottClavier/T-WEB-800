@@ -25,6 +25,7 @@ import { SimpleButtonComponent } from './components/buttons/simple-button/simple
 import { SearchBarComponent } from './containers/search-bar/search-bar.component';
 import { MainComponent } from './layouts/main/main.component';
 import {LoginUserComponent} from "./containers/login-user/login-user.component";
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
     DateRangeComponent,
     SimpleButtonComponent,
     SearchBarComponent,
-    MainComponent
+    MainComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
