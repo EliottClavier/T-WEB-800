@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { RegisterUserComponent } from './containers/register-user/register-user.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
@@ -27,14 +27,19 @@ import { SimpleIconButtonComponent } from './components/buttons/simple-icon-butt
 import { ExploreComponent } from './layouts/explore/explore.component';
 import { SingleSearchBarComponent } from './containers/single-search-bar/single-search-bar.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {LoginUserComponent} from "./containers/login-user/login-user.component";
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
+    LoginUserComponent,
     SearchInputComponent,
     DateRangeComponent,
     SimpleButtonComponent,
+    MainComponent,
+    HeaderComponent,
     MultipleSearchBarsComponent,
     MainComponent,
     SimpleIconButtonComponent,
@@ -64,7 +69,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     ReactiveFormsModule,
   ],
   exports: [
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginUserComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
