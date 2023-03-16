@@ -31,12 +31,12 @@ describe('HeaderComponent', () => {
     expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  it('should navigate to /register-user when register button is clicked', () => {
+  it('should navigate to /register when register button is clicked', () => {
     spyOn(component['router'], 'navigate');
 
     const registerButton = fixture.nativeElement.querySelector('.register');
     registerButton.click();
 
-    expect(component['router'].navigate).toHaveBeenCalledWith(['/register-user']);
+    expect(component['router'].navigate).toHaveBeenCalledWith(['/register']);
   });
 })
