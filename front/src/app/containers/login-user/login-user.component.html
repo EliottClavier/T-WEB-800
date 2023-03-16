@@ -28,6 +28,7 @@
               }">
           <mat-error *ngIf="loginForm.hasError('required', 'password')">{{LOGIN_RESPONSE.EMPTY_PASSWORD}}</mat-error>
         </mat-form-field>
+        <mat-error name="errorRequest" *ngIf="this.errorMessage !== ''">{{this.errorMessage}}</mat-error>
         <button mat-raised-button color="primary" name="loginButton" (click)="loginUser()">Login</button>
       </form>
     </mat-card-content>

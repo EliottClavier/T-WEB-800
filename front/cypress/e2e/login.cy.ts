@@ -1,4 +1,5 @@
 import {LoginConst} from "../../src/app/enums/login-const";
+import {ApiResponseConst} from "../../src/app/enums/api-response-const";
 
 describe('Login', () => {
 
@@ -7,6 +8,7 @@ describe('Login', () => {
   let loginButton: Cypress.Chainable<JQuery<HTMLElement>>;
 
   const LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
+  const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   beforeEach(() => {
     cy.visit('/login');
@@ -40,10 +42,22 @@ describe('Login', () => {
   });
 
   it('should display success message if login is successful', () => {
+    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/201_login-user', statusCode: 201}).as('201_login');
+    loginButton = cy.get('button[name="loginButton"]');
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
     loginButton.click();
-
+    cy.wait('@201_login').its('response.statusCode').should('eq', 201);
     cy.get('.successLogin mat-card-content').invoke('text').should('equal', LOGIN_RESPONSE.SUCCESS_LOGIN);
+  });
+
+  it('should display error message if credentials are bad', () => {
+    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/401_login-user', statusCode: 401}).as('401_login');
+    loginButton = cy.get('button[name="loginButton"]');
+    emailInput.type('test@gmail.com');
+    passwordInput.type('Password123');
+    loginButton.click();
+    cy.wait('@401_login').its('response.statusCode').should('eq', 401);
+    cy.get('mat-error[name="errorRequest"]').invoke('text').should('equal', API_RESPONSE.BAD_CREDENTIALS);
   });
 });
