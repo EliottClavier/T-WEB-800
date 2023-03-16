@@ -1,6 +1,6 @@
 <form [formGroup]="searchForms" class="row justify-content-center">
   <div formArrayName="searchFormsArray" class="col-12">
-    <div search-bars class="row justify-content-center"
+    <div search-bars class="row m-0"
          *ngFor="let searchForm of searchFormsArrayControls; let i = index"
          [formGroupName]="i">
       <!--
@@ -24,21 +24,25 @@
         </div>
       </div>
       -->
+      <div class="row justify-content-between mx-0 p-0">
+        <app-search-input
+          class="col-9 px-0"
+          [searchForm]="searchForm">
+        </app-search-input>
 
-      <app-search-input [searchForm]="searchForm" class="col-4 mx-1 px-0">
-      </app-search-input>
-
-      <app-date-range [searchForm]="searchForm" class="col-4 mx-1 px-0">
-      </app-date-range>
-
-      <app-simple-icon-button
-        search-bar-remove
-        class="col-2 mx-1 px-0"
-        [icon]="'delete'"
-        [color]="'warn'"
-        [isHidden]="searchFormsArrayControls.length === 1"
-        (buttonClick)="removeSearchBar(i)">
-      </app-simple-icon-button>
+        <app-simple-icon-button
+          search-bar-remove
+          class="col-2 px-0"
+          [icon]="'delete'"
+          [color]="'warn'"
+          [isDisabled]="searchFormsArrayControls.length === 1"
+          (buttonClick)="removeSearchBar(i)">
+        </app-simple-icon-button>
+      </div>
+      <div class="row mx-0 p-0">
+        <app-date-range [searchForm]="searchForm" class="col-9 px-0">
+        </app-date-range>
+      </div>
     </div>
   </div>
   <div class="col-12">
@@ -50,14 +54,6 @@
         [buttonType]="'mini-fab'"
         (buttonClick)="addSearchBar()">
       </app-simple-icon-button>
-      <app-simple-button
-        search-bar-validate
-        class="col-2 px-0"
-        *ngIf="searchForms"
-        [label]="'Validate'"
-        [isDisabled]="searchForms.invalid"
-        (buttonClick)="validate()">
-      </app-simple-button>
     </div>
   </div>
 </form>

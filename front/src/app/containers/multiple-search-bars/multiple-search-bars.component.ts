@@ -48,23 +48,4 @@ export class MultipleSearchBarsComponent {
   }
   */
 
-  public validate(): void {
-    const form: FormGroup = this.searchFormsArrayControls[0];
-    let location: Location = form.get('location')!.value;
-    let start: Date = form.get('start')!.value;
-    let end: Date = form.get('end')!.value;
-
-    if (location && start && end) {
-      this._router.navigate(
-        ['/', 'explore', location.getName],
-        {
-          queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
-          }
-        }
-      );
-    }
-  }
-
 }

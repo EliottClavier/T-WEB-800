@@ -120,10 +120,10 @@ describe('MultipleSearchBarsComponent', () => {
       expect(spectator.query("app-simple-button[search-bar-remove]")).toBeFalsy();
     });
 
-    it('should have hidden remove search bar when there is only one search bar', () => {
+    it('should have disabled remove search bar when there is only one search bar', () => {
       expect(component.searchFormsArrayControls!.length).toBe(1);
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeHidden();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeDisabled();
     });
 
     it('should have remove search bar button for each search bar when there are multiple search bar', () => {
@@ -150,7 +150,7 @@ describe('MultipleSearchBarsComponent', () => {
       expect(component.searchFormsArrayControls!.length).toBe(1);
 
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeHidden();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeDisabled();
     });
 
   });
@@ -187,62 +187,10 @@ describe('MultipleSearchBarsComponent', () => {
       spectator.detectChanges();
     });
 
-    it('should have validate button', () => {
-      expect(spectator.query("app-simple-button[search-bar-validate]")).toBeDefined();
-      expect(spectator.query("app-simple-button[search-bar-validate]")).toHaveText("Validate");
-    });
-
-    it('should submit search when validate button is clicked', () => {
-      spyOn(component["_router"], 'navigate').and.stub();
-      spyOn(component, 'validate').and.callThrough();
-
-      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
-      spectator.click(button);
-
-      expect(button).not.toBeDisabled();
-      expect(component.searchForms.invalid).toBeFalse();
-      expect(component.validate).toHaveBeenCalled();
-    });
-
     it('should have Router injected', () => {
       expect(component["_router"]).toBeDefined();
       expect(component["_router"]).toBeTruthy();
       expect(component["_router"]).toEqual(_router);
-    });
-
-    it('should redirect to explore view with params', () => {
-      spyOn(component["_router"], 'navigate').and.stub();
-
-      component.validate();
-
-      expect(component["_router"].navigate).toHaveBeenCalledWith(
-        ["/", "explore", locationName],
-        {
-          queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
-          }
-        }
-      );
-    });
-
-    it('should redirect to explore view when validate button is clicked', () => {
-      spyOn(component, 'validate').and.callThrough();
-      spyOn(component["_router"], 'navigate').and.stub();
-
-      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
-      spectator.click(button);
-
-      expect(component.validate).toHaveBeenCalled();
-      expect(component["_router"].navigate).toHaveBeenCalledWith(
-        ["/", "explore", locationName],
-        {
-          queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
-          }
-        }
-      );
     });
 
   });
