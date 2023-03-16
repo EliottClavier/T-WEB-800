@@ -8,9 +8,9 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'explore/:location', component: ExploreComponent },
-  { path: 'register-user', component: RegisterUserComponent },
-  { path: '**', redirectTo: '' },
+  { path: 'register', component: RegisterUserComponent },
   { path: 'login', component: LoginUserComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
