@@ -13,13 +13,12 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {LoginService} from "../../services/login/login.service";
-import {RegisterService} from "../../services/register/register.service";
 import {User} from "../../models/user/User.model";
 import {BehaviorSubject, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";
 
-describe('RegisterUserComponent', () => {
+describe('LoginUserComponent', () => {
   let component: LoginUserComponent;
   let formGroup: FormGroup;
   let control: FormControl;
@@ -33,6 +32,7 @@ describe('RegisterUserComponent', () => {
   const createComponent = createComponentFactory({
     component: LoginUserComponent,
     imports: [
+      HttpClientModule,
       MatAutocompleteModule,
       MatFormFieldModule,
       MatInputModule,

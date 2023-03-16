@@ -12,8 +12,8 @@ import {
 import {ErrorStateMatcher} from "@angular/material/core";
 import {LoginConst} from "../../enums/login-const";
 import {User} from "../../models/user/User.model";
-import {RegisterConst} from "../../enums/register-const";
 import {ApiResponseConst} from "../../enums/api-response-const";
+import {LoginService} from "../../services/login/login.service";
 
 
 @Component({
@@ -27,10 +27,11 @@ export class LoginUserComponent {
   loginForm: FormGroup;
   success: boolean;
   user: User;
-  INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
+  errorMessage: string;
+  LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
   API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
-  constructor() {
+  constructor(private _loginService: LoginService) {
     this.credentials = new Credentials('', '');
     this.success = false;
     this.loginForm = new FormGroup({
@@ -38,12 +39,21 @@ export class LoginUserComponent {
       password: new FormControl('', [Validators.required])
     });
     this.user = new User(0, '', '', '');
+    this.errorMessage = '';
   }
 
   loginUser() {
     if (this.loginForm.valid) {
       this.credentials = this.loginForm.value;
-      this.success = true;
+      this._loginService.postLogin(this.credentials).subscribe({
+        next: (value: any) => {
+          this.user = value['data'];
+          this.success = true;
+        },
+        error: () => {
+          this.errorMessage = this.API_RESPONSE.BAD_CREDENTIALS;
+        },
+      });
     }
   }
 
