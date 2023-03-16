@@ -4,6 +4,7 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../app.module";
 import {By} from "@angular/platform-browser";
 import {SingleSearchBarComponent} from "../../containers/single-search-bar/single-search-bar.component";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -17,7 +18,10 @@ describe('MainComponent', () => {
     ],
     imports: [
       AppModule
-    ]
+    ],
+    schemas: [
+      NO_ERRORS_SCHEMA
+    ],
   });
 
   beforeEach(async () => {

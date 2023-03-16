@@ -1,4 +1,7 @@
-<mat-form-field [formGroup]="searchForm" search-input-form-field appearance="outline" class="w-100">
+<mat-form-field
+  search-input-form-field appearance="outline" class="w-100"
+  [formGroup]="searchForm"
+  [hideRequiredMarker]="true">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
   <input
     search-input

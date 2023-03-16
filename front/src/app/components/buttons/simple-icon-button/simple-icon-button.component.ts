@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ThemePalette} from "@angular/material/core";
 
 @Component({
   selector: 'app-simple-icon-button',
@@ -10,6 +11,7 @@ export class SimpleIconButtonComponent {
   @Input() public isDisabled: boolean = false;
   @Input() public isHidden: boolean = false;
   @Input() public icon: string = '';
+  @Input() public color: ThemePalette = 'primary';
 
   @Output() public buttonClick: EventEmitter<void> = new EventEmitter<void>();
 

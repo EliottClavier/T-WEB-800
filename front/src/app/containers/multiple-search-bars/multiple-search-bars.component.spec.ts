@@ -18,6 +18,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {Router, RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {getDateFromIsoString} from "../../utils/date.utils";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -46,7 +47,10 @@ describe('MultipleSearchBarsComponent', () => {
       BrowserAnimationsModule,
       ReactiveFormsModule,
       FormsModule
-    ]
+    ],
+    schemas: [
+      NO_ERRORS_SCHEMA
+    ],
   });
 
   beforeEach(async () => {

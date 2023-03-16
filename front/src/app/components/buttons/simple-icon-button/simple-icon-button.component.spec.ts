@@ -1,6 +1,11 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {AppModule} from "../../../app.module";
 import {SimpleIconButtonComponent} from "./simple-icon-button.component";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 describe('SimpleIconButtonComponent', () => {
   let component: SimpleIconButtonComponent;
@@ -8,7 +13,16 @@ describe('SimpleIconButtonComponent', () => {
 
   const createComponent = createComponentFactory({
     component: SimpleIconButtonComponent,
-    imports: [ AppModule ],
+    imports: [
+      MatButtonModule,
+      MatButtonToggleModule,
+      MatTooltipModule,
+      MatIconModule,
+      BrowserAnimationsModule,
+    ],
+    schemas: [
+      CUSTOM_ELEMENTS_SCHEMA
+    ],
   });
 
   beforeEach(async () => {
@@ -76,5 +90,13 @@ describe('SimpleIconButtonComponent', () => {
     spectator.detectChanges();
     const button: HTMLElement = spectator.query('[simple-icon-button]')!;
     expect(button.getAttribute('hidden')).toBeFalsy();
+  })
+
+  it('should have a color attribute to change theme color', () => {
+    component.color = 'warn';
+    spectator.detectChanges();
+    const button: HTMLElement = spectator.query('[simple-icon-button]')!;
+    console.log(button);
+    expect(button.getAttribute('ng-reflect-color')).toEqual(component.color);
   });
 });

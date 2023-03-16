@@ -1,6 +1,7 @@
-<button simple-icon-button
+<button ngDefaultControl
+        simple-icon-button
         mat-icon-button
-        color="primary"
+        [color]="color"
         class="mat-custom-height mat-custom-width"
         (click)="onClickButton()"
         [disabled]="isDisabled"

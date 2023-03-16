@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,7 @@ import { MainComponent } from './layouts/main/main.component';
 import { SimpleIconButtonComponent } from './components/buttons/simple-icon-button/simple-icon-button.component';
 import { ExploreComponent } from './layouts/explore/explore.component';
 import { SingleSearchBarComponent } from './containers/single-search-bar/single-search-bar.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SingleSearchBarComponent } from './containers/single-search-bar/single-
     AppRoutingModule,
     FormsModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatFormFieldModule,
     MatIconModule,
     MatListModule,
@@ -56,6 +58,7 @@ import { SingleSearchBarComponent } from './containers/single-search-bar/single-
     MatCardModule,
     MatTableModule,
     BrowserAnimationsModule,
+    BrowserModule,
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
@@ -64,6 +67,6 @@ import { SingleSearchBarComponent } from './containers/single-search-bar/single-
     RegisterUserComponent
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

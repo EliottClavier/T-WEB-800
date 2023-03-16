@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('SingleSearchBarComponent', () => {
 
@@ -46,7 +47,10 @@ describe('SingleSearchBarComponent', () => {
       BrowserAnimationsModule,
       ReactiveFormsModule,
       FormsModule
-    ]
+    ],
+    schemas: [
+      NO_ERRORS_SCHEMA
+    ],
   });
 
   beforeEach(async () => {
