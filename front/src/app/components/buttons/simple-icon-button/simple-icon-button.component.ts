@@ -12,6 +12,7 @@ export class SimpleIconButtonComponent {
   @Input() public isHidden: boolean = false;
   @Input() public icon: string = '';
   @Input() public color: ThemePalette = 'primary';
+  @Input() public buttonType: 'mini-fab' | 'icon' = 'icon';
 
   @Output() public buttonClick: EventEmitter<void> = new EventEmitter<void>();
 

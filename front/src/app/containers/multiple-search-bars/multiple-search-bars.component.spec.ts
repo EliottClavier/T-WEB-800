@@ -109,7 +109,7 @@ describe('MultipleSearchBarsComponent', () => {
       let length: number = component.searchFormsArrayControls!.length;
 
       spyOn(component, 'addSearchBar').and.callThrough();
-      spectator.click(spectator.query("app-simple-icon-button[search-bar-add]>[simple-icon-button]")!);
+      spectator.click(spectator.query("app-simple-icon-button[search-bar-add] [simple-icon-button]")!);
       spectator.detectChanges();
       expect(component.addSearchBar).toHaveBeenCalled();
       expect(spectator.queryAll("div[search-bars]").length).toBe(length + 1);
@@ -122,8 +122,8 @@ describe('MultipleSearchBarsComponent', () => {
 
     it('should have hidden remove search bar when there is only one search bar', () => {
       expect(component.searchFormsArrayControls!.length).toBe(1);
-      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!).toBeHidden();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeTruthy();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeHidden();
     });
 
     it('should have remove search bar button for each search bar when there are multiple search bar', () => {
@@ -144,13 +144,13 @@ describe('MultipleSearchBarsComponent', () => {
       expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBeGreaterThan(1);
 
       spyOn(component, 'removeSearchBar').and.callThrough();
-      spectator.click(spectator.queryLast("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")!);
+      spectator.click(spectator.queryLast("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!);
       spectator.detectChanges();
       expect(component.removeSearchBar).toHaveBeenCalled();
       expect(component.searchFormsArrayControls!.length).toBe(1);
 
-      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-remove]>[simple-icon-button]")).toBeHidden();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeTruthy();
+      expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeHidden();
     });
 
   });

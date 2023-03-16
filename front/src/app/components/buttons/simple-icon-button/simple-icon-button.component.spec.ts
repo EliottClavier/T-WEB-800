@@ -38,9 +38,16 @@ describe('SimpleIconButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a mat-button with specific icon', () => {
+  it('should have a icon mat-button with specific icon by default', () => {
     expect(spectator.query('button[mat-icon-button][simple-icon-button]')).toBeTruthy();
     expect(spectator.query('button[mat-icon-button][simple-icon-button]>mat-icon[simple-icon]')).toHaveText(component.icon);
+  });
+
+  it('should have a mini-fab mat-button with specific icon', () => {
+    component.buttonType = 'mini-fab';
+    spectator.detectChanges();
+    expect(spectator.query('button[mat-mini-fab][simple-icon-button]')).toBeTruthy();
+    expect(spectator.query('button[mat-mini-fab][simple-icon-button]>mat-icon[simple-icon]')).toHaveText(component.icon);
   });
 
   it('should emit the buttonClick event when the button is clicked and not disabled', () => {
@@ -96,7 +103,6 @@ describe('SimpleIconButtonComponent', () => {
     component.color = 'warn';
     spectator.detectChanges();
     const button: HTMLElement = spectator.query('[simple-icon-button]')!;
-    console.log(button);
     expect(button.getAttribute('ng-reflect-color')).toEqual(component.color);
   });
 });
