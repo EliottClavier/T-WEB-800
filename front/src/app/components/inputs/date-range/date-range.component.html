@@ -1,8 +1,8 @@
-<mat-form-field date-range-form-field appearance="fill" class="w-100 mat-form-field-wo-margin">
-  <mat-label date-range-label>MM/DD/YYYY – MM/DD/YYYY</mat-label>
+<mat-form-field date-range-form-field appearance="outline" class="w-100">
+  <mat-label date-range-label>Check in - Check out</mat-label>
   <mat-date-range-input date-range-input [formGroup]="searchForm" [rangePicker]="picker">
-    <input type="text" matStartDate date-range-input-start formControlName="start" placeholder="Start date">
-    <input type="text" matEndDate date-range-input-end formControlName="end" placeholder="End date">
+    <input type="text" matStartDate date-range-input-start formControlName="start" placeholder="MM/DD/YYYY">
+    <input type="text" matEndDate date-range-input-end formControlName="end" placeholder="MM/DD/YYYY">
   </mat-date-range-input>
   <mat-datepicker-toggle date-range-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker date-range-picker #picker></mat-date-range-picker>

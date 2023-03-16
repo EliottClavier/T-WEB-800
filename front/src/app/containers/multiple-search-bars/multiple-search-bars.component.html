@@ -1,0 +1,59 @@
+<form [formGroup]="searchForms" class="row justify-content-center">
+  <div formArrayName="searchFormsArray" class="col-12">
+    <div search-bars class="row m-0"
+         *ngFor="let searchForm of searchFormsArrayControls; let i = index"
+         [formGroupName]="i">
+      <!--
+      <div class="col-1 px-0">
+        <div class="row flex-column">
+          <app-simple-icon-button
+            search-bar-up
+            class="col-6 px-0"
+            [icon]="'keyboard_arrow_up'"
+            [isHidden]="i === 0"
+            (buttonClick)="moveSearchBar(i, false)"
+          ></app-simple-icon-button>
+
+          <app-simple-icon-button
+            search-bar-down
+            class="col-6 px-0"
+            [icon]="'keyboard_arrow_down'"
+            [isHidden]="i === searchFormsArrayControls.length - 1"
+            (buttonClick)="moveSearchBar(i, true)"
+          ></app-simple-icon-button>
+        </div>
+      </div>
+      -->
+      <div class="row justify-content-between mx-0 p-0">
+        <app-search-input
+          class="col-9 px-0"
+          [searchForm]="searchForm">
+        </app-search-input>
+
+        <app-simple-icon-button
+          search-bar-remove
+          class="col-2 px-0"
+          [icon]="'delete'"
+          [color]="'warn'"
+          [isDisabled]="searchFormsArrayControls.length === 1"
+          (buttonClick)="removeSearchBar(i)">
+        </app-simple-icon-button>
+      </div>
+      <div class="row mx-0 p-0">
+        <app-date-range [searchForm]="searchForm" class="col-9 px-0">
+        </app-date-range>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row justify-content-center">
+      <app-simple-icon-button
+        search-bar-add
+        class="col-1 px-0"
+        [icon]="'add'"
+        [buttonType]="'mini-fab'"
+        (buttonClick)="addSearchBar()">
+      </app-simple-icon-button>
+    </div>
+  </div>
+</form>

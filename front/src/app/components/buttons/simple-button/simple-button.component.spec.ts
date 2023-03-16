@@ -2,7 +2,7 @@ import { SimpleButtonComponent } from './simple-button.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../../app.module";
 
-describe('ValidateButtonComponent', () => {
+describe('SimpleButtonComponent', () => {
   let component: SimpleButtonComponent;
   let spectator: Spectator<SimpleButtonComponent>;
 
@@ -25,42 +25,56 @@ describe('ValidateButtonComponent', () => {
   });
 
   it('should have a mat-button with specific label', () => {
-    expect(spectator.query('button[mat-stroked-button][validate-button]')).toBeTruthy();
-    expect(spectator.query('button[mat-stroked-button][validate-button]')).toHaveText(component.label);
+    expect(spectator.query('button[mat-flat-button][simple-button]')).toBeTruthy();
+    expect(spectator.query('button[mat-flat-button][simple-button]')).toHaveText(component.label);
   });
 
-  it('should emit the validate event when the button is clicked and not disabled', () => {
-    spyOn(component.validate, 'emit');
+  it('should emit the buttonClick event when the button is clicked and not disabled', () => {
+    spyOn(component.buttonClick, 'emit');
     // .callThrough() to allow call on the original method while spying on it
     spyOn(component, 'onClickButton').and.callThrough();
-    const button: HTMLElement = spectator.query('[validate-button]')!;
+    const button: HTMLElement = spectator.query('[simple-button]')!;
     button.click();
-    expect(component.validate.emit).toHaveBeenCalled();
+    expect(component.buttonClick.emit).toHaveBeenCalled();
     expect(component.onClickButton).toHaveBeenCalled();
   });
 
-  it('should not emit the validate event when the button is disabled', () => {
+  it('should not emit the buttonClick event when the button is disabled', () => {
     component.isDisabled = true;
     spectator.detectChanges();
     spyOn(component, 'onClickButton');
-    spyOn(component.validate, 'emit');
-    const button: HTMLElement = spectator.query('[validate-button]')!;
+    spyOn(component.buttonClick, 'emit');
+    const button: HTMLElement = spectator.query('[simple-button]')!;
     button.click();
     expect(component.onClickButton).not.toHaveBeenCalled();
-    expect(component.validate.emit).not.toHaveBeenCalled();
+    expect(component.buttonClick.emit).not.toHaveBeenCalled();
   });
 
   it('should disable the button when isDisabled is true', () => {
     component.isDisabled = true;
     spectator.detectChanges();
-    const button: HTMLElement = spectator.query('[validate-button]')!;
+    const button: HTMLElement = spectator.query('[simple-button]')!;
     expect(button.getAttribute('disabled')).toBeTruthy();
   });
 
   it('should enable the button when isDisabled is false', () => {
-    component.isDisabled = true;
+    component.isDisabled = false;
     spectator.detectChanges();
-    const button: HTMLElement = spectator.query('[validate-button]')!;
-    expect(button.getAttribute('disabled')).toEqual('true');
+    const button: HTMLElement = spectator.query('[simple-button]')!;
+    expect(button.getAttribute('disabled')).toBeFalsy();
+  });
+
+  it('should hide the button when isHidden is true', () => {
+    component.isHidden = true;
+    spectator.detectChanges();
+    const button: HTMLElement = spectator.query('[simple-button]')!;
+    expect(button.getAttribute('hidden')).toEqual('');
+  });
+
+  it('should show the button when isHidden is false', () => {
+    component.isHidden = false;
+    spectator.detectChanges();
+    const button: HTMLElement = spectator.query('[simple-button]')!;
+    expect(button.getAttribute('hidden')).toBeFalsy();
   });
 });

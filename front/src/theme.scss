@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@import './palettes/travel-palette.scss';
+
+@include mat.core();
+
+// Define the primary, accent and warn palettes
+$travel-palette: mat.define-palette($travel, 500);
+$travel-palette-accent: mat.define-palette($travel, 700, 900, A100);
+$travel-palette-warn: mat.define-palette($travel-warn, 500, 900, A100);
+
+$theme: mat.define-light-theme(
+    (color:
+      (primary: $travel-palette,
+        accent: $travel-palette-accent,
+        warn: $travel-palette-warn
+      )
+    )
+);
+
+@include mat.all-component-themes($theme);
