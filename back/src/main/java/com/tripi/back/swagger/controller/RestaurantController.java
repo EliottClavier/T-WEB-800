@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @Controller
-public class DemoController {
+@RestController
+@RequestMapping("/restaurants")
+public class RestaurantController {
 
-    @RequestMapping("/hello")
+    @RequestMapping("/msg")
     @ResponseBody
-    public String helloWorld() {return "Hello World !";}
+    public String location() {return "restaurants !";}
 }
