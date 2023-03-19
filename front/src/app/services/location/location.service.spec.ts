@@ -111,4 +111,32 @@ describe('LocationService', () => {
     ), { status: 200, statusText: 'OK' });
   });
 
+  // it('should retrieve Google Maps API with key', () => {
+  //   environment.envVar.GOOGLE_API_KEY = googleMapsApiKey;
+  //   service.getGoogleMapsApi().subscribe(
+  //     (loaded: boolean) => {
+  //       expect(loaded).toBeTruthy();
+  //     }
+  //   );
+  //
+  //   let key: string = environment.envVar.GOOGLE_API_KEY;
+  //   const req = httpMock.expectOne(`https://maps.googleapis.com/maps/api/js?key=${key}&callback=JSONP_CALLBACK`);
+  //   expect(req.request.method).toEqual('JSONP');
+  //   req.flush(true, { status: 200, statusText: 'OK' });
+  // });
+  //
+  // it('should not retrieve Google Maps API with key', () => {
+  //   environment.envVar.GOOGLE_API_KEY = googleMapsApiKey + "test";
+  //   service.getGoogleMapsApi().subscribe(
+  //     (loaded: boolean) => {
+  //       expect(loaded).toBeFalsy();
+  //     }
+  //   );
+  //
+  //   let key: string = environment.envVar.GOOGLE_API_KEY;
+  //   const req = httpMock.expectOne(`https://maps.googleapis.com/maps/api/js?key=${key}&callback=JSONP_CALLBACK`);
+  //   expect(req.request.method).toEqual('JSONP');
+  //   req.flush(false, { status: 404, statusText: 'Not loaded' });
+  // });
+
 });

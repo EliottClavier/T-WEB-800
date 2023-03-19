@@ -19,6 +19,7 @@ import {Router, RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {getDateFromIsoString} from "../../utils/date.utils";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {AppModule} from "../../app.module";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -35,18 +36,7 @@ describe('MultipleSearchBarsComponent', () => {
       SimpleIconButtonComponent
     ],
     imports: [
-      HttpClientModule,
-      RouterModule,
-      RouterTestingModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatDatepickerModule,
-      MatInputModule,
-      MatIconModule,
-      MatNativeDateModule,
-      BrowserAnimationsModule,
-      ReactiveFormsModule,
-      FormsModule
+      AppModule
     ],
     schemas: [
       NO_ERRORS_SCHEMA

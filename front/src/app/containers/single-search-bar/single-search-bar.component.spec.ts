@@ -18,6 +18,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {AppModule} from "../../app.module";
 
 describe('SingleSearchBarComponent', () => {
 
@@ -35,18 +36,7 @@ describe('SingleSearchBarComponent', () => {
       SimpleIconButtonComponent
     ],
     imports: [
-      HttpClientModule,
-      RouterModule,
-      RouterTestingModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatDatepickerModule,
-      MatInputModule,
-      MatIconModule,
-      MatNativeDateModule,
-      BrowserAnimationsModule,
-      ReactiveFormsModule,
-      FormsModule
+      AppModule
     ],
     schemas: [
       NO_ERRORS_SCHEMA

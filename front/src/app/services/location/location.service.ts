@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Location} from "../../models/location/location.model";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {getDateFromIsoString} from "../../utils/date.utils";
 
 @Injectable({
@@ -28,6 +28,15 @@ export class LocationService {
           end: getDateFromIsoString(end)
         }
       }
+    );
+  }
+
+  public getGoogleMapsApi(): Observable<boolean> {
+    let link: string = "https://maps.googleapis.com/maps/api/js";
+    environment.envVar.GOOGLE_API_KEY && (link += "?key=" + environment.envVar.GOOGLE_API_KEY);
+    return this.http.jsonp<boolean>(link, 'callback').pipe(
+      map(() => true),
+      catchError(() => of(false)),
     );
   }
 }

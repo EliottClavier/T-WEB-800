@@ -77,4 +77,14 @@ describe('SimpleButtonComponent', () => {
     const button: HTMLElement = spectator.query('[simple-button]')!;
     expect(button.getAttribute('hidden')).toBeFalsy();
   });
+
+  it('should change height dynamically', () => {
+    let button: HTMLElement = spectator.query('[simple-button]')!;
+    expect(button).toHaveStyle({height: component.height});
+
+    component.height = '20px';
+    spectator.detectChanges();
+    button = spectator.query('[simple-button]')!;
+    expect(button).toHaveStyle({height: component.height});
+  });
 });

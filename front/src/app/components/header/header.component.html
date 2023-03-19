@@ -1,7 +1,27 @@
-<header>
-  <div class="logo">T-WEB-800</div>
-  <div class="buttons">
-    <button class="login" (click)="goToLogin()">Login</button>
-    <button class="register" (click)="goToRegister()">Register</button>
+<header class="container-fluid h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none">
+  <div class="row justify-content-between align-items-center p-3 m-0">
+    <div class="col-2 text-center">
+      T-WEB-800
+    </div>
+
+    <div class="col-2">
+      <div class="row justify-content-end px-0">
+        <app-simple-button
+          header-login
+          class="col-6"
+          [height]="'2rem'"
+          [label]="'Login'"
+          (buttonClick)="goToLogin()">
+        </app-simple-button>
+
+        <app-simple-button
+          header-register
+          class="col-6"
+          [height]="'2rem'"
+          [label]="'Register'"
+          (buttonClick)="goToRegister()">
+        </app-simple-button>
+      </div>
+    </div>
   </div>
 </header>
