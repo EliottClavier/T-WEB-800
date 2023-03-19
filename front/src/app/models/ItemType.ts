@@ -1,0 +1,7 @@
+export  enum ItemType {
+  BAR = 'BAR',
+  RESTAURANT = 'RESTAURANT',
+  ACCOMMODATION = 'ACCOMMODATION',
+  ACTIVITY = 'ACTIVITY',
+  EVENT = 'EVENT',
+}

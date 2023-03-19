@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BarService } from './bar.service';
+import { SuggestionsService } from './suggestions.service';
 
-describe('BarService', () => {
-  let service: BarService;
+describe('SuggestionsService', () => {
+  let service: SuggestionsService;
+
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BarService);
+    service = TestBed.inject(SuggestionsService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
 });

@@ -1,59 +1,70 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardsContainerComponent} from "./cards-container.component";
-import {ItemModel} from "../../models/item.model";
+import {ItemModel} from "../../models/item/item.model";
 import {AppModule} from "../../app.module";
-import {LocationService} from "../../services/location/location.service";
-import {BarService} from "../../services/bar-service/bar.service";
-import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
-import {BehaviorSubject} from "rxjs";
-import {Location} from "../../models/location/location.model";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {of} from "rxjs";
+import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
-describe('Card container', () => {
-  let spectator: Spectator<CardsContainerComponent>;
-  let cardsItem: ItemModel[];
-  let component: CardsContainerComponent;
-  let barService: BarService;
+function getItems(): ItemModel[] {
+  let items: ItemModel[] = [];
 
-  const createComponent = createComponentFactory({
-    component: CardsContainerComponent,
-    imports: [AppModule],
-    providers: [BarService],
+  for (let i = 0; i < 3; i++) {
+    items.push(new ItemModel());
+  }
+    return items;
+  }
+
+  describe('Card container', () => {
+    let spectator: Spectator<CardsContainerComponent>;
+    let barItems: ItemModel[] = getItems();
+    let component: CardsContainerComponent;
+    let store: SuggestionsStoreService;
+    const createComponent = createComponentFactory({
+      component: CardsContainerComponent,
+      imports: [AppModule],
+      providers: [
+        SuggestionsService,
+        {
+          provide: SuggestionsStoreService,
+          useValue: { suggestions : of(barItems)}
+        }
+      ],
+    });
+
+
+    describe('should fetch suggestions store to get data', () => {
+
+      beforeEach(() => {
+        spectator = createComponent();
+        component = spectator.component;
+        store = spectator.inject(SuggestionsStoreService);
+
+        barItems = new Array<ItemModel>();
+        for (let i = 0; i < 3; i++) {
+          barItems.push(new ItemModel());
+        }
+
+        spectator.detectChanges()
+
+      });
+
+      it('should have SuggestionsStore injected', () => {
+        expect(component["_suggestionsStore"]).toBeDefined();
+        expect(component["_suggestionsStore"]).toBeTruthy();
+        expect(component["_suggestionsStore"]).toEqual(store);
+
+      });
+      it('should get suggestionItem from SuggestionsService when data store updated', () => {
+
+        spyOn(store.suggestions, 'subscribe').and.callThrough();
+        spectator.component.subscribeItems();
+        spectator.detectChanges();
+
+        expect(store.suggestions.subscribe).toHaveBeenCalled();
+        expect(spectator.component.suggests).toEqual(barItems);
+
+      });
+
+    });
   });
-
-
-  describe('should fetch bar service to get data', () => {
-
-    beforeEach(() => {
-      spectator = createComponent();
-      component = spectator.component;
-      barService = spectator.inject(BarService);
-
-      cardsItem = new Array<ItemModel>();
-      for (let i = 0; i < 3; i++) {
-        cardsItem.push(new ItemModel());
-      }
-
-      // spyOn LocationService.getLocations() to mock API Call
-      // spyOn<LocationService, any>(_locationService, "getLocationsBySearch").and.callFake((search: string) => {
-      //   return new BehaviorSubject<Location[]>(testLocationOptions.filter(
-      //     (location: Location) => location.getName.toLowerCase().startsWith(search.toLowerCase()))
-      //   );
-      // });
-
-      spectator.detectChanges()
-
-
-    });
-
-    it('should have BarService injected', () => {
-      expect(component["_barService"]).toBeDefined();
-      expect(component["_barService"]).toBeTruthy();
-      expect(component["_barService"]).toEqual(barService);
-
-    });
-    it('should get data from BarService', () => {
-
-
-    });
-  });
-});
