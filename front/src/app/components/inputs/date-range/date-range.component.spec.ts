@@ -55,7 +55,7 @@ describe('DateRangeComponent', () => {
   it('should have a mat-label', function () {
     let element: HTMLElement = spectator.query("[date-range-label]")!;
     expect(element).toBeTruthy();
-    expect(element).toHaveText("MM/DD/YYYY – MM/DD/YYYY");
+    expect(element).toHaveText("Check in - Check out");
   });
 
   it('should have a mat-date-range-input', function () {
@@ -66,14 +66,14 @@ describe('DateRangeComponent', () => {
     let element: HTMLElement = spectator.query("input[date-range-input-start]")!;
     expect(element).toBeTruthy();
     expect(element).toHaveAttribute("matStartDate");
-    expect(element.getAttribute("placeholder")).toEqual("Start date");
+    expect(element.getAttribute("placeholder")).toEqual("MM/DD/YYYY");
   });
 
   it('should have a end input', function () {
     let element: HTMLElement = spectator.query("input[date-range-input-end]")!;
     expect(element).toBeTruthy();
     expect(element).toHaveAttribute("matEndDate");
-    expect(element.getAttribute("placeholder")).toEqual("End date");
+    expect(element.getAttribute("placeholder")).toEqual("MM/DD/YYYY");
   });
 
   it('should have a mat-datepicker-toggle', function () {

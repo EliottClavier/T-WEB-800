@@ -11,6 +11,9 @@ import {
 } from "@angular/forms";
 import {ErrorStateMatcher} from "@angular/material/core";
 import {RegisterConst} from "../../enums/register-const";
+import {RegisterService} from "../../services/register/register.service";
+import {User} from "../../models/user/User.model";
+import {ApiResponseConst} from "../../enums/api-response-const";
 
 
 @Component({
@@ -23,13 +26,18 @@ export class RegisterUserComponent {
   newUser: Register;
   matcher: MyErrorStateMatcher;
   success: boolean;
+  user: User;
+  errorMessage: string;
 
   INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
+  API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
-  constructor() {
+  constructor(private _registerService: RegisterService) {
     this.newUser = new Register('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
     this.success = false;
+    this.user = new User(0, '', '', '');
+    this.errorMessage = '';
    }
 
   ngOnInit(): void {
@@ -52,7 +60,15 @@ export class RegisterUserComponent {
   createUser() {
     if (this.registerForm.valid) {
       this.newUser = new Register(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
-      this.success = true;
+      this._registerService.postUserRegister(this.newUser).subscribe({
+        next: (value: any) => {
+          this.user = value['data'];
+          this.success = true;
+        },
+        error: () => {
+          this.errorMessage = this.API_RESPONSE.BAD_REQUEST;
+        },
+      });
     }
   }
 }

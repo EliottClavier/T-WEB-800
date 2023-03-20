@@ -1,15 +1,19 @@
-<mat-form-field [formGroup]="searchForm" location-form-field appearance="fill" class="w-100">
-  <mat-label location-autocomplete-label>Location</mat-label>
+<mat-form-field
+  search-input-form-field appearance="outline" class="w-100"
+  [formGroup]="searchForm"
+  [hideRequiredMarker]="true">
+  <mat-label search-input-autocomplete-label>Destination</mat-label>
   <input
-    location-search
+    search-input
     formControlName="locationSearch"
-    type="text" placeholder="Choose a location ..."
+    type="text" placeholder="Search a destination ..."
     matInput [matAutocomplete]="auto">
+  <mat-icon search-input-suffix matSuffix>search</mat-icon>
   <mat-autocomplete
-    location-autocomplete
+    search-input-autocomplete
     #auto="matAutocomplete">
     <mat-option
-      location-option
+      search-input-option
       *ngFor="let option of locationOptions;"
       [id]="option.getId"
       (click)="onLocationOptionClick(option)">
@@ -17,7 +21,7 @@
     </mat-option>
   </mat-autocomplete>
   <mat-error
-    location-error class="mat-error mat-mdc-form-field-error"
+    search-input-error
     *ngIf="locationSearch.touched && (locationSearch.errors || location.errors)">
     Location is required
   </mat-error>
