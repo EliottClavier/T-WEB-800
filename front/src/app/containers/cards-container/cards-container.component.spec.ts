@@ -20,6 +20,7 @@ function getItems(): ItemModel[] {
     let barItems: ItemModel[] = getItems();
     let component: CardsContainerComponent;
     let store: SuggestionsStoreService;
+
     const createComponent = createComponentFactory({
       component: CardsContainerComponent,
       imports: [AppModule],
@@ -27,7 +28,7 @@ function getItems(): ItemModel[] {
         SuggestionsService,
         {
           provide: SuggestionsStoreService,
-          useValue: { suggestions : of(barItems)}
+          useValue: { suggestions$ : of(barItems)}
         }
       ],
     });
@@ -57,11 +58,11 @@ function getItems(): ItemModel[] {
       });
       it('should get suggestionItem from SuggestionsService when data store updated', () => {
 
-        spyOn(store.suggestions, 'subscribe').and.callThrough();
+        spyOn(store.suggestions$, 'subscribe').and.callThrough();
         spectator.component.subscribeItems();
         spectator.detectChanges();
 
-        expect(store.suggestions.subscribe).toHaveBeenCalled();
+        expect(store.suggestions$.subscribe).toHaveBeenCalled();
         expect(spectator.component.suggests).toEqual(barItems);
 
       });

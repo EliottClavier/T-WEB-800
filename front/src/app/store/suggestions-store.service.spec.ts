@@ -6,6 +6,7 @@ import {ItemModel} from "../models/item/item.model";
 import {SuggestionsService} from "../services/suggestions-service/suggestions.service";
 import {ItemType} from "../models/ItemType";
 import {BehaviorSubject} from "rxjs";
+import {SingleSearchBarComponent} from "../containers/single-search-bar/single-search-bar.component";
 
 describe('SuggestionsStoreService', () => {
   let store: SuggestionsStoreService;
@@ -14,8 +15,9 @@ describe('SuggestionsStoreService', () => {
   const createService = createServiceFactory<SuggestionsStoreService>({
     service: SuggestionsStoreService,
     providers: [mockProvider(SuggestionsService, {
-      getSuggestions: () => new Array<ItemModel>(), //if needed
-    }),]
+      getReviewSuggestions: () => new Array<ItemModel>(), //if needed
+    }),
+    SingleSearchBarComponent]
   });
 
   function getBarItem() {
@@ -48,42 +50,65 @@ describe('SuggestionsStoreService', () => {
     expect(store).toBeTruthy();
   });
   it('should be get suggestion data', () => {
-    expect(createService().service.suggestionsData).toBeDefined();
+    expect(createService().service.getSuggestionsData()).toBeDefined();
     // expect(createService().service.getSuggestions()).toEqual(new Array<ItemModel>());
   });
 
   it('should be update suggestion data', () => {
-    spyOnProperty(createService().service, 'suggestions', 'set').and.callThrough();
-    expect(createService().service.suggestions = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>())).toBeDefined();
+    spyOnProperty(createService().service, 'suggestions$', 'set').and.callThrough();
+    expect(createService().service.suggestions$ = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>())).toBeDefined();
   });
 
   it('should be get Bar suggestions ', () => {
     let data = new BehaviorSubject<ItemModel[]>(getBarItem())
-    const subjectSpy = spyOn(createService().service.suggestions, 'asObservable').and.returnValue(data.asObservable());
-    expect(createService().service.suggestions.asObservable()).toEqual(data.asObservable());
-    expect(createService().service.suggestions.asObservable()).toBeDefined();
+    const subjectSpy = spyOn(createService().service.suggestions$, 'asObservable').and.returnValue(data.asObservable());
+    expect(createService().service.suggestions$.asObservable()).toEqual(data.asObservable());
+    expect(createService().service.suggestions$.asObservable()).toBeDefined();
     expect(subjectSpy).toHaveBeenCalled();
   });
 
-  it('should be get Activity suggestions ', () => {
+  it('should get Activity suggestions ', () => {
     let data = new BehaviorSubject<ItemModel[]>(getActivityItem())
-    const subjectSpy = spyOn(createService().service.suggestions, 'asObservable').and.returnValue(data.asObservable());
-    expect(createService().service.suggestions.asObservable()).toEqual(data.asObservable());
-    expect(createService().service.suggestions.asObservable()).toBeDefined();
+    const subjectSpy = spyOn(createService().service.suggestions$, 'asObservable').and.returnValue(data.asObservable());
+    expect(createService().service.suggestions$.asObservable()).toEqual(data.asObservable());
+    expect(createService().service.suggestions$.asObservable()).toBeDefined();
     expect(subjectSpy).toHaveBeenCalled();
   });
 
   it('should be set suggestion ', () => {
-    expect(createService().service.suggestionsData = getBarItem()).toBeDefined();
+    spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
+      expect(createService().service.setSuggestionsData(getBarItem())).toHaveBeenCalled();
+    });
   });
-
 
   it('should subscribe to data when "next" is called', () => {
-    spyOnProperty(createService().service, 'suggestionsData').and.callThrough();
-    createService().service.suggestionsData = getBarItem();
+    spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
 
-    // expect(createService().service.suggestions).toHaveBeenCalled();
-    expect(createService().service.suggestionsData).toEqual(getBarItem());
+      expect(createService().service.suggestions$).toHaveBeenCalled();
+
+      createService().service.setSuggestionsData(getBarItem());
+
+      expect(createService().service.getSuggestionsData()).toEqual(getBarItem());
+    });
   });
 
+
+  it('should  trigger the next Suggestions value when location updated', () => {
+
+    const subjectSpy = spyOn(createService().service, 'setSuggestionsData').and.callThrough();
+    createService().service.setSuggestionsData(getBarItem());
+    expect(subjectSpy).toHaveBeenCalled();
+    expect(createService().service.getSuggestionsData()).toEqual(getBarItem());
+  });
 });
+
+
+function getAccommodationItems() {
+  let data = new Array<ItemModel>();
+  for (let i = 0; i < 3; i++) {
+    let item = new ItemModel();
+    item.typeOfItem = ItemType.BAR;
+    data.push(item);
+  }
+  return data;
+};

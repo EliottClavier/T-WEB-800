@@ -8,31 +8,33 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class SuggestionsStoreService {
 
 
-   private _suggestions: BehaviorSubject<ItemModel[]> = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>());
+   private _suggestions$: BehaviorSubject<ItemModel[]> = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>());
 
 
   constructor() {
-    this._suggestions.subscribe((suggestions) => {
-      console.log('suggestions', suggestions);
-    });
+    // this._suggestions.subscribe((suggestions) => {
+    //   console.log('suggestions', suggestions);
+    // });
   }
 
 
-  get suggestions(): BehaviorSubject<ItemModel[]> {
-    return this._suggestions;
+  public get suggestions$(): BehaviorSubject<ItemModel[]> {
+    return this._suggestions$;
   }
 
-  set suggestions(value: BehaviorSubject<ItemModel[]>) {
-    this._suggestions = value;
+  public set suggestions$(value: BehaviorSubject<ItemModel[]>) {
+    this._suggestions$ = value;
   }
 
+  public getSuggestionsData(): ItemModel[] {
+    return this._suggestions$.getValue();
+  }
 
-  public get suggestionsData(): ItemModel[] {
-    return this._suggestions.getValue();
+  public setSuggestionsData(data: ItemModel[]) {
+    this._suggestions$.next(data);
+
   }
-  public set suggestionsData(data: ItemModel[]) {
-    this._suggestions.next(data);
-  }
+
 
 
 }

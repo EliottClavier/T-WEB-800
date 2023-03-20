@@ -1,5 +1,5 @@
-import { SingleSearchBarComponent } from './single-search-bar.component'
-import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {SingleSearchBarComponent} from './single-search-bar.component'
+import {createComponentFactory, createServiceFactory, Spectator} from "@ngneat/spectator";
 import {Router, RouterModule} from "@angular/router";
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
@@ -17,13 +17,20 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {ItemModel} from "../../models/item/item.model";
+import {ItemType} from "../../models/ItemType";
+import {of, throwError} from "rxjs";
+import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
 describe('SingleSearchBarComponent', () => {
 
   let component: SingleSearchBarComponent;
   let spectator: Spectator<SingleSearchBarComponent>;
   let _router: Router;
+  let suggestionService: SuggestionsService;
+  let suggestionStore: SuggestionsStoreService;
 
   const createComponent = createComponentFactory({
     component: SingleSearchBarComponent,
@@ -51,12 +58,18 @@ describe('SingleSearchBarComponent', () => {
     schemas: [
       NO_ERRORS_SCHEMA
     ],
+    providers: [SuggestionsService, SuggestionsStoreService]
   });
+
+  const createService = createServiceFactory(SuggestionsService)
+  const createStore = createServiceFactory(SuggestionsStoreService)
 
   beforeEach(async () => {
     spectator = createComponent();
     component = spectator.component;
     spectator.detectChanges();
+    suggestionService = createService().service;
+    suggestionStore = createStore().service;
   });
 
   it('should create', () => {
@@ -151,5 +164,59 @@ describe('SingleSearchBarComponent', () => {
         }
       );
     });
+    it('should set location and search value based on selected option', () => {
+      const location = new Location('01', 'New York');
+      const suggestions = getAccommodationItems()
+      const suggestion$ = of(suggestions);
+
+      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
+
+      component.onLocationOptionClick(location);
+
+      expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(ItemType.ACCOMMODATION, location);
+      expect(component.searchForm.value.location).toEqual(location);
+      expect(component.searchForm.value.locationSearch).toEqual(location.getName);
+    });
+    it('should update the Suggestions value when location is updated ', () => {
+
+      const location = new Location('01', 'New York');
+      const suggestions = getAccommodationItems()
+      const suggestion$ = of(suggestions);
+
+      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
+      component.onLocationOptionClick(location);
+
+      suggestionStore.suggestions$.subscribe(suggests => {
+
+        expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(ItemType.ACCOMMODATION, location);
+        expect(suggests).toEqual(suggestions);
+      });
+    })
+
+    it('should update the Suggestions value when location is updated and getting error ', () => {
+
+      const location = new Location('01', 'New York');
+      const suggestions = new Array<ItemModel>();
+
+      const mockCall = spyOn(suggestionService, "getReviewSuggestions").and.returnValue(throwError(() => new Error('error')));
+      component.onLocationOptionClick(location);
+
+      suggestionStore.suggestions$.subscribe({
+        next: suggests => {
+          expect(suggestions).toEqual(suggests);
+        }
+
+      });
+    });
   });
-})
+});
+    function getAccommodationItems() {
+      let data = new Array<ItemModel>();
+      for (let i = 0; i < 6; i++) {
+        let item = new ItemModel();
+        item.typeOfItem = ItemType.BAR;
+        data.push(item);
+      }
+      return data;
+    }
+

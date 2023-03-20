@@ -8,6 +8,7 @@ export class Location {
     this.name = name;
   }
 
+
   // Getter
   get getId(): string {
     return this.id;

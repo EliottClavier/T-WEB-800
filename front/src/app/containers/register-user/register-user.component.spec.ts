@@ -21,6 +21,7 @@ import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import any = jasmine.any;
+import {MatCardModule} from "@angular/material/card";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
@@ -37,12 +38,7 @@ describe('RegisterUserComponent', () => {
   const createComponent = createComponentFactory({
     component: RegisterUserComponent,
     imports: [
-      HttpClientModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatInputModule,
-      ReactiveFormsModule,
-      FormsModule
+      AppModule
     ],
     providers: [ RegisterService ],
   });

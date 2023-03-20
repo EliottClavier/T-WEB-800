@@ -18,7 +18,7 @@ export class CardsContainerComponent implements OnInit {
   };
 
   subscribeItems() {
-    this._suggestionsStore.suggestions.subscribe((suggestions) => {
+    this._suggestionsStore.suggestions$.subscribe((suggestions) => {
         this.suggests = suggestions;
     });
   }
