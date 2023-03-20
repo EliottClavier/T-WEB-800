@@ -1,34 +1,28 @@
 package com.tripi.back.auth.entity.user;
 
-import lombok.AccessLevel;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 public class UserDto {
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Email is required")
+    @NotEmpty(message = "Email is required")
     private String email;
 
-    @NotNull
-    @NotEmpty
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
+    @NotNull(message = "Password is required")
+    @NotEmpty(message = "Password is required")
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "First name is required")
+    @NotEmpty(message = "First name is required")
     private String firstname;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Last name is required")
+    @NotEmpty(message = "Last name is required")
     private String lastname;
 
     public UserDto(String email, String password, String firstname, String lastname) {
