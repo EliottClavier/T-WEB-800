@@ -6,9 +6,10 @@ import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {Router} from "@angular/router";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -72,7 +73,7 @@ describe('MultipleSearchBarsComponent', () => {
     });
 
     it('should add a start date to the new search bar initialized if previous search bar has end date', () => {
-      component.searchFormsArrayControls![0].get('end')!.setValue(new Date());
+      component.lastSearchBar.get('end')!.setValue(new Date());
       component.addSearchBar();
       spectator.detectChanges();
       let length: number = component.searchFormsArrayControls!.length;
@@ -201,7 +202,7 @@ describe('MultipleSearchBarsComponent', () => {
         spectator.detectChanges();
       });
 
-      it('should have activeSearchBar set to 0 by default', () => {
+      it('should have activeSearchBar set to 0 and false by default', () => {
         expect(component.activeSearchBar).toEqual({
           index: 0,
           isEditing: false
@@ -209,46 +210,57 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should have activeSearchBar set to 0 when there are multiple search bar, the first one is removed and index was 0', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.activeSearchBarChange, 'emit');
         component.removeSearchBar(0);
         spectator.detectChanges();
-        expect(component.activeSearchBar).toEqual({
+        let searchBarEvent: SearchBarEvent = {
           index: 0,
           isEditing: false
-        });
+        }
+        expect(component.activeSearchBar).toEqual(searchBarEvent);
+        expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
 
       it('should have activeSearchBar set to current index minus 1 when there are multiple search bar, the first one is removed and index was greater than 0', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.activeSearchBarChange, 'emit');
         component.activeSearchBar = {
           index: 1,
           isEditing: false
         };
         component.removeSearchBar(0);
         spectator.detectChanges();
-        expect(component.activeSearchBar).toEqual({
+        let searchBarEvent: SearchBarEvent = {
           index: component.searchFormsArrayControls.length - 1,
           isEditing: false
-        });
+        }
+        expect(component.activeSearchBar).toEqual(searchBarEvent);
+        expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
 
       it('should have activeSearchBar set to last search bar index when new search bar is created', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.activeSearchBarChange, 'emit');
         component.addSearchBar();
         spectator.detectChanges();
-        expect(component.activeSearchBar).toEqual({
+        let searchBarEvent: SearchBarEvent = {
           index: component.searchFormsArrayControls.length - 1,
           isEditing: true
-        });
+        }
+        expect(component.activeSearchBar).toEqual(searchBarEvent);
+        expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
 
       it('should have activeSearchBar set to selected search bar', () => {
-        component.onSearchBarSelect({
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.activeSearchBarChange, 'emit');
+        let searchBarEvent: SearchBarEvent = {
           index: 1,
           isEditing: false
-        });
-        expect(component.activeSearchBar).toEqual({
-          index: 1,
-          isEditing: false
-        });
+        }
+        component.onSearchBarSelect(searchBarEvent);
+        expect(component.activeSearchBar).toEqual(searchBarEvent);
+        expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
+
+
     });
 
     describe('Active search bar', () => {

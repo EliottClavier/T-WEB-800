@@ -3,6 +3,7 @@ import {FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
+import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-single-search-bar',
@@ -11,7 +12,7 @@ import {getDateFromIsoString} from "../../utils/date.utils";
 })
 export class SingleSearchBarComponent {
 
-  @Input() public searchForm: FormGroup = new FormGroup<any>({});
+  @Input() public searchForm: FormGroup = buildSearchBarFormGroupControls();
 
   constructor(
     private _router: Router

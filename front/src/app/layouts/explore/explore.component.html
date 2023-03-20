@@ -3,8 +3,14 @@
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 px-0 py-3 sticky-top">
       <app-multiple-search-bars
         search-bar
+        [(activeSearchBar)]="activeSearchBar"
         [searchForms]="searchForms"
       ></app-multiple-search-bars>
+      <app-map-filters
+        map-filters
+        *ngIf="activeSearchBar.index !== null"
+        [selectedSearchForm]="searchFormsArrayControls[activeSearchBar.index]"
+      ></app-map-filters>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 px-0">
       <app-map map></app-map>

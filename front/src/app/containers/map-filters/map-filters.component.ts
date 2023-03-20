@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-map-filters',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./map-filters.component.scss']
 })
 export class MapFiltersComponent {
+
+  @Input() public selectedSearchForm: FormGroup = new FormGroup<any>({});
 
 }

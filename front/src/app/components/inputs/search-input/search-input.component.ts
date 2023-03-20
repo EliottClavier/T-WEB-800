@@ -3,6 +3,7 @@ import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {SearchBarEvent} from "../../../types/search-bar-event.type";
+import {isLocation} from "../../../utils/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-search-input',
@@ -29,7 +30,7 @@ export class SearchInputComponent implements OnInit {
       "locationSearch", new FormControl<string>("", [ Validators.required ]),
     );
     this.searchForm.addControl(
-      "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
+      "location", new FormControl<Location | null>(null, [ Validators.required, isLocation() ])
     );
 
     // Change detection
@@ -46,13 +47,7 @@ export class SearchInputComponent implements OnInit {
   get location(): FormControl {
     return this.searchForm.get("location")! as FormControl;
   }
-
-  private isLocation(): ValidatorFn {
-    return (control: AbstractControl) : ValidationErrors | null => {
-      return control.value instanceof Location ? null : { isLocation: true };
-    }
-  }
-
+  
   private _getLocationSuggestions(search: string): void {
     this._locationService.getLocationSuggestions(search).subscribe(
       (locations: Location[]) => {

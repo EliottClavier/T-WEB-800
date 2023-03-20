@@ -208,18 +208,6 @@ describe('SearchInputComponent', () => {
     expect(component.locationOptions).toEqual([]);
   });
 
-  it('should define a validator called isLocation', () => {
-    expect(component["isLocation"]).toBeDefined();
-  });
-
-  it('should have a validator to verify that location has Location type', () => {
-    component.searchForm.patchValue({
-      locationSearch: "Nan",
-      location: new Location("1", "Nantes")
-    });
-    expect(component["isLocation"]()(component.searchForm.get("location")!)).toEqual(null);
-  });
-
   it('should require location FormControl with value of type Location', () => {
     component.searchForm.patchValue({
       locationSearch: "Nan",

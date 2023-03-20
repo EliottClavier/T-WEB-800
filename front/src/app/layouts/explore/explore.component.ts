@@ -10,6 +10,8 @@ import {
 } from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
+import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-explore',
@@ -20,9 +22,14 @@ export class ExploreComponent implements OnInit {
 
   public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      new FormGroup({}),
+      buildSearchBarFormGroupControls(),
     ]),
   });
+
+  public activeSearchBar: SearchBarEvent = {
+    index: 0,
+    isEditing: false,
+  };
 
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
@@ -39,37 +46,15 @@ export class ExploreComponent implements OnInit {
     this._loadRouteParams();
   }
 
-  private isLocation(): ValidatorFn {
-    return (control: AbstractControl) : ValidationErrors | null => {
-      return control.value instanceof Location ? null : { isLocation: true };
-    }
-  }
-
-  private _buildFormGroupControls(formGroup: FormGroup): void {
-    formGroup.addControl(
-      "locationSearch", new FormControl<string>("", [ Validators.required ]),
-    );
-    formGroup.addControl(
-      "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
-    );
-    formGroup.addControl(
-      "start", new FormControl<Date | null>(null, [ Validators.required ])
-    );
-    formGroup.addControl(
-      "end", new FormControl<Date | null>(null, [ Validators.required ])
-    );
-  }
-
   private _isValidDate(date: any): boolean {
     return date instanceof Date && !isNaN(date.getTime());
   }
 
   private _loadRouteParams(): void {
-    let formGroup: FormGroup = this.searchFormsArrayControls[0];
-    this._buildFormGroupControls(formGroup);
+    this.searchFormsArrayControls[0] = buildSearchBarFormGroupControls();
     let start: Date | null = this._route.snapshot.queryParams['start']! ? new Date(this._route.snapshot.queryParams['start']!) : null;
     let end: Date | null = this._route.snapshot.queryParams['end']! ? new Date(this._route.snapshot.queryParams['end']!) : null;
-    formGroup.patchValue({
+    this.searchFormsArrayControls[0].patchValue({
       locationSearch: this._route.snapshot.params['location']!,
       location: new Location("", this._route.snapshot.params['location']!),
       start: this._isValidDate(start) ? start : null,

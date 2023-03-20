@@ -10,6 +10,7 @@ import {ActivatedRoute, convertToParamMap} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
+import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -84,6 +85,12 @@ describe('ExploreComponent', () => {
       let mapComponent: MapComponent = map.componentInstance as MapComponent;
       expect(mapComponent).toBeDefined();
     });
+
+    // it('should have a map-filters component', () => {
+    //   let mapFilters = spectator.debugElement.query(By.css("app-map-filters"))!;
+    //   let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
+    //   expect(mapFiltersComponent).toBeDefined();
+    // });
   });
 
   describe('Component initialization', () => {
@@ -109,16 +116,16 @@ describe('ExploreComponent', () => {
     });
   });
 
-  describe('Form Group initialization', () => {
-    it('should have a method to construct FormGroup\'s controls', () => {
-      let formGroup: FormGroup = new FormGroup({});
-      component["_buildFormGroupControls"](formGroup);
-      expect(formGroup.get('location')).toBeDefined();
-      expect(formGroup.get('locationSearch')).toBeDefined();
-      expect(formGroup.get('start')).toBeDefined();
-      expect(formGroup.get('end')).toBeDefined();
+  describe('activeSearchBar initialization', () => {
+    it('should have activeSearchBar set to 0 and false by default', () => {
+      expect(component.activeSearchBar).toEqual({
+        index: 0,
+        isEditing: false
+      });
     });
+  });
 
+  describe('Form Group initialization', () => {
     it('should be able to access ActivatedRoute params', () => {
       expect(component["_route"].snapshot.params['location']).toEqual("Nan");
       expect(component["_route"].snapshot.queryParams['start']).toEqual("2023-01-01");
