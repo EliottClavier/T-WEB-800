@@ -31,6 +31,7 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import { HeaderComponent } from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { MapComponent } from './containers/map/map.component';
+import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MapComponent } from './containers/map/map.component';
     SimpleIconButtonComponent,
     ExploreComponent,
     SingleSearchBarComponent,
-    MapComponent
+    MapComponent,
+    MapFiltersComponent
   ],
   imports: [
     GoogleMapsModule,
