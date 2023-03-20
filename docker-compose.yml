@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: app
+    image: eliottclavier/tripi-app:latest
+    command: /bin/bash -c "envsubst '$${APP_PORT},$${API_PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    restart: unless-stopped
+    env_file:
+      - ./env/app.env
+    environment:
+      APP_PORT: ${APP_PORT}
+      API_PORT: ${API_PORT}
+      VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${APP_PORT}
+      LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
+    expose:
+      - "${APP_PORT}"
+    volumes:
+      - ./front/nginx.conf:/etc/nginx/nginx.conf.template
+    networks:
+      - front-net
+      - nginx-proxy
+    depends_on:
+      - api
+
+  api:
+    container_name: api
+    image: eliottclavier/tripi-api:latest
+    command: /bin/bash -c "sed -i 's/8080/'"${API_PORT}"'/g' /usr/local/tomcat/conf/server.xml && catalina.sh run"
+    restart: unless-stopped
+    env_file:
+      - ./env/api.env
+      - ./env/app.env
+      - ./env/database.env
+    environment:
+      VIRTUAL_HOST: ${API_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${API_PORT}
+      LETSENCRYPT_HOST: ${API_VIRTUAL_HOST}
+    expose:
+      - "${API_PORT}"
+    networks:
+      - front-net
+      - back-net
+      - nginx-proxy
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: mariadb:latest
+    restart: unless-stopped
+    env_file:
+      - ./env/database.env
+    volumes:
+      - /data/database:/var/lib/mysql
+    ports:
+      - "${MARIADB_PORT}"
+    networks:
+      - back-net
+
+volumes:
+  database:
+  nginx.conf:
+
+networks:
+  front-net:
+  back-net:
+  nginx-proxy:
+    external:
+      name: nginx-proxy

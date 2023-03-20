@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  run_app_tests:
+    name: Run App tests
+    uses: ./.github/workflows/run-app-tests.yml
+
+  run_api_tests:
+    name: Run API tests
+    uses: ./.github/workflows/run-api-tests.yml
