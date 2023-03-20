@@ -30,13 +30,4 @@ export class LocationService {
       }
     );
   }
-
-  public getGoogleMapsApi(): Observable<boolean> {
-    let link: string = "https://maps.googleapis.com/maps/api/js";
-    environment.envVar.GOOGLE_API_KEY && (link += "?key=" + environment.envVar.GOOGLE_API_KEY);
-    return this.http.jsonp<boolean>(link, 'callback').pipe(
-      map(() => true),
-      catchError(() => of(false)),
-    );
-  }
 }
