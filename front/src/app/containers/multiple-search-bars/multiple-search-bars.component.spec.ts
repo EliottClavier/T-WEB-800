@@ -2,24 +2,13 @@ import { MultipleSearchBarsComponent } from './multiple-search-bars.component';
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
-import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatInputModule} from "@angular/material/input";
-import {MatNativeDateModule} from "@angular/material/core";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
-import {By} from "@angular/platform-browser";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
-import {MatIconModule} from "@angular/material/icon";
-import {Router, RouterModule} from "@angular/router";
-import {RouterTestingModule} from "@angular/router/testing";
-import {getDateFromIsoString} from "../../utils/date.utils";
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {Router} from "@angular/router";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
+import {createComponentFactory, Spectator} from "@ngneat/spectator";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -73,6 +62,21 @@ describe('MultipleSearchBarsComponent', () => {
     it('should add a search bar to searchFormsArray', () => {
       component.addSearchBar();
       expect(component.searchFormsArrayControls!.length).toBe(2);
+    });
+
+    it('should not add a start date to the new search bar initialized if previous search bar has end date', () => {
+      component.addSearchBar();
+      spectator.detectChanges();
+      let length: number = component.searchFormsArrayControls!.length;
+      expect(component.searchFormsArrayControls![length - 1].get('start')!.value).toBeNull();
+    });
+
+    it('should add a start date to the new search bar initialized if previous search bar has end date', () => {
+      component.searchFormsArrayControls![0].get('end')!.setValue(new Date());
+      component.addSearchBar();
+      spectator.detectChanges();
+      let length: number = component.searchFormsArrayControls!.length;
+      expect(component.searchFormsArrayControls![length - 1].get('start')!.value).toBe(component.searchFormsArrayControls![length - 2].get('end')!.value);
     });
 
     it('should remove a search bar to searchFormsArray', () => {
