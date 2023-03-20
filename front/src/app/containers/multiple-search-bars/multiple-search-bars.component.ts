@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
 
 @Component({
   selector: 'app-multiple-search-bars',
@@ -14,6 +15,11 @@ export class MultipleSearchBarsComponent {
       new FormGroup({}),
     ]),
   });
+
+  public activeSearchBar: SearchBarEvent = {
+    index: 0,
+    isEditing: false,
+  };
 
   constructor(
     private _router: Router,
@@ -40,10 +46,22 @@ export class MultipleSearchBarsComponent {
       );
     }
     this.searchFormsArray.push(newFormGroup);
+    this.activeSearchBar = {
+      index: this.searchFormsArrayControls.length - 1,
+      isEditing: true,
+    };
   }
 
   public removeSearchBar(index: number): void {
+    this.activeSearchBar = {
+      index: index > 0 ? index - 1 : index,
+      isEditing: false,
+    };
     this.searchFormsArrayControls.length > 1 && this.searchFormsArray.removeAt(index);
+  }
+
+  public onSearchBarSelect(event: SearchBarEvent): void {
+    this.activeSearchBar = event;
   }
 
   /*

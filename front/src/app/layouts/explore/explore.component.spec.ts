@@ -52,9 +52,19 @@ describe('ExploreComponent', () => {
     _locationService = spectator.inject(LocationService);
     _route = spectator.inject(ActivatedRoute);
 
+    _route.snapshot.params = {
+      location: "Nan"
+    }
+
+    _route.snapshot.queryParams = {
+      start: "2023-01-01",
+      end: "2023-01-02",
+    }
+
     spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
       return new BehaviorSubject<Location[]>([]);
     });
+
     spectator.detectChanges();
   });
 
@@ -117,10 +127,6 @@ describe('ExploreComponent', () => {
 
     it('should have a method to retrieve ActivatedRoute params and fill FormGroup on Init', () => {
       spyOn<ExploreComponent, any>(component, "_loadRouteParams").and.callThrough();
-      _route.snapshot.queryParams = {
-        start: "2023-01-01",
-        end: "2023-01-02",
-      }
       component.ngOnInit();
       spectator.detectChanges();
 

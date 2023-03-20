@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {SearchBarEvent} from "../../../types/search-bar-event.type";
 
 @Component({
   selector: 'app-search-input',
@@ -10,7 +11,12 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, 
 })
 export class SearchInputComponent implements OnInit {
 
+  @Input() public id: number | null = null;
   @Input() public searchForm: FormGroup = new FormGroup<any>({});
+  @Input() public readonly: boolean = false;
+
+  @Output() public onSearchBarSelect: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
+
   public locationOptions: Location[] = [];
 
   constructor(
@@ -66,6 +72,21 @@ export class SearchInputComponent implements OnInit {
       location: location,
     })
     this.locationOptions = [];
+  }
+
+  public onSelectSearchBar(): void {
+    this.id !== null && this.readonly && (this.onSearchBarSelect.emit({
+      index: this.id,
+      isEditing: false,
+    }));
+  }
+
+  public onEditSearchBar(): void {
+    this.id !== null && this.readonly && (this.onSearchBarSelect.emit({
+      index: this.id,
+      isEditing: true,
+    }));
+    this.readonly = false;
   }
 
 }

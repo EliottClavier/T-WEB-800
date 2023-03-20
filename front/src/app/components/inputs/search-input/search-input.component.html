@@ -1,14 +1,28 @@
 <mat-form-field
   search-input-form-field appearance="outline" class="w-100"
   [formGroup]="searchForm"
-  [hideRequiredMarker]="true">
+  [hideRequiredMarker]="true"
+  (click)="onSelectSearchBar()">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
   <input
     search-input
+    [readonly]="readonly"
+    [style]="{ 'cursor': readonly ? 'pointer' : 'auto' }"
     formControlName="locationSearch"
     type="text" placeholder="Search a destination ..."
     matInput [matAutocomplete]="auto">
-  <mat-icon search-input-suffix matSuffix>search</mat-icon>
+  <button
+    *ngIf="readonly"
+    mat-icon-button search-input-suffix matSuffix
+    (click)="onEditSearchBar()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <mat-icon
+    *ngIf="!readonly"
+    search-input-suffix
+    matSuffix>
+    search
+  </mat-icon>
   <mat-autocomplete
     search-input-autocomplete
     #auto="matAutocomplete">

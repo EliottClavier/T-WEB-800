@@ -189,6 +189,88 @@ describe('MultipleSearchBarsComponent', () => {
 
   });
 
+  describe('Active Search bar', () => {
+
+    describe('Active search bar attribute', () => {
+
+      beforeEach(() => {
+        component.activeSearchBar = {
+          index: 0,
+          isEditing: false
+        };
+        spectator.detectChanges();
+      });
+
+      it('should have activeSearchBar set to 0 by default', () => {
+        expect(component.activeSearchBar).toEqual({
+          index: 0,
+          isEditing: false
+        });
+      });
+
+      it('should have activeSearchBar set to 0 when there are multiple search bar, the first one is removed and index was 0', () => {
+        component.removeSearchBar(0);
+        spectator.detectChanges();
+        expect(component.activeSearchBar).toEqual({
+          index: 0,
+          isEditing: false
+        });
+      });
+
+      it('should have activeSearchBar set to current index minus 1 when there are multiple search bar, the first one is removed and index was greater than 0', () => {
+        component.activeSearchBar = {
+          index: 1,
+          isEditing: false
+        };
+        component.removeSearchBar(0);
+        spectator.detectChanges();
+        expect(component.activeSearchBar).toEqual({
+          index: component.searchFormsArrayControls.length - 1,
+          isEditing: false
+        });
+      });
+
+      it('should have activeSearchBar set to last search bar index when new search bar is created', () => {
+        component.addSearchBar();
+        spectator.detectChanges();
+        expect(component.activeSearchBar).toEqual({
+          index: component.searchFormsArrayControls.length - 1,
+          isEditing: true
+        });
+      });
+
+      it('should have activeSearchBar set to selected search bar', () => {
+        component.onSearchBarSelect({
+          index: 1,
+          isEditing: false
+        });
+        expect(component.activeSearchBar).toEqual({
+          index: 1,
+          isEditing: false
+        });
+      });
+    });
+
+    describe('Active search bar', () => {
+
+      beforeEach(() => {
+        component.activeSearchBar = {
+          index: 1,
+          isEditing: false
+        };
+        component.addSearchBar();
+        component.addSearchBar();
+        spectator.detectChanges();
+      });
+
+      it('should have only one active search bar input at most', () => {
+        expect(spectator.queryAll("[search-bar-input] [search-input]:not([readonly])").length).toBe(1);
+        expect(spectator.queryAll("[search-bar-input] [search-input][readonly]").length).toBe(component.searchFormsArrayControls.length - 1);
+      });
+    });
+
+  });
+
   /*
   describe('Up and down buttons', () => {
 

@@ -26,8 +26,13 @@
       -->
       <div class="row justify-content-between mx-0 p-0">
         <app-search-input
+          search-bar-input
           class="col-9 px-0"
-          [searchForm]="searchForm">
+          [id]="i"
+          [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
+          [searchForm]="searchForm"
+          (onSearchBarSelect)="onSearchBarSelect($event)"
+        >
         </app-search-input>
 
         <app-simple-icon-button
