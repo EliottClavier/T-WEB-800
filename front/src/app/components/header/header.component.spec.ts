@@ -1,21 +1,31 @@
 import { HeaderComponent } from './header.component'
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 import {RouterTestingModule} from "@angular/router/testing";
+import {MatCardModule} from "@angular/material/card";
+import {SimpleButtonComponent} from "../buttons/simple-button/simple-button.component";
+import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {AppModule} from "../../app.module";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+  let spectator: Spectator<HeaderComponent>;
+
+  const createComponent = createComponentFactory({
+    component: HeaderComponent,
+    imports: [
+      RouterTestingModule,
+      MatCardModule
+    ],
+    declarations: [
+      HeaderComponent,
+      SimpleButtonComponent
+    ]
+  });
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      declarations: [ HeaderComponent ]
-    })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
+    component = spectator.component;
+    spectator.detectChanges();
   });
 
   it('should create', () => {
@@ -24,19 +34,15 @@ describe('HeaderComponent', () => {
 
   it('should navigate to /login when login button is clicked', () => {
     spyOn(component['router'], 'navigate');
-
-    const loginButton = fixture.nativeElement.querySelector('.login');
-    loginButton.click();
-
+    let button: HTMLElement = spectator.query('[header-login] [simple-button]')!;
+    button.click();
     expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should navigate to /register when register button is clicked', () => {
     spyOn(component['router'], 'navigate');
-
-    const registerButton = fixture.nativeElement.querySelector('.register');
-    registerButton.click();
-
+    let button: HTMLElement = spectator.query('[header-register] [simple-button]')!;
+    button.click();
     expect(component['router'].navigate).toHaveBeenCalledWith(['/register']);
   });
 })

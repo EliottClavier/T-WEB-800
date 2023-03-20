@@ -10,6 +10,7 @@ export class SimpleButtonComponent {
   @Input() public isDisabled: boolean = false;
   @Input() public isHidden: boolean = false;
   @Input() public label: string = '';
+  @Input() public height: string = '56px';
 
   @Output() public buttonClick: EventEmitter<void> = new EventEmitter<void>();
 

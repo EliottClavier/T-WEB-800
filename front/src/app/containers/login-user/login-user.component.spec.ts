@@ -17,6 +17,7 @@ import {User} from "../../models/user/User.model";
 import {BehaviorSubject, throwError} from "rxjs";
 import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";
+import {MatCardModule} from "@angular/material/card";
 
 describe('LoginUserComponent', () => {
   let component: LoginUserComponent;
@@ -33,6 +34,7 @@ describe('LoginUserComponent', () => {
     component: LoginUserComponent,
     imports: [
       HttpClientModule,
+      MatCardModule,
       MatAutocompleteModule,
       MatFormFieldModule,
       MatInputModule,

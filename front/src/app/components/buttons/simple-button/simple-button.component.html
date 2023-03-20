@@ -1,9 +1,10 @@
-<button class="w-100 mat-custom-height"
+<button class="w-100"
         simple-button
         mat-flat-button
         color="primary"
         (click)="onClickButton()"
         [disabled]="isDisabled"
-        [hidden]="isHidden">
+        [hidden]="isHidden"
+        [style.height]="height">
   {{ label }}
 </button>

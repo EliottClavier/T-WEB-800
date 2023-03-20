@@ -1,23 +1,15 @@
 import { SingleSearchBarComponent } from './single-search-bar.component'
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {Router, RouterModule} from "@angular/router";
+import {Router} from "@angular/router";
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
-import {HttpClientModule} from "@angular/common/http";
-import {RouterTestingModule} from "@angular/router/testing";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
-import {MatNativeDateModule} from "@angular/material/core";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {AppModule} from "../../app.module";
 
 describe('SingleSearchBarComponent', () => {
 
@@ -35,18 +27,7 @@ describe('SingleSearchBarComponent', () => {
       SimpleIconButtonComponent
     ],
     imports: [
-      HttpClientModule,
-      RouterModule,
-      RouterTestingModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatDatepickerModule,
-      MatInputModule,
-      MatIconModule,
-      MatNativeDateModule,
-      BrowserAnimationsModule,
-      ReactiveFormsModule,
-      FormsModule
+      AppModule
     ],
     schemas: [
       NO_ERRORS_SCHEMA

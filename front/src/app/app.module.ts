@@ -15,7 +15,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import { SearchInputComponent } from './components/inputs/search-input/search-input.component';
-import {HttpClientModule} from "@angular/common/http"
+import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -29,6 +29,8 @@ import { SingleSearchBarComponent } from './containers/single-search-bar/single-
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import { HeaderComponent } from './components/header/header.component';
+import {GoogleMapsModule} from "@angular/google-maps";
+import { MapComponent } from './containers/map/map.component';
 
 @NgModule({
   declarations: [
@@ -44,11 +46,14 @@ import { HeaderComponent } from './components/header/header.component';
     MainComponent,
     SimpleIconButtonComponent,
     ExploreComponent,
-    SingleSearchBarComponent
+    SingleSearchBarComponent,
+    MapComponent
   ],
   imports: [
+    GoogleMapsModule,
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     FormsModule,
     MatButtonModule,
