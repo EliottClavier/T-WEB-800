@@ -11,7 +11,7 @@ import {
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group.utils";
+import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-explore',

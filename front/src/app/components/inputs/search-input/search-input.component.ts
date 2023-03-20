@@ -3,7 +3,7 @@ import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {SearchBarEvent} from "../../../types/search-bar-event.type";
-import {isLocation} from "../../../utils/search-bar-form-group.utils";
+import {isLocation} from "../../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-search-input',
@@ -47,7 +47,7 @@ export class SearchInputComponent implements OnInit {
   get location(): FormControl {
     return this.searchForm.get("location")! as FormControl;
   }
-  
+
   private _getLocationSuggestions(search: string): void {
     this._locationService.getLocationSuggestions(search).subscribe(
       (locations: Location[]) => {

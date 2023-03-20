@@ -1,5 +1,5 @@
 <form [formGroup]="searchForms" class="row justify-content-center">
-  <div formArrayName="searchFormsArray" class="col-12">
+  <div formArrayName="searchFormsArray" class="col-12 mx-2">
     <div search-bars class="row m-0"
          *ngFor="let searchForm of searchFormsArrayControls; let i = index"
          [formGroupName]="i">
@@ -27,7 +27,7 @@
       <div class="row justify-content-between mx-0 p-0">
         <app-search-input
           search-bar-input
-          class="col-9 px-0"
+          class="col-8 px-0"
           [id]="i"
           [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
           [searchForm]="searchForm"
@@ -44,10 +44,6 @@
           (buttonClick)="removeSearchBar(i)">
         </app-simple-icon-button>
       </div>
-<!--      <div class="row mx-0 p-0">-->
-<!--        <app-date-range [searchForm]="searchForm" class="col-9 px-0">-->
-<!--        </app-date-range>-->
-<!--      </div>-->
     </div>
   </div>
   <div class="col-12">

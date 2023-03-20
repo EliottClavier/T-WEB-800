@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group.utils";
+import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-multiple-search-bars',

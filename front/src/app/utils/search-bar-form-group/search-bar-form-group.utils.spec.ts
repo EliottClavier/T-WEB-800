@@ -1,6 +1,6 @@
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {buildSearchBarFormGroupControls, isLocation} from "./search-bar-form-group.utils";
-import {Location} from "../models/location/location.model";
+import {Location} from "../../models/location/location.model";
 
 describe('Search bar\'s FormGroup utils', () => {
 

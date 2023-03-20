@@ -1,5 +1,5 @@
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {Location} from "../models/location/location.model";
+import {Location} from "../../models/location/location.model";
 
 export const isLocation = (): ValidatorFn => {
   return (control: AbstractControl) : ValidationErrors | null => {
