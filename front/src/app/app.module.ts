@@ -32,10 +32,22 @@ import { HeaderComponent } from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { MapComponent } from './containers/map/map.component';
 import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
+import { CardItemComponent } from './components/card-item/card-item.component';
+import { CardItemsListComponent } from './components/card-items-list/card-items-list.component';
+import {HttpClient} from "@angular/common/http";
+import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
+    CardItemComponent,
+    CardItemsListComponent,
     RegisterUserComponent,
     LoginUserComponent,
     SearchInputComponent,
@@ -48,6 +60,9 @@ import {MapFiltersComponent} from "./containers/map-filters/map-filters.componen
     SimpleIconButtonComponent,
     ExploreComponent,
     SingleSearchBarComponent,
+    MapComponent,
+    MainComponent,
+    CardsContainerComponent,
     MapComponent,
     MapFiltersComponent
   ],
@@ -74,10 +89,24 @@ import {MapFiltersComponent} from "./containers/map-filters/map-filters.componen
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    TranslateModule.forRoot(
+      {
+        defaultLanguage: 'en',
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      },
+    )
   ],
   exports: [
     RegisterUserComponent,
     LoginUserComponent,
+    RegisterUserComponent,
+    BrowserAnimationsModule,
+    MatCardModule,
+   TranslateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

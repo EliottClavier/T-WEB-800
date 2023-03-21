@@ -29,9 +29,9 @@
     <mat-option
       search-input-option
       *ngFor="let option of locationOptions;"
-      [id]="option.getId"
+      [id]="option.id"
       (click)="onLocationOptionClick(option)">
-      {{ option.getName }}
+      {{ option.name }}
     </mat-option>
   </mat-autocomplete>
   <mat-error

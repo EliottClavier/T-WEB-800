@@ -18,6 +18,7 @@ export class SearchInputComponent implements OnInit {
 
   @Output() public onSearchBarSelect: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
 
+  @Output() public onLocationOptionChange: EventEmitter<any> = new EventEmitter<any>();
   public locationOptions: Location[] = [];
 
   constructor(
@@ -52,20 +53,17 @@ export class SearchInputComponent implements OnInit {
     this._locationService.getLocationSuggestions(search).subscribe(
       (locations: Location[]) => {
         this.locationOptions = locations;
-    });
+      });
   }
 
   public onLocationChange(value: string): void {
     let location: AbstractControl = this.searchForm.get("location")!;
     location!.setValue(value ? new Location("", value) : null);
-    location.value && location.value.getName ? this._getLocationSuggestions(location.value.getName) : this.locationOptions = [];
+    location.value && location.value.name ? this._getLocationSuggestions(location.value.name) : this.locationOptions = [];
   }
 
   public onLocationOptionClick(location: Location): void {
-    this.searchForm.patchValue({
-      locationSearch: location.getName,
-      location: location,
-    })
+    this.onLocationOptionChange.emit(location);
     this.locationOptions = [];
   }
 
