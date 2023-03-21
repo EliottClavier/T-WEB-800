@@ -26,7 +26,7 @@ export class SingleSearchBarComponent {
 
   public onLocationOptionClick(location: Location): void {
     this.searchForm.patchValue({
-      locationSearch: location.getName,
+      locationSearch: location.name,
       location: location,
     });
     this._suggestionService.getReviewSuggestions(ItemType.ACCOMMODATION, location).subscribe(
@@ -48,7 +48,7 @@ export class SingleSearchBarComponent {
 
     if (this.searchForm.valid) {
       this._router.navigate(
-        ['/', 'explore', location.getName],
+        ['/', 'explore', location.name],
         {
           queryParams: {
             start: getDateFromIsoString(start),

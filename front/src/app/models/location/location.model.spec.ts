@@ -14,19 +14,19 @@ describe('Location', () => {
   });
 
   it('should have null values when no value are passed on instantiation', () => {
-    expect(locationEmpty.getId).toEqual("");
-    expect(locationEmpty.getName).toEqual("");
+    expect(locationEmpty.id).toEqual("");
+    expect(locationEmpty.name).toEqual("");
   });
 
   it('should set and get the id property', () => {
-    expect(location.getId).toEqual('1');
-    location.setId = '2';
-    expect(location.getId).toEqual('2');
+    expect(location.id).toEqual('1');
+    location.id = '2';
+    expect(location.id).toEqual('2');
   });
 
   it('should set and get the name property', () => {
-    expect(location.getName).toEqual('Paris');
-    location.setName = 'Lyon';
-    expect(location.getName).toEqual('Lyon');
+    expect(location.name).toEqual('Paris');
+    location.name = 'Lyon';
+    expect(location.name).toEqual('Lyon');
   });
 });

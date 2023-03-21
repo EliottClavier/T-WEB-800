@@ -58,7 +58,7 @@ describe('SuggestionsService', () => {
       }
     );
 
-    let req = spectatorHttp.expectOne(`/api/review/accommodations/search?location=${location.getName}`, HttpMethod.GET);
+    let req = spectatorHttp.expectOne(`/api/review/accommodations/search?location=${location.name}`, HttpMethod.GET);
     req.flush(getBarItems());
     expect(req.request.method).toEqual('GET');
 

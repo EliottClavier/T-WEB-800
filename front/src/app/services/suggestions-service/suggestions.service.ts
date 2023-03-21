@@ -18,6 +18,6 @@ export class SuggestionsService {
   }
 
   getReviewSuggestions(itemType: ItemType, location : Location,): Observable<ItemModel[]> {
-    return this._httpclient.get<ItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.getName}`);
+    return this._httpclient.get<ItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.name}`);
   }
 }

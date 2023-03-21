@@ -176,7 +176,7 @@ describe('SingleSearchBarComponent', () => {
 
       expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(ItemType.ACCOMMODATION, location);
       expect(component.searchForm.value.location).toEqual(location);
-      expect(component.searchForm.value.locationSearch).toEqual(location.getName);
+      expect(component.searchForm.value.locationSearch).toEqual(location.name);
     });
     it('should update the Suggestions value when location is updated ', () => {
 

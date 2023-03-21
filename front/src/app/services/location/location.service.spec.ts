@@ -62,14 +62,14 @@ describe('LocationService', () => {
 
     service.getLocationSuggestions(locationName).subscribe(data => {
       expect(data).toEqual(testLocationOptions.filter(
-        (location: Location) => location.getName.toLowerCase().startsWith(locationName.toLowerCase())
+        (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
       ));
     });
 
     const req = httpMock.expectOne(`/api/locations/suggestion/${locationName}`);
     expect(req.request.method).toEqual('GET');
     req.flush(testLocationOptions.filter(
-      (location: Location) => location.getName.toLowerCase().startsWith(locationName.toLowerCase())
+      (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
     ), { status: 200, statusText: 'OK' });
   });
 
