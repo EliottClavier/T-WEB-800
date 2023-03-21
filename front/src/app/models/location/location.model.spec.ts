@@ -16,6 +16,8 @@ describe('Location', () => {
   it('should have null values when no value are passed on instantiation', () => {
     expect(locationEmpty.id).toEqual("");
     expect(locationEmpty.name).toEqual("");
+    expect(locationEmpty.lat).toEqual(0);
+    expect(locationEmpty.lng).toEqual(0);
   });
 
   it('should set and get the id property', () => {
@@ -29,4 +31,16 @@ describe('Location', () => {
     location.name = 'Lyon';
     expect(location.name).toEqual('Lyon');
   });
+
+  it('should set and get the lat property', () => {
+    expect(location.lat).toEqual(0);
+    location.lat = 1;
+    expect(location.lat).toEqual(1);
+  });
+  it('should set and get the lng property', () => {
+    expect(location.lng).toEqual(0);
+    location.lng = 1;
+    expect(location.lng).toEqual(1);
+  });
+
 });

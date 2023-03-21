@@ -58,7 +58,7 @@ export class SearchInputComponent implements OnInit {
   public onLocationChange(value: string): void {
     let location: AbstractControl = this.searchForm.get("location")!;
     location!.setValue(value ? new Location("", value) : null);
-    location.value && location.value.getName ? this._getLocationSuggestions(location.value.getName) : this.locationOptions = [];
+    location.value && location.value.name ? this._getLocationSuggestions(location.value.name) : this.locationOptions = [];
   }
 
   public onLocationOptionClick(location: Location): void {
