@@ -31,8 +31,7 @@
           [id]="i"
           [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
           [searchForm]="searchForm"
-          (onSearchBarSelect)="onSearchBarSelect($event)"
-        >
+          (onSearchBarSelect)="onSearchBarSelect($event)">
         </app-search-input>
 
         <app-simple-icon-button

@@ -10,11 +10,15 @@
       <app-map-filters
         map-filters
         *ngIf="activeSearchBar.index !== null"
-        [selectedSearchForm]="searchFormsArrayControls[activeSearchBar.index]"
+        [selectedSearchForm]="selectedSearchForm"
       ></app-map-filters>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 px-0">
-      <app-map map></app-map>
+      <app-map
+        map
+        *ngIf="activeSearchBar.index !== null"
+        [selectedLocation]="selectedLocation"
+      ></app-map>
     </div>
   </div>
 </div>

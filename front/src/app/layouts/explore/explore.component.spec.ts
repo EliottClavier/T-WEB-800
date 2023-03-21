@@ -60,6 +60,8 @@ describe('ExploreComponent', () => {
     _route.snapshot.queryParams = {
       start: "2023-01-01",
       end: "2023-01-02",
+      lat: "42.555",
+      lng: "37.444",
     }
 
     spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
@@ -130,6 +132,8 @@ describe('ExploreComponent', () => {
       expect(component["_route"].snapshot.params['location']).toEqual("Nan");
       expect(component["_route"].snapshot.queryParams['start']).toEqual("2023-01-01");
       expect(component["_route"].snapshot.queryParams['end']).toEqual("2023-01-02");
+      expect(component["_route"].snapshot.queryParams['lng']).toEqual("37.444");
+      expect(component["_route"].snapshot.queryParams['lat']).toEqual("42.555");
     });
 
     it('should have a method to retrieve ActivatedRoute params and fill FormGroup on Init', () => {
@@ -137,7 +141,7 @@ describe('ExploreComponent', () => {
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan"));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -145,11 +149,14 @@ describe('ExploreComponent', () => {
 
     it('should have a method to retrieve ActivatedRoute params without date and fill FormGroup on Init', () => {
       spyOn<ExploreComponent, any>(component, "_loadRouteParams").and.callThrough();
-      _route.snapshot.queryParams = {}
+      _route.snapshot.queryParams = {
+        lat: "42.555",
+        lng: "37.444",
+      }
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan"));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(null);
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(null);
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -160,13 +167,30 @@ describe('ExploreComponent', () => {
       _route.snapshot.queryParams = {
         start: "2023-01-01111",
         end: "2023-01-02222",
+        lat: "42.555",
+        lng: "37.444",
       }
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan"));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(null);
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(null);
+      expect(component["_loadRouteParams"]).toHaveBeenCalled();
+    });
+
+    it('should have a method to retrieve ActivatedRoute params with no coordinates and fill FormGroup on Init', () => {
+      spyOn<ExploreComponent, any>(component, "_loadRouteParams").and.callThrough();
+      _route.snapshot.queryParams = {
+        start: "2023-01-01",
+        end: "2023-01-02",
+      }
+      component.ngOnInit();
+      spectator.detectChanges();
+
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 0, 0));
+      expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
+      expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
     });
 

@@ -2,6 +2,8 @@
   map
   height="65vh"
   width="100%"
+  (zoomChanged)="onMapBoundariesChange()"
+  (mapDragend)="onMapBoundariesChange()"
   [zoom]="zoom"
   [center]="center"
   [options]="options"

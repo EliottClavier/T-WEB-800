@@ -1,12 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {
-  AbstractControl,
   FormArray,
-  FormControl,
   FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
 } from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
@@ -39,6 +34,14 @@ export class ExploreComponent implements OnInit {
     return this.searchFormsArray.controls as FormGroup[];
   }
 
+  get selectedSearchForm(): FormGroup {
+    return this.searchFormsArrayControls[this.activeSearchBar.index];
+  }
+
+  get selectedLocation(): Location {
+    return this.selectedSearchForm.get('location')?.value as Location;
+  }
+
   constructor(private _route: ActivatedRoute) {
   }
 
@@ -52,11 +55,18 @@ export class ExploreComponent implements OnInit {
 
   private _loadRouteParams(): void {
     this.searchFormsArrayControls[0] = buildSearchBarFormGroupControls();
-    let start: Date | null = this._route.snapshot.queryParams['start']! ? new Date(this._route.snapshot.queryParams['start']!) : null;
-    let end: Date | null = this._route.snapshot.queryParams['end']! ? new Date(this._route.snapshot.queryParams['end']!) : null;
+    let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
+    let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
+    let lat: string = this._route.snapshot.queryParams['lat'] || "0";
+    let lng: string = this._route.snapshot.queryParams['lng'] || "0";
     this.searchFormsArrayControls[0].patchValue({
       locationSearch: this._route.snapshot.params['location']!,
-      location: new Location("", this._route.snapshot.params['location']!),
+      location: new Location(
+        "",
+        this._route.snapshot.params['location']!,
+        Number(lat),
+        Number(lng),
+      ),
       start: this._isValidDate(start) ? start : null,
       end: this._isValidDate(start) ? end : null,
     })
