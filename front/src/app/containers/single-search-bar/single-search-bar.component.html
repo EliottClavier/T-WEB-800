@@ -2,7 +2,11 @@
   <div class="col-12 mx-0 p-0">
     <div class="row justify-content-between mx-0 p-0">
       <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 mx-0 p-0">
-        <app-search-input search-bar-input [searchForm]="searchForm" class="col-5 px-0">
+        <app-search-input
+          search-bar-input
+          [searchForm]="searchForm"
+          (onLocationOptionChange)="onLocationOptionClick($event)"
+          class="col-5 px-0">
         </app-search-input>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mx-0 p-0">

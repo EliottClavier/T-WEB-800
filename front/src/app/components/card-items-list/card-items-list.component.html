@@ -1,0 +1,18 @@
+<div class="ng-container"
+     *ngIf="cardItems.length > 0; else emptyState">
+  <ul
+    *ngFor="let item of cardItems">
+    <li>
+      <app-card-item
+        [cardItem]="item"
+        data-cy-card-component></app-card-item>
+    </li>
+  </ul>
+</div>
+
+<ng-template #emptyState>
+  <p
+    data-cy-card-component-empty>
+    {{emptyMessage}}
+  </p>
+</ng-template>
