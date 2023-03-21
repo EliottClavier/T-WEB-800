@@ -9,9 +9,8 @@ import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
-import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 
@@ -198,23 +197,40 @@ describe('ExploreComponent', () => {
   describe('Getting Suggestions information', () => {
 
 
+
     it('should update activeSearchBar when index of input location triggered', () => {
 
       let mockedValue: SearchBarEvent = {
         index: 0,
         isEditing: true,
       };
-     const valueChangeSpy = spyOn(component, 'onActiveSearchBarChange').and.callThrough( );
-     const SuggestionsSpy = spyOn(component, '_getSuggestions').and.callThrough( );
+      const valueChangeSpy = spyOn(component, 'onActiveSearchBarChange').and.callThrough();
+
 
       spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
 
       expect(valueChangeSpy).toHaveBeenCalled();
       expect(mockedValue).toEqual(component.activeSearchBar);
-      expect(SuggestionsSpy).toHaveBeenCalled();
-    });
-    it('should getting Suggestion when search button is clicked', () => {
 
+    });
+
+    it('should getSuggestions has been call when i called onActiveSearchBar', () => {
+
+      let suggestionSpy = spyOn<ExploreComponent, any>(component, '_getSuggestions').and.callThrough();
+      component.onActiveSearchBarChange({index: 0, isEditing: true});
+      expect(suggestionSpy).toHaveBeenCalled();
+
+    });
+    it('should getting Suggestion when index of input location triggered', () => {
+      let mockedValue: SearchBarEvent = {
+        index: 0,
+        isEditing: true,
+      };
+      const SuggestionsSpy = spyOn<ExploreComponent, any>(component, '_getSuggestions').and.callThrough();
+
+      spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
+
+      expect(SuggestionsSpy).toHaveBeenCalled();
     });
   });
 

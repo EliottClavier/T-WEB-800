@@ -73,7 +73,7 @@ export class ExploreComponent implements OnInit {
       end: this._isValidDate(start) ? end : null,
     })
   }
-   _getSuggestions(location :Location): void {
+    private _getSuggestions(location :Location): void {
 
   }
 
