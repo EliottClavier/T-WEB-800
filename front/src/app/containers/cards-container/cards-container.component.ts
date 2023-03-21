@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
 @Component({
@@ -8,7 +8,7 @@ import {SuggestionsStoreService} from "../../store/suggestions-store.service";
   styleUrls: ['./cards-container.component.scss']
 })
 export class CardsContainerComponent implements OnInit {
-  suggests: ItemModel[] = new Array<ItemModel>;
+  suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
 
   constructor(private _suggestionsStore: SuggestionsStoreService) {
   }

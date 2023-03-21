@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ItemModel} from "../models/item/item.model";
+import {LeisureItemModel} from "../models/Leisure/leisure.item.model";
 import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class SuggestionsStoreService {
 
 
-   private _suggestions$: BehaviorSubject<ItemModel[]> = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>());
+   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
 
 
   constructor() {
@@ -18,19 +18,19 @@ export class SuggestionsStoreService {
   }
 
 
-  public get suggestions$(): BehaviorSubject<ItemModel[]> {
+  public get suggestions$(): BehaviorSubject<LeisureItemModel[]> {
     return this._suggestions$;
   }
 
-  public set suggestions$(value: BehaviorSubject<ItemModel[]>) {
+  public set suggestions$(value: BehaviorSubject<LeisureItemModel[]>) {
     this._suggestions$ = value;
   }
 
-  public getSuggestionsData(): ItemModel[] {
+  public getSuggestionsData(): LeisureItemModel[] {
     return this._suggestions$.getValue();
   }
 
-  public setSuggestionsData(data: ItemModel[]) {
+  public setSuggestionsData(data: LeisureItemModel[]) {
     this._suggestions$.next(data);
 
   }

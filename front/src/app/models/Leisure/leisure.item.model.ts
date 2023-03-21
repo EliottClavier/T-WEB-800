@@ -1,6 +1,6 @@
 import {LeisureType} from "../../enums/leisure-type";
 
-export class ItemModel {
+export class LeisureItemModel {
 
   id: string = "";
   title: string = "default title";

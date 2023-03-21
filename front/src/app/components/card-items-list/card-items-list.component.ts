@@ -1,5 +1,5 @@
 import {AfterContentChecked, Component, Input} from '@angular/core';
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {CardItemComponent} from "../card-item/card-item.component";
 import {TranslateService} from "@ngx-translate/core";
 
@@ -11,7 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class CardItemsListComponent implements AfterContentChecked{
 
-  @Input() cardItems: ItemModel[] = [];
+  @Input() cardItems: LeisureItemModel[] = [];
    emptyMessage?: string;
 
   constructor(private translate: TranslateService) {

@@ -233,5 +233,4 @@ describe('ExploreComponent', () => {
       expect(SuggestionsSpy).toHaveBeenCalled();
     });
   });
-
 });

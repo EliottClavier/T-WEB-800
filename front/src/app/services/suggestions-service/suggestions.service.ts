@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {LeisureType} from "../../enums/leisure-type";
 import {HttpClient} from "@angular/common/http";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
@@ -17,7 +17,7 @@ export class SuggestionsService {
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
-  getReviewSuggestions(itemType: LeisureType, location : Location,): Observable<ItemModel[]> {
-    return this._httpclient.get<ItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.name}`);
+  getReviewSuggestions(itemType: LeisureType, location : Location,): Observable<LeisureItemModel[]> {
+    return this._httpclient.get<LeisureItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.name}`);
   }
 }

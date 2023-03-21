@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {SuggestionsStoreService} from './suggestions-store.service';
 import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spectator";
-import {ItemModel} from "../models/item/item.model";
+import {LeisureItemModel} from "../models/Leisure/leisure.item.model";
 import {SuggestionsService} from "../services/suggestions-service/suggestions.service";
 import {LeisureType} from "../enums/leisure-type";
 import {BehaviorSubject} from "rxjs";
@@ -15,15 +15,15 @@ describe('SuggestionsStoreService', () => {
   const createService = createServiceFactory<SuggestionsStoreService>({
     service: SuggestionsStoreService,
     providers: [mockProvider(SuggestionsService, {
-      getReviewSuggestions: () => new Array<ItemModel>(), //if needed
+      getReviewSuggestions: () => new Array<LeisureItemModel>(), //if needed
     }),
     SingleSearchBarComponent]
   });
 
   function getBarItem() {
-    let data = new Array<ItemModel>();
+    let data = new Array<LeisureItemModel>();
     for (let i = 0; i < 3; i++) {
-      let item = new ItemModel();
+      let item = new LeisureItemModel();
       item.typeOfItem = LeisureType.BAR;
       data.push(item);
     }
@@ -31,9 +31,9 @@ describe('SuggestionsStoreService', () => {
   }
 
   function getActivityItem() {
-    let data = new Array<ItemModel>();
+    let data = new Array<LeisureItemModel>();
     for (let i = 0; i < 4; i++) {
-      let item = new ItemModel();
+      let item = new LeisureItemModel();
       item.typeOfItem = LeisureType.ACTIVITY;
       data.push(item);
     }
@@ -51,16 +51,16 @@ describe('SuggestionsStoreService', () => {
   });
   it('should be get suggestion data', () => {
     expect(createService().service.getSuggestionsData()).toBeDefined();
-    // expect(createService().service.getSuggestions()).toEqual(new Array<ItemModel>());
+    // expect(createService().service.getSuggestions()).toEqual(new Array<LeisureItemModel>());
   });
 
   it('should be update suggestion data', () => {
     spyOnProperty(createService().service, 'suggestions$', 'set').and.callThrough();
-    expect(createService().service.suggestions$ = new BehaviorSubject<ItemModel[]>(new Array<ItemModel>())).toBeDefined();
+    expect(createService().service.suggestions$ = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>())).toBeDefined();
   });
 
   it('should be get Bar suggestions ', () => {
-    let data = new BehaviorSubject<ItemModel[]>(getBarItem())
+    let data = new BehaviorSubject<LeisureItemModel[]>(getBarItem())
     const subjectSpy = spyOn(createService().service.suggestions$, 'asObservable').and.returnValue(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toEqual(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toBeDefined();
@@ -68,7 +68,7 @@ describe('SuggestionsStoreService', () => {
   });
 
   it('should get Activity suggestions ', () => {
-    let data = new BehaviorSubject<ItemModel[]>(getActivityItem())
+    let data = new BehaviorSubject<LeisureItemModel[]>(getActivityItem())
     const subjectSpy = spyOn(createService().service.suggestions$, 'asObservable').and.returnValue(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toEqual(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toBeDefined();
@@ -104,9 +104,9 @@ describe('SuggestionsStoreService', () => {
 
 
 function getAccommodationItems() {
-  let data = new Array<ItemModel>();
+  let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
-    let item = new ItemModel();
+    let item = new LeisureItemModel();
     item.typeOfItem = LeisureType.BAR;
     data.push(item);
   }

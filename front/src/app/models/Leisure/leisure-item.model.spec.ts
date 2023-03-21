@@ -1,16 +1,16 @@
-import {ItemModel} from './item.model';
+import {LeisureItemModel} from './leisure.item.model';
 import {Spectator} from "@ngneat/spectator";
 import {LeisureType} from "../../enums/leisure-type";
 
-describe('ItemModel', () => {
-  let itemModel: ItemModel;
-  let itemGet: ItemModel;
+describe('LeisureItemModel', () => {
+  let itemModel: LeisureItemModel;
+  let itemGet: LeisureItemModel;
   let setSpy :any
   let getSpy :any
 
   beforeEach(() => {
-    itemModel = new ItemModel();
-    itemGet = new ItemModel();
+    itemModel = new LeisureItemModel();
+    itemGet = new LeisureItemModel();
     itemModel.typeOfItem = LeisureType.ACCOMMODATION;
     setSpy = spyOnProperty(itemModel, 'typeOfItem').and.callThrough();
     getSpy = spyOnProperty(itemGet, 'typeOfItem').and.returnValue(
@@ -30,5 +30,4 @@ describe('ItemModel', () => {
     expect(itemGet.typeOfItem).toBe(LeisureType.BAR);
     expect(getSpy).toHaveBeenCalled();
   });
-
 });

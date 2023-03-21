@@ -1,23 +1,23 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardsContainerComponent} from "./cards-container.component";
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {of} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
-function getItems(): ItemModel[] {
-  let items: ItemModel[] = [];
+function getItems(): LeisureItemModel[] {
+  let items: LeisureItemModel[] = [];
 
   for (let i = 0; i < 3; i++) {
-    items.push(new ItemModel());
+    items.push(new LeisureItemModel());
   }
     return items;
   }
 
   describe('Card container', () => {
     let spectator: Spectator<CardsContainerComponent>;
-    let barItems: ItemModel[] = getItems();
+    let barItems: LeisureItemModel[] = getItems();
     let component: CardsContainerComponent;
     let store: SuggestionsStoreService;
 
@@ -41,9 +41,9 @@ function getItems(): ItemModel[] {
         component = spectator.component;
         store = spectator.inject(SuggestionsStoreService);
 
-        barItems = new Array<ItemModel>();
+        barItems = new Array<LeisureItemModel>();
         for (let i = 0; i < 3; i++) {
-          barItems.push(new ItemModel());
+          barItems.push(new LeisureItemModel());
         }
 
         spectator.detectChanges()

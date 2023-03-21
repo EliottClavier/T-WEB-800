@@ -3,7 +3,7 @@ import {fakeAsync, tick} from '@angular/core/testing';
 import {SuggestionsService} from './suggestions.service';
 import {createHttpFactory, createServiceFactory, HttpMethod, SpectatorHttp, SpectatorService} from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {LeisureType} from "../../enums/leisure-type";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Location} from "../../models/location/location.model";
@@ -77,7 +77,7 @@ describe('SuggestionsService', () => {
     spyOn(spectator.service, 'getReviewSuggestions').and.returnValue(getBarItems$().pipe(delay(1)));
 
     tick(1);
-    const result$: Observable<ItemModel[]> = spectator.service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"));
+    const result$: Observable<LeisureItemModel[]> = spectator.service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"));
 
     getBarItems$().subscribe((data) => {
       expect(data).toEqual(expectedValue);
@@ -87,29 +87,29 @@ describe('SuggestionsService', () => {
 });
 
 function getBarItems$() {
-  let data = new Array<ItemModel>();
+  let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
-    let item = new ItemModel();
+    let item = new LeisureItemModel();
     item.typeOfItem = LeisureType.BAR;
     data.push(item);
   }
-  return new Observable<ItemModel[]>((observer) => {
+  return new Observable<LeisureItemModel[]>((observer) => {
     observer.next(data);
     observer.complete();
   });
 }
 
 function getBarItems() {
-  let data = new Array<ItemModel>();
+  let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
-    let item = new ItemModel();
+    let item = new LeisureItemModel();
     item.typeOfItem = LeisureType.BAR;
     data.push(item);
   }
   return data;
 };
 
-let testItemModelInformations: ItemModel[] = [
+let testItemModelInformations: LeisureItemModel[] = [
   {
     "id": "1",
     "title": "firstAccommodation",

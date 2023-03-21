@@ -11,7 +11,7 @@ import {getDateFromIsoString} from "../../utils/date.utils";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {LeisureType} from "../../enums/leisure-type";
 import {of, throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
@@ -178,7 +178,7 @@ describe('SingleSearchBarComponent', () => {
     it('should update the Suggestions value when location is updated and getting error ', () => {
 
       const location = new Location('01', 'New York');
-      const suggestions = new Array<ItemModel>();
+      const suggestions = new Array<LeisureItemModel>();
 
       const mockCall = spyOn(suggestionService, "getReviewSuggestions").and.returnValue(throwError(() => new Error('error')));
       component.onLocationOptionClick(location);
@@ -195,9 +195,9 @@ describe('SingleSearchBarComponent', () => {
 
 });
     function getAccommodationItems() {
-      let data = new Array<ItemModel>();
+      let data = new Array<LeisureItemModel>();
       for (let i = 0; i < 6; i++) {
-        let item = new ItemModel();
+        let item = new LeisureItemModel();
         item.typeOfItem = LeisureType.BAR;
         data.push(item);
       }

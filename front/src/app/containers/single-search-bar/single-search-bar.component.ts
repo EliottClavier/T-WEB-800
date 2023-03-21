@@ -7,7 +7,7 @@ import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureType} from "../../enums/leisure-type";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 
 @Component({
   selector: 'app-single-search-bar',
@@ -36,7 +36,7 @@ export class SingleSearchBarComponent {
             this._suggestionStoreService.setSuggestionsData(suggestions);
         },
         error: (err) => {
-          this._suggestionStoreService.setSuggestionsData(new Array<ItemModel>());
+          this._suggestionStoreService.setSuggestionsData(new Array<LeisureItemModel>());
         }
       }
     );
