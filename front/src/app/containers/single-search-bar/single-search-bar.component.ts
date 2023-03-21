@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {ItemType} from "../../models/ItemType";
+import {LeisureType} from "../../enums/leisure-type";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {ItemModel} from "../../models/item/item.model";
 
@@ -29,7 +29,7 @@ export class SingleSearchBarComponent {
       locationSearch: location.name,
       location: location,
     });
-    this._suggestionService.getReviewSuggestions(ItemType.ACCOMMODATION, location).subscribe(
+    this._suggestionService.getReviewSuggestions(LeisureType.ACCOMMODATION, location).subscribe(
       {
         next: (suggestions) => {
             this._suggestionStoreService.setSuggestionsData(suggestions);

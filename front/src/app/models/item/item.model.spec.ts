@@ -1,6 +1,6 @@
 import {ItemModel} from './item.model';
 import {Spectator} from "@ngneat/spectator";
-import {ItemType} from "../ItemType";
+import {LeisureType} from "../../enums/leisure-type";
 
 describe('ItemModel', () => {
   let itemModel: ItemModel;
@@ -11,10 +11,10 @@ describe('ItemModel', () => {
   beforeEach(() => {
     itemModel = new ItemModel();
     itemGet = new ItemModel();
-    itemModel.typeOfItem = ItemType.ACCOMMODATION;
+    itemModel.typeOfItem = LeisureType.ACCOMMODATION;
     setSpy = spyOnProperty(itemModel, 'typeOfItem').and.callThrough();
     getSpy = spyOnProperty(itemGet, 'typeOfItem').and.returnValue(
-      ItemType.BAR
+      LeisureType.BAR
     );
   });
 
@@ -23,11 +23,11 @@ describe('ItemModel', () => {
   });
 
   it('should be set type of item', () => {
-    expect(itemModel.typeOfItem).toBe(ItemType.ACCOMMODATION);
+    expect(itemModel.typeOfItem).toBe(LeisureType.ACCOMMODATION);
     expect(setSpy).toHaveBeenCalled();
   });
   it('should be get type of item', () => {
-    expect(itemGet.typeOfItem).toBe(ItemType.BAR);
+    expect(itemGet.typeOfItem).toBe(LeisureType.BAR);
     expect(getSpy).toHaveBeenCalled();
   });
 

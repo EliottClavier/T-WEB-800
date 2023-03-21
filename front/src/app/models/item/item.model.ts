@@ -1,4 +1,4 @@
-import {ItemType} from "../ItemType";
+import {LeisureType} from "../../enums/leisure-type";
 
 export class ItemModel {
 
@@ -7,13 +7,13 @@ export class ItemModel {
   subtitle?: string = "default subtitle";
   description: string = "default description";
   image: string = './assets/images/default_image.jpg';
-  private _typeOfItem?: ItemType;
+  private _typeOfItem?: LeisureType;
 
-  public get typeOfItem(): ItemType {
-    return this._typeOfItem as ItemType;
+  public get typeOfItem(): LeisureType {
+    return this._typeOfItem as LeisureType;
   }
 
-  public set typeOfItem(type: ItemType){
+  public set typeOfItem(type: LeisureType){
     this._typeOfItem = type;
   }
 }

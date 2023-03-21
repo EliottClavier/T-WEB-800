@@ -4,7 +4,7 @@ import {MatCardModule} from "@angular/material/card";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 import {ItemModel} from "../../models/item/item.model";
 import {AppModule} from "../../app.module";
-import {ItemType} from "../../models/ItemType";
+import {LeisureType} from "../../enums/leisure-type";
 
 describe('CardItemComponent', () => {
   let component: CardItemComponent;
@@ -32,7 +32,7 @@ function InitializeCardValue(cardItem: ItemModel, spectator: Spectator<CardItemC
   cardItem.subtitle = 'test-subtitle';
   cardItem.description = 'test-description';
   cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
-  cardItem.typeOfItem = ItemType.ACCOMMODATION;
+  cardItem.typeOfItem = LeisureType.ACCOMMODATION;
 
   spectator.setInput('cardItem', cardItem);
 
