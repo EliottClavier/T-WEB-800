@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  AbstractControl,
+  AbstractControl, Form,
   FormArray,
   FormControl,
   FormGroup,
@@ -31,6 +31,18 @@ export class ExploreComponent implements OnInit {
     isEditing: false,
   };
 
+  onActiveSearchBarChange($event: SearchBarEvent) {
+    this.activeSearchBar = $event;
+
+      let formArrayElement : FormArray = this.searchFormsArray;
+      let formControls  = formArrayElement.at(this.activeSearchBar.index);
+      let location : Location = formControls.get('location')?.value;
+
+      this._getSuggestions(location);
+
+
+  }
+
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
   }
@@ -60,6 +72,9 @@ export class ExploreComponent implements OnInit {
       start: this._isValidDate(start) ? start : null,
       end: this._isValidDate(start) ? end : null,
     })
+  }
+   _getSuggestions(location :Location): void {
+
   }
 
 }

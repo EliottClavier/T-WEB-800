@@ -6,18 +6,24 @@ import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
 import {FormArray, FormGroup} from "@angular/forms";
-import {ActivatedRoute, convertToParamMap} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
   let spectator: Spectator<ExploreComponent>;
   let _route: ActivatedRoute;
   let _locationService: LocationService;
+  let _suggestionStoreService: SuggestionsStoreService;
+  let _multipleSearchComponent: MultipleSearchBarsComponent;
 
+  const mockChildComponent = jasmine.createSpyObj('MultipleSearchBarsComponent', ['childEvent']);
   const createComponent = createComponentFactory({
     component: ExploreComponent,
     providers: [
@@ -34,10 +40,13 @@ describe('ExploreComponent', () => {
             }
           },
         }
-      }
+      },
+      SuggestionsStoreService,
+      MultipleSearchBarsComponent
     ],
     declarations: [
       ExploreComponent,
+      MultipleSearchBarsComponent
     ],
     imports: [
       AppModule
@@ -52,7 +61,9 @@ describe('ExploreComponent', () => {
     component = spectator.component;
     _locationService = spectator.inject(LocationService);
     _route = spectator.inject(ActivatedRoute);
+    let router = spectator.inject(Router);
 
+    _multipleSearchComponent = spectator.inject(MultipleSearchBarsComponent);
     _route.snapshot.params = {
       location: "Nan"
     }
@@ -181,6 +192,30 @@ describe('ExploreComponent', () => {
     it('should return false if date parameter is not a date object', () => {
       expect(component["_isValidDate"]("test")).toBeFalsy();
     });
+
+
+  });
+  describe('Getting Suggestions information', () => {
+
+
+    it('should update activeSearchBar when index of input location triggered', () => {
+
+      let mockedValue: SearchBarEvent = {
+        index: 0,
+        isEditing: true,
+      };
+     const valueChangeSpy = spyOn(component, 'onActiveSearchBarChange').and.callThrough( );
+     const SuggestionsSpy = spyOn(component, '_getSuggestions').and.callThrough( );
+
+      spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
+
+      expect(valueChangeSpy).toHaveBeenCalled();
+      expect(mockedValue).toEqual(component.activeSearchBar);
+      expect(SuggestionsSpy).toHaveBeenCalled();
+    });
+    it('should getting Suggestion when search button is clicked', () => {
+
+    });
   });
 
-})
+});

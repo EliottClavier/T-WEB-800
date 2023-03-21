@@ -1,4 +1,4 @@
-import { MultipleSearchBarsComponent } from './multiple-search-bars.component';
+import {MultipleSearchBarsComponent} from './multiple-search-bars.component';
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
@@ -280,7 +280,25 @@ describe('MultipleSearchBarsComponent', () => {
         expect(spectator.queryAll("[search-bar-input] [search-input][readonly]").length).toBe(component.searchFormsArrayControls.length - 1);
       });
     });
+    it('should emit the correct value when location is selected', () => {
 
+      let mockedValue: SearchBarEvent = {
+        index: 0,
+        isEditing: true,
+      };
+
+      let emittedValue: any;
+
+      spectator.component.activeSearchBarChange.subscribe((val) => (
+        emittedValue = val
+
+      ));
+      let spyEmit = spyOn(spectator.component.activeSearchBarChange, 'emit').and.callThrough();
+      spectator.component.activeSearchBarChange.emit(mockedValue)
+
+      expect(spyEmit).toHaveBeenCalled();
+      expect(emittedValue).toEqual(mockedValue);
+    });
   });
 
   /*
