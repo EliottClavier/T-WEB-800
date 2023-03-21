@@ -3,6 +3,7 @@ import {FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
+import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureType} from "../../enums/leisure-type";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
@@ -15,7 +16,7 @@ import {ItemModel} from "../../models/item/item.model";
 })
 export class SingleSearchBarComponent {
 
-  @Input() public searchForm: FormGroup = new FormGroup<any>({});
+  @Input() public searchForm: FormGroup = buildSearchBarFormGroupControls();
 
   constructor(
     private _router: Router,

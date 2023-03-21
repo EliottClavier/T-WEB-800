@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { RegisterUserComponent } from './containers/register-user/register-user.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
@@ -30,13 +31,13 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import { HeaderComponent } from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { MapComponent } from './containers/map/map.component';
+import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
 import { CardItemComponent } from './components/card-item/card-item.component';
 import { CardItemsListComponent } from './components/card-items-list/card-items-list.component';
 import {HttpClient} from "@angular/common/http";
 import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
-import {RegisterUserComponent} from "./containers/register-user/register-user.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,7 +62,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     SingleSearchBarComponent,
     MapComponent,
     MainComponent,
-    CardsContainerComponent
+    CardsContainerComponent,
+    MapComponent,
+    MapFiltersComponent
   ],
   imports: [
     GoogleMapsModule,

@@ -1,1 +1,12 @@
-<p>map-filters works!</p>
+<div class="row justify-content-center">
+  <div class="col-12 mx-2">
+    <div class="row m-0">
+      <app-date-range
+        class="col-12 px-0"
+        filter-date-range
+        *ngIf="selectedSearchForm"
+        [searchForm]="selectedSearchForm">
+      </app-date-range>
+    </div>
+  </div>
+</div>

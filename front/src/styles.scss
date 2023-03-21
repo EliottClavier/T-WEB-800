@@ -8,3 +8,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .h-container {
   min-height: calc(100vh - 9vh);
 }
+
+.h-container-fixed {
+  min-height: calc(100vh - 9vh);
+  max-height: calc(100vh - 9vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.border-lightgray-bottom {
+  border-bottom: 1px solid lightgray;
+}
+
+.border-lightgray-top {
+  border-top: 1px solid lightgray;
+}
+
+.border-lightgray-right {
+  border-right: 1px solid lightgray;
+}
+
+.border-lightgray-left {
+  border-left: 1px solid lightgray;
+}

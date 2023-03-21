@@ -1,7 +1,17 @@
 <div class="container-fluid h-container">
   <div class="row justify-content-center">
-    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 px-0 py-3 sticky-top">
-      <app-multiple-search-bars search-bar></app-multiple-search-bars>
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 m-0 py-3 h-container-fixed border-lightgray-right">
+      <app-multiple-search-bars
+        search-bar
+        [(activeSearchBar)]="activeSearchBar"
+        [searchForms]="searchForms"
+      ></app-multiple-search-bars>
+      <hr class="mx-2 my-4 border-lightgray-bottom">
+      <app-map-filters
+        map-filters
+        *ngIf="activeSearchBar.index !== null"
+        [selectedSearchForm]="searchFormsArrayControls[activeSearchBar.index]"
+      ></app-map-filters>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 px-0">
       <app-map map></app-map>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -12,6 +12,10 @@ export class DateRangeComponent implements OnInit {
 
   public ngOnInit(): void {
     // Add controls
+    this._initForm();
+  }
+
+  private _initForm(): void {
     this.searchForm.addControl(
       "start", new FormControl<Date | null>(null, [ Validators.required ])
     );

@@ -8,6 +8,9 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatIconModule} from "@angular/material/icon";
+import {EventEmitter} from "@angular/core";
+import {SearchBarEvent} from "../../../types/search-bar-event.type";
 
 describe('SearchInputComponent', () => {
   let component: SearchInputComponent;
@@ -21,6 +24,7 @@ describe('SearchInputComponent', () => {
       MatAutocompleteModule,
       MatFormFieldModule,
       MatInputModule,
+      MatIconModule,
       ReactiveFormsModule,
       FormsModule
     ],
@@ -38,7 +42,6 @@ describe('SearchInputComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     _locationService = spectator.inject(LocationService);
-
     component.locationOptions = [];
 
     // spyOn LocationService.getLocations() to mock API Call
@@ -205,18 +208,6 @@ describe('SearchInputComponent', () => {
     expect(component.locationOptions).toEqual([]);
   });
 
-  it('should define a validator called isLocation', () => {
-    expect(component["isLocation"]).toBeDefined();
-  });
-
-  it('should have a validator to verify that location has Location type', () => {
-    component.searchForm.patchValue({
-      locationSearch: "Nan",
-      location: new Location("1", "Nantes")
-    });
-    expect(component["isLocation"]()(component.searchForm.get("location")!)).toEqual(null);
-  });
-
   it('should require location FormControl with value of type Location', () => {
     component.searchForm.patchValue({
       locationSearch: "Nan",
@@ -262,5 +253,103 @@ describe('SearchInputComponent', () => {
     // mat-error not displayed again
     expect(spectator.query('[search-input-error]')).toBeFalsy();
   });
+
+  describe('Readonly mode', () => {
+
+    beforeEach(() => {
+      component.id = 1;
+      component.readonly = true;
+      spectator.detectChanges();
+    });
+
+    it('should display pointer when readonly', () => {
+      expect(spectator.query('[search-input]')!.getAttribute("readonly")).toEqual("true");
+      expect(spectator.query('[search-input]')!.getAttribute("style")).toEqual("cursor: pointer;");
+    });
+
+    it('should not display pointer when not readonly', () => {
+      component.readonly = false;
+      spectator.detectChanges();
+      expect(spectator.query('[search-input]')!.getAttribute("readonly")).toEqual(null);
+      expect(spectator.query('[search-input]')!.getAttribute("style")).toEqual("cursor: auto;");
+    });
+
+    it('should have edit icon when readonly', () => {
+      expect(spectator.query('[search-input-suffix]')).toHaveText("edit");
+    });
+
+    it('should have search icon when not readonly', () => {
+      component.readonly = false;
+      spectator.detectChanges();
+      expect(spectator.query('[search-input-suffix]')).toHaveText("search");
+    });
+
+    describe('onSelectSearchBar method', () => {
+      it('should emit event with its id on search bar selected', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.onSearchBarSelect, "emit");
+        component.onSelectSearchBar();
+        expect(component.onSearchBarSelect.emit).toHaveBeenCalledWith({
+          index: component.id!,
+          isEditing: false
+        });
+      });
+
+      it('should emit nothing when its id is null on search bar selected', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.onSearchBarSelect, "emit");
+        component.id = null;
+        spectator.detectChanges();
+        component.onSelectSearchBar();
+        expect(component.onSearchBarSelect.emit).not.toHaveBeenCalled();
+      });
+
+      it('should emit nothing when not readonly on search bar selected', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.onSearchBarSelect, "emit");
+        component.readonly = false
+        spectator.detectChanges();
+        component.onSelectSearchBar();
+        expect(component.onSearchBarSelect.emit).not.toHaveBeenCalled();
+      });
+
+      it('should trigger method on click on searchbar when readonly and id not null', () => {
+        spyOn<SearchInputComponent, any>(component, "onSelectSearchBar");
+        spectator.click(spectator.query('[search-input-form-field]')!);
+        expect(component.onSelectSearchBar).toHaveBeenCalled();
+      });
+    });
+
+    describe('onEditSearchBar method', () => {
+
+      it('should set readonly property to false', () => {
+        component.onEditSearchBar();
+        expect(component.readonly).toEqual(false);
+      });
+
+      it('should emit event with its id on click on edit icon', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.onSearchBarSelect, "emit");
+        component.onEditSearchBar();
+        expect(component.onSearchBarSelect.emit).toHaveBeenCalledWith({
+          index: component.id!,
+          isEditing: true
+        });
+      });
+
+      it('should not emit its id on click on edit icon when id is null', () => {
+        spyOn<EventEmitter<SearchBarEvent>, any>(component.onSearchBarSelect, "emit");
+        component.id = null;
+        spectator.detectChanges();
+        component.onEditSearchBar();
+        expect(component.onSearchBarSelect.emit).not.toHaveBeenCalled();
+      });
+
+      it('should become editable on edit icon click', () => {
+        spyOn<SearchInputComponent, any>(component, "onEditSearchBar");
+        component.readonly = true;
+        spectator.detectChanges();
+        spectator.click(spectator.query('[search-input-suffix]')!);
+        expect(component.onEditSearchBar).toHaveBeenCalled();
+      });
+    });
+  });
+
 
 });

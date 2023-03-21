@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Location} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {SearchBarEvent} from "../../../types/search-bar-event.type";
+import {isLocation} from "../../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-search-input',
@@ -10,7 +12,12 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, 
 })
 export class SearchInputComponent implements OnInit {
 
+  @Input() public id: number | null = null;
   @Input() public searchForm: FormGroup = new FormGroup<any>({});
+  @Input() public readonly: boolean = false;
+
+  @Output() public onSearchBarSelect: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
+
   @Output() public onLocationOptionChange: EventEmitter<any> = new EventEmitter<any>();
   public locationOptions: Location[] = [];
 
@@ -24,7 +31,7 @@ export class SearchInputComponent implements OnInit {
       "locationSearch", new FormControl<string>("", [ Validators.required ]),
     );
     this.searchForm.addControl(
-      "location", new FormControl<Location | null>(null, [ Validators.required, this.isLocation() ])
+      "location", new FormControl<Location | null>(null, [ Validators.required, isLocation() ])
     );
 
     // Change detection
@@ -40,12 +47,6 @@ export class SearchInputComponent implements OnInit {
 
   get location(): FormControl {
     return this.searchForm.get("location")! as FormControl;
-  }
-
-  private isLocation(): ValidatorFn {
-    return (control: AbstractControl) : ValidationErrors | null => {
-      return control.value instanceof Location ? null : { isLocation: true };
-    }
   }
 
   private _getLocationSuggestions(search: string): void {
@@ -64,6 +65,21 @@ export class SearchInputComponent implements OnInit {
   public onLocationOptionClick(location: Location): void {
     this.onLocationOptionChange.emit(location);
     this.locationOptions = [];
+  }
+
+  public onSelectSearchBar(): void {
+    this.id !== null && this.readonly && (this.onSearchBarSelect.emit({
+      index: this.id,
+      isEditing: false,
+    }));
+  }
+
+  public onEditSearchBar(): void {
+    this.id !== null && this.readonly && (this.onSearchBarSelect.emit({
+      index: this.id,
+      isEditing: true,
+    }));
+    this.readonly = false;
   }
 
 }
