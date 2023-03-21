@@ -86,11 +86,11 @@ describe('ExploreComponent', () => {
       expect(mapComponent).toBeDefined();
     });
 
-    // it('should have a map-filters component', () => {
-    //   let mapFilters = spectator.debugElement.query(By.css("app-map-filters"))!;
-    //   let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
-    //   expect(mapFiltersComponent).toBeDefined();
-    // });
+    it('should have a map-filters component', () => {
+      let mapFilters = spectator.debugElement.query(By.css("app-map-filters"))!;
+      let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
+      expect(mapFiltersComponent).toBeDefined();
+    });
   });
 
   describe('Component initialization', () => {
