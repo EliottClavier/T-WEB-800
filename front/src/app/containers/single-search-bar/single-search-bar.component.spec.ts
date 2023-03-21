@@ -164,6 +164,7 @@ describe('SingleSearchBarComponent', () => {
         }
       );
     });
+
     it('should set location and search value based on selected option', () => {
       const location = new Location('01', 'New York');
       const suggestions = getAccommodationItems()
@@ -209,6 +210,8 @@ describe('SingleSearchBarComponent', () => {
       });
     });
   });
+
+
 });
     function getAccommodationItems() {
       let data = new Array<ItemModel>();

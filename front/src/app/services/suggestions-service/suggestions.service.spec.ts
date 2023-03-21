@@ -1,11 +1,11 @@
 import {fakeAsync, tick} from '@angular/core/testing';
 
 import {SuggestionsService} from './suggestions.service';
-import {createServiceFactory, SpectatorService} from "@ngneat/spectator";
+import {createHttpFactory, createServiceFactory, HttpMethod, SpectatorHttp, SpectatorService} from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {ItemModel} from "../../models/item/item.model";
 import {ItemType} from "../../models/ItemType";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Location} from "../../models/location/location.model";
 import {delay, Observable} from "rxjs";
 import {addMatchers} from 'jasmine-marbles';
@@ -16,7 +16,7 @@ describe('SuggestionsService', () => {
   let spectator: SpectatorService<SuggestionsService>;
   let httpclient: HttpClient;
   let service: SuggestionsService;
-  let httpMock: HttpTestingController;
+  let spectatorHttp: SpectatorHttp<SuggestionsService>
 
   const createService = createServiceFactory({
     service: SuggestionsService,
@@ -24,10 +24,13 @@ describe('SuggestionsService', () => {
     providers: [HttpClient],
   });
 
+  const createHttp = createHttpFactory(SuggestionsService);
+
   beforeEach(() => {
     spectator = createService();
     service = spectator.service;
     httpclient = spectator.inject(HttpClient);
+    spectatorHttp = createHttp();
     addMatchers();
   });
 
@@ -46,13 +49,19 @@ describe('SuggestionsService', () => {
   it('should have HttpClient as dependency', () => {
     expect(httpclient).toBeDefined();
   });
+  it('should test HttpClient getReviewSuggestions', () => {
+    let location = new Location("1", "Nantes");
 
-  it('should GET http request ', () => {
-    let req = httpMock.expectOne(`/api/search/accommodation/nantes`);
+    spectatorHttp.service.getReviewSuggestions(ItemType.ACCOMMODATION, location).subscribe(
+      (data) => {
+        expect(data).toEqual(getBarItems());
+      }
+    );
+
+    let req = spectatorHttp.expectOne(`/api/review/accommodations/search?location=${location.getName}`, HttpMethod.GET);
+    req.flush(getBarItems());
     expect(req.request.method).toEqual('GET');
-    // req.flush(testItemModelInformations.filter(
-    //   (accomodations : ItemModel[]) => accomodation.getTitle().toLowerCase())
-    // ), {status: 200, statusText: 'OK'});
+
   });
 
 
@@ -76,6 +85,7 @@ describe('SuggestionsService', () => {
 
   }));
 });
+
 function getBarItems$() {
   let data = new Array<ItemModel>();
   for (let i = 0; i < 3; i++) {
@@ -104,28 +114,28 @@ let testItemModelInformations: ItemModel[] = [
     "id": "1",
     "title": "firstAccommodation",
     "description": "this is a description",
-    "image":'./assets/images/default_image.jpg',
+    "image": './assets/images/default_image.jpg',
     "typeOfItem": ItemType.ACCOMMODATION,
   },
   {
     "id": "2",
     "title": "secondAccommodation",
     "description": "this is a description",
-    "image":'./assets/images/default_image.jpg',
+    "image": './assets/images/default_image.jpg',
     "typeOfItem": ItemType.ACCOMMODATION,
   },
   {
     "id": "3",
     "title": "thirdAccommodation",
     "description": "this is a description",
-    "image":'./assets/images/default_image.jpg',
+    "image": './assets/images/default_image.jpg',
     "typeOfItem": ItemType.ACCOMMODATION,
   },
   {
     "id": "4",
     "title": "fourthAccommodation",
     "description": "this is a description",
-    "image":'./assets/images/default_image.jpg',
+    "image": './assets/images/default_image.jpg',
     "typeOfItem": ItemType.ACCOMMODATION,
   },
   {
@@ -137,7 +147,7 @@ let testItemModelInformations: ItemModel[] = [
   },
   {
     "id": "6",
-    "title": "firstAccommodation",
+    "title": "sixthAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
     "typeOfItem": ItemType.ACCOMMODATION,

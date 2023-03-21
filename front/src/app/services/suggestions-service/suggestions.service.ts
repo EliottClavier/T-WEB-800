@@ -11,13 +11,13 @@ import {Observable} from "rxjs";
 })
 export class SuggestionsService {
 
-  private suggestions_url: string = 'http://localhost:3000/suggestions/';
+  private review_suggestions_url: string = '/api/review/';
 
 
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
   getReviewSuggestions(itemType: ItemType, location : Location,): Observable<ItemModel[]> {
-    return this._httpclient.get<ItemModel[]>(`${this.suggestions_url}${itemType}`)
+    return this._httpclient.get<ItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.getName}`);
   }
 }
