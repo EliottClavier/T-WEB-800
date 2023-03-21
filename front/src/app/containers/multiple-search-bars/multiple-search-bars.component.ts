@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {getDateFromIsoString} from "../../utils/date.utils";
 
 @Component({
   selector: 'app-multiple-search-bars',
@@ -11,7 +9,7 @@ import {getDateFromIsoString} from "../../utils/date.utils";
 })
 export class MultipleSearchBarsComponent {
 
-  public searchForms: FormGroup = new FormGroup({
+  @Input() public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
       new FormGroup({}),
     ]),
@@ -30,8 +28,18 @@ export class MultipleSearchBarsComponent {
     return this.searchFormsArray.controls as FormGroup[];
   }
 
+  get lastSearchBar(): FormGroup {
+    return this.searchFormsArrayControls[this.searchFormsArrayControls.length - 1];
+  }
+
   public addSearchBar(): void {
-    this.searchFormsArray.push(new FormGroup({}));
+    let newFormGroup: FormGroup = new FormGroup({});
+    if (this.lastSearchBar.get("end")?.value) {
+      newFormGroup.addControl(
+        "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [ Validators.required ])
+      );
+    }
+    this.searchFormsArray.push(newFormGroup);
   }
 
   public removeSearchBar(index: number): void {

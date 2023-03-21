@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +14,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import { SearchInputComponent } from './components/inputs/search-input/search-input.component';
-import {HttpClientModule} from "@angular/common/http"
+import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { DateRangeComponent } from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -28,6 +28,8 @@ import { SingleSearchBarComponent } from './containers/single-search-bar/single-
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import { HeaderComponent } from './components/header/header.component';
+import {GoogleMapsModule} from "@angular/google-maps";
+import { MapComponent } from './containers/map/map.component';
 import { CardItemComponent } from './components/card-item/card-item.component';
 import { CardItemsListComponent } from './components/card-items-list/card-items-list.component';
 import {HttpClient} from "@angular/common/http";
@@ -57,12 +59,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     SimpleIconButtonComponent,
     ExploreComponent,
     SingleSearchBarComponent,
+    MapComponent,
     MainComponent,
     CardsContainerComponent
   ],
   imports: [
+    GoogleMapsModule,
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     FormsModule,
     MatButtonModule,

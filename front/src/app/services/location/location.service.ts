@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Location} from "../../models/location/location.model";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {getDateFromIsoString} from "../../utils/date.utils";
 
 @Injectable({

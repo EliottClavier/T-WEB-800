@@ -34,6 +34,7 @@ describe('LoginUserComponent', () => {
     component: LoginUserComponent,
     imports: [
       HttpClientModule,
+      MatCardModule,
       MatAutocompleteModule,
       MatFormFieldModule,
       MatInputModule,
