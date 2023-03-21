@@ -111,26 +111,13 @@ describe('MapComponent', () => {
 
   describe('Boundaries change', () => {
 
-    it('should emit new boundaries on boundaries change', () => {
+    it('should emit new boundaries on zoom change', async() => {
       spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
       spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
       component.map.boundsChanged.subscribe(() => {
-        // Can't test what's emitted  since there is no way
+        // Can't test what's emitted since there is no way
         // to wait for the map to be fully loaded it seems
         // The content emitted is made from component.map.getBounds() with N,E,S,W coordinates
-        expect(component.onMapBoundariesChange).toHaveBeenCalled();
-        expect(component.onBoundariesChange.emit).toHaveBeenCalled();
-      });
-
-      google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
-        latLng: new google.maps.LatLng(50, 50)
-      });
-    });
-
-    it('should emit new boundaries on zoom change', () => {
-      spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
-      spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
-      component.map.boundsChanged.subscribe(() => {
         expect(component.onMapBoundariesChange).toHaveBeenCalled();
         expect(component.onBoundariesChange.emit).toHaveBeenCalled();
       });
@@ -144,11 +131,14 @@ describe('MapComponent', () => {
       google.maps.event.trigger(component.map.googleMap!, 'zoom_changed');
     });
 
-    it('should emit new boundaries on drag end', () => {
+    it('should emit new boundaries on drag end', async() => {
       spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
       spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
 
       component.map.boundsChanged.subscribe(() => {
+        // Can't test what's emitted since there is no way
+        // to wait for the map to be fully loaded it seems
+        // The content emitted is made from component.map.getBounds() with N,E,S,W coordinates
         expect(component.onMapBoundariesChange).toHaveBeenCalled();
         expect(component.onBoundariesChange.emit).toHaveBeenCalled();
       });
