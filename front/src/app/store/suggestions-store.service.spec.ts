@@ -34,7 +34,7 @@ describe('SuggestionsStoreService', () => {
     let data = new Array<LeisureItemModel>();
     for (let i = 0; i < 4; i++) {
       let item = new LeisureItemModel();
-      item.category = LeisureCategory.ACTIVITY;
+      item.category = LeisureCategory.CULTURAL_EVENT;
       data.push(item);
     }
     return data;

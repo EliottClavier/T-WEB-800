@@ -64,7 +64,6 @@ describe('SuggestionsService', () => {
 
   });
 
-
   it('should have getReviewSuggestions method', () => {
     expect(service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeDefined();
     expect(spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeTruthy();
@@ -108,48 +107,49 @@ function getBarItems() {
   }
   return data;
 };
-
-let testItemModelInformations: LeisureItemModel[] = [
-  {
-    "id": "1",
-    "title": "firstAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-  {
-    "id": "2",
-    "title": "secondAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-  {
-    "id": "3",
-    "title": "thirdAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-  {
-    "id": "4",
-    "title": "fourthAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-  {
-    "id": "5",
-    "title": "fifthAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-  {
-    "id": "6",
-    "title": "sixthAccommodation",
-    "description": "this is a description",
-    "image": './assets/images/default_image.jpg',
-    "category": LeisureCategory.ACCOMMODATION,
-  },
-]
+//
+// let testItemModelInformations: LeisureItemModel[] = [
+//   {
+//     "id": "1",
+//     "title": "firstAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//   },
+//   {
+//     "id": "2",
+//     "title": "secondAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//   },
+//   {
+//     "id": "3",
+//     "title": "thirdAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//   },
+//   {
+//     "id": "4",
+//     "title": "fourthAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//   },
+//   {
+//     "id": "5",
+//     "title": "fifthAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//     c
+//   },
+//   {
+//     "id": "6",
+//     "title": "sixthAccommodation",
+//     "description": "this is a description",
+//     "image": './assets/images/default_image.jpg',
+//     "category": LeisureCategory.ACCOMMODATION,
+//   },
+// ]

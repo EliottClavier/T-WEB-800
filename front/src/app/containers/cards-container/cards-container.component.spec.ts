@@ -6,6 +6,7 @@ import {SuggestionsService} from "../../services/suggestions-service/suggestions
 import {of} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 
 function getItems(): LeisureItemModel[] {
   let items: LeisureItemModel[] = [];
@@ -13,70 +14,87 @@ function getItems(): LeisureItemModel[] {
   for (let i = 0; i < 3; i++) {
     items.push(new LeisureItemModel());
   }
-    return items;
-  }
+  return items;
+}
 
-  describe('Card container', () => {
-    let spectator: Spectator<CardsContainerComponent>;
-    let barItems: LeisureItemModel[] = getItems();
-    let component: CardsContainerComponent;
-    let store: SuggestionsStoreService;
+describe('Card container', () => {
+  let spectator: Spectator<CardsContainerComponent>;
+  let barItems: LeisureItemModel[] = getItems();
+  let component: CardsContainerComponent;
+  let store: SuggestionsStoreService;
+  let suggests : LeisureItemModel[]
+  const createComponent = createComponentFactory({
+    component: CardsContainerComponent,
+    imports: [AppModule],
+    providers: [
+      SuggestionsService,
 
-    const createComponent = createComponentFactory({
-      component: CardsContainerComponent,
-      imports: [AppModule],
-      providers: [
-        SuggestionsService,
-        TranslateService,
-        {
-          provide: SuggestionsStoreService,
-          useValue: { suggestions$ : of(barItems)}
-        }
-      ],
+      {
+        provide: SuggestionsStoreService,
+        useValue: {suggestions$: of(barItems)}
+      },
+      TranslateService,
+    ],
+  });
+
+  describe('should fetch suggestions store to get data', () => {
+
+    beforeEach(() => {
+      spectator = createComponent();
+      component = spectator.component;
+      store = spectator.inject(SuggestionsStoreService);
+      suggests = component.suggests = getAccommodationItems();
+      barItems = new Array<LeisureItemModel>();
+      for (let i = 0; i < 3; i++) {
+        barItems.push(new LeisureItemModel());
+      }
+
+      spectator.detectChanges()
+
     });
 
+    it('should have SuggestionsStore injected', () => {
+      expect(component["_suggestionsStore"]).toBeDefined();
+      expect(component["_suggestionsStore"]).toBeTruthy();
+      expect(component["_suggestionsStore"]).toEqual(store);
 
-    describe('should fetch suggestions store to get data', () => {
+    });
 
-      beforeEach(() => {
-        spectator = createComponent();
-        component = spectator.component;
-        store = spectator.inject(SuggestionsStoreService);
+    it('should get suggestionItem from SuggestionsService when data store updated', () => {
 
-        barItems = new Array<LeisureItemModel>();
-        for (let i = 0; i < 3; i++) {
-          barItems.push(new LeisureItemModel());
-        }
+      spyOn(store.suggestions$, 'subscribe').and.callThrough();
+      spectator.component.subscribeItems();
+      spectator.detectChanges();
 
-        spectator.detectChanges()
+      expect(store.suggestions$.subscribe).toHaveBeenCalled();
+      expect(spectator.component.suggests).toEqual(barItems);
 
+    });
+
+    describe('Card container displaying', () => {
+
+
+
+      it('should display the leisure item category', async () => {
+
+        const translateService = await spectator.inject(TranslateService);
+
+        let categoryString = translateService.instant(suggests[0].categoryTranslateKey().toString())
+        // let categoryString = translateService.instant('leisure_category_unknown')
+  console.log("salut" + categoryString);
+        expect(spectator.query('[data-cy-item-category]')).toHaveText(categoryString);
       });
 
-      it('should have SuggestionsStore injected', () => {
-        expect(component["_suggestionsStore"]).toBeDefined();
-        expect(component["_suggestionsStore"]).toBeTruthy();
-        expect(component["_suggestionsStore"]).toEqual(store);
+      it('should display the leisure items', () => {
 
+        expect(spectator.query('[data-cy-items]')).toBeTruthy();
+        expect(suggests).toBeTruthy()
       });
 
-      it('should get suggestionItem from SuggestionsService when data store updated', () => {
-
-        spyOn(store.suggestions$, 'subscribe').and.callThrough();
-        spectator.component.subscribeItems();
-        spectator.detectChanges();
-
-        expect(store.suggestions$.subscribe).toHaveBeenCalled();
-        expect(spectator.component.suggests).toEqual(barItems);
-
-      });
-
-      describe('Card container displaying', () => {
-
-          it('should display the leisure item category', () => {
-            const translateService = spectator.inject(TranslateService);
-            expect(spectator.query('[data-cy-item-category]')).toHaveText(translateService.instant('accommodations_leisure_accommodations'));
-          });
+      it('should display the "show more" button of leisure items', () => {
+        expect(spectator.query('[data-cy-show-more-item-button]')).toBeTruthy();
 
       });
     });
   });
+});

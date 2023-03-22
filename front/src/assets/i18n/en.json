@@ -2,11 +2,12 @@
 
   "hello": "Hello guys!",
   "nothing_to_display" : "Nothing to display",
-  "accommodations_leisure_accommodations" : "Accommodations",
-  "accommodations_leisure_sporting_event" : "Sporting events",
-  "accommodations_leisure_cultural_event" : "Cultural events",
-  "accommodations_leisure_bar" : "Bars",
-  "accommodations_leisure_restaurant" : "Restaurants"
-
+  "leisure_category_accommodations" : "Accommodations",
+  "leisure_category_sporting_event" : "Sporting events",
+  "leisure_category_cultural_event" : "Cultural events",
+  "leisure_category_bar" : "Bars",
+  "leisure_category_restaurant" : "Restaurants",
+  "leisure_category_unknown" : "Unknown",
+  "unknown" : "Unknown"
 
 }
