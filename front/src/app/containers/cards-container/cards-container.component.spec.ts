@@ -5,6 +5,7 @@ import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {of} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {TranslateService} from "@ngx-translate/core";
 
 function getItems(): LeisureItemModel[] {
   let items: LeisureItemModel[] = [];
@@ -26,6 +27,7 @@ function getItems(): LeisureItemModel[] {
       imports: [AppModule],
       providers: [
         SuggestionsService,
+        TranslateService,
         {
           provide: SuggestionsStoreService,
           useValue: { suggestions$ : of(barItems)}
@@ -56,6 +58,7 @@ function getItems(): LeisureItemModel[] {
         expect(component["_suggestionsStore"]).toEqual(store);
 
       });
+
       it('should get suggestionItem from SuggestionsService when data store updated', () => {
 
         spyOn(store.suggestions$, 'subscribe').and.callThrough();
@@ -67,5 +70,13 @@ function getItems(): LeisureItemModel[] {
 
       });
 
+      describe('Card container displaying', () => {
+
+          it('should display the leisure item category', () => {
+            const translateService = spectator.inject(TranslateService);
+            expect(spectator.query('[data-cy-item-category]')).toHaveText(translateService.instant('accommodations_leisure_accommodations'));
+          });
+
+      });
     });
   });

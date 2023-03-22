@@ -1,11 +1,11 @@
 import {LeisureItemModel} from "../models/Leisure/leisure.item.model";
-import {LeisureType} from "../enums/leisure-type";
+import {LeisureCategory} from "../enums/leisure-category";
 
  export function getAccommodationItems() {
   let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 6; i++) {
     let item = new LeisureItemModel();
-    item.typeOfItem = LeisureType.ACCOMMODATION;
+    item.category = LeisureCategory.ACCOMMODATION;
     data.push(item);
   }
   return data;

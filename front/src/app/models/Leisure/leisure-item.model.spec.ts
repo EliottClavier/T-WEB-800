@@ -1,6 +1,6 @@
 import {LeisureItemModel} from './leisure.item.model';
 import {Spectator} from "@ngneat/spectator";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('LeisureItemModel', () => {
   let itemModel: LeisureItemModel;
@@ -11,10 +11,10 @@ describe('LeisureItemModel', () => {
   beforeEach(() => {
     itemModel = new LeisureItemModel();
     itemGet = new LeisureItemModel();
-    itemModel.typeOfItem = LeisureType.ACCOMMODATION;
-    setSpy = spyOnProperty(itemModel, 'typeOfItem').and.callThrough();
-    getSpy = spyOnProperty(itemGet, 'typeOfItem').and.returnValue(
-      LeisureType.BAR
+    itemModel.category = LeisureCategory.ACCOMMODATION;
+    setSpy = spyOnProperty(itemModel, 'category').and.callThrough();
+    getSpy = spyOnProperty(itemGet, 'category').and.returnValue(
+      LeisureCategory.BAR
     );
   });
 
@@ -23,11 +23,11 @@ describe('LeisureItemModel', () => {
   });
 
   it('should be set type of item', () => {
-    expect(itemModel.typeOfItem).toBe(LeisureType.ACCOMMODATION);
+    expect(itemModel.category).toBe(LeisureCategory.ACCOMMODATION);
     expect(setSpy).toHaveBeenCalled();
   });
   it('should be get type of item', () => {
-    expect(itemGet.typeOfItem).toBe(LeisureType.BAR);
+    expect(itemGet.category).toBe(LeisureCategory.BAR);
     expect(getSpy).toHaveBeenCalled();
   });
 });

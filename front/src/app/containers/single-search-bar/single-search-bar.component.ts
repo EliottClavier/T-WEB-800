@@ -5,7 +5,7 @@ import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
 import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 
@@ -30,7 +30,7 @@ export class SingleSearchBarComponent {
       locationSearch: location.name,
       location: location,
     });
-    this._suggestionService.getReviewSuggestions(LeisureType.ACCOMMODATION, location).subscribe(
+    this._suggestionService.getReviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
       {
         next: (suggestions) => {
             this._suggestionStoreService.setSuggestionsData(suggestions);

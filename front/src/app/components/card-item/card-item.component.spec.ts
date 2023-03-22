@@ -2,7 +2,7 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('CardItemComponent', () => {
   let spectator: Spectator<CardItemComponent>;
@@ -74,7 +74,7 @@ function InitializeCardValue(cardItem: LeisureItemModel, spectator: Spectator<Ca
   cardItem.subtitle = 'test-subtitle';
   cardItem.description = 'test-description';
   cardItem.image = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
-  cardItem.typeOfItem = LeisureType.ACCOMMODATION;
+  cardItem.category = LeisureCategory.ACCOMMODATION;
 
   spectator.setInput('cardItem', cardItem);
 

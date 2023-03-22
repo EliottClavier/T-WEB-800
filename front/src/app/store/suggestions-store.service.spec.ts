@@ -4,7 +4,7 @@ import {SuggestionsStoreService} from './suggestions-store.service';
 import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spectator";
 import {LeisureItemModel} from "../models/Leisure/leisure.item.model";
 import {SuggestionsService} from "../services/suggestions-service/suggestions.service";
-import {LeisureType} from "../enums/leisure-type";
+import {LeisureCategory} from "../enums/leisure-category";
 import {BehaviorSubject} from "rxjs";
 import {SingleSearchBarComponent} from "../containers/single-search-bar/single-search-bar.component";
 
@@ -24,7 +24,7 @@ describe('SuggestionsStoreService', () => {
     let data = new Array<LeisureItemModel>();
     for (let i = 0; i < 3; i++) {
       let item = new LeisureItemModel();
-      item.typeOfItem = LeisureType.BAR;
+      item.category = LeisureCategory.BAR;
       data.push(item);
     }
     return data;
@@ -34,7 +34,7 @@ describe('SuggestionsStoreService', () => {
     let data = new Array<LeisureItemModel>();
     for (let i = 0; i < 4; i++) {
       let item = new LeisureItemModel();
-      item.typeOfItem = LeisureType.ACTIVITY;
+      item.category = LeisureCategory.ACTIVITY;
       data.push(item);
     }
     return data;
@@ -107,7 +107,7 @@ function getAccommodationItems() {
   let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
     let item = new LeisureItemModel();
-    item.typeOfItem = LeisureType.BAR;
+    item.category = LeisureCategory.BAR;
     data.push(item);
   }
   return data;

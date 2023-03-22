@@ -12,7 +12,7 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 import {of, throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
@@ -155,7 +155,7 @@ describe('SingleSearchBarComponent', () => {
 
       component.onLocationOptionClick(location);
 
-      expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureType.ACCOMMODATION, location);
+      expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
       expect(component.searchForm.value.location).toEqual(location);
       expect(component.searchForm.value.locationSearch).toEqual(location.name);
     });
@@ -170,7 +170,7 @@ describe('SingleSearchBarComponent', () => {
 
       suggestionStore.suggestions$.subscribe(suggests => {
 
-        expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureType.ACCOMMODATION, location);
+        expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
         expect(suggests).toEqual(suggestions);
       });
     })
@@ -198,7 +198,7 @@ describe('SingleSearchBarComponent', () => {
       let data = new Array<LeisureItemModel>();
       for (let i = 0; i < 6; i++) {
         let item = new LeisureItemModel();
-        item.typeOfItem = LeisureType.BAR;
+        item.category = LeisureCategory.BAR;
         data.push(item);
       }
       return data;

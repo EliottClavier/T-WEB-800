@@ -5,7 +5,7 @@ import {HttpClientTestingModule, HttpTestingController} from "@angular/common/ht
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {Location} from "../../models/location/location.model";
 import {getDateFromIsoString} from "../../utils/date.utils";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('LocationService', () => {
   let service: LocationService;
@@ -20,7 +20,7 @@ describe('LocationService', () => {
     new Location("5", "Nanterre"),
   ];
 
-  let testLeisure = LeisureType.ACCOMMODATION;
+  let testLeisure = LeisureCategory.ACCOMMODATION;
 
   let testLocationInformations: any[] = [
     {
@@ -29,7 +29,7 @@ describe('LocationService', () => {
     },
     {
       "name": "firstBar",
-      "type": LeisureType.BAR,
+      "type": LeisureCategory.BAR,
     },
     {
       "name": "secondAccommodation",

@@ -4,7 +4,7 @@ import {SuggestionsService} from './suggestions.service';
 import {createHttpFactory, createServiceFactory, HttpMethod, SpectatorHttp, SpectatorService} from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Location} from "../../models/location/location.model";
 import {delay, Observable} from "rxjs";
@@ -52,7 +52,7 @@ describe('SuggestionsService', () => {
   it('should test HttpClient getReviewSuggestions', () => {
     let location = new Location("1", "Nantes");
 
-    spectatorHttp.service.getReviewSuggestions(LeisureType.ACCOMMODATION, location).subscribe(
+    spectatorHttp.service.getReviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
       (data) => {
         expect(data).toEqual(getBarItems());
       }
@@ -66,9 +66,9 @@ describe('SuggestionsService', () => {
 
 
   it('should have getReviewSuggestions method', () => {
-    expect(service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"))).toBeDefined();
-    expect(spectator.service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"))).toBeTruthy();
-    expect(spectator.service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"))).toEqual(jasmine.any(Observable));
+    expect(service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeDefined();
+    expect(spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeTruthy();
+    expect(spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toEqual(jasmine.any(Observable));
   });
 
   it('should get subscribe to an Observable and get data', fakeAsync(() => {
@@ -77,7 +77,7 @@ describe('SuggestionsService', () => {
     spyOn(spectator.service, 'getReviewSuggestions').and.returnValue(getBarItems$().pipe(delay(1)));
 
     tick(1);
-    const result$: Observable<LeisureItemModel[]> = spectator.service.getReviewSuggestions(LeisureType.BAR, new Location("0", "Nantes"));
+    const result$: Observable<LeisureItemModel[]> = spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"));
 
     getBarItems$().subscribe((data) => {
       expect(data).toEqual(expectedValue);
@@ -90,7 +90,7 @@ function getBarItems$() {
   let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
     let item = new LeisureItemModel();
-    item.typeOfItem = LeisureType.BAR;
+    item.category = LeisureCategory.BAR;
     data.push(item);
   }
   return new Observable<LeisureItemModel[]>((observer) => {
@@ -103,7 +103,7 @@ function getBarItems() {
   let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {
     let item = new LeisureItemModel();
-    item.typeOfItem = LeisureType.BAR;
+    item.category = LeisureCategory.BAR;
     data.push(item);
   }
   return data;
@@ -115,41 +115,41 @@ let testItemModelInformations: LeisureItemModel[] = [
     "title": "firstAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
   {
     "id": "2",
     "title": "secondAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
   {
     "id": "3",
     "title": "thirdAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
   {
     "id": "4",
     "title": "fourthAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
   {
     "id": "5",
     "title": "fifthAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
   {
     "id": "6",
     "title": "sixthAccommodation",
     "description": "this is a description",
     "image": './assets/images/default_image.jpg',
-    "typeOfItem": LeisureType.ACCOMMODATION,
+    "category": LeisureCategory.ACCOMMODATION,
   },
 ]
