@@ -22,7 +22,7 @@ describe('Card container', () => {
   let barItems: LeisureItemModel[] = getItems();
   let component: CardsContainerComponent;
   let store: SuggestionsStoreService;
-  let suggests : LeisureItemModel[]
+  let suggests: LeisureItemModel[]
   const createComponent = createComponentFactory({
     component: CardsContainerComponent,
     imports: [AppModule],
@@ -49,15 +49,19 @@ describe('Card container', () => {
         barItems.push(new LeisureItemModel());
       }
 
+
       spectator.detectChanges()
 
     });
+    afterEach(() => {
+      // spectator?.component?.unsubscribeItems();
+      spectator?.fixture?.destroy();
+    });
 
     it('should have SuggestionsStore injected', () => {
-      expect(component["_suggestionsStore"]).toBeDefined();
-      expect(component["_suggestionsStore"]).toBeTruthy();
-      expect(component["_suggestionsStore"]).toEqual(store);
-
+      expect(component.suggestionsStore).toBeDefined();
+      expect(component.suggestionsStore).toBeTruthy();
+      expect(component.suggestionsStore).toEqual(store);
     });
 
     it('should get suggestionItem from SuggestionsService when data store updated', () => {
@@ -74,15 +78,14 @@ describe('Card container', () => {
     describe('Card container displaying', () => {
 
 
-
       it('should display the leisure item category', async () => {
 
         const translateService = await spectator.inject(TranslateService);
 
         let categoryString = translateService.instant(suggests[0].categoryTranslateKey().toString())
         // let categoryString = translateService.instant('leisure_category_unknown')
-  console.log("salut" + categoryString);
-        expect(spectator.query('[data-cy-item-category]')).toHaveText(categoryString);
+        console.log("salut" + categoryString);
+        expect(spectator.query('[data-cy-item-category]')).toHaveText(categoryString || translateService.instant('unknown'));
       });
 
       it('should display the leisure items', () => {

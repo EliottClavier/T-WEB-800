@@ -151,11 +151,11 @@ describe('SingleSearchBarComponent', () => {
       const suggestions = getAccommodationItems()
       const suggestion$ = of(suggestions);
 
-      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
+      spyOn(suggestionService, 'getPreviewSuggestions').and.returnValue(suggestion$);
 
       component.onLocationOptionClick(location);
 
-      expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
+      expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
       expect(component.searchForm.value.location).toEqual(location);
       expect(component.searchForm.value.locationSearch).toEqual(location.name);
     });
@@ -165,12 +165,12 @@ describe('SingleSearchBarComponent', () => {
       const suggestions = getAccommodationItems()
       const suggestion$ = of(suggestions);
 
-      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
+      spyOn(suggestionService, 'getPreviewSuggestions').and.returnValue(suggestion$);
       component.onLocationOptionClick(location);
 
       suggestionStore.suggestions$.subscribe(suggests => {
 
-        expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
+        expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
         expect(suggests).toEqual(suggestions);
       });
     })
@@ -180,7 +180,7 @@ describe('SingleSearchBarComponent', () => {
       const location = new Location('01', 'New York');
       const suggestions = new Array<LeisureItemModel>();
 
-      const mockCall = spyOn(suggestionService, "getReviewSuggestions").and.returnValue(throwError(() => new Error('error')));
+      const mockCall = spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
       component.onLocationOptionClick(location);
 
       suggestionStore.suggestions$.subscribe({

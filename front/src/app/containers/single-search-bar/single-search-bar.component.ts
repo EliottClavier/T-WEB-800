@@ -30,7 +30,7 @@ export class SingleSearchBarComponent {
       locationSearch: location.name,
       location: location,
     });
-    this._suggestionService.getReviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
+    this._suggestionService.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
       {
         next: (suggestions) => {
             this._suggestionStoreService.setSuggestionsData(suggestions);

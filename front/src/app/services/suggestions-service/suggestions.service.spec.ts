@@ -49,10 +49,10 @@ describe('SuggestionsService', () => {
   it('should have HttpClient as dependency', () => {
     expect(httpclient).toBeDefined();
   });
-  it('should test HttpClient getReviewSuggestions', () => {
+  it('should test HttpClient getPreviewSuggestions', () => {
     let location = new Location("1", "Nantes");
 
-    spectatorHttp.service.getReviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
+    spectatorHttp.service.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
       (data) => {
         expect(data).toEqual(getBarItems());
       }
@@ -64,19 +64,19 @@ describe('SuggestionsService', () => {
 
   });
 
-  it('should have getReviewSuggestions method', () => {
-    expect(service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeDefined();
-    expect(spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeTruthy();
-    expect(spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toEqual(jasmine.any(Observable));
+  it('should have getPreviewSuggestions method', () => {
+    expect(service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeDefined();
+    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeTruthy();
+    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toEqual(jasmine.any(Observable));
   });
 
   it('should get subscribe to an Observable and get data', fakeAsync(() => {
 
     const expectedValue = getBarItems();
-    spyOn(spectator.service, 'getReviewSuggestions').and.returnValue(getBarItems$().pipe(delay(1)));
+    spyOn(spectator.service, 'getPreviewSuggestions').and.returnValue(getBarItems$().pipe(delay(1)));
 
     tick(1);
-    const result$: Observable<LeisureItemModel[]> = spectator.service.getReviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"));
+    const result$: Observable<LeisureItemModel[]> = spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"));
 
     getBarItems$().subscribe((data) => {
       expect(data).toEqual(expectedValue);

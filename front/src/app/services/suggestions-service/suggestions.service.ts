@@ -17,7 +17,7 @@ export class SuggestionsService {
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
-  getReviewSuggestions(itemType: LeisureCategory, location : Location,): Observable<LeisureItemModel[]> {
+  getPreviewSuggestions(itemType: LeisureCategory, location : Location,): Observable<LeisureItemModel[]> {
     return this._httpclient.get<LeisureItemModel[]>(`${this.review_suggestions_url}${itemType.toLowerCase()}/search?location=${location.name}`);
   }
 }

@@ -15,7 +15,7 @@ describe('SuggestionsStoreService', () => {
   const createService = createServiceFactory<SuggestionsStoreService>({
     service: SuggestionsStoreService,
     providers: [mockProvider(SuggestionsService, {
-      getReviewSuggestions: () => new Array<LeisureItemModel>(), //if needed
+      getPreviewSuggestions: () => new Array<LeisureItemModel>(), //if needed
     }),
     SingleSearchBarComponent]
   });

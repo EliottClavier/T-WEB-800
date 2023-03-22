@@ -16,13 +16,21 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService) {
   }
 
+  get suggestionsStore(): SuggestionsStoreService {
+    return this._suggestionsStore;
+  }
+
+  set suggestionsStore(value: SuggestionsStoreService) {
+    this._suggestionsStore = value;
+  }
+
   ngOnInit() {
     this.subscribeItems();
   };
 
   ngAfterContentChecked(): void {
 
-    this.category = this.suggests[0].categoryTranslateKey();
+    this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
     console.log(this.category);
   }
 
@@ -42,9 +50,12 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   subscribeItems() {
-    this._suggestionsStore.suggestions$.subscribe((suggestions) => {
+    this?._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
         this._suggests = suggestions;
     });
+  }
+  unsubscribeItems() {
+    this?._suggestionsStore?.suggestions$?.unsubscribe();
   }
 
 
