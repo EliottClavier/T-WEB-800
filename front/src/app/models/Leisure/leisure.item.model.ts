@@ -1,4 +1,4 @@
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 export class LeisureItemModel {
 
@@ -7,13 +7,13 @@ export class LeisureItemModel {
   subtitle?: string = "default subtitle";
   description: string = "default description";
   image: string = './assets/images/default_image.jpg';
-  private _typeOfItem?: LeisureType;
+  private _category?: LeisureCategory;
 
-  public get typeOfItem(): LeisureType {
-    return this._typeOfItem as LeisureType;
+  public get category(): LeisureCategory {
+    return this._category as LeisureCategory;
   }
 
-  public set typeOfItem(type: LeisureType){
-    this._typeOfItem = type;
+  public set category(type: LeisureCategory){
+    this._category = type;
   }
 }

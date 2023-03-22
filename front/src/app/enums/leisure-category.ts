@@ -1,4 +1,4 @@
-export enum LeisureType {
+export enum LeisureCategory {
   BAR = 'BARS',
   RESTAURANT = 'RESTAURANTS',
   ACCOMMODATION = 'ACCOMMODATIONS',
