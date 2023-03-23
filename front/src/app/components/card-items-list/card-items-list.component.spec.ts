@@ -3,22 +3,23 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {AppModule} from "../../app.module";
 import {TranslateService} from "@ngx-translate/core";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 
 
 describe('CardItemsComponent', () => {
   let spectator: Spectator<CardItemsListComponent>;
   let threeCardItems: LeisureItemModel[];
-  let component : CardItemsListComponent;
+  let component: CardItemsListComponent;
 
   const createComponent = createComponentFactory({
     component: CardItemsListComponent,
-    imports: [ AppModule,],
+    imports: [AppModule,],
     providers: [TranslateService],
   });
-  beforeEach( () => {
+  beforeEach(() => {
     spectator = createComponent();
     component = spectator.component;
-    })
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -26,7 +27,6 @@ describe('CardItemsComponent', () => {
 
 
   describe('Cards Display', () => {
-
 
     beforeEach(() => {
       spectator = createComponent();
@@ -37,10 +37,12 @@ describe('CardItemsComponent', () => {
       }
     });
 
-    it('should display 3 items elements', () => {
-      spectator.setInput('cardItems', threeCardItems);
-
-      expect(spectator.queryAll('[data-cy-card-component]').length).toEqual(3);
+    it('should display 6 items elements', () => {
+      let items = getAccommodationItems()
+      spectator.setInput('cardItems', items);
+      spectator.detectChanges();
+      let itemsElementsLength = spectator.queryAll('app-card-item').length;
+      expect(itemsElementsLength).toEqual(items.length);
     });
     it('should display empty message if array elements is empty', () => {
 

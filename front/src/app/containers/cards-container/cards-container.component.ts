@@ -12,6 +12,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
   private _suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
   category: string = "";
+  itemsSelected: LeisureItemModel | undefined;
 
   constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService) {
   }
@@ -45,4 +46,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
     });
   }
 
+  onSuggestClicking($event: any) {
+    this.itemsSelected  = $event as LeisureItemModel;
+  }
 }

@@ -2,7 +2,7 @@
 
   <h1 data-cy-item-category>{{this.category}}</h1>
 
-<app-card-items data-cy-items ></app-card-items>
+<app-card-items data-cy-items [cardItems]="suggests" (cardItemClicked)="onSuggestClicking($event)"></app-card-items>
 <app-simple-button data-cy-show-more-item-button></app-simple-button>
 
 </div>

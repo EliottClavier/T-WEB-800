@@ -1,5 +1,6 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardsContainerComponent} from "./cards-container.component";
+
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
@@ -8,10 +9,14 @@ import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {
   getAccommodationItems,
-  getBarItems, getCulturalItems,
+  getBarItems,
+  getCulturalItems,
   getRestaurantItems,
-  getSportingItems, getUnknownItems
+  getSportingItems,
+  getUnknownItems
 } from "../../utils/suggestions-mock.utils";
+import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
+
 
 function getItems(): LeisureItemModel[] {
   let items: LeisureItemModel[] = [];
@@ -31,9 +36,18 @@ describe('Card container', () => {
   const createComponent = createComponentFactory({
     component: CardsContainerComponent,
     imports: [AppModule],
+    declarations: [CardItemsListComponent],
+    componentProviders: [
+      {
+        provide: CardItemsListComponent,
+        useValue: {
+          outputEvent: {
+            emit: jasmine.createSpy('emit')
+          }
+        }
+      }],
     providers: [
       SuggestionsService,
-
       {
         provide: SuggestionsStoreService,
         useValue: {suggestions$: of(barItems)}
@@ -46,6 +60,7 @@ describe('Card container', () => {
 
     beforeEach(() => {
       spectator = createComponent();
+
       component = spectator.component;
       store = spectator.inject(SuggestionsStoreService);
 
@@ -59,7 +74,6 @@ describe('Card container', () => {
 
     });
     afterEach(() => {
-      // spectator?.component?.unsubscribeItems();
       spectator?.fixture?.destroy();
     });
 
@@ -138,6 +152,18 @@ describe('Card container', () => {
         expect(suggests).toBeTruthy()
       });
 
+      it('should get the item details view when leisure items is clicking', () => {
+        const itemListComponent = spectator.query(CardItemsListComponent);
+        suggests = component.suggests = getAccommodationItems();
+        let item = suggests[0];
+
+        let spy = spyOn(component, 'onSuggestClicking').and.callThrough();
+
+        spectator.setInput({suggests: suggests});
+        itemListComponent?.onItemClicked(item);
+        expect(spy).toHaveBeenCalledWith(item);
+
+      });
 
 
 
@@ -148,3 +174,4 @@ describe('Card container', () => {
     });
   });
 });
+

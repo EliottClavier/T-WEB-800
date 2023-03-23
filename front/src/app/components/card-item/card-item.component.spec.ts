@@ -64,7 +64,6 @@ describe('CardItemComponent', () => {
 
       spectator.click('[data-cy-card-item]');
       expect(emittedValue).toEqual(cardItem);
-
     });
   });
 });
