@@ -38,6 +38,7 @@ import {HttpClient} from "@angular/common/http";
 import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
+import { CardItemDetailsViewComponent } from './components/card-item-details-view/card-item-details-view.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainComponent,
     CardsContainerComponent,
     MapComponent,
-    MapFiltersComponent
+    MapFiltersComponent,
+    CardItemDetailsViewComponent
   ],
   imports: [
     GoogleMapsModule,

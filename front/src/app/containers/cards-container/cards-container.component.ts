@@ -25,7 +25,6 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
     this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
   }
 
-
   get suggests(): LeisureItemModel[] {
     return this._suggests;
   }
@@ -47,6 +46,8 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   onSuggestClicking($event: any) {
+
     this.itemsSelected  = $event as LeisureItemModel;
+    console.log('onSuggestClicking', this.itemsSelected);
   }
 }

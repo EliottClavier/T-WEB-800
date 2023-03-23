@@ -165,7 +165,30 @@ describe('Card container', () => {
 
       });
 
+      it('should display the item details view when leisure items is selected', () => {
+        suggests = getAccommodationItems();
+        let item = suggests[0];
+        component.onSuggestClicking(item);
 
+        console.log('item ' + spectator.component.itemsSelected?.category);
+        spectator.detectChanges()
+        expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
+
+      });
+      it('should hidden the item details view when leisure items is not more selected', () => {
+        suggests = getAccommodationItems();
+        let item = suggests[0];
+        component.onSuggestClicking(item);
+
+        console.log('item ' + spectator.component.itemsSelected?.category);
+        spectator.detectChanges()
+        expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
+
+        component.itemsSelected = undefined;
+        spectator.detectChanges()
+        expect(spectator.query('[data-cy-item-details]')).toBeFalsy();
+
+      });
 
       it('should display the "show more" button of leisure items', () => {
         expect(spectator.query('[data-cy-show-more-item-button]')).toBeTruthy();

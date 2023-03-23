@@ -4,5 +4,8 @@
 
 <app-card-items data-cy-items [cardItems]="suggests" (cardItemClicked)="onSuggestClicking($event)"></app-card-items>
 <app-simple-button data-cy-show-more-item-button></app-simple-button>
+  <div *ngIf="itemsSelected">
+    <app-item-details-view data-cy-item-details></app-item-details-view>
+  </div>
 
 </div>

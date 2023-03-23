@@ -29,7 +29,6 @@ describe('CardItemComponent', () => {
       expect(spectator.query('[data-cy-card-item]')).toBeTruthy();
       expect(spectator.query('[data-cy-card-item-title]')).toBeTruthy();
       expect(spectator.query('[data-cy-card-item-subtitle]')).toBeTruthy();
-      expect(spectator.query('[data-cy-card-item-description]')).toBeTruthy();
       expect(spectator.query('[data-cy-card-item-image]')).toBeTruthy();
 
     });
@@ -40,7 +39,6 @@ describe('CardItemComponent', () => {
 
       expect(spectator.query('[data-cy-card-item-title]')).toHaveText("test-title");
       expect(spectator.query('[data-cy-card-item-subtitle]')).toHaveText('test-subtitle');
-      expect(spectator.query('[data-cy-card-item-description]')).toHaveText('test-description');
       expect(spectator.query('[data-cy-card-item-image]')?.getAttribute('src')?.trim()).toEqual('https://material.angular.io/assets/img/examples/shiba2.jpg');
 
     });
