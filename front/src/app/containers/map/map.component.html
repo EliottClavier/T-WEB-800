@@ -2,9 +2,24 @@
   map
   height="65vh"
   width="100%"
-  (zoomChanged)="onMapBoundariesChange()"
+  (zoomChanged)="onMapBoundariesChange(true)"
   (mapDragend)="onMapBoundariesChange()"
   [zoom]="zoom"
   [center]="center"
   [options]="options"
-></google-map>
+>
+  <map-marker
+    map-marker
+    *ngFor="let marker of markers"
+    (mapClick)="onMapMarkerClick(marker)"
+    [position]="{ lat: marker.lat, lng: marker.lng }"
+    [title]="marker.title"
+    [options]="{
+      animation: _markerAnimation,
+      icon: {
+        url: getMarkerImage(marker),
+        scaledSize: _markerSize
+      }
+     }"
+  ></map-marker>
+</google-map>
