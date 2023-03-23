@@ -25,7 +25,7 @@ describe('CardItemComponent', () => {
 
   describe('Card Display', () => {
 
-    it('should appear as the given mockup a card with title, subtile, description and image', () => {
+    it('should appear as the given mockup a card with title, subtile and image', () => {
       expect(spectator.query('[data-cy-card-item]')).toBeTruthy();
       expect(spectator.query('[data-cy-card-item-title]')).toBeTruthy();
       expect(spectator.query('[data-cy-card-item-subtitle]')).toBeTruthy();
@@ -33,7 +33,7 @@ describe('CardItemComponent', () => {
 
     });
 
-    it('should display in card specific title, subtitle, description and image', () => {
+    it('should display in card specific title, subtitle and image', () => {
 
       InitializeCardValue(cardItem, spectator);
 

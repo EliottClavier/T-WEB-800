@@ -22,7 +22,7 @@ describe('CardItemDetailsViewComponent', () => {
   });
 
   describe('Details View', () => {
-    it('should appear as the given mockup a card with title, subtile, description and image', () => {
+    it('should appear as the given mockup a detail with title, subtile, description and image', () => {
       expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
       expect(spectator.query('[data-cy-item-details-title]')).toBeTruthy();
       expect(spectator.query('[data-cy-item-details-subtitle]')).toBeTruthy();
@@ -31,9 +31,13 @@ describe('CardItemDetailsViewComponent', () => {
 
     });
 
-    it('should display in card specific title, subtitle, description and image', () => {
+    it('should display in detail specific title, subtitle, description and image', () => {
 
       let items = getAccommodationItems();
+      items[0].title = "test-title";
+      items[0].subtitle = "test-subtitle";
+      items[0].description = "test-description";
+      items[0].image = "https://material.angular.io/assets/img/examples/shiba2.jpg";
       spectator.setInput('detailsItem', items[0]);
 
       spectator.detectChanges();
