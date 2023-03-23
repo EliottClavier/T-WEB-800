@@ -2,7 +2,7 @@
   <mat-card
     class="item-details"
     data-cy-item-details>
-<!--    (click)="onClickItem(cardItem)"-->
+
 
     <img
       data-cy-item-details-image
@@ -28,4 +28,6 @@
       </mat-card-content>
     </div>
   </mat-card>
+
+  <app-simple-button (buttonClick)="onCloseDetailsView()" [label]=" 'close' | translate" data-cy-item-details-close-button></app-simple-button>
 </ng-container>

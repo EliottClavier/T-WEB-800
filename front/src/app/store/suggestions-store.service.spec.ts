@@ -76,8 +76,8 @@ describe('SuggestionsStoreService', () => {
   });
 
   it('should be set suggestion ', () => {
-    spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
-      expect(createService().service.setSuggestionsData(getBarItem())).toHaveBeenCalled();
+    let  spy = spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
+      expect(spy).toHaveBeenCalled();
     });
   });
 

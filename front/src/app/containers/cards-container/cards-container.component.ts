@@ -10,9 +10,10 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
+
   private _suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
   category: string = "";
-  itemsSelected: LeisureItemModel | undefined;
+  private _itemsSelected?: LeisureItemModel;
 
   constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService) {
   }
@@ -25,6 +26,13 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
     this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
   }
 
+  get itemsSelected(): LeisureItemModel {
+    return this._itemsSelected!;
+  }
+
+  set itemsSelected(value: LeisureItemModel) {
+    this._itemsSelected = value;
+  }
   get suggests(): LeisureItemModel[] {
     return this._suggests;
   }
@@ -40,14 +48,17 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   subscribeItems() {
-    this?._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
+    this._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
         this._suggests = suggestions;
     });
   }
 
-  onSuggestClicking($event: any) {
+  onItemSelected($event: any) {
+    this._itemsSelected  = $event as LeisureItemModel;
+  }
 
-    this.itemsSelected  = $event as LeisureItemModel;
-    console.log('onSuggestClicking', this.itemsSelected);
+  onCloseDetails() {
+    this._itemsSelected = undefined;
+    console.log("close : " );
   }
 }

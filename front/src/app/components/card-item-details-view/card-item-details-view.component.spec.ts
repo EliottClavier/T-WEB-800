@@ -1,22 +1,21 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {MatCardModule} from "@angular/material/card";
-import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {CardItemDetailsViewComponent} from "./card-item-details-view.component";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {AppModule} from "../../app.module";
+
 
 describe('CardItemDetailsViewComponent', () => {
   let spectator: Spectator<CardItemDetailsViewComponent>;
   let component: CardItemDetailsViewComponent;
   const createComponent = createComponentFactory({
     component: CardItemDetailsViewComponent,
-    imports: [MatCardModule],
+    imports: [AppModule],
   });
 
   beforeEach(() => {
     spectator = createComponent();
     component = spectator.component;
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -48,6 +47,22 @@ describe('CardItemDetailsViewComponent', () => {
       expect(spectator.query('[data-cy-item-details-image]')?.getAttribute('src')?.trim()).toEqual('https://material.angular.io/assets/img/examples/shiba2.jpg');
 
     });
-  });
+    it('should display an button to close the details view', () => {
+      expect(spectator.query('[data-cy-item-details-close-button]')).toBeTruthy();
+    });
+    it('should send close inforamtion when button is cliking', async () => {
 
+      let items = getAccommodationItems();
+      spectator.setInput('detailsItem', items[0]);
+
+      let spy = await spyOn(component, 'onCloseDetailsView').and.callThrough()
+
+      await spectator.click('[data-cy-item-details-close-button] [simple-button]');
+
+      spectator.detectChanges();
+
+      expect(spy).toHaveBeenCalled();
+
+    });
+  });
 });

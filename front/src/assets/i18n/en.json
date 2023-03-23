@@ -8,6 +8,8 @@
   "leisure_category_bar" : "Bars",
   "leisure_category_restaurant" : "Restaurants",
   "leisure_category_unknown" : "Unknown",
-  "unknown" : "Unknown"
+  "unknown" : "Unknown",
+  "close" : "Close",
+  "show_more" : "Show more"
 
 }

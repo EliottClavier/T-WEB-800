@@ -16,6 +16,7 @@ import {
   getUnknownItems
 } from "../../utils/suggestions-mock.utils";
 import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
+import {CardItemDetailsViewComponent} from "../../components/card-item-details-view/card-item-details-view.component";
 
 
 function getItems(): LeisureItemModel[] {
@@ -33,19 +34,11 @@ describe('Card container', () => {
   let component: CardsContainerComponent;
   let store: SuggestionsStoreService;
   let suggests: LeisureItemModel[]
+
   const createComponent = createComponentFactory({
     component: CardsContainerComponent,
-    imports: [AppModule],
-    declarations: [CardItemsListComponent],
-    componentProviders: [
-      {
-        provide: CardItemsListComponent,
-        useValue: {
-          outputEvent: {
-            emit: jasmine.createSpy('emit')
-          }
-        }
-      }],
+    imports: [AppModule,],
+    declarations: [CardItemsListComponent, CardItemDetailsViewComponent],
     providers: [
       SuggestionsService,
       {
@@ -157,7 +150,7 @@ describe('Card container', () => {
         suggests = component.suggests = getAccommodationItems();
         let item = suggests[0];
 
-        let spy = spyOn(component, 'onSuggestClicking').and.callThrough();
+        let spy = spyOn(component, 'onItemSelected').and.callThrough();
 
         spectator.setInput({suggests: suggests});
         itemListComponent?.onItemClicked(item);
@@ -168,7 +161,7 @@ describe('Card container', () => {
       it('should display the item details view when leisure items is selected', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];
-        component.onSuggestClicking(item);
+        component.onItemSelected(item);
 
         console.log('item ' + spectator.component.itemsSelected?.category);
         spectator.detectChanges()
@@ -178,19 +171,33 @@ describe('Card container', () => {
       it('should hidden the item details view when leisure items is not more selected', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];
-        component.onSuggestClicking(item);
+        component.onItemSelected(item);
 
-        console.log('item ' + spectator.component.itemsSelected?.category);
         spectator.detectChanges()
         expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
 
-        component.itemsSelected = undefined;
+        component.onCloseDetails();
         spectator.detectChanges()
         expect(spectator.query('[data-cy-item-details]')).toBeFalsy();
 
       });
 
+      it('should close the item details view when closing emitted', () => {
+        suggests = getAccommodationItems();
+        let item = suggests[0];
+        component.onItemSelected(item);
+        spectator.detectChanges();
+        let spy = spyOn<CardsContainerComponent, any>(component, 'onCloseDetails').and.callThrough();
+        spectator.triggerEventHandler(CardItemDetailsViewComponent, 'onClose', undefined);
+
+        spectator.detectChanges();
+        expect(spy).toHaveBeenCalled();
+        expect(spectator.query('[data-cy-item-details]')).toBeFalsy();
+
+      });
+
       it('should display the "show more" button of leisure items', () => {
+
         expect(spectator.query('[data-cy-show-more-item-button]')).toBeTruthy();
 
       });

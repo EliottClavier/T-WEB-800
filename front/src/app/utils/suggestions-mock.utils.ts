@@ -6,6 +6,11 @@ import {LeisureCategory} from "../enums/leisure-category";
   for (let i = 0; i < 6; i++) {
     let item = new LeisureItemModel();
     item.category = LeisureCategory.ACCOMMODATION;
+    item.title = "Accommodation " + i;
+    item.subtitle = "subtitle " + i;
+    item.description = "Description " + i;
+    item.id = i.toString();
+
     data.push(item);
   }
   return data;
