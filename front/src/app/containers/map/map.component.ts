@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Location} from "../../models/location/location.model";
-import {GoogleMap} from "@angular/google-maps";
+import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
 import {ItemModel} from "../../models/item/item.model";
 import {LeisureType} from "../../enums/leisure-type";
+import {map, Observable} from 'rxjs';
+import {ItineraryMode} from "../../types/itinerary-mode.type";
 
 @Component({
   selector: 'app-map',
@@ -43,33 +45,71 @@ export class MapComponent implements OnChanges {
   }
 
   /* Markers style */
-  _markerSize: google.maps.Size = new google.maps.Size(40, 40);
-  _markerAnimation: google.maps.Animation = google.maps.Animation.DROP;
+  public markerSize: google.maps.Size = new google.maps.Size(40, 40);
+  public markerAnimation: google.maps.Animation = google.maps.Animation.DROP;
 
+  /* Markers */
   @Input() public selectedLocation: Location = new Location(
     "",
     "",
     this.center.lat,
     this.center.lng
   );
+  @Input() public nextLocation: Location | undefined;
 
   @Input() public markers: ItemModel[] = [];
   @Input() public selectedMarkers: ItemModel[] = [];
   @Input() public activeMarker: ItemModel | undefined;
 
+  /* Map and map events */
   @ViewChild(GoogleMap, { static: false }) public map!: GoogleMap;
-
   @Output() public onBoundariesChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() public onMarkerClick: EventEmitter<ItemModel> = new EventEmitter<ItemModel>();
 
-  constructor() {
-  }
+  /* Itinerary and directions */
+  @Input() public itineraryView: boolean = false;
+  @Input() public itineraryMode: ItineraryMode = {
+    travelMode: google.maps.TravelMode.DRIVING,
+  };
+  public directionsResults: google.maps.DirectionsResult | undefined;
+
+  constructor(private _directionService: MapDirectionsService) {}
 
   public ngOnChanges(): void {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {
-      this.zoom = this.defaultZoom;
-      this._moveCenterToLatLng(this.selectedLocation.lat, this.selectedLocation.lng);
+      if (this.itineraryView) {
+        if (this.nextLocation && this.nextLocation.hasValidCoordinates() && this._isTravelModeValid(this.itineraryMode.travelMode)) {
+          this._requestDirections(this.selectedLocation.name, this.nextLocation.name, google.maps.TravelMode.TRANSIT);
+        } else {
+          this.directionsResults = undefined;
+        }
+      } else {
+        this.zoom = this.defaultZoom;
+        this._moveCenterToLatLng(this.selectedLocation.lat, this.selectedLocation.lng);
+      }
     }
+  }
+
+  private _isTravelModeValid(travelMode: google.maps.TravelMode): boolean {
+    return [google.maps.TravelMode.DRIVING, google.maps.TravelMode.WALKING, google.maps.TravelMode.BICYCLING, google.maps.TravelMode.TRANSIT].includes(travelMode)
+  }
+
+  private _getDirections(request: google.maps.DirectionsRequest): Observable<MapDirectionsResponse> {
+    return this._directionService.route(request);
+  }
+
+  private _requestDirections(origin: string, destination: string, travelMode: google.maps.TravelMode, transitMode?: google.maps.TransitMode): void {
+    const request: google.maps.DirectionsRequest = {
+      origin: origin,
+      destination: destination,
+      travelMode: travelMode,
+    };
+
+    transitMode && (request.transitOptions = { modes: [transitMode] });
+
+    this._getDirections(request).subscribe((response) => {
+      this.directionsResults = response.result;
+    });
   }
 
   private _moveCenterToLatLng(lat: number, lng: number): void {
@@ -77,7 +117,7 @@ export class MapComponent implements OnChanges {
   }
 
   public onMapBoundariesChange(zoomed: boolean = false): void {
-    zoomed && (this.zoom = this.map.getZoom() || this.defaultZoom);
+    zoomed && !this.itineraryView && (this.zoom = this.map.getZoom() || this.defaultZoom);
 
     let bounds: any = {
       north: this.map.getBounds()?.getNorthEast().lat(),

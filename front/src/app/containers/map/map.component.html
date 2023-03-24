@@ -15,11 +15,16 @@
     [position]="{ lat: marker.lat, lng: marker.lng }"
     [title]="marker.title"
     [options]="{
-      animation: _markerAnimation,
+      animation: markerAnimation,
       icon: {
         url: getMarkerImage(marker),
-        scaledSize: _markerSize
+        scaledSize: markerSize
       }
      }"
   ></map-marker>
+  <map-directions-renderer
+    map-directions-renderer
+    *ngIf="itineraryView && directionsResults"
+    [directions]="directionsResults">
+  </map-directions-renderer>
 </google-map>
