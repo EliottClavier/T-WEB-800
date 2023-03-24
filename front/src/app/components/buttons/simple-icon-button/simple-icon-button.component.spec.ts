@@ -105,4 +105,12 @@ describe('SimpleIconButtonComponent', () => {
     const button: HTMLElement = spectator.query('[simple-icon-button]')!;
     expect(button.getAttribute('ng-reflect-color')).toEqual(component.color);
   });
+
+  it('should remove material interaction effects and be disabled when noInteraction is true', () => {
+    component.noInteraction = true;
+    spectator.detectChanges();
+    const button: HTMLElement = spectator.query('[simple-icon-button]')!;
+    expect(button).toHaveClass('mat-button-icon-no-interaction');
+    expect(button.getAttribute('ng-reflect-disabled')).toEqual('true');
+  });
 });

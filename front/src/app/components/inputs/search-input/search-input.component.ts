@@ -21,6 +21,8 @@ export class SearchInputComponent implements OnInit {
   @Output() public onLocationOptionChange: EventEmitter<any> = new EventEmitter<any>();
   public locationOptions: Location[] = [];
 
+  @Input() public noMarginBottom: boolean = false;
+
   constructor(
     private _locationService: LocationService,
   ) { }

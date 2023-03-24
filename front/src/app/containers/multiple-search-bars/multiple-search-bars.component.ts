@@ -2,7 +2,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {
+  buildSearchBarFormGroupControlsDetails
+} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-multiple-search-bars',
@@ -13,7 +15,7 @@ export class MultipleSearchBarsComponent {
 
   @Input() public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      buildSearchBarFormGroupControls(),
+      buildSearchBarFormGroupControlsDetails(),
     ]),
   });
 
@@ -41,7 +43,7 @@ export class MultipleSearchBarsComponent {
   }
 
   public addSearchBar(): void {
-    let newFormGroup: FormGroup = buildSearchBarFormGroupControls();
+    let newFormGroup: FormGroup = buildSearchBarFormGroupControlsDetails();
     if (this.lastSearchBar.get("end")?.value) {
       newFormGroup.setControl(
         "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [ Validators.required ])
@@ -70,14 +72,30 @@ export class MultipleSearchBarsComponent {
     this.activeSearchBarChange.emit(this.activeSearchBar);
   }
 
-  /*
-  public moveSearchBar(index: number, down: boolean): void {
-    if ((down && index < this.searchFormsArray.length - 1) || (!down && index > 0)) {
-      let searchBar = this.searchFormsArray.at(down ? index + 1 : index);
-      this.removeSearchBar(down ? index + 1 : index);
-      this.searchFormsArray.insert(down ? index : index - 1, searchBar);
+  public accessTravelModeIcon(searchBarIndex: number): string {
+    if (this.searchFormsArrayControls.length === searchBarIndex + 1 ) {
+      return 'outlined_flag';
+    }
+    return this._getTravelModeIcon(this.searchFormsArrayControls[searchBarIndex].get("travelMode")?.value);
+  }
+
+  private _getTravelModeIcon(travelMode: string = ""): string {
+    switch (travelMode) {
+      case "DRIVING":
+        return "directions_car";
+      case "WALKING":
+        return "directions_walk";
+      case "BICYCLING":
+        return "directions_bike";
+      case "BUS":
+        return "bus";
+      case "TRAIN":
+        return "train";
+      case "FLIGHT":
+        return "flight";
+      default:
+        return "panorama_fish_eye";
     }
   }
-  */
 
 }

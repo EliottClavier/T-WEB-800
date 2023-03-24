@@ -10,6 +10,7 @@ import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
+import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -264,7 +265,6 @@ describe('MultipleSearchBarsComponent', () => {
     });
 
     describe('Active search bar', () => {
-
       beforeEach(() => {
         component.activeSearchBar = {
           index: 1,
@@ -281,94 +281,47 @@ describe('MultipleSearchBarsComponent', () => {
       });
     });
 
-  });
-
-  /*
-  describe('Up and down buttons', () => {
-
-    let length: number;
-
-    beforeEach(() => {
-      component.addSearchBar();
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(component.searchFormsArrayControls.length).toEqual(3);
-      length = component.searchFormsArrayControls.length;
-
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        component.searchFormsArrayControls[index].value["location"] = new Location(String(index), name);
-      });
-    });
-
-    it('should have up and down buttons for each search bar when there are multiple search bar', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toBe(component.searchFormsArrayControls.length);
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toBe(component.searchFormsArrayControls.length);
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]")).toBeTruthy();
-      spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]").map((button: Element) => {
-        expect(button).toHaveText("keyboard_arrow_up");
+    describe('Itinerary display', function () {
+      it('should remove margin bottom on search bars', () => {
+        expect(spectator.queryAll("[search-bar-input]").every((input) =>
+          input.getAttribute("ng-reflect-no-margin-bottom") === "true"
+        )).toBeTruthy();
       });
 
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]")).toBeTruthy();
-      spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]").map((button: Element) => {
-        expect(button).toHaveText("keyboard_arrow_down");
+      it('should have as much itinerary arrows as search bars', () => {
+        expect(spectator.queryAll("app-simple-button[search-bar-itinerary-arrow]").length).toBe(component.searchFormsArrayControls.length - 1);
       });
-    });
 
-    it('should have up button not visible when search bar is the first one', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toEqual(component.searchFormsArrayControls.length);
-      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeHidden();
-    });
-
-    it('should have down button not visible when search bar is the last one', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toEqual(component.searchFormsArrayControls.length);
-      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeTruthy();
-      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeHidden();
-    });
-
-    it('should move search bar up in FormArray', () => {
-      component.moveSearchBar(length - 1, false);
-
-      ["Lyon", "Nantes", "Paris"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should have as much itinerary travel mode bubbles as search bars', () => {
+        expect(spectator.queryAll("app-simple-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length - 1);
       });
-    });
 
-    it('should do nothing when moving down while the search bar is already at the bottom', () => {
-      component.moveSearchBar(length - 1, true);
-
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should return the correct travel mode icon', () => {
+        expect(component["_getTravelModeIcon"](google.maps.TravelMode.DRIVING)).toBe("directions_car");
+        expect(component["_getTravelModeIcon"](google.maps.TravelMode.WALKING)).toBe("directions_walk");
+        expect(component["_getTravelModeIcon"](google.maps.TravelMode.BICYCLING)).toBe("directions_bike");
+        expect(component["_getTravelModeIcon"](google.maps.TransitMode.BUS)).toBe("bus");
+        expect(component["_getTravelModeIcon"](google.maps.TransitMode.TRAIN)).toBe("train");
+        expect(component["_getTravelModeIcon"]("FLIGHT")).toBe("flight");
+        expect(component["_getTravelModeIcon"]("")).toBe("panorama_fish_eye");
+        expect(component["_getTravelModeIcon"]()).toBe("panorama_fish_eye");
       });
-    });
 
-    it('should move search bar down in FormArray', () => {
-      component.moveSearchBar(length - 3, true);
-
-      ["Paris", "Lyon", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
-      });
-    });
-
-    it('should do nothing when moving up while the search bar is already at the top', () => {
-      component.moveSearchBar(length - 3, false);
-
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should return the correct travel mode icon depending on additional conditions', () => {
+        let searchForm: FormGroup = buildSearchBarFormGroupControlsDetails();
+        searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
+        component.searchFormsArrayControls.push(
+          searchForm,
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        spectator.detectChanges();
+        // 0 is the default search bar which has no travel mode
+        expect(component.accessTravelModeIcon(0)).toBe("panorama_fish_eye");
+        // This one matches with searchForm variable
+        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 2)).toBe("directions_car");
+        // This one matches with the last search bar of the list
+        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 1)).toBe("outlined_flag");
       });
     });
   });
-   */
-
 });

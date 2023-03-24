@@ -34,6 +34,7 @@
     "strictTemplates": true
   },
   "exclude": [
-    "cypress/**/*"
+    "cypress/**/*",
+    "cypress.config.ts"
   ]
 }

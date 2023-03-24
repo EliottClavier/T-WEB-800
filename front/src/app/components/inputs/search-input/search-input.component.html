@@ -2,6 +2,7 @@
   search-input-form-field appearance="outline" class="w-100"
   [formGroup]="searchForm"
   [hideRequiredMarker]="true"
+  [ngClass]="{ 'no-margin-bottom': noMarginBottom }"
   (click)="onSelectSearchBar()">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
   <input

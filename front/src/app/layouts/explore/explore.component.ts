@@ -6,7 +6,10 @@ import {
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {
+  buildSearchBarFormGroupControls,
+  buildSearchBarFormGroupControlsDetails
+} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 @Component({
   selector: 'app-explore',
@@ -17,7 +20,7 @@ export class ExploreComponent implements OnInit {
 
   public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      buildSearchBarFormGroupControls(),
+      buildSearchBarFormGroupControlsDetails(),
     ]),
   });
 
@@ -54,7 +57,7 @@ export class ExploreComponent implements OnInit {
   }
 
   private _loadRouteParams(): void {
-    this.searchFormsArrayControls[0] = buildSearchBarFormGroupControls();
+    this.searchFormsArrayControls[0] = buildSearchBarFormGroupControlsDetails();
     let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
     let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
     let lat: string = this._route.snapshot.queryParams['lat'] || "0";
