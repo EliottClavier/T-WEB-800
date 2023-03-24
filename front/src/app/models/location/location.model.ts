@@ -46,4 +46,8 @@ export class Location {
   set lat(value: number) {
     this._lat = value;
   }
+
+  getCoordinates(): string {
+    return this.lng + "-" + this.lat;
+  }
 }

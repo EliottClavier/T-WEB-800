@@ -2,6 +2,8 @@ import {AfterContentChecked, Component, OnInit} from '@angular/core';
 import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {Location} from "../../models/location/location.model";
 
 @Component({
   selector: 'app-card-container',
@@ -15,7 +17,8 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   category: string = "";
   private _itemsSelected?: LeisureItemModel;
 
-  constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService) {
+  constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
+
   }
 
   ngOnInit() {
@@ -33,9 +36,11 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   set itemsSelected(value: LeisureItemModel) {
     this._itemsSelected = value;
   }
+
   get suggests(): LeisureItemModel[] {
     return this._suggests;
   }
+
   get translateService(): TranslateService {
     return this._translateService;
   }
@@ -43,22 +48,38 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   set translateService(value: TranslateService) {
     this._translateService = value;
   }
+
   set suggests(value: LeisureItemModel[]) {
     this._suggests = value;
   }
 
   subscribeItems() {
     this._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
-        this._suggests = suggestions;
+      this._suggests = suggestions;
     });
   }
 
   onItemSelected($event: any) {
-    this._itemsSelected  = $event as LeisureItemModel;
+    this._itemsSelected = $event as LeisureItemModel;
   }
 
   onCloseDetails() {
     this._itemsSelected = undefined;
-    console.log("close : " );
   }
+
+  onShowMoreItems() {
+    let category = this._suggests[0].category;
+    let location = this._suggests[0].location as Location;
+    this._suggestionsService.getSuggestions(category, location, undefined).subscribe({
+        next: (suggestions) => {
+          this._suggestionsStore.setSuggestionsData(suggestions);
+        },
+        // error: (err) => {
+        //   this._suggestionsStore.setSuggestionsData(new Array<LeisureItemModel>());
+        // }
+      }
+    );
+  }
+
+
 }

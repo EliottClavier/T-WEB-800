@@ -155,7 +155,7 @@ describe('SingleSearchBarComponent', () => {
 
       component.onLocationOptionClick(location);
 
-      expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
+      expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location, undefined);
       expect(component.searchForm.value.location).toEqual(location);
       expect(component.searchForm.value.locationSearch).toEqual(location.name);
     });
@@ -170,7 +170,7 @@ describe('SingleSearchBarComponent', () => {
 
       suggestionStore.suggestions$.subscribe(suggests => {
 
-        expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location);
+        expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location, undefined);
         expect(suggests).toEqual(suggestions);
       });
     })

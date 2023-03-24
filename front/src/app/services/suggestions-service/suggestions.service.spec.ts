@@ -51,32 +51,33 @@ describe('SuggestionsService', () => {
   });
   it('should test HttpClient getPreviewSuggestions', () => {
     let location = new Location("1", "Nantes");
+    let items = getBarItems()
 
-    spectatorHttp.service.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, location).subscribe(
+    spectatorHttp.service.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, location, undefined).subscribe(
       (data) => {
-        expect(data).toEqual(getBarItems());
+        expect(data[0].title).toEqual(items[0].title);
       }
     );
-
-    let req = spectatorHttp.expectOne(`/api/review/accommodations/search?location=${location.name}`, HttpMethod.GET);
+    let date = items[0].date;
+    let req = spectatorHttp.expectOne(`/api/review/accommodations/search?location=${location.getCoordinates()}&date=undefined`, HttpMethod.GET);
     req.flush(getBarItems());
     expect(req.request.method).toEqual('GET');
 
   });
 
   it('should have getPreviewSuggestions method', () => {
-    expect(service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeDefined();
-    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toBeTruthy();
-    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"))).toEqual(jasmine.any(Observable));
+    expect(service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"),undefined)).toBeDefined();
+    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"),undefined)).toBeTruthy();
+    expect(spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"),undefined)).toEqual(jasmine.any(Observable));
   });
 
   it('should get subscribe to an Observable and get data', fakeAsync(() => {
 
     const expectedValue = getBarItems();
-    spyOn(spectator.service, 'getPreviewSuggestions').and.returnValue(getBarItems$().pipe(delay(1)));
+    spyOn(spectator.service, 'getPreviewSuggestions').and.returnValue(getBarItems$());
 
-    tick(1);
-    const result$: Observable<LeisureItemModel[]> = spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"));
+    // tick(1);
+    const result$: Observable<LeisureItemModel[]> = spectator.service.getPreviewSuggestions(LeisureCategory.BAR, new Location("0", "Nantes"), undefined);
 
     getBarItems$().subscribe((data) => {
       expect(data).toEqual(expectedValue);

@@ -33,6 +33,7 @@ describe('Card container', () => {
   let barItems: LeisureItemModel[] = getItems();
   let component: CardsContainerComponent;
   let store: SuggestionsStoreService;
+  let suggestionsService: SuggestionsService;
   let suggests: LeisureItemModel[]
 
   const createComponent = createComponentFactory({
@@ -78,11 +79,11 @@ describe('Card container', () => {
 
     it('should get suggestionItem from SuggestionsService when data store updated', () => {
 
-      spyOn(store.suggestions$, 'subscribe').and.callThrough();
+      let spy = spyOn(store.suggestions$, 'subscribe').and.callThrough();
       spectator.component.subscribeItems();
       spectator.detectChanges();
 
-      expect(store.suggestions$.subscribe).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
       expect(spectator.component.suggests).toEqual(barItems);
 
     });
@@ -199,6 +200,27 @@ describe('Card container', () => {
       it('should display the "show more" button of leisure items', () => {
 
         expect(spectator.query('[data-cy-show-more-item-button]')).toBeTruthy();
+
+      });
+      it('should get the next leisure items when button clicked', () => {
+        // component.suggests = getAccommodationItems();
+        let spy = spyOn(component, 'onShowMoreItems').and.callFake(() => {
+
+
+          // createService().service.setSuggestionsData(getBarItem());
+          //
+          // expect(createService().service.getSuggestionsData()).toEqual(getBarItem());
+
+        });
+        let items = barItems;
+        let item = items[0];
+        spectator.click('[data-cy-show-more-item-button] [simple-button]');
+        spectator.triggerEventHandler('[data-cy-show-more-item-button] [simple-button]', 'click', item);
+
+        expect(spy).toHaveBeenCalled();
+        spectator.detectChanges();
+        expect(spectator.component.suggests).toEqual(items);
+
 
       });
     });
