@@ -30,4 +30,6 @@
   </mat-card>
 
   <app-simple-button (buttonClick)="onCloseDetailsView()" [label]=" 'close' | translate" data-cy-item-details-close-button></app-simple-button>
+  <app-simple-button (buttonClick)="onAddItemToTrip(detailsItem)" [label]=" 'add_to_trip' | translate" data-cy-item-details-add-to-trip-button></app-simple-button>
+
 </ng-container>

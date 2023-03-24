@@ -50,7 +50,7 @@ describe('CardItemDetailsViewComponent', () => {
     it('should display an button to close the details view', () => {
       expect(spectator.query('[data-cy-item-details-close-button]')).toBeTruthy();
     });
-    it('should send close inforamtion when button is cliking', async () => {
+    it('should send close information when button is clicking', async () => {
 
       let items = getAccommodationItems();
       spectator.setInput('detailsItem', items[0]);
@@ -62,6 +62,24 @@ describe('CardItemDetailsViewComponent', () => {
       spectator.detectChanges();
 
       expect(spy).toHaveBeenCalled();
+
+    });
+
+    it('should display an button to add item in my trip', () => {
+      expect(spectator.query('[data-cy-item-details-add-to-trip-button]')).toBeTruthy();
+    });
+    it('should send add to trip information when button is clicking', async () => {
+
+        let items = getAccommodationItems();
+        spectator.setInput('detailsItem', items[0]);
+
+        let spy = await spyOn<CardItemDetailsViewComponent, any>(component, 'onAddItemToTrip').and.returnValue(items[0])
+
+        await spectator.click('[data-cy-item-details-add-to-trip-button] [simple-button]');
+
+        spectator.detectChanges();
+
+        expect(spy).toHaveBeenCalledWith(items[0]);
 
     });
   });
