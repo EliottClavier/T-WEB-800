@@ -6,11 +6,12 @@ import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
 import {FormArray, FormGroup} from "@angular/forms";
-import {ActivatedRoute, convertToParamMap} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
+import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -204,6 +205,44 @@ describe('ExploreComponent', () => {
 
     it('should return false if date parameter is not a date object', () => {
       expect(component["_isValidDate"]("test")).toBeFalsy();
+    });
+  });
+
+  describe('View change', () => {
+    it('should change itinerary view to true', () => {
+      component.onViewChange("itinerary");
+      expect(component.itineraryView).toEqual(true);
+    });
+
+    it('should change itinerary view to false', () => {
+      component.onViewChange("location");
+      expect(component.itineraryView).toEqual(false);
+    });
+
+    it('should change itinerary view to false in default case', () => {
+      component.onViewChange("");
+      expect(component.itineraryView).toEqual(false);
+    });
+  });
+
+  describe("Next location status", () => {
+    beforeEach(() => {
+      component.searchFormsArrayControls.push(
+        buildSearchBarFormGroupControlsDetails(),
+        buildSearchBarFormGroupControlsDetails(),
+      );
+    });
+
+    it('should return Location if next location exists', () => {
+      component.activeSearchBar.index = 0;
+      component.searchFormsArrayControls[1].get('location')!.setValue(new Location("", "Nantes", 42.555, 37.444));
+      expect(component.nextLocation).toBeTruthy();
+    });
+
+    it('should return undefined if there is no next location', () => {
+      // We take the last search bar
+      component.activeSearchBar.index = component.searchFormsArrayControls.length - 1;
+      expect(component.nextLocation).toBeFalsy();
     });
   });
 

@@ -11,6 +11,8 @@ import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {MapComponent} from "../map/map.component";
+import {MapView} from "../../enums/map-view-const";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -260,11 +262,9 @@ describe('MultipleSearchBarsComponent', () => {
         expect(component.activeSearchBar).toEqual(searchBarEvent);
         expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
-
-
     });
 
-    describe('Active search bar', () => {
+    describe('Active search bar elements', () => {
       beforeEach(() => {
         component.activeSearchBar = {
           index: 1,
@@ -282,6 +282,16 @@ describe('MultipleSearchBarsComponent', () => {
     });
 
     describe('Itinerary display', function () {
+      let searchForm: FormGroup;
+
+      beforeEach(() => {
+        searchForm = buildSearchBarFormGroupControlsDetails();
+        component.searchFormsArrayControls.push(
+          searchForm
+        );
+        spectator.detectChanges();
+      });
+
       it('should remove margin bottom on search bars', () => {
         expect(spectator.queryAll("[search-bar-input]").every((input) =>
           input.getAttribute("ng-reflect-no-margin-bottom") === "true"
@@ -289,11 +299,11 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should have as much itinerary arrows as search bars', () => {
-        expect(spectator.queryAll("app-simple-button[search-bar-itinerary-arrow]").length).toBe(component.searchFormsArrayControls.length - 1);
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-itinerary-arrow]").length).toBe(component.searchFormsArrayControls.length);
       });
 
       it('should have as much itinerary travel mode bubbles as search bars', () => {
-        expect(spectator.queryAll("app-simple-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length - 1);
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length);
       });
 
       it('should return the correct travel mode icon', () => {
@@ -321,6 +331,83 @@ describe('MultipleSearchBarsComponent', () => {
         expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 2)).toBe("directions_car");
         // This one matches with the last search bar of the list
         expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 1)).toBe("outlined_flag");
+      });
+
+      it('should return true if the location is the search bar after the selected search bar is valid', () => {
+        searchForm.get("location")!.setValue(new Location("2", "Paris", 48.856614, 2.3522219));
+        spectator.detectChanges();
+        expect(component.isNextLocationValid(0)).toBeTruthy();
+      });
+
+      it('should return false if the location is the search bar after the selected search bar is not valid', () => {
+        searchForm.get("location")!.setValue(new Location("2", "Paris", 200, 200));
+        spectator.detectChanges();
+        expect(component.isNextLocationValid(0)).toBeFalsy();
+      });
+    });
+
+    describe('View switch', () => {
+
+      it('should emit the view change to location event when adding search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.addSearchBar();
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
+      });
+
+      it('should emit the view change to location event when removing search bar when conditions match', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.activeSearchBar = {
+          index: 0,
+          isEditing: false
+        }
+        spectator.detectChanges();
+        component.removeSearchBar(0);
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
+      });
+
+      it('should not emit the view change to location event when removing search bar when index isn\'t in range', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.activeSearchBar = {
+          index: 0,
+          isEditing: false
+        }
+        spectator.detectChanges();
+        component.removeSearchBar(component.searchFormsArrayControls.length - 1);
+        expect(component.viewChange.emit).not.toHaveBeenCalled();
+      });
+
+      it('should emit the view change to location event when selecting a search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.onSearchBarSelect({
+          index: 0,
+          isEditing: false
+        })
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
+      });
+
+      it('should emit the view change to location event when selecting a search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.onItinerarySelect({
+          index: 0,
+          isEditing: false
+        })
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.ITINERARY);
       });
     });
   });

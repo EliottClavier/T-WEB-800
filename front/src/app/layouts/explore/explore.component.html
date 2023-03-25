@@ -5,6 +5,7 @@
         search-bar
         [(activeSearchBar)]="activeSearchBar"
         [searchForms]="searchForms"
+        (viewChange)="onViewChange($event)"
       ></app-multiple-search-bars>
       <hr class="mx-2 my-4 border-lightgray-bottom">
       <app-map-filters
@@ -17,7 +18,10 @@
       <app-map
         map
         *ngIf="activeSearchBar.index !== null"
+        [itineraryView]="itineraryView"
+        [itineraryMode]="itineraryMode"
         [selectedLocation]="selectedLocation"
+        [nextLocation]="itineraryView ? nextLocation : undefined"
       ></app-map>
     </div>
   </div>

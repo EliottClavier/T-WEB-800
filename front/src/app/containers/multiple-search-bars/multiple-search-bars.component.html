@@ -35,7 +35,9 @@
           search-bar-travel-mode
           class="col-2 px-0"
           [icon]="accessTravelModeIcon(i)"
-          [noInteraction]="searchFormsArrayControls.length === i + 1">
+          [isDisabled]="!isNextLocationValid(i)"
+          [noInteraction]="searchFormsArrayControls.length === i + 1"
+          (click)="isNextLocationValid(i) && (onItinerarySelect({ index: i, isEditing: false }))">
         </app-simple-icon-button>
         <div class="col-10 px-0 w-100"></div>
       </div>

@@ -79,7 +79,7 @@ export class MapComponent implements OnChanges {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {
       if (this.itineraryView) {
         if (this.nextLocation && this.nextLocation.hasValidCoordinates() && this._isTravelModeValid(this.itineraryMode.travelMode)) {
-          this._requestDirections(this.selectedLocation.name, this.nextLocation.name, google.maps.TravelMode.TRANSIT);
+          this._requestDirections(this.selectedLocation.name, this.nextLocation.name, this.itineraryMode.travelMode);
         } else {
           this.directionsResults = undefined;
         }

@@ -1,5 +1,6 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {
+  Form,
   FormArray,
   FormGroup,
 } from "@angular/forms";
@@ -10,6 +11,7 @@ import {
   buildSearchBarFormGroupControls,
   buildSearchBarFormGroupControlsDetails
 } from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {ItineraryMode} from "../../types/itinerary-mode.type";
 
 @Component({
   selector: 'app-explore',
@@ -29,6 +31,12 @@ export class ExploreComponent implements OnInit {
     isEditing: false,
   };
 
+  public itineraryView: boolean = false;
+
+  public itineraryMode: ItineraryMode = {
+    travelMode: google.maps.TravelMode.DRIVING,
+  }
+
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
   }
@@ -43,6 +51,10 @@ export class ExploreComponent implements OnInit {
 
   get selectedLocation(): Location {
     return this.selectedSearchForm.get('location')?.value as Location;
+  }
+
+  get nextLocation(): Location | undefined {
+    return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as Location | undefined
   }
 
   constructor(private _route: ActivatedRoute) {
@@ -75,4 +87,15 @@ export class ExploreComponent implements OnInit {
     })
   }
 
+  public onViewChange(view: string): void {
+    switch(view) {
+      case "itinerary":
+        this.itineraryView = true;
+        break;
+      case "location":
+      default:
+        this.itineraryView = false;
+        break;
+    }
+  }
 }
