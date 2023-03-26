@@ -7,6 +7,13 @@ export const isLocation = (): ValidatorFn => {
   }
 }
 
+export const isValidTravelMode = (): ValidatorFn => {
+  return (control: AbstractControl) : ValidationErrors | null => {
+    let array: string[] = ["DRIVING", "WALKING", "BICYCLING", "BUS", "TRAIN", "FLIGHT"];
+    return array.includes(control.value) ? null : { isValidTravelMode: true };
+  }
+}
+
 export const buildSearchBarFormGroupControls = (): FormGroup => {
   let formGroup: FormGroup = new FormGroup({});
   formGroup.addControl(
@@ -20,6 +27,14 @@ export const buildSearchBarFormGroupControls = (): FormGroup => {
   );
   formGroup.addControl(
     "end", new FormControl<Date | null>(null, [ Validators.required ])
+  );
+  return formGroup;
+}
+
+export const buildSearchBarFormGroupControlsDetails = (): FormGroup => {
+  let formGroup: FormGroup = buildSearchBarFormGroupControls();
+  formGroup.addControl(
+    "travelMode", new FormControl<string>("", [ Validators.required, isValidTravelMode() ])
   );
   return formGroup;
 }

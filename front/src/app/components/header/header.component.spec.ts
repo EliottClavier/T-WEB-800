@@ -1,48 +1,78 @@
 import { HeaderComponent } from './header.component'
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {MatCardModule} from "@angular/material/card";
 import {SimpleButtonComponent} from "../buttons/simple-button/simple-button.component";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AppModule} from "../../app.module";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let spectator: Spectator<HeaderComponent>;
+  let _dialog: MatDialog;
+
+  const dialogMock = {
+    close: () => { },
+    open: () => { }
+  };
 
   const createComponent = createComponentFactory({
     component: HeaderComponent,
     imports: [
-      RouterTestingModule,
-      MatCardModule
+      AppModule
     ],
     declarations: [
       HeaderComponent,
       SimpleButtonComponent
-    ]
+    ],
+    providers: [
+      {provide: MatDialogRef, useValue: dialogMock},
+    ],
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     spectator = createComponent();
     component = spectator.component;
+    _dialog = spectator.inject(MatDialog);
     spectator.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should navigate to /login when login button is clicked', () => {
-    spyOn(component['router'], 'navigate');
-    let button: HTMLElement = spectator.query('[header-login] [simple-button]')!;
-    button.click();
-    expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  it('should navigate to /register when register button is clicked', () => {
-    spyOn(component['router'], 'navigate');
-    let button: HTMLElement = spectator.query('[header-register] [simple-button]')!;
-    button.click();
-    expect(component['router'].navigate).toHaveBeenCalledWith(['/register']);
+  it('should open login dialog', () => {
+    spyOn<HeaderComponent, any>(component, 'openLoginDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    component.openLoginDialog();
+    spectator.detectChanges();
+    expect(component.openLoginDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
   });
+
+  it('should open login dialog on click', () => {
+    spyOn<HeaderComponent, any>(component, 'openLoginDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    spectator.click('[header-login] button');
+    spectator.detectChanges();
+    expect(component.openLoginDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
+  it('should open register dialog on click', () => {
+    spyOn<HeaderComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    component.openRegisterDialog();
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
+  it('should open register dialog', () => {
+    spyOn<HeaderComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    spectator.click('[header-register] button');
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
 })

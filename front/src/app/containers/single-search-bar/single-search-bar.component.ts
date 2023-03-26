@@ -53,7 +53,9 @@ export class SingleSearchBarComponent {
         {
           queryParams: {
             start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
+            end: getDateFromIsoString(end),
+            lat: location.lat,
+            lng: location.lng,
           }
         }
       );
