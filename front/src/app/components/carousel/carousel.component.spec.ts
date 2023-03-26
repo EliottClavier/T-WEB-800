@@ -80,7 +80,7 @@ describe('CarouselComponent', () => {
   });
 
   it('should work with any image', fakeAsync(() => {
-    const carousel = createTestComponent(`<ngb-carousel [interval]="5000" *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">`);
+    const fixture = createTestComponent(`<ngb-carousel [interval]="5000" *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">`);
     //const carousel = fixture.debugElement.query(By.directive(NgbCarousel));
     //const img = carousel.query(By.css('img'));
     tick(3001);

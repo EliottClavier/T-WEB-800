@@ -39,7 +39,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
 import { MapTravelModeSelectionComponent } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -69,7 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardsContainerComponent,
     MapComponent,
     MapFiltersComponent,
-    MapTravelModeSelectionComponent,,
+    MapTravelModeSelectionComponent,
     CarouselComponent
   ],
   imports: [
