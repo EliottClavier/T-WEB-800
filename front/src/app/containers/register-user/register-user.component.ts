@@ -14,6 +14,7 @@ import {RegisterConst} from "../../enums/register-const";
 import {RegisterService} from "../../services/register/register.service";
 import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
+import {MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({
@@ -32,7 +33,10 @@ export class RegisterUserComponent {
   INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
   API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
-  constructor(private _registerService: RegisterService) {
+  constructor(
+    private _registerService: RegisterService,
+    private _dialogRef: MatDialogRef<RegisterUserComponent>
+  ) {
     this.newUser = new Register('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
     this.success = false;
@@ -64,6 +68,7 @@ export class RegisterUserComponent {
         next: (value: any) => {
           this.user = value['data'];
           this.success = true;
+          this._dialogRef.close();
         },
         error: () => {
           this.errorMessage = this.API_RESPONSE.BAD_REQUEST;

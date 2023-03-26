@@ -1,0 +1,15 @@
+<h1>Choose your way of travelling</h1>
+<div class="row justify-content-center text-center">
+  <div class="col-4 px-0 p-3" *ngFor="let travelMode of travelModes">
+    <app-simple-icon-button
+      map-travel-mode-button
+      [size]="'5rem'"
+      [icon]="getTravelModeIcon(travelMode)"
+      [buttonType]="'mini-fab'"
+      [isDisabled]="travelMode === itineraryMode.travelMode || travelMode === itineraryMode.transitMode"
+      (buttonClick)="onTravelModeChange(travelMode)">
+    </app-simple-icon-button>
+    <h2 map-travel-mode-label>{{ travelMode | titlecase }}</h2>
+  </div>
+
+</div>

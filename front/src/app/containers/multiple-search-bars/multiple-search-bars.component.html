@@ -1,38 +1,24 @@
 <form [formGroup]="searchForms" class="row justify-content-center">
-  <div formArrayName="searchFormsArray" class="col-12 mx-2">
+  <div formArrayName="searchFormsArray" class="col-12">
     <div search-bars class="row m-0"
          *ngFor="let searchForm of searchFormsArrayControls; let i = index"
          [formGroupName]="i">
-      <!--
-      <div class="col-1 px-0">
-        <div class="row flex-column">
-          <app-simple-icon-button
-            search-bar-up
-            class="col-6 px-0"
-            [icon]="'keyboard_arrow_up'"
-            [isHidden]="i === 0"
-            (buttonClick)="moveSearchBar(i, false)"
-          ></app-simple-icon-button>
-
-          <app-simple-icon-button
-            search-bar-down
-            class="col-6 px-0"
-            [icon]="'keyboard_arrow_down'"
-            [isHidden]="i === searchFormsArrayControls.length - 1"
-            (buttonClick)="moveSearchBar(i, true)"
-          ></app-simple-icon-button>
-        </div>
-      </div>
-      -->
       <div class="row justify-content-between mx-0 p-0">
+        <app-simple-icon-button
+          search-bar-itinerary-arrow
+          class="col-2 mx-0 px-0"
+          [icon]="'arrow_downward'"
+          [noInteraction]="true">
+        </app-simple-icon-button>
+
         <app-search-input
           search-bar-input
           class="col-8 px-0"
           [id]="i"
           [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
           [searchForm]="searchForm"
-          (onSearchBarSelect)="onSearchBarSelect($event)"
-        >
+          [noMarginBottom]="true"
+          (onSearchBarSelect)="onSearchBarSelect($event)">
         </app-search-input>
 
         <app-simple-icon-button
@@ -44,13 +30,24 @@
           (buttonClick)="removeSearchBar(i)">
         </app-simple-icon-button>
       </div>
+      <div class="row mx-0 px-0">
+        <app-simple-icon-button
+          search-bar-travel-mode
+          class="col-2 px-0"
+          [icon]="accessTravelModeIcon(i)"
+          [isDisabled]="!isNextLocationValid(i)"
+          [noInteraction]="searchFormsArrayControls.length === i + 1"
+          (click)="isNextLocationValid(i) && (onItinerarySelect({ index: i, isEditing: false }))">
+        </app-simple-icon-button>
+        <div class="col-10 px-0 w-100"></div>
+      </div>
     </div>
   </div>
   <div class="col-12">
     <div class="row justify-content-center">
       <app-simple-icon-button
         search-bar-add
-        class="col-1 px-0"
+        class="col-2 px-0"
         [icon]="'add'"
         [buttonType]="'mini-fab'"
         (buttonClick)="addSearchBar()">
