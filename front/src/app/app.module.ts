@@ -39,6 +39,7 @@ import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
 import { MapTravelModeSelectionComponent } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -66,7 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardsContainerComponent,
     MapComponent,
     MapFiltersComponent,
-    MapTravelModeSelectionComponent
+    MapTravelModeSelectionComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -86,6 +87,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatCardModule,
     MatTableModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     BrowserModule,
     MatDatepickerModule,

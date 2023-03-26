@@ -1,27 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {MyErrorStateMatcher, RegisterUserComponent} from './register-user.component';
-import {Register} from "../../models/register/register.model";
 import {AppModule} from "../../app.module";
 import {
   FormControl,
   FormGroup,
   FormGroupDirective,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidatorFn,
   Validators
 } from "@angular/forms";
 import {RegisterService} from "../../services/register/register.service";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {BehaviorSubject, throwError} from "rxjs";
 import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
-import any = jasmine.any;
-import {MatCardModule} from "@angular/material/card";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
@@ -32,15 +23,23 @@ describe('RegisterUserComponent', () => {
   let spectator: Spectator<RegisterUserComponent>;
   let _registerService: RegisterService;
   let userMock: User;
+  let _dialogRef: MatDialogRef<RegisterUserComponent>;
 
   const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
+
+  const dialogMock = {
+    close: () => { }
+  };
 
   const createComponent = createComponentFactory({
     component: RegisterUserComponent,
     imports: [
       AppModule
     ],
-    providers: [ RegisterService ],
+    providers: [
+      RegisterService,
+      {provide: MatDialogRef, useValue: dialogMock},
+    ],
   });
 
   beforeEach(async () => {
@@ -54,6 +53,7 @@ describe('RegisterUserComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     _registerService = spectator.inject(RegisterService);
+    _dialogRef = spectator.inject(MatDialogRef);
 
     spectator.detectChanges()
   });
