@@ -1,1 +1,1 @@
-rootProject.name = 'back'
+include 'user-service'
