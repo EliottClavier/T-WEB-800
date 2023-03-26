@@ -3,22 +3,11 @@
     <div class="col-2 text-center">
       T-WEB-800
     </div>
-
     <div class="col-2">
       <div class="row justify-content-end px-0">
-        <app-simple-button
-          header-login
-          class="col-6"
-          [height]="'2rem'"
-          [label]="'Login'"
-          (buttonClick)="goToLogin()">
+        <app-simple-button header-login class="col-6" [height]="'2rem'" [label]="'Login'" (buttonClick)="goToLogin()">
         </app-simple-button>
-
-        <app-simple-button
-          header-register
-          class="col-6"
-          [height]="'2rem'"
-          [label]="'Register'"
+        <app-simple-button header-register class="col-6" [height]="'2rem'" [label]="'Register'"
           (buttonClick)="goToRegister()">
         </app-simple-button>
       </div>

@@ -1,0 +1,11 @@
+
+.carousel {
+    margin-top: 1rem;
+    position: absolute;
+}
+
+.carousel img {
+    width: 100vw;
+    height: 50vh;
+    object-fit: cover;
+}
