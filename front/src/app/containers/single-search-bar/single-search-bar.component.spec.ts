@@ -79,13 +79,15 @@ describe('SingleSearchBarComponent', () => {
 
   describe('Validate research and redirection', () => {
     let locationName: string = "Paris";
+    let locationLat: number = 48.8566;
+    let locationLong: number = 2.3522;
     let start: Date = new Date();
     let end: Date = new Date();
 
     beforeEach(() => {
       _router = spectator.inject(Router);
       component.searchForm = new FormGroup<any>({
-        location: new FormControl(new Location("1", locationName)),
+        location: new FormControl(new Location("1", locationName, locationLat, locationLong)),
         locationSearch: new FormControl(""),
         start: new FormControl(start),
         end: new FormControl(end),
@@ -121,7 +123,9 @@ describe('SingleSearchBarComponent', () => {
         {
           queryParams: {
             start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
+            end: getDateFromIsoString(end),
+            lat: locationLat,
+            lng: locationLong
           }
         }
       );
@@ -140,7 +144,9 @@ describe('SingleSearchBarComponent', () => {
         {
           queryParams: {
             start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end)
+            end: getDateFromIsoString(end),
+            lat: locationLat,
+            lng: locationLong
           }
         }
       );

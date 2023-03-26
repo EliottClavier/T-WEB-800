@@ -5,7 +5,7 @@ describe('Location', () => {
   let locationEmpty: Location;
 
   beforeEach(() => {
-    location = new Location("1", 'Paris');
+    location = new Location("1", "Paris", 0, 0);
     locationEmpty = new Location();
   });
 
@@ -37,10 +37,30 @@ describe('Location', () => {
     location.lat = 1;
     expect(location.lat).toEqual(1);
   });
+
   it('should set and get the lng property', () => {
     expect(location.lng).toEqual(0);
     location.lng = 1;
     expect(location.lng).toEqual(1);
+  });
+
+  it('should have return true when coordinates are valid', () => {
+    expect(location.hasValidCoordinates()).toEqual(true);
+  });
+
+  it('should have return false when latitude is not valid', () => {
+    location.lat = 100;
+    expect(location.hasValidCoordinates()).toEqual(false);
+    location.lat = -100;
+    expect(location.hasValidCoordinates()).toEqual(false);
+  });
+
+  it('should have return false when longitude is not valid', () => {
+    location.lng = 200;
+    expect(location.hasValidCoordinates()).toEqual(false);
+
+    location.lng = -200;
+    expect(location.hasValidCoordinates()).toEqual(false);
   });
 
 });
