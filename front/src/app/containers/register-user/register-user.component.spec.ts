@@ -38,13 +38,7 @@ describe('RegisterUserComponent', () => {
   const createComponent = createComponentFactory({
     component: RegisterUserComponent,
     imports: [
-      HttpClientModule,
-      MatCardModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatInputModule,
-      ReactiveFormsModule,
-      FormsModule
+      AppModule
     ],
     providers: [ RegisterService ],
   });

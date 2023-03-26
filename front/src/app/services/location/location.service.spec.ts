@@ -4,8 +4,8 @@ import { LocationService } from './location.service';
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {Location} from "../../models/location/location.model";
-import {TripItemConst} from "../../enums/leisure-const";
 import {getDateFromIsoString} from "../../utils/date.utils";
+import {LeisureType} from "../../enums/leisure-type";
 
 describe('LocationService', () => {
   let service: LocationService;
@@ -20,7 +20,7 @@ describe('LocationService', () => {
     new Location("5", "Nanterre"),
   ];
 
-  let testLeisure = new TripItemConst().LEISURE.ACCOMMODATION;
+  let testLeisure = LeisureType.ACCOMMODATION;
 
   let testLocationInformations: any[] = [
     {
@@ -29,7 +29,7 @@ describe('LocationService', () => {
     },
     {
       "name": "firstBar",
-      "type": new TripItemConst().LEISURE.BAR,
+      "type": LeisureType.BAR,
     },
     {
       "name": "secondAccommodation",
@@ -62,14 +62,14 @@ describe('LocationService', () => {
 
     service.getLocationSuggestions(locationName).subscribe(data => {
       expect(data).toEqual(testLocationOptions.filter(
-        (location: Location) => location.getName.toLowerCase().startsWith(locationName.toLowerCase())
+        (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
       ));
     });
 
     const req = httpMock.expectOne(`/api/locations/suggestion/${locationName}`);
     expect(req.request.method).toEqual('GET');
     req.flush(testLocationOptions.filter(
-      (location: Location) => location.getName.toLowerCase().startsWith(locationName.toLowerCase())
+      (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
     ), { status: 200, statusText: 'OK' });
   });
 

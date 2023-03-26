@@ -31,10 +31,23 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import { HeaderComponent } from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { MapComponent } from './containers/map/map.component';
+import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
+import { CardItemComponent } from './components/card-item/card-item.component';
+import { CardItemsListComponent } from './components/card-items-list/card-items-list.component';
+import {HttpClient} from "@angular/common/http";
+import { TranslateModule, TranslateLoader  } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
+    CardItemComponent,
+    CardItemsListComponent,
     RegisterUserComponent,
     LoginUserComponent,
     SearchInputComponent,
@@ -47,7 +60,11 @@ import { MapComponent } from './containers/map/map.component';
     SimpleIconButtonComponent,
     ExploreComponent,
     SingleSearchBarComponent,
-    MapComponent
+    MapComponent,
+    MainComponent,
+    CardsContainerComponent,
+    MapComponent,
+    MapFiltersComponent
   ],
   imports: [
     GoogleMapsModule,
@@ -72,10 +89,24 @@ import { MapComponent } from './containers/map/map.component';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    TranslateModule.forRoot(
+      {
+        defaultLanguage: 'en',
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      },
+    )
   ],
   exports: [
     RegisterUserComponent,
     LoginUserComponent,
+    RegisterUserComponent,
+    BrowserAnimationsModule,
+    MatCardModule,
+   TranslateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

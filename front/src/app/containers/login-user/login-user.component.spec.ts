@@ -39,7 +39,8 @@ describe('LoginUserComponent', () => {
       MatFormFieldModule,
       MatInputModule,
       ReactiveFormsModule,
-      FormsModule
+      FormsModule,
+      MatCardModule
     ],
     providers: [ LoginService ],
   });
