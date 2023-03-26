@@ -113,4 +113,18 @@ describe('SimpleIconButtonComponent', () => {
     expect(button).toHaveClass('mat-button-icon-no-interaction');
     expect(button.getAttribute('ng-reflect-disabled')).toEqual('true');
   });
+
+  it('should have a size attribute with default value', () => {
+    const button: HTMLElement = spectator.query('[simple-icon-button]')!;
+    expect(button).toHaveStyle({ height: "56px" });
+    expect(button).toHaveStyle({ width: "56px" });
+  });
+
+  it('should have a size attribute to change size', () => {
+    component.size = "200px";
+    spectator.detectChanges();
+    const button: HTMLElement = spectator.query('[simple-icon-button]')!;
+    expect(button).toHaveStyle({ height: component.size });
+    expect(button).toHaveStyle({ width: component.size });
+  });
 });

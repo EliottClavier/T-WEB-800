@@ -12,6 +12,10 @@ import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
 import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {
+  MapTravelModeSelectionComponent
+} from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
+import TravelMode = google.maps.TravelMode;
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -94,6 +98,21 @@ describe('ExploreComponent', () => {
       let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
       expect(mapFiltersComponent).toBeDefined();
     });
+
+    it('should have a map-travel-mode-selection component', () => {
+      component.itineraryView = true;
+      spectator.detectChanges();
+      let mapTravelModeSelection = spectator.debugElement.query(By.css("app-map-travel-mode-selection"))!;
+      let mapTravelModeSelectionComponent: MapTravelModeSelectionComponent = mapTravelModeSelection.componentInstance as MapTravelModeSelectionComponent;
+      expect(mapTravelModeSelectionComponent).toBeDefined();
+    });
+
+    it('should not have a map-travel-mode-selection component', () => {
+      component.itineraryView = false;
+      spectator.detectChanges();
+      let mapTravelModeSelection = spectator.debugElement.query(By.css("app-map-travel-mode-selection"))!;
+      expect(mapTravelModeSelection).toBeFalsy();
+    });
   });
 
   describe('Component initialization', () => {
@@ -116,6 +135,17 @@ describe('ExploreComponent', () => {
       expect(component["_route"]).toBeDefined();
       expect(component["_route"]).toBeTruthy();
       expect(component["_route"]).toEqual(_route);
+    });
+
+    it('should have itineraryView initialized', () => {
+      expect(component.itineraryView).toBeDefined();
+      expect(component.itineraryView).toBeFalsy();
+    });
+
+    it('should have itineraryMode initialized', () => {
+      expect(component.itineraryMode).toBeDefined();
+      expect(component.itineraryMode).toBeTruthy();
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.DRIVING);
     });
   });
 
@@ -243,6 +273,46 @@ describe('ExploreComponent', () => {
       // We take the last search bar
       component.activeSearchBar.index = component.searchFormsArrayControls.length - 1;
       expect(component.nextLocation).toBeFalsy();
+    });
+  });
+
+  describe("Itinerary change", () => {
+    it('should change itinerary mode to driving', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.DRIVING });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.DRIVING);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.DRIVING);
+    });
+
+    it('should change itinerary mode to walking', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.WALKING });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.WALKING);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
+    });
+
+    it('should change itinerary mode to bicycling', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
+    });
+
+    it('should change itinerary mode to bus', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.BUS });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
+    });
+
+    it('should change itinerary mode to train', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.TRAIN });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
+    });
+
+    it('should change itinerary mode to flight', () => {
+      component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
+      expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
     });
   });
 

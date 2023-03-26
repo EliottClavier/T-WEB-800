@@ -187,6 +187,7 @@ describe('MapComponent', () => {
 
       it('should reset zoom level even with map getZoom returns undefined', () => {
         spyOn(component.map, 'getZoom').and.returnValue(undefined);
+        component.defaultZoom = 12;
         component.zoom = 1;
         component.onMapBoundariesChange(true);
         // Default zoom level is 12 and assigning zoom to 1 doesn't update map zoom

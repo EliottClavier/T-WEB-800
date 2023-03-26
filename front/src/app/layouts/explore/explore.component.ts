@@ -8,7 +8,6 @@ import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {
-  buildSearchBarFormGroupControls,
   buildSearchBarFormGroupControlsDetails
 } from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {ItineraryMode} from "../../types/itinerary-mode.type";
@@ -96,6 +95,15 @@ export class ExploreComponent implements OnInit {
       default:
         this.itineraryView = false;
         break;
+    }
+  }
+
+  public onItineraryModeChange(itineraryMode: ItineraryMode): void {
+    this.itineraryMode = itineraryMode;
+    if (itineraryMode.transitMode) {
+      this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.transitMode);
+    } else {
+      this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.travelMode);
     }
   }
 }

@@ -5,6 +5,7 @@ import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
 import {Location} from "../../models/location/location.model";
+import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
 
 @Component({
   selector: 'app-multiple-search-bars',
@@ -92,29 +93,10 @@ export class MultipleSearchBarsComponent {
   }
 
   public accessTravelModeIcon(searchBarIndex: number): string {
-    if (this.searchFormsArrayControls.length === searchBarIndex + 1 ) {
+    if (this.searchFormsArrayControls.length === searchBarIndex + 1) {
       return 'outlined_flag';
     }
-    return this._getTravelModeIcon(this.searchFormsArrayControls[searchBarIndex].get("travelMode")?.value);
-  }
-
-  private _getTravelModeIcon(travelMode: string = ""): string {
-    switch (travelMode) {
-      case "DRIVING":
-        return "directions_car";
-      case "WALKING":
-        return "directions_walk";
-      case "BICYCLING":
-        return "directions_bike";
-      case "BUS":
-        return "bus";
-      case "TRAIN":
-        return "train";
-      case "FLIGHT":
-        return "flight";
-      default:
-        return "panorama_fish_eye";
-    }
+    return getTravelModeIcon(this.searchFormsArrayControls[searchBarIndex].get("travelMode")?.value);
   }
 
 }

@@ -1,5 +1,5 @@
 <form [formGroup]="searchForms" class="row justify-content-center">
-  <div formArrayName="searchFormsArray" class="col-12 mx-2">
+  <div formArrayName="searchFormsArray" class="col-12">
     <div search-bars class="row m-0"
          *ngFor="let searchForm of searchFormsArrayControls; let i = index"
          [formGroupName]="i">

@@ -306,17 +306,6 @@ describe('MultipleSearchBarsComponent', () => {
         expect(spectator.queryAll("app-simple-icon-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length);
       });
 
-      it('should return the correct travel mode icon', () => {
-        expect(component["_getTravelModeIcon"](google.maps.TravelMode.DRIVING)).toBe("directions_car");
-        expect(component["_getTravelModeIcon"](google.maps.TravelMode.WALKING)).toBe("directions_walk");
-        expect(component["_getTravelModeIcon"](google.maps.TravelMode.BICYCLING)).toBe("directions_bike");
-        expect(component["_getTravelModeIcon"](google.maps.TransitMode.BUS)).toBe("bus");
-        expect(component["_getTravelModeIcon"](google.maps.TransitMode.TRAIN)).toBe("train");
-        expect(component["_getTravelModeIcon"]("FLIGHT")).toBe("flight");
-        expect(component["_getTravelModeIcon"]("")).toBe("panorama_fish_eye");
-        expect(component["_getTravelModeIcon"]()).toBe("panorama_fish_eye");
-      });
-
       it('should return the correct travel mode icon depending on additional conditions', () => {
         let searchForm: FormGroup = buildSearchBarFormGroupControlsDetails();
         searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
