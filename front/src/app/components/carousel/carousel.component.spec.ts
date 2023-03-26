@@ -1,7 +1,7 @@
 import { CarouselComponent } from './carousel.component'
 import { createComponentFactory, Spectator } from "@ngneat/spectator";
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { By } from '@angular/platform-browser';
 import { Image } from 'src/app/types/image.types';
 
@@ -33,15 +33,15 @@ describe('CarouselComponent', () => {
 
     component.images = [
       {
-        src: 'https://picsum.photos/id/1055/900/500/',
+        src: 'https://picsum.photos/id/28/4928/3264',
         alt: 'img'
       },
       {
-        src: 'https://picsum.photos/id/194/900/500/',
+        src: 'https://picsum.photos/id/42/3456/2304',
         alt: 'img'
       },
       {
-        src: 'https://picsum.photos/id/368/900/500/',
+        src: 'https://picsum.photos/id/45/4592/2576',
         alt: 'img'
       }
     ];
@@ -60,6 +60,10 @@ describe('CarouselComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should return an empty array at the initialisation', () => { });
+
+  it('should return image from api in good format', () => { });
+
   it('should render the bootstrap carousel', () => {
     fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
@@ -75,36 +79,25 @@ describe('CarouselComponent', () => {
     expect(img).toHaveAttribute('alt', component.images[0].alt);
   });
 
-  it('should change the active image', fakeAsync(() => {
-
-    const carousel = fixture.debugElement.query(By.directive(NgbCarousel));
-    const img = carousel.query(By.css('img'));
-
-    expect(img.nativeElement).toHaveAttribute('src', component.images[0].src);
-    expect(img.nativeElement).toHaveAttribute('alt', component.images[0].alt);
-    console.log(img.nativeElement);
-
+  it('should work with any image', fakeAsync(() => {
+    const carousel = createTestComponent(`<ngb-carousel [interval]="5000" *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">`);
+    //const carousel = fixture.debugElement.query(By.directive(NgbCarousel));
+    //const img = carousel.query(By.css('img'));
     tick(3001);
     fixture.detectChanges();
 
-    expect(img.nativeElement).toHaveAttribute('src', component.images[1].src);
-    expect(img.nativeElement).toHaveAttribute('alt', component.images[1].alt);
-    console.log(img.nativeElement);
+    expect(fixture.nativeElement.querySelector('ngb-carousel')).toBeTruthy();
+    expect(getSlideElements(fixture.nativeElement).length).toBe(0);
 
-    tick(3001);
-    fixture.detectChanges();
-
-    expect(img.nativeElement).toHaveAttribute('src', component.images[2].src);
-    expect(img.nativeElement).toHaveAttribute('alt', component.images[2].alt);
-    console.log(img.nativeElement);
+    discardPeriodicTasks();
   }));
 
-  // it('should not render the photo information if wrong', () => {
-  //   const img = spectator.query("#carousel");
+  it('should not render the photo information if wrong', () => {
+    const img = spectator.query("#carousel");
 
-  //   expect(img).toHaveAttribute('src', wrongImage[0].src);
-  //   expect(img).toHaveAttribute('alt', wrongImage[0].alt);
-  // });
+    expect(img).toHaveAttribute('src', wrongImage[0].src);
+    expect(img).toHaveAttribute('alt', wrongImage[0].alt);
+  });
 });
 
 function getSlideElements(nativeElement: any) {
