@@ -41,7 +41,7 @@ public class UserServiceTest {
      */
     @Test
     public void whenConvertUserEntityToUserDto_thenCorrect() {
-        User user = new User(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        User user = new User(null, "testEmail", "testFirstname", "testLastname");
 
         UserDto userDto = userService.convertToDto(user);
         Assertions.assertNotNull(userDto);
@@ -55,7 +55,7 @@ public class UserServiceTest {
      */
     @Test
     public void whenConvertUserDtoToUserEntity_thenCorrect() {
-        UserDto userDto = new UserDto(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
 
         User user = userService.convertToEntity(userDto);
         Assertions.assertNotNull(user);
@@ -69,7 +69,7 @@ public class UserServiceTest {
      */
     @Test
     public void whenRegisterThenCallRepositoryMethod() throws EmailAlreadyExistsException, EmailDoesNotExistException {
-        UserDto userDto = new UserDto(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
 
         Mockito.when(userRepository.saveNewUserWithExceptions(Mockito.any(User.class))).thenReturn(new User());
         userService.saveUser(userDto);
@@ -82,8 +82,8 @@ public class UserServiceTest {
      */
     @Test
     public void whenSaveNewUserThenReturnsNewId() throws EmailAlreadyExistsException {
-        UserDto userDto = new UserDto(null, "testEmail", "testPassword", "testFirstname", "testLastname");
-        User userResponse = new User(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
+        User userResponse = new User(null, "testEmail", "testFirstname", "testLastname");
         userResponse.setId(1);
 
         Mockito.when(userRepository.saveNewUserWithExceptions(Mockito.any(User.class))).thenReturn(userResponse);
@@ -100,9 +100,9 @@ public class UserServiceTest {
      */
     @Test
     public void whenUpdateUserThenReturnUpdatedEntity() throws EmailAlreadyExistsException, EmailDoesNotExistException, UserDoesNotExistsException {
-        UserDto userDto = new UserDto(null, "test2", null, "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(null, "test2", "testFirstname", "testLastname");
         userDto.setId(1);
-        User userResponse = new User(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        User userResponse = new User(null, "testEmail", "testFirstname", "testLastname");
         userResponse.setId(1);
         User userDtoEntity = userService.convertToEntity(userDto);
         Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userResponse));
@@ -120,7 +120,7 @@ public class UserServiceTest {
      */
     @Test
     public void whenGetUserByIdThenCallRepositoryMethod() throws UserDoesNotExistsException {
-        User userResponse = new User(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+        User userResponse = new User(null, "testEmail", "testFirstname", "testLastname");
         userResponse.setId(1);
 
         Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userResponse));

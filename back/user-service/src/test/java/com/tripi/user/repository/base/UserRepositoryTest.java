@@ -38,7 +38,7 @@ public class UserRepositoryTest {
      */
     @Test
     public void shouldSaveNewUser() throws EmailAlreadyExistsException {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         User savedUser = userRepository.saveNewUserWithExceptions(user);
         assertThat(savedUser).usingRecursiveComparison().ignoringFields("id").isEqualTo(user);
     }
@@ -49,7 +49,7 @@ public class UserRepositoryTest {
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
     public void shouldSaveExactlyOneUser() throws EmailAlreadyExistsException {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         userRepository.saveNewUserWithExceptions(user);
         assertThat(userRepository.findAll()).hasSize(5);
     }
