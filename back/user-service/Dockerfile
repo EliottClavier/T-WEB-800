@@ -3,7 +3,7 @@
 FROM gradle:7.5.1-jdk17-alpine as builder
 ENV HOME=/api-build
 RUN mkdir $HOME
-COPY .. /$HOME
+COPY . /$HOME
 WORKDIR /$HOME
 
 RUN export LANG='en_US.UTF-8'

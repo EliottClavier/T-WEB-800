@@ -1,6 +1,6 @@
 package com.tripi.auth.auth.response;
 
-import com.tripi.auth.auth.entity.user.UserDto;
+import com.tripi.auth.auth.model.UserDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

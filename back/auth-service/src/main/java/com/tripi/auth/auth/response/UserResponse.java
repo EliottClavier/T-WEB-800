@@ -1,6 +1,6 @@
 package com.tripi.auth.auth.response;
 
-import com.tripi.auth.auth.entity.user.UserDto;
+import com.tripi.auth.auth.model.UserDto;
 
 public class UserResponse {
 

@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:back/auth-service/src/main/java/com/tripi/auth/auth/entity/user/UserDto.java
-package com.tripi.auth.auth.entity.user;
-========
 package com.tripi.user.model;
->>>>>>>> develop:back/user-service/src/main/java/com/tripi/user/model/UserDto.java
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

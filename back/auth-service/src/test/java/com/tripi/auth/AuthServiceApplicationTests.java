@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/AuthServiceApplicationTests.java
 package com.tripi.auth;
-========
-package com.tripi.user;
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/BackApplicationTests.java
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,23 +15,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/AuthServiceApplicationTests.java
 @SpringBootTest(classes = AuthServiceApplication.class)
 public class AuthServiceApplicationTests {
-========
-@SpringBootTest(classes = UserServiceApplication.class)
-public class BackApplicationTests {
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/BackApplicationTests.java
 
 	@Autowired
 	private ApplicationContext applicationContext;
 
 	@SpyBean
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/AuthServiceApplicationTests.java
 	private AuthServiceApplication backApplication;
-========
-	private UserServiceApplication backApplication;
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/BackApplicationTests.java
 
 	@MockBean
 	private SpringApplicationBuilder springApplicationBuilder;
@@ -48,11 +35,7 @@ public class BackApplicationTests {
 	@Test
 	public void mainTest() {
 		String[] args = new String[]{};
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/AuthServiceApplicationTests.java
-		com.tripi.auth.AuthServiceApplication.main(args);
-========
-		UserServiceApplication.main(args);
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/BackApplicationTests.java
+		AuthServiceApplication.main(args);
 	}
 
 	@Test
@@ -62,10 +45,6 @@ public class BackApplicationTests {
 		SpringApplicationBuilder result = backApplication.configure(springApplicationBuilder);
 		assertNotNull(result);
 
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/AuthServiceApplicationTests.java
 		verify(springApplicationBuilder, times(1)).sources(AuthServiceApplication.class);
-========
-		verify(springApplicationBuilder, times(1)).sources(UserServiceApplication.class);
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/BackApplicationTests.java
 	}
 }

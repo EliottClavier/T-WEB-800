@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/auth/entity/user/UserTest.java
-package com.tripi.auth.auth.entity.user;
-========
-package com.tripi.user.model;
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/model/UserTest.java
+package com.tripi.auth.auth.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +10,25 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(locations = "classpath:application.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserTest {
+
+    /**
+     * Id Getter Test
+     */
+    @Test
+    public void idGetterShouldReturnId(){
+        User user = new User(12, "test", "test", "test", "test");
+        Assertions.assertEquals(12, user.getId());
+    }
+
+    /**
+     * Id Setter Test
+     */
+    @Test
+    public void idSetterShouldSetId() {
+        User user = new User(null, "test", "test", "test", "test");
+        user.setId(10);
+        Assertions.assertEquals(10, user.getId());
+    }
 
     /**
      * Email Getter Test

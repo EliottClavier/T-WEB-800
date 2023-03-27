@@ -1,7 +1,7 @@
 package com.tripi.auth.auth.controller;
 
 import com.tripi.auth.auth.configuration.JwtConfig;
-import com.tripi.auth.auth.entity.user.UserDto;
+import com.tripi.auth.auth.model.UserDto;
 import com.tripi.auth.auth.requests.LoginRequest;
 import com.tripi.auth.auth.requests.RegisterRequest;
 import com.tripi.auth.auth.response.UserResponse;

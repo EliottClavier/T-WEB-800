@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/auth/entity/user/UserTest.java
-package com.tripi.auth.auth.entity.user;
-========
 package com.tripi.user.model;
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/model/UserTest.java
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

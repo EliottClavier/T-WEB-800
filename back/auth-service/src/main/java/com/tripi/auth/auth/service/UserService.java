@@ -1,8 +1,8 @@
 package com.tripi.auth.auth.service;
 
 import com.tripi.auth.auth.requests.RegisterRequest;
-import com.tripi.auth.auth.entity.user.User;
-import com.tripi.auth.auth.entity.user.UserDto;
+import com.tripi.auth.auth.model.User;
+import com.tripi.auth.auth.model.UserDto;
 import com.tripi.auth.auth.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

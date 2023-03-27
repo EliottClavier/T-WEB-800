@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:back/auth-service/src/main/java/com/tripi/auth/auth/entity/user/User.java
-package com.tripi.auth.auth.entity.user;
-========
 package com.tripi.user.model;
->>>>>>>> develop:back/user-service/src/main/java/com/tripi/user/model/User.java
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -32,10 +28,6 @@ public class User {
 
     @Column
     @JsonIgnore
-<<<<<<<< HEAD:back/auth-service/src/main/java/com/tripi/auth/auth/entity/user/User.java
-    @Getter(AccessLevel.NONE)
-========
->>>>>>>> develop:back/user-service/src/main/java/com/tripi/user/model/User.java
     private String password;
 
     @Column

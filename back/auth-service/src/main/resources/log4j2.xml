@@ -10,11 +10,7 @@
         </Console>
     </Appenders>
     <Loggers>
-<<<<<<<< HEAD:back/auth-service/src/main/resources/log4j2.xml
         <Logger name="com.tripi.auth.AuthServiceApplication" level="debug" additivity="false">
-========
-        <Logger name="com.tripi.user.UserServiceApplication" level="debug" additivity="false">
->>>>>>>> develop:back/user-service/src/main/resources/log4j2.xml
             <AppenderRef ref="ConsoleAppender" />
         </Logger>
 

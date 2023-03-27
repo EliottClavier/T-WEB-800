@@ -1,21 +1,14 @@
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/auth/repository/UserRepositoryTest.java
-package com.tripi.auth.auth.repository;
-
-import com.tripi.auth.auth.entity.user.User;
-========
 package com.tripi.user.repository.base;
 
 import com.tripi.user.model.User;
 import com.tripi.user.exception.EmailAlreadyExistsException;
 import com.tripi.user.exception.EmailDoesNotExistException;
 import com.tripi.user.repository.UserRepository;
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/repository/base/UserRepositoryTest.java
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -87,15 +80,13 @@ public class UserRepositoryTest {
      */
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
-<<<<<<<< HEAD:back/auth-service/src/test/java/com/tripi/auth/auth/repository/UserRepositoryTest.java
-    public void shouldFindUserByEmail(){
-        UserDetails user = userRepository.findByEmail("thierry@gmail.com");
-========
     public void shouldFindUserByEmail() throws EmailDoesNotExistException {
         User user = userRepository.findByEmailWithExceptions("thierry@gmail.com");
->>>>>>>> develop:back/user-service/src/test/java/com/tripi/user/repository/base/UserRepositoryTest.java
 
         assertThat(user).isNotNull();
+        assertThat(user.getEmail()).isEqualTo("thierry@gmail.com");
+        assertThat(user.getFirstname()).isEqualTo("Thierry");
+        assertThat(user.getLastname()).isEqualTo("Dupont");
     }
 
     /**
