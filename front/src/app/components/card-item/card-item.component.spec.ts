@@ -1,7 +1,7 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemComponent} from "./card-item.component";
 import {MatCardModule} from "@angular/material/card";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('CardItemComponent', () => {

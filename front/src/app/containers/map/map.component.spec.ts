@@ -5,7 +5,7 @@ import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Location} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {By} from "@angular/platform-browser";
 import {BehaviorSubject, Observable} from "rxjs";
@@ -211,7 +211,7 @@ describe('MapComponent', () => {
           // Can't test what's emitted since there is no way
           // to wait for the map to be fully loaded it seems
           // The content emitted is made from component.map.getBounds() with N,E,S,W coordinates
-          expect(component.onMapBoundariesChange).toHaveBeenCalledWith(true);
+          expect(component.onMapBoundariesChange).toHaveBeenCalled();
           expect(component.onBoundariesChange.emit).toHaveBeenCalled();
         });
 

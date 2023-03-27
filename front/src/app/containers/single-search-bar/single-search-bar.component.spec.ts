@@ -11,7 +11,7 @@ import {getDateFromIsoString} from "../../utils/date.utils";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {of, throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";

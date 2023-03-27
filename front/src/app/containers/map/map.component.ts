@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {Location} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {map, Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 

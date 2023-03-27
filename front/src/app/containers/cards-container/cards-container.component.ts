@@ -1,5 +1,5 @@
 import {AfterContentChecked, Component, OnInit} from '@angular/core';
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";

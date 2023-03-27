@@ -13,6 +13,8 @@ export class Location {
     this._lng = lng;
   }
 
+
+
   public hasValidCoordinates(): boolean {
     return -90 <= this._lat && this._lat <= 90 && -90 <= this._lng && this._lng <= 90;
   }
