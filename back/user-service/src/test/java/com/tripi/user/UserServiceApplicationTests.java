@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = UserServiceApplication.class)
-public class BackApplicationTests {
+public class UserServiceApplicationTests {
 
 	@Autowired
 	private ApplicationContext applicationContext;
