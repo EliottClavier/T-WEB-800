@@ -1,6 +1,6 @@
 import {LeisureItemModel} from './leisure-item.model';
 import {LeisureCategory} from "../../enums/leisure-category";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 
 describe('ItemModel', () => {
   let itemModel: LeisureItemModel;
@@ -51,8 +51,8 @@ describe('ItemModel', () => {
   });
 
   it('should set and get the location property', () => {
-    let location = new Location();
-    itemGet.location = new Location();
+    let location = new LocationModel();
+    itemGet.location = new LocationModel();
     expect(itemGet.location).toEqual(location);
   });
   it('should set and get the id property', () => {

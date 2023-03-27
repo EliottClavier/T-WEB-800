@@ -1,6 +1,6 @@
 
 import {LeisureCategory} from "../../enums/leisure-category";
-import {Location} from "../location/location.model";
+import {LocationModel} from "../location/location.model";
 
 export class LeisureItemModel {
 
@@ -10,7 +10,7 @@ export class LeisureItemModel {
   private _description: string;
   private _image: string;
   private _category: LeisureCategory;
-  private _location: Location
+  private _location: LocationModel
   private _rating: number = 0;
   private _price: number = 0;
   private _date?: string
@@ -21,7 +21,7 @@ export class LeisureItemModel {
     subtitle: string = "default subtitle",
     description: string = "default description",
     image: string = './assets/images/default_image.jpg',
-    location = new Location(),
+    location = new LocationModel(),
     category: LeisureCategory = LeisureCategory.UNKNOWN,
     date = "",
     rating = 0,
@@ -51,11 +51,11 @@ export class LeisureItemModel {
   set date(value: string) {
     this._date = value;
   }
-  get location(): Location {
+  get location(): LocationModel {
     return this._location;
   }
 
-  set location(value: Location) {
+  set location(value: LocationModel) {
     this._location = value;
   }
 

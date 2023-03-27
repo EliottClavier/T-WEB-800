@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {map, Observable} from 'rxjs';
@@ -48,13 +48,13 @@ export class MapComponent implements OnChanges {
   public markerAnimation: google.maps.Animation = google.maps.Animation.DROP;
 
   /* Markers */
-  @Input() public selectedLocation: Location = new Location(
+  @Input() public selectedLocation: LocationModel = new LocationModel(
     "",
     "",
     this.center.lat,
     this.center.lng
   );
-  @Input() public nextLocation: Location | undefined;
+  @Input() public nextLocation: LocationModel | undefined;
 
   @Input() public markers: LeisureItemModel[] = [];
   @Input() public selectedMarkers: LeisureItemModel[] = [];

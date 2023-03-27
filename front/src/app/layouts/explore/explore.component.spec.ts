@@ -7,7 +7,7 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
 import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject, of} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
@@ -19,12 +19,14 @@ import {
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
   let spectator: Spectator<ExploreComponent>;
   let _route: ActivatedRoute;
   let _locationService: LocationService;
+  let _suggestionService: SuggestionsService;
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
   let accommodationItems = getAccommodationItems();
@@ -67,6 +69,7 @@ describe('ExploreComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     _locationService = spectator.inject(LocationService);
+    _suggestionService = spectator.inject(SuggestionsService);
     _route = spectator.inject(ActivatedRoute);
     let router = spectator.inject(Router);
 
@@ -83,7 +86,7 @@ describe('ExploreComponent', () => {
     }
 
     spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
-      return new BehaviorSubject<Location[]>([]);
+      return new BehaviorSubject<LocationModel[]>([]);
     });
 
     spectator.detectChanges();
@@ -185,7 +188,7 @@ describe('ExploreComponent', () => {
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new LocationModel("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -200,7 +203,7 @@ describe('ExploreComponent', () => {
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new LocationModel("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(null);
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(null);
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -217,7 +220,7 @@ describe('ExploreComponent', () => {
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 42.555, 37.444));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new LocationModel("", "Nan", 42.555, 37.444));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(null);
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(null);
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -232,7 +235,7 @@ describe('ExploreComponent', () => {
       component.ngOnInit();
       spectator.detectChanges();
 
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 0, 0));
+      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new LocationModel("", "Nan", 0, 0));
       expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
       expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
@@ -294,9 +297,9 @@ describe('ExploreComponent', () => {
         );
       });
 
-      it('should return Location if next location exists', () => {
+      it('should return LocationModel if next location exists', () => {
         component.activeSearchBar.index = 0;
-        component.searchFormsArrayControls[1].get('location')!.setValue(new Location("", "Nantes", 42.555, 37.444));
+        component.searchFormsArrayControls[1].get('location')!.setValue(new LocationModel("", "Nantes", 42.555, 37.444));
         expect(component.nextLocation).toBeTruthy();
       });
 
@@ -358,7 +361,7 @@ describe('ExploreComponent', () => {
 
   it('should getSuggestions has been call when i called onActiveSearchBar', () => {
 
-    let suggestionSpy = spyOn<ExploreComponent, any>(component, '_getSuggestions').and.callThrough();
+    let suggestionSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
     component.onActiveSearchBarChange({index: 0, isEditing: true});
     expect(suggestionSpy).toHaveBeenCalled();
 
@@ -368,11 +371,25 @@ describe('ExploreComponent', () => {
       index: 0,
       isEditing: true,
     };
-    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, '_getSuggestions').and.callThrough();
+    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
 
     spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
 
     expect(SuggestionsSpy).toHaveBeenCalled();
   });
-});
+  it('should call getSuggestions when user want shows more', () => {
 
+    let spy = spyOn(component, 'getLeisureSuggestions').and.callThrough();
+    spectator.triggerEventHandler(CardsContainerComponent, 'onGetSuggestions', undefined);
+
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should getSuggestions when triggered', () => {
+
+    let spy = spyOn(_suggestionService, 'getSuggestions').and.callThrough();
+    component.getLeisureSuggestions()
+    expect(spy).toHaveBeenCalled();
+
+  });
+
+});

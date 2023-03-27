@@ -3,7 +3,7 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClient} from "@angular/common/http";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -17,12 +17,12 @@ export class SuggestionsService {
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
-  getPreviewSuggestions(category: LeisureCategory, location : Location, start: string, end: string): Observable<LeisureItemModel[]> {
+  getPreviewSuggestions(category: LeisureCategory, location : LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
 
     return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 
-  getSuggestions(category: LeisureCategory, location: Location, start : string, end: string ): Observable<LeisureItemModel[]> {
+  getSuggestions(category: LeisureCategory, location: LocationModel, start : string, end: string ): Observable<LeisureItemModel[]> {
 
     return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }

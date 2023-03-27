@@ -3,7 +3,7 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../app.module";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
@@ -34,7 +34,7 @@ describe('MapComponent', () => {
     component = spectator.component;
     http = spectator.inject(HttpClient);
 
-    component.selectedLocation = new Location('', 'Nantes', 47.21121663814047, -1.5669571980709454)
+    component.selectedLocation = new LocationModel('', 'Nantes', 47.21121663814047, -1.5669571980709454)
 
     spectator.detectChanges();
   });
@@ -89,7 +89,7 @@ describe('MapComponent', () => {
 
     it('should have base selectedLocation attribute gotten from parent component', () => {
       expect(component.selectedLocation).toBeDefined();
-      expect(component.selectedLocation).toBeInstanceOf(Location);
+      expect(component.selectedLocation).toBeInstanceOf(LocationModel);
     });
 
     it('should not define nextLocation attribute gotten from parent component', () => {
@@ -225,7 +225,7 @@ describe('MapComponent', () => {
           'Subtitile',
           'Description',
           'image',
-          new Location("","",47.21121663814047, -1.5669571980709454),
+          new LocationModel("","",47.21121663814047, -1.5669571980709454),
           LeisureCategory.ACCOMMODATION,
         ),
         new LeisureItemModel(
@@ -234,7 +234,7 @@ describe('MapComponent', () => {
           'Subtitile',
           'Description',
           'image',
-          new Location("","",47.21121663814047, -1.5669571980709454),
+          new LocationModel("","",47.21121663814047, -1.5669571980709454),
           LeisureCategory.ACCOMMODATION,
         ),
         new LeisureItemModel(
@@ -243,7 +243,7 @@ describe('MapComponent', () => {
           'Subtitile',
           'Description',
           'image',
-          new Location("","",47.21121663814047, -1.5669571980709454),
+          new LocationModel("","",47.21121663814047, -1.5669571980709454),
           LeisureCategory.ACCOMMODATION,
         ),
       ];
@@ -395,14 +395,14 @@ describe('MapComponent', () => {
 
       it('should not request directions results if origin isn`t valid', () => {
         spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-        component.selectedLocation = new Location("", "", 200, 200);
+        component.selectedLocation = new LocationModel("", "", 200, 200);
         component.ngOnChanges()
         expect(component["_requestDirections"]).not.toHaveBeenCalled();
       });
 
       it('should not request directions results if destination isn`t valid', () => {
         spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-        component.nextLocation = new Location("", "", 200, 200);
+        component.nextLocation = new LocationModel("", "", 200, 200);
         component.ngOnChanges()
         expect(component["_requestDirections"]).not.toHaveBeenCalled();
       });
@@ -423,8 +423,8 @@ describe('MapComponent', () => {
 
       it('should request directions results conditions are matched', () => {
         spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-        component.selectedLocation = new Location("1", "Nantes", 10, 50);
-        component.nextLocation = new Location("2", "Paris", 20, 60);
+        component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
+        component.nextLocation = new LocationModel("2", "Paris", 20, 60);
         component.ngOnChanges();
         expect(component["_requestDirections"]).toHaveBeenCalled();
       });

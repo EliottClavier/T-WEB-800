@@ -1,4 +1,4 @@
-export class Location {
+export class LocationModel {
 
 
   private _id: string;

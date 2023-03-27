@@ -7,6 +7,8 @@ import {SuggestionsService} from "../services/suggestions-service/suggestions.se
 import {LeisureCategory} from "../enums/leisure-category";
 import {BehaviorSubject} from "rxjs";
 import {SingleSearchBarComponent} from "../containers/single-search-bar/single-search-bar.component";
+import {getBarItems} from "../utils/suggestions-mock.utils";
+import {LocationModel} from "../models/location/location.model";
 
 describe('SuggestionsStoreService', () => {
   let store: SuggestionsStoreService;
@@ -17,18 +19,10 @@ describe('SuggestionsStoreService', () => {
     providers: [mockProvider(SuggestionsService, {
       getPreviewSuggestions: () => new Array<LeisureItemModel>(), //if needed
     }),
-    SingleSearchBarComponent]
+      SingleSearchBarComponent]
   });
 
-  function getBarItem() {
-    let data = new Array<LeisureItemModel>();
-    for (let i = 0; i < 3; i++) {
-      let item = new LeisureItemModel();
-      item.category = LeisureCategory.BAR;
-      data.push(item);
-    }
-    return data;
-  }
+
 
   function getActivityItem() {
     let data = new Array<LeisureItemModel>();
@@ -60,7 +54,7 @@ describe('SuggestionsStoreService', () => {
   });
 
   it('should be get Bar suggestions ', () => {
-    let data = new BehaviorSubject<LeisureItemModel[]>(getBarItem())
+    let data = new BehaviorSubject<LeisureItemModel[]>(getBarItems())
     const subjectSpy = spyOn(createService().service.suggestions$, 'asObservable').and.returnValue(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toEqual(data.asObservable());
     expect(createService().service.suggestions$.asObservable()).toBeDefined();
@@ -76,7 +70,7 @@ describe('SuggestionsStoreService', () => {
   });
 
   it('should be set suggestion ', () => {
-    let  spy = spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
+    let spy = spyOn(createService().service, 'setSuggestionsData').and.callFake(() => {
       expect(spy).toHaveBeenCalled();
     });
   });
@@ -86,9 +80,9 @@ describe('SuggestionsStoreService', () => {
 
       expect(createService().service.suggestions$).toHaveBeenCalled();
 
-      createService().service.setSuggestionsData(getBarItem());
+      createService().service.setSuggestionsData(getBarItems());
 
-      expect(createService().service.getSuggestionsData()).toEqual(getBarItem());
+      expect(createService().service.getSuggestionsData()).toEqual(getBarItems());
     });
   });
 
@@ -96,20 +90,32 @@ describe('SuggestionsStoreService', () => {
   it('should  trigger the next Suggestions value when location updated', () => {
 
     const subjectSpy = spyOn(createService().service, 'setSuggestionsData').and.callThrough();
-    createService().service.setSuggestionsData(getBarItem());
+    createService().service.setSuggestionsData(getBarItems());
     expect(subjectSpy).toHaveBeenCalled();
-    expect(createService().service.getSuggestionsData()).toEqual(getBarItem());
+    expect(createService().service.getSuggestionsData()).toEqual(getBarItems());
+  });
+
+  it('should get category of item', () => {
+    store.suggestions$.next(getBarItems());
+    expect(store.getCategory).toEqual(LeisureCategory.BAR);
+  });
+
+
+  it('should get location of item', () => {
+    let items = getBarItems();
+    items.forEach((item) => {
+      item.location.lng = 34.78;
+      item.location.lat = 32.08;
+      item.location.name = "Tel Aviv";
+    });
+
+    store.suggestions$.next(items);
+
+    expect(store.getLocation.name).toEqual("Tel Aviv");
+    expect(store.getLocation.lat).toEqual(32.08);
+    expect(store.getLocation.lng).toEqual(34.78);
   });
 });
 
 
 
-function getAccommodationItems() {
-  let data = new Array<LeisureItemModel>();
-  for (let i = 0; i < 3; i++) {
-    let item = new LeisureItemModel();
-    item.category = LeisureCategory.BAR;
-    data.push(item);
-  }
-  return data;
-};

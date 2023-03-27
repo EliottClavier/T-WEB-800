@@ -1,9 +1,9 @@
-import {AfterContentChecked, Component, EventEmitter, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 
 @Component({
   selector: 'app-card-container',
@@ -15,7 +15,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   private _suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
   category: string = "";
   private _itemsSelected?: LeisureItemModel;
-  private onGetSuggestions: EventEmitter<void> = new EventEmitter<void>()
+  @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>()
 
   constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
 
@@ -68,17 +68,8 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   onShowMoreItems() {
-    let category = this._suggests[0].category;
-    let location = this._suggests[0].location as Location;
-    this._suggestionsService.getSuggestions(category, location, "","").subscribe({
-        next: (suggestions) => {
-          this._suggestionsStore.setSuggestionsData(suggestions);
-        },
-        // error: (err) => {
-        //   this._suggestionsStore.setSuggestionsData(new Array<LeisureItemModel>());
-        // }
-      }
-    );
+    this.onGetSuggestions.emit();
+
   }
 
 

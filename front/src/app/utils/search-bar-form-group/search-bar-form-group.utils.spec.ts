@@ -5,7 +5,7 @@ import {
   isLocation,
   isValidTravelMode
 } from "./search-bar-form-group.utils";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 
 describe('Search bar\'s FormGroup utils', () => {
 
@@ -48,13 +48,13 @@ describe('Search bar\'s FormGroup utils', () => {
   });
 
   describe('isLocation', () => {
-    it('should return null if control holds Location instance', () => {
+    it('should return null if control holds LocationModel instance', () => {
       let formGroup: FormGroup = buildSearchBarFormGroupControls();
-      formGroup.get('location')!.setValue(new Location("", ""));
+      formGroup.get('location')!.setValue(new LocationModel("", ""));
       expect(isLocation()(formGroup.get('location')!)).toBeNull();
     });
 
-    it('should return error if control does\'t hold Location instance', () => {
+    it('should return error if control does\'t hold LocationModel instance', () => {
       let formControl = new FormControl("", Validators.required);
       expect(isLocation()(formControl)).toBeTruthy();
     });

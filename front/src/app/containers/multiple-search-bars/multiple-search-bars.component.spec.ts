@@ -3,7 +3,7 @@ import {SearchInputComponent} from "../../components/inputs/search-input/search-
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {Router} from "@angular/router";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
@@ -177,7 +177,7 @@ describe('MultipleSearchBarsComponent', () => {
     beforeEach(() => {
       _router = spectator.inject(Router);
       component.searchFormsArray.setControl(0, new FormGroup({
-        location: new FormControl(new Location("1", locationName)),
+        location: new FormControl(new LocationModel("1", locationName)),
         locationSearch: new FormControl(""),
         start: new FormControl(start),
         end: new FormControl(end),
@@ -347,13 +347,13 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should return true if the location is the search bar after the selected search bar is valid', () => {
-        searchForm.get("location")!.setValue(new Location("2", "Paris", 48.856614, 2.3522219));
+        searchForm.get("location")!.setValue(new LocationModel("2", "Paris", 48.856614, 2.3522219));
         spectator.detectChanges();
         expect(component.isNextLocationValid(0)).toBeTruthy();
       });
 
       it('should return false if the location is the search bar after the selected search bar is not valid', () => {
-        searchForm.get("location")!.setValue(new Location("2", "Paris", 200, 200));
+        searchForm.get("location")!.setValue(new LocationModel("2", "Paris", 200, 200));
         spectator.detectChanges();
         expect(component.isNextLocationValid(0)).toBeFalsy();
       });

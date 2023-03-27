@@ -1,15 +1,15 @@
-import { Location } from './location.model';
+import { LocationModel } from './location.model';
 
 describe('Location', () => {
-  let location: Location;
-  let locationEmpty: Location;
+  let location: LocationModel;
+  let locationEmpty: LocationModel;
 
   beforeEach(() => {
-    location = new Location("1", "Paris", 0, 0);
-    locationEmpty = new Location();
+    location = new LocationModel("1", "Paris", 0, 0);
+    locationEmpty = new LocationModel();
   });
 
-  it('should create an instance of Location', () => {
+  it('should create an instance of LocationModel', () => {
     expect(location).toBeTruthy();
   });
 

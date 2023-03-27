@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
@@ -25,7 +25,7 @@ export class SingleSearchBarComponent {
   ) {
   }
 
-  public onLocationOptionClick(location: Location): void {
+  public onLocationOptionClick(location: LocationModel): void {
     this.searchForm.patchValue({
       locationSearch: location.name,
       location: location,
@@ -34,7 +34,7 @@ export class SingleSearchBarComponent {
   }
 
   public validate(): void {
-    let location: Location = this.searchForm.get('location')!.value;
+    let location: LocationModel = this.searchForm.get('location')!.value;
     let start: Date = this.searchForm.get('start')!.value;
     let end: Date = this.searchForm.get('end')!.value;
 

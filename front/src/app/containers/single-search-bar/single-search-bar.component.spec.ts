@@ -6,7 +6,7 @@ import {DateRangeComponent} from "../../components/inputs/date-range/date-range.
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
@@ -87,7 +87,7 @@ describe('SingleSearchBarComponent', () => {
     beforeEach(() => {
       _router = spectator.inject(Router);
       component.searchForm = new FormGroup<any>({
-        location: new FormControl(new Location("1", locationName, locationLat, locationLong)),
+        location: new FormControl(new LocationModel("1", locationName, locationLat, locationLong)),
         locationSearch: new FormControl(""),
         start: new FormControl(start),
         end: new FormControl(end),
@@ -156,7 +156,7 @@ describe('SingleSearchBarComponent', () => {
 
     it('should update the Suggestions value when location is updated and getting error ', () => {
 
-      const location = new Location('01', 'New York');
+      const location = new LocationModel('01', 'New York');
       const suggestions = new Array<LeisureItemModel>();
 
       const mockCall = spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));

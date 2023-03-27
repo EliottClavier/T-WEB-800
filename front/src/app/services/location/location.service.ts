@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {getIsoStringFromDate} from "../../utils/date.utils";
@@ -13,8 +13,8 @@ export class LocationService {
     private http: HttpClient,
   ) { }
 
-  public getLocationSuggestions(search: string): Observable<Location[]> {
-    return this.http.get<Location[]>(`/api/locations/suggestion/${search}`);
+  public getLocationSuggestions(search: string): Observable<LocationModel[]> {
+    return this.http.get<LocationModel[]>(`/api/locations/suggestion/${search}`);
   }
 
   public getLocationInformations(

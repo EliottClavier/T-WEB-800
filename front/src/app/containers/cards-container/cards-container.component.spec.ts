@@ -17,11 +17,6 @@ import {
 } from "../../utils/suggestions-mock.utils";
 import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
 import {CardItemDetailsViewComponent} from "../../components/card-item-details-view/card-item-details-view.component";
-import {LocationService} from "../../services/location/location.service";
-import {Location} from "../../models/location/location.model";
-import {LeisureCategory} from "../../enums/leisure-category";
-import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {MultipleSearchBarsComponent} from "../multiple-search-bars/multiple-search-bars.component";
 
 
 describe('Card container', () => {

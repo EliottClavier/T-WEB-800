@@ -35,6 +35,7 @@
         <div class="col-12">
           <app-card-container
             *ngIf="activeSearchBar.index !== null && !itineraryView"
+            (onGetSuggestions)="getLeisureSuggestions()"
           ></app-card-container>
           <app-map-travel-mode-selection
             map-travel-mode-selection

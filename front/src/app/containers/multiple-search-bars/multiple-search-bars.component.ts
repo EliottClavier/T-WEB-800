@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
 
 @Component({
@@ -45,7 +45,7 @@ export class MultipleSearchBarsComponent {
   }
 
   public isNextLocationValid(index: number): boolean {
-    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as Location | undefined;
+    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as LocationModel | undefined;
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
