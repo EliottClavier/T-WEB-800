@@ -3,7 +3,7 @@ import {fakeAsync, tick} from '@angular/core/testing';
 import {SuggestionsService} from './suggestions.service';
 import {createHttpFactory, createServiceFactory, HttpMethod, SpectatorHttp, SpectatorService} from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {LeisureItemModel} from "../../models/Leisure/leisure.item.model";
+import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Location} from "../../models/location/location.model";
@@ -154,3 +154,4 @@ function getBarItems() {
 //     "category": LeisureCategory.ACCOMMODATION,
 //   },
 // ]
+

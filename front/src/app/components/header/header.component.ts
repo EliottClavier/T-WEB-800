@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {LoginUserComponent} from "../../containers/login-user/login-user.component";
+import {RegisterUserComponent} from "../../containers/register-user/register-user.component";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-header',
@@ -8,13 +11,20 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent {
 
-  constructor(private router: Router) { }
+  constructor(
+    private _dialog: MatDialog,
+  ) { }
 
-  goToLogin() {
-    this.router.navigate(['/login']);
+  public openLoginDialog(): void {
+    this._dialog.open(LoginUserComponent, {
+      scrollStrategy: new NoopScrollStrategy()
+    });
   }
 
-  goToRegister() {
-    this.router.navigate(['/register']);
+  public openRegisterDialog(): void {
+    this._dialog.open(RegisterUserComponent, {
+      scrollStrategy: new NoopScrollStrategy()
+    });
   }
+
 }

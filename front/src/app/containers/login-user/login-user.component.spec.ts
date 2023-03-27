@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {LoginUserComponent} from './login-user.component';
 import {
   FormControl,
@@ -18,6 +17,8 @@ import {BehaviorSubject, throwError} from "rxjs";
 import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatCardModule} from "@angular/material/card";
+import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {AppModule} from "../../app.module";
 
 describe('LoginUserComponent', () => {
   let component: LoginUserComponent;
@@ -27,22 +28,23 @@ describe('LoginUserComponent', () => {
   let spectator: Spectator<LoginUserComponent>;
   let _loginService: LoginService;
   let userMock: User;
+  let _dialogRef: MatDialogRef<LoginUserComponent>;
+
+  const dialogMock = {
+    close: () => { }
+  };
 
   const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   const createComponent = createComponentFactory({
     component: LoginUserComponent,
     imports: [
-      HttpClientModule,
-      MatCardModule,
-      MatAutocompleteModule,
-      MatFormFieldModule,
-      MatInputModule,
-      ReactiveFormsModule,
-      FormsModule,
-      MatCardModule
+      AppModule
     ],
-    providers: [ LoginService ],
+    providers: [
+      LoginService,
+      {provide: MatDialogRef, useValue: dialogMock},
+    ],
   });
 
   beforeEach(async () => {
@@ -51,6 +53,7 @@ describe('LoginUserComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     _loginService = spectator.inject(LoginService);
+    _dialogRef = spectator.inject(MatDialogRef);
 
     spectator.detectChanges()
   });

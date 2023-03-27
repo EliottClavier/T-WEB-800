@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {SuggestionsStoreService} from './suggestions-store.service';
 import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spectator";
-import {LeisureItemModel} from "../models/Leisure/leisure.item.model";
+import {LeisureItemModel} from "../models/leisure/leisure-item.model";
 import {SuggestionsService} from "../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../enums/leisure-category";
 import {BehaviorSubject} from "rxjs";

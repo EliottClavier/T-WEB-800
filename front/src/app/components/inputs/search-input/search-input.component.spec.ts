@@ -351,5 +351,10 @@ describe('SearchInputComponent', () => {
     });
   });
 
+  it('should remove margin bottom with a custom class when true', () => {
+    component.noMarginBottom = true;
+    spectator.detectChanges();
+    expect(spectator.query('[search-input-form-field]')!.classList).toContain("no-margin-bottom");
+  });
 
 });

@@ -13,7 +13,47 @@
         *ngIf="activeSearchBar.index !== null"
         [selectedSearchForm]="searchFormsArrayControls[activeSearchBar.index]"
       ></app-map-filters>
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 h-container-fixed">
+      <div class="row position-relative">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
+          <app-multiple-search-bars
+            search-bar
+            [(activeSearchBar)]="activeSearchBar"
+            [searchForms]="searchForms"
+            (viewChange)="onViewChange($event)"
+          ></app-multiple-search-bars>
+          <hr class="mx-2 my-4 border-lightgray-bottom">
+          <app-map-filters
+            map-filters
+            *ngIf="activeSearchBar.index !== null"
+            [selectedSearchForm]="selectedSearchForm"
+          ></app-map-filters>
+        </div>
+      </div>
     </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border-lightgray-left">
+      <div class="row">
+        <div class="col-12 px-0">
+          <app-map
+            map
+            *ngIf="activeSearchBar.index !== null"
+            [itineraryView]="itineraryView"
+            [itineraryMode]="itineraryMode"
+            [selectedLocation]="selectedLocation"
+            [nextLocation]="itineraryView ? nextLocation : undefined"
+          ></app-map>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <app-map-travel-mode-selection
+            map-travel-mode-selection
+            *ngIf="activeSearchBar.index !== null && itineraryView"
+            [itineraryMode]="itineraryMode"
+            (itineraryModeChange)="onItineraryModeChange($event)"
+          ></app-map-travel-mode-selection>
+        </div>
+      </div>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 px-0">
       <app-map map></app-map>
 <!--      <app-card-container></app-card-container>-->

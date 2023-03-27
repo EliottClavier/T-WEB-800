@@ -10,6 +10,9 @@ import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
+import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {MapComponent} from "../map/map.component";
+import {MapView} from "../../enums/map-view-const";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
@@ -259,12 +262,9 @@ describe('MultipleSearchBarsComponent', () => {
         expect(component.activeSearchBar).toEqual(searchBarEvent);
         expect(component.activeSearchBarChange.emit).toHaveBeenCalledWith(searchBarEvent);
       });
-
-
     });
 
-    describe('Active search bar', () => {
-
+    describe('Active search bar elements', () => {
       beforeEach(() => {
         component.activeSearchBar = {
           index: 1,
@@ -301,92 +301,127 @@ describe('MultipleSearchBarsComponent', () => {
     });
   });
 
-  /*
+
   describe('Up and down buttons', () => {
 
     let length: number;
+    describe('Itinerary display', function () {
+      let searchForm: FormGroup;
 
-    beforeEach(() => {
-      component.addSearchBar();
-      component.addSearchBar();
-      spectator.detectChanges();
+      beforeEach(() => {
+        searchForm = buildSearchBarFormGroupControlsDetails();
+        component.searchFormsArrayControls.push(
+          searchForm
+        );
+        spectator.detectChanges();
+      });
 
-      expect(component.searchFormsArrayControls.length).toEqual(3);
-      length = component.searchFormsArrayControls.length;
+      it('should remove margin bottom on search bars', () => {
+        expect(spectator.queryAll("[search-bar-input]").every((input) =>
+          input.getAttribute("ng-reflect-no-margin-bottom") === "true"
+        )).toBeTruthy();
+      });
 
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        component.searchFormsArrayControls[index].value["location"] = new Location(String(index), name);
+      it('should have as much itinerary arrows as search bars', () => {
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-itinerary-arrow]").length).toBe(component.searchFormsArrayControls.length);
+      });
+
+      it('should have as much itinerary travel mode bubbles as search bars', () => {
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length);
+      });
+
+      it('should return the correct travel mode icon depending on additional conditions', () => {
+        let searchForm: FormGroup = buildSearchBarFormGroupControlsDetails();
+        searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
+        component.searchFormsArrayControls.push(
+          searchForm,
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        spectator.detectChanges();
+        // 0 is the default search bar which has no travel mode
+        expect(component.accessTravelModeIcon(0)).toBe("panorama_fish_eye");
+        // This one matches with searchForm variable
+        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 2)).toBe("directions_car");
+        // This one matches with the last search bar of the list
+        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 1)).toBe("outlined_flag");
+      });
+
+      it('should return true if the location is the search bar after the selected search bar is valid', () => {
+        searchForm.get("location")!.setValue(new Location("2", "Paris", 48.856614, 2.3522219));
+        spectator.detectChanges();
+        expect(component.isNextLocationValid(0)).toBeTruthy();
+      });
+
+      it('should return false if the location is the search bar after the selected search bar is not valid', () => {
+        searchForm.get("location")!.setValue(new Location("2", "Paris", 200, 200));
+        spectator.detectChanges();
+        expect(component.isNextLocationValid(0)).toBeFalsy();
       });
     });
 
-    it('should have up and down buttons for each search bar when there are multiple search bar', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
+    describe('View switch', () => {
 
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toBe(component.searchFormsArrayControls.length);
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toBe(component.searchFormsArrayControls.length);
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]")).toBeTruthy();
-      spectator.queryAll("app-simple-icon-button[search-bar-up] mat-icon[simple-icon]").map((button: Element) => {
-        expect(button).toHaveText("keyboard_arrow_up");
+      it('should emit the view change to location event when adding search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.addSearchBar();
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
       });
 
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]")).toBeTruthy();
-      spectator.queryAll("app-simple-icon-button[search-bar-down] mat-icon[simple-icon]").map((button: Element) => {
-        expect(button).toHaveText("keyboard_arrow_down");
+      it('should emit the view change to location event when removing search bar when conditions match', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.activeSearchBar = {
+          index: 0,
+          isEditing: false
+        }
+        spectator.detectChanges();
+        component.removeSearchBar(0);
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
       });
-    });
 
-    it('should have up button not visible when search bar is the first one', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-up]").length).toEqual(component.searchFormsArrayControls.length);
-      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeTruthy();
-      expect(spectator.query("app-simple-icon-button[search-bar-up]>[simple-icon-button]")).toBeHidden();
-    });
-
-    it('should have down button not visible when search bar is the last one', () => {
-      component.addSearchBar();
-      spectator.detectChanges();
-
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-down]").length).toEqual(component.searchFormsArrayControls.length);
-      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeTruthy();
-      expect(spectator.queryLast("app-simple-icon-button[search-bar-down]>[simple-icon-button]")!).toBeHidden();
-    });
-
-    it('should move search bar up in FormArray', () => {
-      component.moveSearchBar(length - 1, false);
-
-      ["Lyon", "Nantes", "Paris"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should not emit the view change to location event when removing search bar when index isn\'t in range', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.activeSearchBar = {
+          index: 0,
+          isEditing: false
+        }
+        spectator.detectChanges();
+        component.removeSearchBar(component.searchFormsArrayControls.length - 1);
+        expect(component.viewChange.emit).not.toHaveBeenCalled();
       });
-    });
 
-    it('should do nothing when moving down while the search bar is already at the bottom', () => {
-      component.moveSearchBar(length - 1, true);
-
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should emit the view change to location event when selecting a search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.onSearchBarSelect({
+          index: 0,
+          isEditing: false
+        })
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.LOCATION);
       });
-    });
 
-    it('should move search bar down in FormArray', () => {
-      component.moveSearchBar(length - 3, true);
-
-      ["Paris", "Lyon", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
-      });
-    });
-
-    it('should do nothing when moving up while the search bar is already at the top', () => {
-      component.moveSearchBar(length - 3, false);
-
-      ["Lyon", "Paris", "Nantes"].map((name: string, index: number) => {
-        expect(component.searchFormsArrayControls[index].value["location"]!.name).toEqual(name);
+      it('should emit the view change to location event when selecting a search bar', () => {
+        spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
+        component.searchFormsArrayControls.push(
+          buildSearchBarFormGroupControlsDetails(),
+          buildSearchBarFormGroupControlsDetails(),
+        );
+        component.onItinerarySelect({
+          index: 0,
+          isEditing: false
+        })
+        expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.ITINERARY);
       });
     });
   });
-   */
-
 });

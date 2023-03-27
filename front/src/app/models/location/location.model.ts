@@ -6,11 +6,15 @@ export class Location {
   private _lng: number;
   private _lat: number;
 
-  constructor(id: string = "", name: string = "", lng: number = 0, lat: number = 0) {
+  constructor(id: string = "", name: string = "", lat: number = 0, lng: number = 0) {
     this._id = id;
     this._name = name;
-    this._lng = lng;
     this._lat = lat;
+    this._lng = lng;
+  }
+
+  public hasValidCoordinates(): boolean {
+    return -90 <= this._lat && this._lat <= 90 && -90 <= this._lng && this._lng <= 90;
   }
 
   // Getter

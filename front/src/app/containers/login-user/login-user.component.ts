@@ -1,19 +1,15 @@
 import {Component} from '@angular/core';
 import {Credentials} from "../../models/credentials/credentials.model";
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  FormGroupDirective, NgForm,
-  ValidationErrors,
-  ValidatorFn,
   Validators
 } from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material/core";
 import {LoginConst} from "../../enums/login-const";
 import {User} from "../../models/user/User.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {LoginService} from "../../services/login/login.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({
@@ -31,7 +27,10 @@ export class LoginUserComponent {
   LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
   API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
-  constructor(private _loginService: LoginService) {
+  constructor(
+    private _loginService: LoginService,
+    public _dialogRef: MatDialogRef<LoginUserComponent>
+  ) {
     this.credentials = new Credentials('', '');
     this.success = false;
     this.loginForm = new FormGroup({
@@ -49,6 +48,7 @@ export class LoginUserComponent {
         next: (value: any) => {
           this.user = value['data'];
           this.success = true;
+          this._dialogRef.close();
         },
         error: () => {
           this.errorMessage = this.API_RESPONSE.BAD_CREDENTIALS;

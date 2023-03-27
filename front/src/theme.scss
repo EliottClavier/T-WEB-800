@@ -20,3 +20,11 @@ $theme: mat.define-light-theme(
 );
 
 @include mat.all-component-themes($theme);
+
+.text-custom-primary {
+  color: mat.get-color-from-palette($travel-palette, 500);
+}
+
+.background-custom-primary {
+  background-color: mat.get-color-from-palette($travel-palette, 500);
+}
