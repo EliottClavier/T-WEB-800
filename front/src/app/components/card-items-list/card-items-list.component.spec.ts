@@ -32,7 +32,7 @@ describe('CardItemsComponent', () => {
       spectator = createComponent();
 
       threeCardItems = new Array<LeisureItemModel>();
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 6; i++) {
         threeCardItems.push(new LeisureItemModel());
       }
     });

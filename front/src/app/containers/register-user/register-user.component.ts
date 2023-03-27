@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Register} from "../../models/register/register.model";
+import {RegisterModel} from "../../models/register/register.model";
 import {
   AbstractControl,
   FormControl,
@@ -24,7 +24,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 
 export class RegisterUserComponent {
-  newUser: Register;
+  newUser: RegisterModel;
   matcher: MyErrorStateMatcher;
   success: boolean;
   user: User;
@@ -37,7 +37,7 @@ export class RegisterUserComponent {
     private _registerService: RegisterService,
     private _dialogRef: MatDialogRef<RegisterUserComponent>
   ) {
-    this.newUser = new Register('', '', '', '');
+    this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
     this.success = false;
     this.user = new User(0, '', '', '');
@@ -63,7 +63,7 @@ export class RegisterUserComponent {
 
   createUser() {
     if (this.registerForm.valid) {
-      this.newUser = new Register(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      this.newUser = new RegisterModel(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
       this._registerService.postUserRegister(this.newUser).subscribe({
         next: (value: any) => {
           this.user = value['data'];

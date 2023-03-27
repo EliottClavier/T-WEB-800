@@ -23,7 +23,7 @@ export class LeisureItemModel {
     image: string = './assets/images/default_image.jpg',
     location = new Location(),
     category: LeisureCategory = LeisureCategory.UNKNOWN,
-    date = undefined,
+    date = "",
     rating = 0,
     price = 0,
   ) {

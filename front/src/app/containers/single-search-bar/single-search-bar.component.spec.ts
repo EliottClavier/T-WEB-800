@@ -7,7 +7,7 @@ import {SimpleButtonComponent} from "../../components/buttons/simple-button/simp
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Location} from "../../models/location/location.model";
-import {getDateFromIsoString} from "../../utils/date.utils";
+import {getIsoStringFromDate} from "../../utils/date.utils";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
@@ -122,8 +122,8 @@ describe('SingleSearchBarComponent', () => {
         ["/", "explore", locationName],
         {
           queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end),
+            start: getIsoStringFromDate(start),
+            end: getIsoStringFromDate(end),
             lat: locationLat,
             lng: locationLong
           }
@@ -143,8 +143,8 @@ describe('SingleSearchBarComponent', () => {
         ["/", "explore", locationName],
         {
           queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end),
+            start: getIsoStringFromDate(start),
+            end: getIsoStringFromDate(end),
             lat: locationLat,
             lng: locationLong
           }
@@ -152,34 +152,7 @@ describe('SingleSearchBarComponent', () => {
       );
     });
 
-    it('should set location and search value based on selected option', () => {
-      const location = new Location('01', 'New York');
-      const suggestions = getAccommodationItems()
-      const suggestion$ = of(suggestions);
 
-      spyOn(suggestionService, 'getPreviewSuggestions').and.returnValue(suggestion$);
-
-      component.onLocationOptionClick(location);
-
-      expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location, undefined);
-      expect(component.searchForm.value.location).toEqual(location);
-      expect(component.searchForm.value.locationSearch).toEqual(location.name);
-    });
-    it('should update the Suggestions value when location is updated ', () => {
-
-      const location = new Location('01', 'New York');
-      const suggestions = getAccommodationItems()
-      const suggestion$ = of(suggestions);
-
-      spyOn(suggestionService, 'getPreviewSuggestions').and.returnValue(suggestion$);
-      component.onLocationOptionClick(location);
-
-      suggestionStore.suggestions$.subscribe(suggests => {
-
-        expect(suggestionService.getPreviewSuggestions).toHaveBeenCalledWith(LeisureCategory.ACCOMMODATION, location, undefined);
-        expect(suggests).toEqual(suggestions);
-      });
-    })
 
     it('should update the Suggestions value when location is updated and getting error ', () => {
 
@@ -193,7 +166,6 @@ describe('SingleSearchBarComponent', () => {
         next: suggests => {
           expect(suggestions).toEqual(suggests);
         }
-
       });
     });
   });

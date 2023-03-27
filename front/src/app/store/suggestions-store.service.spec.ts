@@ -103,6 +103,7 @@ describe('SuggestionsStoreService', () => {
 });
 
 
+
 function getAccommodationItems() {
   let data = new Array<LeisureItemModel>();
   for (let i = 0; i < 3; i++) {

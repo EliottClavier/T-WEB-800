@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Location} from "../../models/location/location.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {getDateFromIsoString} from "../../utils/date.utils";
+import {getIsoStringFromDate} from "../../utils/date.utils";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,8 @@ export class LocationService {
       `/api/locations/search/${search}/${type}`,
       {
         params: {
-          start: getDateFromIsoString(start),
-          end: getDateFromIsoString(end)
+          start: getIsoStringFromDate(start),
+          end: getIsoStringFromDate(end)
         }
       }
     );

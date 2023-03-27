@@ -1,7 +1,7 @@
 import {RegisterConst} from "../../src/app/enums/register-const";
 import {ApiResponseConst} from "../../src/app/enums/api-response-const";
 
-describe('Register', () => {
+describe('RegisterModel', () => {
 
   let firstNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let lastNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
@@ -25,7 +25,7 @@ describe('Register', () => {
   });
 
   it('should display register page', () => {
-    cy.get('h1').invoke('text').should('equal', 'Register User');
+    cy.get('h1').invoke('text').should('equal', 'RegisterModel User');
   });
 
   it('should display required error message if first name is empty', () => {

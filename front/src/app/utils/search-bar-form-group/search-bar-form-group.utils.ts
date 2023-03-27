@@ -36,5 +36,10 @@ export const buildSearchBarFormGroupControlsDetails = (): FormGroup => {
   formGroup.addControl(
     "travelMode", new FormControl<string>("", [ Validators.required, isValidTravelMode() ])
   );
+  formGroup.addControl(
+    "leisureMode", new FormControl<string>("", [ ])
+  );
+
+
   return formGroup;
 }

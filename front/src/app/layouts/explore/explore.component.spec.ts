@@ -1,5 +1,5 @@
 import {ExploreComponent} from "./explore.component";
-import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {createComponentFactory, mockProvider, Spectator} from "@ngneat/spectator";
 import {By} from "@angular/platform-browser";
 import {MultipleSearchBarsComponent} from "../../containers/multiple-search-bars/multiple-search-bars.component";
 import {AppModule} from "../../app.module";
@@ -9,7 +9,7 @@ import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
@@ -17,6 +17,8 @@ import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-for
 import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -25,10 +27,13 @@ describe('ExploreComponent', () => {
   let _locationService: LocationService;
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
+  let accommodationItems = getAccommodationItems();
 
   const createComponent = createComponentFactory({
     component: ExploreComponent,
-    providers: [
+    providers: [mockProvider(SuggestionsService, {
+      getSuggestions: () => of(accommodationItems),
+    }),
       {
         provide: ActivatedRoute,
         useValue: {

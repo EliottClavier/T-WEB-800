@@ -1,4 +1,4 @@
-import {AfterContentChecked, Component, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, EventEmitter, OnInit} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
@@ -12,10 +12,10 @@ import {Location} from "../../models/location/location.model";
 })
 export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
-
   private _suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
   category: string = "";
   private _itemsSelected?: LeisureItemModel;
+  private onGetSuggestions: EventEmitter<void> = new EventEmitter<void>()
 
   constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
 
@@ -26,7 +26,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   };
 
   ngAfterContentChecked(): void {
-    this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
+    this.suggests.length > 0 && (this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey()));
   }
 
   get itemsSelected(): LeisureItemModel {
@@ -68,16 +68,17 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   onShowMoreItems() {
+
+     // this.onGetSuggestions.emit();
+
     let category = this._suggests[0].category;
     let location = this._suggests[0].location as Location;
-    this._suggestionsService.getSuggestions(category, location, undefined).subscribe({
-        next: (suggestions) => {
+
+    this._suggestionsService.getSuggestions(category, location, "", "").subscribe((suggestions) => {
+
           this._suggestionsStore.setSuggestionsData(suggestions);
-        },
-        // error: (err) => {
-        //   this._suggestionsStore.setSuggestionsData(new Array<LeisureItemModel>());
-        // }
-      }
+
+         }
     );
   }
 

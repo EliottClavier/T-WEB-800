@@ -4,7 +4,7 @@ import { RegisterService } from './register.service';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {Observable} from "rxjs";
-import {Register} from "../../models/register/register.model";
+import {RegisterModel} from "../../models/register/register.model";
 
 describe('RegisterService', () => {
   let service: RegisterService;
@@ -38,12 +38,12 @@ describe('RegisterService', () => {
   });
 
   it('should have postUserRegister method that returns an Observable', () => {
-    let user = new Register('Albert', 'Test', 'test@gmail.com', 'Password123');
+    let user = new RegisterModel('Albert', 'Test', 'test@gmail.com', 'Password123');
     expect(service.postUserRegister(user)).toEqual(jasmine.any(Observable));
   });
 
   it('should post user register', () => {
-    let user = new Register('Albert', 'Test', 'test@gmail.com', 'Password123');
+    let user = new RegisterModel('Albert', 'Test', 'test@gmail.com', 'Password123');
     service.postUserRegister(user).subscribe(data => {
       expect(typeof data).toEqual('object');
       expect(data).toEqual(jasmine.objectContaining({

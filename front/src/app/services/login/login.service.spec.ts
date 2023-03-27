@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 import {Observable} from "rxjs";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {Credentials} from "../../models/credentials/credentials.model";
+import {CredentialsModel} from "../../models/credentials/credentialsModel";
 
 describe('LoginService', () => {
   let service: LoginService;
@@ -38,12 +38,12 @@ describe('LoginService', () => {
   });
 
   it('should have postLogin method that returns an Observable', () => {
-    let credentials = new Credentials('test@gmail.com', 'Password123');
+    let credentials = new CredentialsModel('test@gmail.com', 'Password123');
     expect(service.postLogin(credentials)).toEqual(jasmine.any(Observable));
   });
 
   it('should post user login', () => {
-    let credentials = new Credentials('test@gmail.com', 'Password123');
+    let credentials = new CredentialsModel('test@gmail.com', 'Password123');
     service.postLogin(credentials).subscribe(data => {
       expect(typeof data).toEqual('object');
       expect(data).toEqual(jasmine.objectContaining({

@@ -11,17 +11,19 @@ import {Observable} from "rxjs";
 })
 export class SuggestionsService {
 
-  private review_suggestions_url: string = '/api/review/';
-
+  private preview_suggestions_url: string = '/api/preview/';
+  private suggestions_url: string = '/api/suggestions/';
 
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
-  getPreviewSuggestions(category: LeisureCategory, location : Location, date : string | undefined): Observable<LeisureItemModel[]> {
-    return this._httpclient.get<LeisureItemModel[]>(`${this.review_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&date=${date}`);
+  getPreviewSuggestions(category: LeisureCategory, location : Location, start: string, end: string): Observable<LeisureItemModel[]> {
+
+    return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 
-  getSuggestions(category: LeisureCategory, location: Location, date : string |undefined ): Observable<LeisureItemModel[]> {
-    return this._httpclient.get<LeisureItemModel[]>(`${this.review_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&date=${date}`);
+  getSuggestions(category: LeisureCategory, location: Location, start : string, end: string ): Observable<LeisureItemModel[]> {
+
+    return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 }

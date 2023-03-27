@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
-import {getDateFromIsoString} from "../../utils/date.utils";
+import {getIsoStringFromDate} from "../../utils/date.utils";
 import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
@@ -30,16 +30,7 @@ export class SingleSearchBarComponent {
       locationSearch: location.name,
       location: location,
     });
-    this._suggestionService.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, location, undefined).subscribe(
-      {
-        next: (suggestions) => {
-            this._suggestionStoreService.setSuggestionsData(suggestions);
-        },
-        error: (err) => {
-          this._suggestionStoreService.setSuggestionsData(new Array<LeisureItemModel>());
-        }
-      }
-    );
+
   }
 
   public validate(): void {
@@ -52,8 +43,8 @@ export class SingleSearchBarComponent {
         ['/', 'explore', location.name],
         {
           queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end),
+            start: getIsoStringFromDate(start),
+            end: getIsoStringFromDate(end),
             lat: location.lat,
             lng: location.lng,
           }

@@ -7,16 +7,10 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class SuggestionsStoreService {
 
-
    private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
 
-
   constructor() {
-    // this._suggestions.subscribe((suggestions) => {
-    //   console.log('suggestions', suggestions);
-    // });
   }
-
 
   public get suggestions$(): BehaviorSubject<LeisureItemModel[]> {
     return this._suggestions$;
@@ -34,7 +28,4 @@ export class SuggestionsStoreService {
     this._suggestions$.next(data);
 
   }
-
-
-
 }
