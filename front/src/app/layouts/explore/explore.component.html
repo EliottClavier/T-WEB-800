@@ -1,25 +1,12 @@
 <div class="container-fluid h-container">
   <div class="row justify-content-center">
-    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 m-0 py-3 h-container-fixed border-lightgray-right">
-      <app-multiple-search-bars
-        search-bar
-        [activeSearchBar]="activeSearchBar"
-        (activeSearchBarChange)="onActiveSearchBarChange($event)"
-        [searchForms]="searchForms"
-      ></app-multiple-search-bars>
-      <hr class="mx-2 my-4 border-lightgray-bottom">
-      <app-map-filters
-        map-filters
-        *ngIf="activeSearchBar.index !== null"
-        [selectedSearchForm]="searchFormsArrayControls[activeSearchBar.index]"
-      ></app-map-filters>
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 h-container-fixed">
       <div class="row position-relative">
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
           <app-multiple-search-bars
             search-bar
-            [(activeSearchBar)]="activeSearchBar"
             [searchForms]="searchForms"
+            (activeSearchBarChange)="onActiveSearchBarChange($event)"
             (viewChange)="onViewChange($event)"
           ></app-multiple-search-bars>
           <hr class="mx-2 my-4 border-lightgray-bottom">
@@ -46,6 +33,9 @@
       </div>
       <div class="row mt-3">
         <div class="col-12">
+          <app-card-container
+            *ngIf="activeSearchBar.index !== null && !itineraryView"
+          ></app-card-container>
           <app-map-travel-mode-selection
             map-travel-mode-selection
             *ngIf="activeSearchBar.index !== null && itineraryView"
@@ -54,10 +44,5 @@
           ></app-map-travel-mode-selection>
         </div>
       </div>
-    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 px-0">
-      <app-map map></app-map>
-<!--      <app-card-container></app-card-container>-->
-    </div>
-
   </div>
 </div>

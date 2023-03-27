@@ -26,7 +26,9 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   };
 
   ngAfterContentChecked(): void {
-    this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
+    if (this._suggests.length) {
+      this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
+    }
   }
 
   get itemsSelected(): LeisureItemModel {

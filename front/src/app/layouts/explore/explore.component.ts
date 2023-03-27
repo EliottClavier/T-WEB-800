@@ -33,13 +33,11 @@ export class ExploreComponent implements OnInit {
   onActiveSearchBarChange($event: SearchBarEvent) {
     this.activeSearchBar = $event;
 
-      let formArrayElement : FormArray = this.searchFormsArray;
-      let formControls  = formArrayElement.at(this.activeSearchBar.index);
-      let location : Location = formControls.get('location')?.value;
+    let formArrayElement : FormArray = this.searchFormsArray;
+    let formControls  = formArrayElement.at(this.activeSearchBar.index);
+    let location : Location = formControls.get('location')?.value;
 
-      this._getSuggestions(location);
-
-
+    this._getSuggestions(location);
   }
 
   public itineraryView: boolean = false;
@@ -97,7 +95,8 @@ export class ExploreComponent implements OnInit {
       end: this._isValidDate(start) ? end : null,
     })
   }
-    private _getSuggestions(location :Location): void {
+
+  private _getSuggestions(location :Location): void {
 
   }
 
