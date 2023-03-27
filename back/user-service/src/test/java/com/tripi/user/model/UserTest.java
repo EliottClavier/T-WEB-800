@@ -16,7 +16,7 @@ public class UserTest {
      */
     @Test
     public void emailGetterShouldReturnEmail() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         Assertions.assertEquals("test", user.getEmail());
     }
 
@@ -25,7 +25,7 @@ public class UserTest {
      */
     @Test
     public void emailSetterShouldSetEmail() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         user.setEmail("test2");
         Assertions.assertEquals("test2", user.getEmail());
     }
@@ -35,7 +35,7 @@ public class UserTest {
      */
     @Test
     public void firstnameGetterShouldReturnFirstname() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         Assertions.assertEquals("test", user.getFirstname());
     }
 
@@ -44,7 +44,7 @@ public class UserTest {
      */
     @Test
     public void firstnameSetterShouldSetFirstname() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         user.setFirstname("test2");
         Assertions.assertEquals("test2", user.getFirstname());
     }
@@ -54,7 +54,7 @@ public class UserTest {
      */
     @Test
     public void lastnameGetterShouldReturnLastname() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         Assertions.assertEquals("test", user.getLastname());
     }
 
@@ -63,26 +63,7 @@ public class UserTest {
      */
     @Test
     public void lastnameSetterShouldSetLastname() {
-        User user = new User(null, "test", "test", "test", "test");
-        user.setLastname("test2");
-        Assertions.assertEquals("test2", user.getLastname());
-    }
-
-    /**
-     * Password Getter Test
-     */
-    @Test
-    public void passwordGetterShouldReturnsPassword(){
-        User user = new User(null, "test", "test", "test", "test");
-        Assertions.assertEquals("test", user.getPassword());
-    }
-
-    /**
-     * Password Setter Test
-     */
-    @Test
-    public void passwordSetterShouldSetLastname() {
-        User user = new User(null, "test", "test", "test", "test");
+        User user = new User(null, "test", "test", "test");
         user.setLastname("test2");
         Assertions.assertEquals("test2", user.getLastname());
     }
