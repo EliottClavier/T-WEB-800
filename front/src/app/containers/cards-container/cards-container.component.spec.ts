@@ -1,7 +1,7 @@
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardsContainerComponent} from "./cards-container.component";
 
-import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {of} from "rxjs";

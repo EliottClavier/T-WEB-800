@@ -1,5 +1,5 @@
 import {AfterContentChecked, Component, EventEmitter, Input, Output} from '@angular/core';
-import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {CardItemComponent} from "../card-item/card-item.component";
 import {TranslateService} from "@ngx-translate/core";
 

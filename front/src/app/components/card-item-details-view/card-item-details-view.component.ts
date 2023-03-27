@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {LeisureItemModel} from 'src/app/models/leisure/leisure-item.model';
+import {LeisureItemModel} from 'src/app/models/leisures/leisure-item.model';
 
 @Component({
   selector: 'app-item-details-view',
