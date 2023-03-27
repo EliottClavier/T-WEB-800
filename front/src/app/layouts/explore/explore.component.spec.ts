@@ -6,7 +6,7 @@ import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
 import {FormArray, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
@@ -15,12 +15,12 @@ import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-for
 import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
-import TravelMode = google.maps.TravelMode;
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
   let spectator: Spectator<ExploreComponent>;
   let _route: ActivatedRoute;
+  let _router: Router;
   let _locationService: LocationService;
 
   const createComponent = createComponentFactory({
@@ -57,6 +57,7 @@ describe('ExploreComponent', () => {
     component = spectator.component;
     _locationService = spectator.inject(LocationService);
     _route = spectator.inject(ActivatedRoute);
+    _router = spectator.inject(Router);
 
     _route.snapshot.params = {
       location: "Nan"
@@ -137,6 +138,12 @@ describe('ExploreComponent', () => {
       expect(component["_route"]).toEqual(_route);
     });
 
+    it('should have Router injected', () => {
+      expect(component["_router"]).toBeDefined();
+      expect(component["_router"]).toBeTruthy();
+      expect(component["_router"]).toEqual(_router);
+    });
+
     it('should have itineraryView initialized', () => {
       expect(component.itineraryView).toBeDefined();
       expect(component.itineraryView).toBeFalsy();
@@ -210,21 +217,6 @@ describe('ExploreComponent', () => {
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
     });
 
-    it('should have a method to retrieve ActivatedRoute params with no coordinates and fill FormGroup on Init', () => {
-      spyOn<ExploreComponent, any>(component, "_loadRouteParams").and.callThrough();
-      _route.snapshot.queryParams = {
-        start: "2023-01-01",
-        end: "2023-01-02",
-      }
-      component.ngOnInit();
-      spectator.detectChanges();
-
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new Location("", "Nan", 0, 0));
-      expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
-      expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
-      expect(component["_loadRouteParams"]).toHaveBeenCalled();
-    });
-
     it('should return true if date is valid', () => {
       expect(component["_isValidDate"](new Date("2023-01-01"))).toBeTruthy();
     })
@@ -235,6 +227,17 @@ describe('ExploreComponent', () => {
 
     it('should return false if date parameter is not a date object', () => {
       expect(component["_isValidDate"]("test")).toBeFalsy();
+    });
+
+    it('should redirect to / if lat or lng is not provided', () => {
+      spyOn<Router, any>(component["_router"], "navigate").and.callThrough();
+      _route.snapshot.queryParams = {
+        start: "2023-01-01",
+        end: "2023-01-02",
+      }
+      component.ngOnInit();
+      spectator.detectChanges();
+      expect(component["_router"].navigate).toHaveBeenCalledWith(['/']);
     });
   });
 
