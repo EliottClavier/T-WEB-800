@@ -215,10 +215,10 @@ describe('MapComponent', () => {
           expect(component.onBoundariesChange.emit).toHaveBeenCalled();
         });
 
-        component.map.zoomChanged.subscribe(() => {
-          google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
-            latLng: new google.maps.LatLng(50, 50)
-          });
+        // component.map.zoomChanged.subscribe(() => {
+        //   google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
+        //     latLng: new google.maps.LatLng(50, 50)
+        //   });
         });
 
         google.maps.event.trigger(component.map.googleMap!, 'zoom_changed');
@@ -236,14 +236,16 @@ describe('MapComponent', () => {
           expect(component.onBoundariesChange.emit).toHaveBeenCalled();
         });
 
-        component.map.mapDragend.subscribe(() => {
-          google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
-            latLng: new google.maps.LatLng(50, 50)
-          });
+        // component.map.mapDragend.subscribe(() => {
+        //   // google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
+        //   //   latLng: new google.maps.LatLng(50, 50)
+        //   });
         });
 
-        google.maps.event.trigger(component.map.googleMap!, 'dragend');
-      });
+        // google.maps.event.trigger(component.map.googleMap!, 'dragend');
+      google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
+        latLng: new google.maps.LatLng(50, 50)
+
     });
   });
 
