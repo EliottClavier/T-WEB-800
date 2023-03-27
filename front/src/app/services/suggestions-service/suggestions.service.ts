@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClient} from "@angular/common/http";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";

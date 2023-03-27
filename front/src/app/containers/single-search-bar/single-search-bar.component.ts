@@ -7,7 +7,7 @@ import {buildSearchBarFormGroupControls} from "../../utils/search-bar-form-group
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
-import {LeisureItemModel} from "../../models/leisure/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 @Component({
   selector: 'app-single-search-bar',
