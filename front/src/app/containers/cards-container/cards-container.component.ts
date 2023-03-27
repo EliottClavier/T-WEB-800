@@ -26,7 +26,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   };
 
   ngAfterContentChecked(): void {
-    this.suggests.length > 0 && (this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey()));
+    this.category = this.translateService.instant(this.suggests[0].categoryTranslateKey());
   }
 
   get itemsSelected(): LeisureItemModel {
@@ -68,17 +68,16 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   }
 
   onShowMoreItems() {
-
-     // this.onGetSuggestions.emit();
-
     let category = this._suggests[0].category;
     let location = this._suggests[0].location as Location;
-
-    this._suggestionsService.getSuggestions(category, location, "", "").subscribe((suggestions) => {
-
+    this._suggestionsService.getSuggestions(category, location, "","").subscribe({
+        next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
-
-         }
+        },
+        // error: (err) => {
+        //   this._suggestionsStore.setSuggestionsData(new Array<LeisureItemModel>());
+        // }
+      }
     );
   }
 

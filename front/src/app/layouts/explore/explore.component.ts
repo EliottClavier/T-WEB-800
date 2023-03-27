@@ -1,9 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormGroup,} from "@angular/forms";
+import {Component, OnChanges, OnInit} from '@angular/core';
+import {
+  AbstractControl, Form,
+  FormArray,
+  FormGroup,
+} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {
+  buildSearchBarFormGroupControlsDetails
+} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
@@ -32,10 +38,9 @@ export class ExploreComponent implements OnInit {
   onActiveSearchBarChange($event: SearchBarEvent) {
     this.activeSearchBar = $event;
 
-
-    let formArrayElement: FormArray = this.searchFormsArray;
-    let formControls = formArrayElement.at(this.activeSearchBar.index);
-    let location: Location = formControls.get('location')?.value;
+      let formArrayElement : FormArray = this.searchFormsArray;
+      let formControls  = formArrayElement.at(this.activeSearchBar.index);
+      let location : Location = formControls.get('location')?.value;
 
     let start: Date = formControls.get('start')?.value;
     let end: Date = formControls.get('end')?.value;
@@ -117,7 +122,7 @@ export class ExploreComponent implements OnInit {
   }
 
   public onViewChange(view: string): void {
-    switch (view) {
+    switch(view) {
       case "itinerary":
         this.itineraryView = true;
         break;
