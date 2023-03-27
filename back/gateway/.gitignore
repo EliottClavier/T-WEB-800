@@ -1,7 +1,7 @@
 HELP.md
 .gradle
 build/
-!auth-service/gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-auth-service/.idea
+.idea
 *.iws
 *.iml
 *.ipr
@@ -35,5 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-jacoco-coverage-reports/
