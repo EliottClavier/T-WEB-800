@@ -203,7 +203,15 @@ describe('MapComponent', () => {
       });
     });
 
-    // describe('on Events', () => {
+     describe('on Events', () => {
+
+       it('should emit new boundaries on event', () => {
+         spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
+         spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
+         component.onMapBoundariesChange();
+         expect(component.onMapBoundariesChange).toHaveBeenCalled();
+         expect(component.onBoundariesChange.emit).toHaveBeenCalled();
+       });
     //   it('should emit new boundaries on zoom change', async() => {
     //     spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
     //     spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
@@ -246,7 +254,7 @@ describe('MapComponent', () => {
     //   google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
     //     latLng: new google.maps.LatLng(50, 50)
     //
-    // });
+     });
   });
 
   describe('Markers', () => {

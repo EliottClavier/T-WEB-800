@@ -12,7 +12,7 @@
     map-marker
     *ngFor="let marker of markers"
     (mapClick)="onMapMarkerClick(marker)"
-    [position]="{ lat: marker.lat, lng: marker.lng }"
+    [position]="{ lat: marker.location.lat, lng: marker.location.lng }"
     [title]="marker.title"
     [options]="{
       animation: markerAnimation,
