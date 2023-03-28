@@ -6,17 +6,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "credentials")
 @Getter
 @Setter
-public class User {
+public class Credentials {
 
-    public User(Integer id, String email, String password, String firstname, String lastname) {
+    public Credentials(Integer id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
     }
 
     @Id
@@ -31,13 +29,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @Column
-    private String firstname;
-
-    @Column
-    private String lastname;
-
-    public User() {
+    public Credentials() {
 
     }
 

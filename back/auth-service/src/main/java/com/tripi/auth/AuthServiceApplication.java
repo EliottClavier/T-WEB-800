@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Log4j2
 @SpringBootApplication(scanBasePackages = {"com.tripi", "com.tripi.auth"})
 @Import({ WebSecurityConfiguration.class })
+@EnableJpaRepositories(basePackages = "com.tripi.auth.auth.repository")
 public class AuthServiceApplication extends SpringBootServletInitializer {
 
 	@Override
