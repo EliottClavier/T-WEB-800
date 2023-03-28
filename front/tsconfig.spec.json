@@ -6,6 +6,7 @@
     "types": [
       "jasmine",
       "google.maps",
+      "@angular/localize"
     ]
   },
   "include": [
