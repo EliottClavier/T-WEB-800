@@ -32,6 +32,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AuthRequest authRequest) throws EmailAlreadyExistsException {
+        if (!authRequest.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            return ResponseEntity.badRequest().body("Invalid email");
+        }
+        if (authRequest.getPassword().length() < 6) {
+            return ResponseEntity.badRequest().body("Password must be at least 6 characters");
+        }
         String password = passwordEncoder().encode(authRequest.getPassword());
         CredentialsDto credentialsDto = new CredentialsDto();
         credentialsDto.setEmail(authRequest.getEmail());
@@ -71,6 +77,13 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<String> delete(@RequestBody AuthRequest authRequest) throws EmailDoesNotExistException, CredentialsDoesNotExistsException {
+        CredentialsDto credentialsDto = credentialsService.getCredentialsByEmail(authRequest.getEmail());
+        credentialsService.deleteCredentials(credentialsDto.getId());
+        return ResponseEntity.ok("User deleted");
+    }
+
     public static String generateToken(String email) {
         Instant now = Instant.now();
         Instant expirationTime = now.plusSeconds(EXPIRATION_TIME);
@@ -86,5 +99,4 @@ public class AuthController {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
