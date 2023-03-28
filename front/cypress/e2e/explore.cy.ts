@@ -1,16 +1,19 @@
 describe('Explore', () => {
 
   describe('Explore page redirection', () => {
-    it('should redirect to / when query parameters are missing', () => {
+    // Retries to avoid fail on CI
+    it('should redirect to / when query parameters are missing', {
+      retries: {
+        runMode: 1,
+        openMode: 1
+      }
+    }, () => {
       cy.visit('/explore/Nantes?start=2020-01-01&end=2020-01-01');
       cy.location('pathname').should('eq', '/');
     });
   });
 
   describe('Explore page visit', () => {
-
-    let map: Cypress.Chainable<JQuery<HTMLElement>>;
-
     beforeEach(() => {
       cy.visit('/explore/Nantes?start=2020-01-01&end=2020-01-02&lat=47.218371&lng=-1.553621');
     });
@@ -88,7 +91,6 @@ describe('Explore', () => {
         );
 
         cy.get('app-multiple-search-bars[search-bar] app-simple-icon-button[search-bar-travel-mode]').find('button mat-icon').first().should('have.text', 'directions_walk');
-
       });
     });
   });

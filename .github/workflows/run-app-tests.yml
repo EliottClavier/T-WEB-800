@@ -27,4 +27,8 @@ jobs:
       - name: Run e2e Cypress tests
         uses: cypress-io/github-action@v4
         with:
-          command: npm run e2e
+          working-directory: ./front
+          record: false
+          browser: chrome
+          spec: cypress/**/*.cy.ts
+          start: npm start

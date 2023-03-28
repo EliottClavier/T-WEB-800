@@ -33,7 +33,6 @@ describe('MapComponent', () => {
     spectator = await createComponent();
     component = spectator.component;
     http = spectator.inject(HttpClient);
-
     component.selectedLocation = new Location('', 'Nantes', 47.21121663814047, -1.5669571980709454)
 
     spectator.detectChanges();
