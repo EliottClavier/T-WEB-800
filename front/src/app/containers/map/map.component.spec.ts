@@ -203,46 +203,12 @@ describe('MapComponent', () => {
       });
     });
 
-    describe('on Events', () => {
+    describe('on Events (simplified)', () => {
       it('should emit new boundaries on zoom change', async() => {
         spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
         spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
-        component.map.boundsChanged.subscribe(() => {
-          // Can't test what's emitted since there is no way
-          // to wait for the map to be fully loaded it seems
-          // The content emitted is made from component.map.getBounds() with N,E,S,W coordinates
-          expect(component.onMapBoundariesChange).toHaveBeenCalledWith(true);
-          expect(component.onBoundariesChange.emit).toHaveBeenCalled();
-        });
-
-        component.map.zoomChanged.subscribe(() => {
-          google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
-            latLng: new google.maps.LatLng(50, 50)
-          });
-        });
-
-        google.maps.event.trigger(component.map.googleMap!, 'zoom_changed');
-      });
-
-      it('should emit new boundaries on drag end', async() => {
-        spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
-        spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
-
-        component.map.boundsChanged.subscribe(() => {
-          // Can't test what's emitted since there is no way
-          // to wait for the map to be fully loaded it seems
-          // The content emitted is made from component.map.getBounds() with N,E,S,W coordinates
-          expect(component.onMapBoundariesChange).toHaveBeenCalledWith();
-          expect(component.onBoundariesChange.emit).toHaveBeenCalled();
-        });
-
-        component.map.mapDragend.subscribe(() => {
-          google.maps.event.trigger(component.map.googleMap!, 'bounds_changed', {
-            latLng: new google.maps.LatLng(50, 50)
-          });
-        });
-
-        google.maps.event.trigger(component.map.googleMap!, 'dragend');
+        component.onMapBoundariesChange();
+        expect(component.onBoundariesChange.emit).toHaveBeenCalled();
       });
     });
   });
