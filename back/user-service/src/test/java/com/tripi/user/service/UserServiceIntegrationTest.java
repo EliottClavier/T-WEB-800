@@ -42,7 +42,7 @@ public class UserServiceIntegrationTest {
      */
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
-    public void shouldSaveUser() throws EmailAlreadyExistsException {
+    public void shouldSaveUser() throws Exception {
         UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
         UserDto savedUser = userService.saveUser(userDto);
 
@@ -67,7 +67,7 @@ public class UserServiceIntegrationTest {
      */
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
-    public void shouldUpdateUser() throws EmailAlreadyExistsException, UserDoesNotExistsException {
+    public void shouldUpdateUser() throws Exception {
         UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
         UserDto savedUser = userService.saveUser(userDto);
 

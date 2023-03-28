@@ -75,7 +75,7 @@ public class UserManagerTest {
      * Create user should call user service with the same user dto
      */
     @Test
-    public void createUserShouldCallUserServiceWithSameUserDto() throws SQLDataException, EmailAlreadyExistsException {
+    public void createUserShouldCallUserServiceWithSameUserDto() throws Exception {
         UserDto userDto = new UserDto(1, "test", "test", "test");
         Mockito.when(userService.saveUser(userDto)).thenReturn(userDto);
 
@@ -89,7 +89,7 @@ public class UserManagerTest {
      * Create user with exception should return a user response with correct status code
      */
     @Test
-    public void createUserWithExceptionShouldReturnUserResponseWithCorrectStatusCode() throws SQLDataException, EmailAlreadyExistsException {
+    public void createUserWithExceptionShouldReturnUserResponseWithCorrectStatusCode() throws Exception {
         UserDto userDto = new UserDto(1, "test", "test", "test");
         Mockito.when(userService.saveUser(userDto)).thenThrow(new NullPointerException());
 

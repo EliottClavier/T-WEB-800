@@ -36,7 +36,7 @@ public class UserService {
         return modelMapper.map(userDto, User.class);
     }
 
-    public UserDto saveUser(UserDto userDto) throws EmailAlreadyExistsException {
+    public UserDto saveUser(UserDto userDto) throws Exception {
         User user = userRepository.saveNewUserWithExceptions(convertToEntity(userDto));
         return convertToDto(user);
     }

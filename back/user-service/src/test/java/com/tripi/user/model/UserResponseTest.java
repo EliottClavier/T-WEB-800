@@ -3,6 +3,7 @@ package com.tripi.user.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -30,6 +31,8 @@ class UserResponseTest {
         assertNotNull(userResponse.getUser());
         userResponse.setUser(null);
         assertNull(userResponse.getUser());
+        userResponse.setHeaders(HttpHeaders.EMPTY);
+        assertNotNull(userResponse.getHeaders());
     }
 
     /**

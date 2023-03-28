@@ -68,7 +68,7 @@ public class UserServiceTest {
      * Test the call of the repository method when saving a new user
      */
     @Test
-    public void whenRegisterThenCallRepositoryMethod() throws EmailAlreadyExistsException, EmailDoesNotExistException {
+    public void whenRegisterThenCallRepositoryMethod() throws Exception {
         UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
 
         Mockito.when(userRepository.saveNewUserWithExceptions(Mockito.any(User.class))).thenReturn(new User());
@@ -81,7 +81,7 @@ public class UserServiceTest {
      * Test the that new user is saved with the correct id
      */
     @Test
-    public void whenSaveNewUserThenReturnsNewId() throws EmailAlreadyExistsException {
+    public void whenSaveNewUserThenReturnsNewId() throws Exception {
         UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
         User userResponse = new User(null, "testEmail", "testFirstname", "testLastname");
         userResponse.setId(1);
