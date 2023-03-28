@@ -1,43 +1,22 @@
-<mat-form-field
-  search-input-form-field appearance="outline" class="w-100"
-  [formGroup]="searchForm"
-  [hideRequiredMarker]="true"
-  [ngClass]="{ 'no-margin-bottom': noMarginBottom }"
-  (click)="onSelectSearchBar()">
+<mat-form-field search-input-form-field appearance="outline" class="w-100" [formGroup]="searchForm"
+  [hideRequiredMarker]="true" [ngClass]="{ 'no-margin-bottom': noMarginBottom }" (click)="onSelectSearchBar()">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
-  <input
-    search-input
-    [readonly]="readonly"
-    [style]="{ 'cursor': readonly ? 'pointer' : 'auto' }"
-    formControlName="locationSearch"
-    type="text" placeholder="Search a destination ..."
-    matInput [matAutocomplete]="auto">
-  <button
-    *ngIf="readonly"
-    mat-icon-button search-input-suffix matSuffix
-    (click)="onEditSearchBar()">
+  <input search-input [readonly]="readonly" [style]="{ 'cursor': readonly ? 'pointer' : 'auto' }"
+    formControlName="locationSearch" type="text" placeholder="Search a destination ..." matInput
+    [matAutocomplete]="auto">
+  <button *ngIf="readonly" mat-icon-button search-input-suffix matSuffix (click)="onEditSearchBar()">
     <mat-icon>edit</mat-icon>
   </button>
-  <mat-icon
-    *ngIf="!readonly"
-    search-input-suffix
-    matSuffix>
+  <mat-icon *ngIf="!readonly" search-input-suffix matSuffix>
     search
   </mat-icon>
-  <mat-autocomplete
-    search-input-autocomplete
-    #auto="matAutocomplete">
-    <mat-option
-      search-input-option
-      *ngFor="let option of locationOptions;"
-      [id]="option.id"
+  <mat-autocomplete search-input-autocomplete #auto="matAutocomplete">
+    <mat-option search-input-option *ngFor="let option of locationOptions;" [id]="option.id"
       (click)="onLocationOptionClick(option)">
       {{ option.name }}
     </mat-option>
   </mat-autocomplete>
-  <mat-error
-    search-input-error
-    *ngIf="locationSearch.touched && (locationSearch.errors || location.errors)">
+  <mat-error search-input-error *ngIf="locationSearch.touched && (locationSearch.errors || location.errors)">
     Location is required
   </mat-error>
 </mat-form-field>
