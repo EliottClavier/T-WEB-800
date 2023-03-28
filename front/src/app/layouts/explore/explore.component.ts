@@ -97,6 +97,9 @@ export class ExploreComponent implements OnInit {
     switch(view) {
       case "itinerary":
         this.itineraryView = true;
+        if (!this.selectedSearchForm.get('travelMode')?.value) {
+          this.selectedSearchForm.get('travelMode')?.patchValue(google.maps.TravelMode.DRIVING);
+        }
         break;
       case "location":
       default:

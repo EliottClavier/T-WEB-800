@@ -76,7 +76,7 @@ describe('Register', () => {
   });
 
   it('should display success message if register is successful', () => {
-    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/201_register-user', statusCode: 201}).as('201_register');
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/register/201_register-user', statusCode: 201}).as('201_register');
     registerButton = cy.get('app-simple-button[register-button] [simple-button]');
     firstNameInput.type('Albert');
     lastNameInput.type('Test', { force: true });
@@ -89,7 +89,7 @@ describe('Register', () => {
   });
 
   it('should display error message if bad request', () => {
-    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/400_register-user', statusCode: 400}).as('400_register');
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/register/400_register-user', statusCode: 400}).as('400_register');
     registerButton = cy.get('app-simple-button[register-button] [simple-button]');
     firstNameInput.type('Albert');
     lastNameInput.type('Test', { force: true });

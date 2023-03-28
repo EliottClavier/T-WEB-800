@@ -43,7 +43,7 @@ describe('Login', () => {
   });
 
   it('should display success message if login is successful', () => {
-    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/201_login-user', statusCode: 201}).as('201_login');
+    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/login/201_login-user', statusCode: 201}).as('201_login');
     loginButton = cy.get('app-simple-button[login-button] [simple-button]');
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
@@ -52,7 +52,7 @@ describe('Login', () => {
   });
 
   it('should display error message if credentials are bad', () => {
-    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/401_login-user', statusCode: 401}).as('401_login');
+    cy.intercept('POST', '/api/auth/login', {fixture: '../fixtures/login/401_login-user', statusCode: 401}).as('401_login');
     loginButton = cy.get('app-simple-button[login-button] [simple-button]');
     emailInput.type('test@gmail.com');
     passwordInput.type('Password123');
