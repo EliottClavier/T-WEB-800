@@ -214,7 +214,7 @@ describe('Card container', () => {
       });
       it('should get LeisureItems when OnShowMoreItems called', () => {
         expect(spectator.component.onShowMoreItems).toBeDefined();
-        let spy = spyOn(component, 'onShowMoreItems').and.stub( );
+        let spy = spyOn(component, 'onShowMoreItems').and.callThrough( );
         let spy2 = spyOn(suggestionsService, 'getSuggestions').and.returnValue(of(barItems));
         suggestionsService.getSuggestions(accommodationItems[0].category, accommodationItems[0].location, "", "").subscribe((suggestions) => {
           expect(suggestions).toEqual(barItems);

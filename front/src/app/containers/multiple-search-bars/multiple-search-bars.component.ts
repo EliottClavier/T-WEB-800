@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
 import {LocationModel} from "../../models/location/location.model";
 import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
@@ -16,7 +16,7 @@ export class MultipleSearchBarsComponent {
 
   @Input() public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      buildSearchBarFormGroupControlsDetails(),
+      buildStepFormGroupControlsDetails(),
     ]),
   });
 
@@ -50,7 +50,7 @@ export class MultipleSearchBarsComponent {
   }
 
   public addSearchBar(): void {
-    let newFormGroup: FormGroup = buildSearchBarFormGroupControlsDetails();
+    let newFormGroup: FormGroup = buildStepFormGroupControlsDetails();
     if (this.lastSearchBar.get("end")?.value) {
       newFormGroup.setControl(
         "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [ Validators.required ])

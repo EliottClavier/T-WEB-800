@@ -13,13 +13,14 @@ import {BehaviorSubject, of} from "rxjs";
 import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -292,8 +293,8 @@ describe('ExploreComponent', () => {
     describe("Next location status", () => {
       beforeEach(() => {
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
       });
 
@@ -361,7 +362,7 @@ describe('ExploreComponent', () => {
 
   it('should getSuggestions has been call when i called onActiveSearchBar', () => {
 
-    let suggestionSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
+    let suggestionSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
     component.onActiveSearchBarChange({index: 0, isEditing: true});
     expect(suggestionSpy).toHaveBeenCalled();
 
@@ -371,11 +372,13 @@ describe('ExploreComponent', () => {
       index: 0,
       isEditing: true,
     };
-    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
+    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
 
     spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
 
     expect(SuggestionsSpy).toHaveBeenCalled();
+
+
   });
   it('should call getSuggestions when user want shows more', () => {
 
@@ -390,6 +393,9 @@ describe('ExploreComponent', () => {
     component.getLeisureSuggestions()
     expect(spy).toHaveBeenCalled();
 
+
   });
+
+
 
 });

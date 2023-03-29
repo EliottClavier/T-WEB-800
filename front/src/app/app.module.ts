@@ -42,6 +42,8 @@ import {
   MapTravelModeSelectionComponent
 } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
+import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,6 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapFiltersComponent,
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
+    LeisureCategoryFilterComponent,
+    RadioButtonComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -111,6 +115,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterUserComponent,
     LoginUserComponent,
     RegisterUserComponent,
+    LeisureCategoryFilterComponent,
+    RadioButtonComponent,
     BrowserAnimationsModule,
     MatCardModule,
     TranslateModule
