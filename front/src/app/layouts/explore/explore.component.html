@@ -15,7 +15,7 @@
             *ngIf="activeSearchBar.index !== null"
             [selectedSearchForm]="selectedSearchForm"
           ></app-map-filters>
-          <app-leisure-category-filter>
+          <app-leisure-category-filter (onSelectedCategory)="onSelectedCategoryChange($event)">
 
           </app-leisure-category-filter>
         </div>

@@ -161,4 +161,5 @@ export class LeisureItemModel {
           return 'unknown'.toString();
       }
   }
+
 }

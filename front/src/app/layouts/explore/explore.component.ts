@@ -8,8 +8,8 @@ import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
-import {SearchDates} from "../../types/SearchDates";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
 
 @Component({
   selector: 'app-explore',
@@ -110,9 +110,12 @@ export class ExploreComponent implements OnInit {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
     this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe((data) => {
-      this._suggestionsStore.setSuggestionsData(data);
-    });
-
+        this._suggestionsStore.setSuggestionsData(data);
+      },
+      (error) => {
+        alert("error");
+        this._suggestionsStore.setSuggestionsData(getAccommodationItems());
+      });
   }
 
   public onViewChange(view: string): void {
@@ -167,4 +170,13 @@ export class ExploreComponent implements OnInit {
       }
     );
   }
+
+  onSelectedCategoryChange(value: LeisureCategory) {
+
+    this.getPreviewSuggestions(value);
+
+
+  }
+
+
 }

@@ -5,6 +5,8 @@ import {
 } from "../../../containers/leisure-category-filter/leisure-category-filter.component";
 import {AppModule} from "../../../app.module";
 import {LegacyCanUpdateErrorState} from "@angular/material/legacy-core";
+import {LeisureCategory} from "../../../enums/leisure-category";
+import {LeisureItemModel} from "../../../models/leisures/leisure-item.model";
 
 describe('RadioButtonComponent', () => {
   let spectator: Spectator<RadioButtonComponent>;
@@ -43,18 +45,20 @@ describe('RadioButtonComponent', () => {
   });
 
   it('Should emit selected option', async () => {
+    let leisureCategoryList = Object.values(LeisureCategory).map((value) => LeisureItemModel.categoryTranslateKey(value).toString());
+    leisureCategoryList = leisureCategoryList.filter((value) => value != "unknown");
+   spectator.setInput("radioLabelList", leisureCategoryList);
 
-   spectator.setInput("radioLabelList", ["test1", "test2"]);
-
-    let emitted: string ="";
-    let emitted2: string ="";
-    component.selectedOptionChange.subscribe((event: string) => {
+    let emitted: number = -1;
+    let emitted2: number =- 1;
+    component.selectedOptionChange.subscribe((event: number) => {
       emitted = event;
-      expect(emitted).toBe("test1");
+      expect(emitted).toBe(0);
     });
-    parentComponent.onSelectedCategory.subscribe((event: string) => {
+    parentComponent.onSelectedCategory.subscribe((event: number) => {
+
       emitted2 = event;
-      expect(emitted).toBe("test1");
+      expect(emitted).toBe(0);
     });
     spectator.click("#item-0");
     spectator.detectChanges();
@@ -63,7 +67,7 @@ describe('RadioButtonComponent', () => {
 
     spectator.detectChanges();
 
-    expect(component.selectedOption).toBe("test1");
+    expect(component.selectedOption).toBe(0);
 
 
   });

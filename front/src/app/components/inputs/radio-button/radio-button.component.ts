@@ -9,12 +9,13 @@ import {TranslateService} from "@ngx-translate/core";
 export class RadioButtonComponent implements OnInit, AfterContentChecked {
 
   @Input() public radioLabelList: string[] = [];
-  @Output() public selectedOptionChange = new EventEmitter<string>();
-  private _selectedOption: string = "";
+  @Output() public selectedOptionChange = new EventEmitter<number>();
+  private _selectedOption: number = 0;
 
-  set selectedOption(value: string) {
+  set selectedOption(value: number) {
     this._selectedOption = value;
     this.selectedOptionChange.emit(this.selectedOption);
+
 
   }
 
@@ -23,14 +24,14 @@ export class RadioButtonComponent implements OnInit, AfterContentChecked {
   }
 
 
-  get selectedOption(): string {
+  get selectedOption(): number {
     return this._selectedOption;
   }
 
   public ngOnInit(): void {
-
   }
   ngAfterContentChecked(): void {
-    this.radioLabelList.length > 0 && (this.radioLabelList =  this.radioLabelList.map((value)=> this.translateService.instant(value)))
+     this.radioLabelList.length > 0 && (this.radioLabelList =  this.radioLabelList.map((value)=> this.translateService.instant(value)))
+
   }
 }

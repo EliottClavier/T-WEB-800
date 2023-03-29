@@ -18,9 +18,12 @@ import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {getAccommodationItems, getBarItems, getSportingItems} from "../../utils/suggestions-mock.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
 import {LeisureCategory} from "../../enums/leisure-category";
+import {
+  LeisureCategoryFilterComponent
+} from "../../containers/leisure-category-filter/leisure-category-filter.component";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -31,11 +34,13 @@ describe('ExploreComponent', () => {
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
   let accommodationItems = getAccommodationItems();
+  let sportingItems = getSportingItems();
 
   const createComponent = createComponentFactory({
     component: ExploreComponent,
     providers: [mockProvider(SuggestionsService, {
       getSuggestions: () => of(accommodationItems),
+      getPreviewSuggestions: () => of(sportingItems)
     }),
       {
         provide: ActivatedRoute,
@@ -387,15 +392,20 @@ describe('ExploreComponent', () => {
 
     expect(spy).toHaveBeenCalled();
   });
+
   it('should getSuggestions when triggered', () => {
 
     let spy = spyOn(_suggestionService, 'getSuggestions').and.callThrough();
     component.getLeisureSuggestions()
     expect(spy).toHaveBeenCalled();
-
-
   });
 
+  it('should getPreviewSuggestions when user select a category', () => {
 
-
+    let spy = spyOn(component, 'onSelectedCategoryChange').and.callThrough();
+    let spyService = spyOn<SuggestionsService, any>(_suggestionService, 'getPreviewSuggestions').and.callThrough();
+    spectator.triggerEventHandler(LeisureCategoryFilterComponent, 'onSelectedCategory', LeisureCategory.SPORTING_EVENT);
+    expect(spy).toHaveBeenCalledWith(LeisureCategory.SPORTING_EVENT);
+    expect(spyService).toHaveBeenCalled();
+  });
 });

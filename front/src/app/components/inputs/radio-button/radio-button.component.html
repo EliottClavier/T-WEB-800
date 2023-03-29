@@ -1,7 +1,7 @@
 
 <div >
   <label *ngFor="let option of radioLabelList; let i = index" [attr.data-index]="i" >
-    <input data-cy-radio-button-item [id]="'item-' + i" type="radio" [name]="option" [value]="option"  [(ngModel)]="selectedOption">
+    <input data-cy-radio-button-item [id]="'item-' + i" type="radio" [name]="option" [value]="i"  [(ngModel)]="selectedOption">
     {{ option }}
   </label>
 </div>
