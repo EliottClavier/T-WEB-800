@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
     env_file:
       - ./env/discovery.env
-    ports:
+    expose:
       - "${DISCOVERY_PORT}"
     networks:
       - back-net
@@ -67,7 +67,7 @@ services:
       - ./env/database.env
     volumes:
       - /data/database:/var/lib/mysql
-    ports:
+    expose:
       - "${MARIADB_PORT}"
     networks:
       - back-net
