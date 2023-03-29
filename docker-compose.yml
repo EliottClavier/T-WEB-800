@@ -11,7 +11,7 @@ services:
       - ./env/app.env
     environment:
       APP_PORT: ${APP_PORT}
-      API_PORT: ${GATEWAY_PORT}
+      GATEWAY_PORT: ${GATEWAY_PORT}
       VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
       VIRTUAL_PORT: ${APP_PORT}
       LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
