@@ -14,7 +14,7 @@ export class Location {
   }
 
   public hasValidCoordinates(): boolean {
-    return -90 <= this._lat && this._lat <= 90 && -90 <= this._lng && this._lng <= 90;
+    return -90 <= this._lat && this._lat <= 90 && -180 <= this._lng && this._lng <= 180;
   }
 
   // Getter

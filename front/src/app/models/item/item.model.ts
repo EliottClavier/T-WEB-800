@@ -40,6 +40,6 @@ export class ItemModel {
   }
 
   public hasValidCoordinates(): boolean {
-    return -90 <= this.lat && this.lat <= 90 && -90 <= this.lng && this.lng <= 90;
+    return -90 <= this.lat && this.lat <= 90 && -180 <= this.lng && this.lng <= 180;
   }
 }

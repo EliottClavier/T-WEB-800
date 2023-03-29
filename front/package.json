@@ -28,6 +28,7 @@
     "@angular/router": "^15.2.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@types/google-maps": "^3.2.3",
     "@types/google.maps": "^3.52.3",
     "bootstrap": "^5.2.3",
     "jest-marbles": "^3.0.3",
