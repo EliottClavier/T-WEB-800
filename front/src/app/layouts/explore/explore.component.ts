@@ -46,6 +46,7 @@ export class ExploreComponent implements OnInit {
     this.getPreviewSuggestions(leisure, location, start, end);
   }
 
+
   public itineraryView: boolean = false;
 
   public itineraryMode: ItineraryMode = {
@@ -171,11 +172,16 @@ export class ExploreComponent implements OnInit {
     );
   }
 
+  selectedStartDate(){
+    return this.selectedSearchForm.get('start')?.value
+  }
+
+  selectedEndDate(){
+    return this.selectedSearchForm.get('start')?.value
+  }
+
   onSelectedCategoryChange(value: LeisureCategory) {
-
-    this.getPreviewSuggestions(value);
-
-
+    this.getPreviewSuggestions(value, this.selectedLocation,  this.selectedStartDate(), this.selectedEndDate());
   }
 
 
