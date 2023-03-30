@@ -9,13 +9,11 @@ import {LocationModel} from "../models/location/location.model";
 })
 export class SuggestionsStoreService {
 
-
   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
   private _getCategory?: LeisureCategory;
   private _getLocation?: LocationModel;
 
   constructor() {
-
   }
 
   public get suggestions$(): BehaviorSubject<LeisureItemModel[]> {
@@ -32,7 +30,6 @@ export class SuggestionsStoreService {
 
   public setSuggestionsData(data: LeisureItemModel[]) {
     this._suggestions$.next(data);
-
   }
 
   get getCategory(): LeisureCategory {
@@ -41,6 +38,4 @@ export class SuggestionsStoreService {
   get getLocation(): LocationModel {
     return this.getSuggestionsData()[0]?.location as LocationModel ;
   }
-
-
 }

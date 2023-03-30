@@ -31,7 +31,7 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import {HeaderComponent} from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import {MapComponent} from './containers/map/map.component';
-import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
+import {StepDatesFiltersComponent} from "./containers/step-dates-filter/step-dates-filters.component";
 import {CardItemComponent} from './components/card-item/card-item.component';
 import {CardItemsListComponent} from './components/card-items-list/card-items-list.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -42,7 +42,9 @@ import {
   MapTravelModeSelectionComponent
 } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
+import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
+import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 
 
@@ -71,10 +73,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainComponent,
     CardsContainerComponent,
     MapComponent,
-    MapFiltersComponent,
+    StepDatesFiltersComponent,
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
     CarouselComponent,
+    LeisureCategoryFilterComponent,
+    RadioButtonComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -100,7 +104,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    NgbModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',
@@ -110,7 +113,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
         }
       },
-    )
+    ),
+    NgbCarousel
   ],
   exports: [
     RegisterUserComponent,

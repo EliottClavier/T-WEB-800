@@ -127,7 +127,7 @@ export class LeisureItemModel {
 
   categoryTranslateKey(): string {
 
-    switch (this.category){
+    switch (this.category) {
       case LeisureCategory.ACCOMMODATION:
         return 'leisure_category_accommodations'.toString();
       case LeisureCategory.BAR:
@@ -143,4 +143,23 @@ export class LeisureItemModel {
         return 'unknown'.toString();
     }
   }
+    static categoryTranslateKey(category: LeisureCategory): string {
+
+      switch (category){
+        case LeisureCategory.ACCOMMODATION:
+          return 'leisure_category_accommodations'.toString();
+        case LeisureCategory.BAR:
+          return 'leisure_category_bar'.toString();
+        case LeisureCategory.RESTAURANT:
+          return 'leisure_category_restaurant'.toString();
+        case LeisureCategory.CULTURAL_EVENT:
+          return 'leisure_category_cultural_event'.toString();
+        case LeisureCategory.SPORTING_EVENT:
+          return 'leisure_category_sporting_event'.toString();
+        default:
+
+          return 'unknown'.toString();
+      }
+  }
+
 }

@@ -10,16 +10,20 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject, of} from "rxjs";
-import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
+import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {getAccommodationItems, getSportingItems} from "../../utils/suggestions-mock.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {
+  LeisureCategoryFilterComponent
+} from "../../containers/leisure-category-filter/leisure-category-filter.component";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -31,11 +35,13 @@ describe('ExploreComponent', () => {
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
   let accommodationItems = getAccommodationItems();
+  let sportingItems = getSportingItems();
 
   const createComponent = createComponentFactory({
     component: ExploreComponent,
     providers: [mockProvider(SuggestionsService, {
       getSuggestions: () => of(accommodationItems),
+      getPreviewSuggestions: () => of(sportingItems)
     }),
       {
         provide: ActivatedRoute,
@@ -110,8 +116,8 @@ describe('ExploreComponent', () => {
     });
 
     it('should have a map-filters component', () => {
-      let mapFilters = spectator.debugElement.query(By.css("app-map-filters"))!;
-      let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
+      let mapFilters = spectator.debugElement.query(By.css("app-step-dates-filters"))!;
+      let mapFiltersComponent: StepDatesFiltersComponent = mapFilters.componentInstance as StepDatesFiltersComponent;
       expect(mapFiltersComponent).toBeDefined();
     });
 
@@ -240,7 +246,6 @@ describe('ExploreComponent', () => {
     });
 
 
-
     it('should redirect to / if lat or lng is not provided', () => {
       spyOn<Router, any>(component["_router"], "navigate").and.callThrough();
       _route.snapshot.queryParams = {
@@ -289,8 +294,8 @@ describe('ExploreComponent', () => {
     describe("Next location status", () => {
       beforeEach(() => {
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
       });
 
@@ -320,39 +325,45 @@ describe('ExploreComponent', () => {
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
       });
 
-    it('should change itinerary mode to bicycling', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
-    });
+      it('should change itinerary mode to bicycling', () => {
+        component.onItineraryModeChange({travelMode: google.maps.TravelMode.BICYCLING});
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
+      });
 
-    it('should change itinerary mode to bus', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.BUS });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
-    });
+      it('should change itinerary mode to bus', () => {
+        component.onItineraryModeChange({
+          travelMode: google.maps.TravelMode.TRANSIT,
+          transitMode: google.maps.TransitMode.BUS
+        });
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
+      });
 
-    it('should change itinerary mode to train', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.TRAIN });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
-    });
+      it('should change itinerary mode to train', () => {
+        component.onItineraryModeChange({
+          travelMode: google.maps.TravelMode.TRANSIT,
+          transitMode: google.maps.TransitMode.TRAIN
+        });
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
+      });
 
-    it('should change itinerary mode to flight', () => {
-      component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
-      expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
+      it('should change itinerary mode to flight', () => {
+        component.onItineraryModeChange({travelMode: "FLIGHT" as google.maps.TravelMode});
+        expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
+      });
     });
-  });
 
 
   });
 
   it('should getSuggestions has been call when i called onActiveSearchBar', () => {
 
-    let suggestionSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
+    let suggestionSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
     component.onActiveSearchBarChange({index: 0, isEditing: true});
     expect(suggestionSpy).toHaveBeenCalled();
 
@@ -362,11 +373,13 @@ describe('ExploreComponent', () => {
       index: 0,
       isEditing: true,
     };
-    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, '_getPreviewSuggestions').and.callThrough();
+    const SuggestionsSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
 
     spectator.triggerEventHandler(MultipleSearchBarsComponent, 'activeSearchBarChange', mockedValue);
 
     expect(SuggestionsSpy).toHaveBeenCalled();
+
+
   });
   it('should call getSuggestions when user want shows more', () => {
 
@@ -375,12 +388,33 @@ describe('ExploreComponent', () => {
 
     expect(spy).toHaveBeenCalled();
   });
+
   it('should getSuggestions when triggered', () => {
 
     let spy = spyOn(_suggestionService, 'getSuggestions').and.callThrough();
     component.getLeisureSuggestions()
     expect(spy).toHaveBeenCalled();
-
   });
+
+  it('should getPreviewSuggestions when user select a category', () => {
+
+    let spy = spyOn(component, 'onSelectedCategoryChange').and.callThrough();
+    let spyService = spyOn<SuggestionsService, any>(_suggestionService, 'getPreviewSuggestions').and.callThrough();
+    spectator.triggerEventHandler(LeisureCategoryFilterComponent, 'onSelectedCategory', LeisureCategory.SPORTING_EVENT);
+    expect(spy).toHaveBeenCalledWith(LeisureCategory.SPORTING_EVENT);
+    expect(spyService).toHaveBeenCalled();
+  });
+  // it('should getPreviewSuggestions return an ERROR when it called', async() => {
+  //
+  //   let spyService = await spyOn<SuggestionsService, any>(component["_suggestionsService"], 'getPreviewSuggestions').and.returnValue(new Error('Error'));
+  //   await component.getPreviewSuggestions()
+  //   spyOn(window, 'alert');
+  //
+  //   setTimeout(() => {
+  //     expect(spyService).toHaveBeenCalled();
+  //     expect(window.alert).toHaveBeenCalledWith('error');
+  //
+  //   }, 0);
+  // });
 
 });

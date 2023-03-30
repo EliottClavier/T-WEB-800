@@ -3,13 +3,13 @@ import {FormArray, FormGroup,} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
-import {SearchDates} from "../../types/SearchDates";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
 
 @Component({
   selector: 'app-explore',
@@ -20,7 +20,7 @@ export class ExploreComponent implements OnInit {
 
   public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      buildSearchBarFormGroupControlsDetails(),
+      buildStepFormGroupControlsDetails(),
     ]),
   });
 
@@ -38,11 +38,11 @@ export class ExploreComponent implements OnInit {
 
     let start: Date = formControls.get('start')?.value;
     let end: Date = formControls.get('end')?.value;
-    let intervalDate: SearchDates = {start, end};
 
+    // let leisure: LeisureCategory = formControls.get('leisure')?.value;
     let leisure: LeisureCategory = this._suggestionsStore.getCategory;
 
-    this._getPreviewSuggestions(leisure, location, intervalDate);
+    this.getPreviewSuggestions(leisure, location, start, end);
   }
 
   public itineraryView: boolean = false;
@@ -87,7 +87,7 @@ export class ExploreComponent implements OnInit {
   }
 
   private _loadRouteParams(): void {
-    this.searchFormsArrayControls[0] = buildSearchBarFormGroupControlsDetails();
+    this.searchFormsArrayControls[0] = buildStepFormGroupControlsDetails();
     let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
     let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
     let lat: string = this._route.snapshot.queryParams['lat'];
@@ -109,13 +109,19 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  private _getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel, interval: SearchDates): void {
-    let start: string = getIsoStringFromDate(interval.start);
-    let end: string = getIsoStringFromDate(interval.end);
-    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe((data) => {
-      this._suggestionsStore.setSuggestionsData(data);
-    });
+  getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
+    let start: string = getIsoStringFromDate(startInterval);
+    let end: string = getIsoStringFromDate(endInterval);
 
+    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe(  {
+        next: (data) => {
+        this._suggestionsStore.setSuggestionsData(data);
+      },
+      error: (error) => {
+        alert("error");
+        this._suggestionsStore.setSuggestionsData(getAccommodationItems());
+      }
+  });
   }
 
   public onViewChange(view: string): void {
@@ -141,19 +147,27 @@ export class ExploreComponent implements OnInit {
       this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.travelMode);
     }
   }
+  public onSelectedCategoryChange(value: LeisureCategory) {
+    this.getPreviewSuggestions(value);
+  }
 
   public getLeisureSuggestions() {
 
+    // let form  = buildStepFormGroupControlsDetails();
 
-    let category = this._suggestionsStore.getCategory;
-    let location = this._suggestionsStore.getLocation;
+    // let category = this._suggestionsStore.getCategory;
+    // let location = this._suggestionsStore.getLocation;
+    // let start = form.get('start')?.value;
+    // let end = form.get('end')?.value;
 
     let formArrayElement: FormArray = this.searchFormsArray;
     let formControls = formArrayElement.at(this.activeSearchBar.index);
 
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
-
+    let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
+    let location: LocationModel = this.selectedSearchForm.get('location')?.value
+    alert(category)
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);

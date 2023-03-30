@@ -10,7 +10,7 @@ import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapComponent} from "../map/map.component";
 import {MapView} from "../../enums/map-view-const";
 import {LocationService} from "../../services/location/location.service";
@@ -291,7 +291,7 @@ describe('MultipleSearchBarsComponent', () => {
       let searchForm: FormGroup;
 
       beforeEach(() => {
-        searchForm = buildSearchBarFormGroupControlsDetails();
+        searchForm = buildStepFormGroupControlsDetails();
         component.searchFormsArrayControls.push(
           searchForm
         );
@@ -313,11 +313,11 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should return the correct travel mode icon depending on additional conditions', () => {
-        let searchForm: FormGroup = buildSearchBarFormGroupControlsDetails();
+        let searchForm: FormGroup = buildStepFormGroupControlsDetails();
         searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
         component.searchFormsArrayControls.push(
           searchForm,
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         spectator.detectChanges();
         // 0 is the default search bar which has no travel mode
@@ -352,8 +352,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when removing search bar when conditions match', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.activeSearchBar = {
           index: 0,
@@ -367,8 +367,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should not emit the view change to location event when removing search bar when index isn\'t in range', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.activeSearchBar = {
           index: 0,
@@ -382,8 +382,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.onSearchBarSelect({
           index: 0,
@@ -395,8 +395,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.onItinerarySelect({
           index: 0,
