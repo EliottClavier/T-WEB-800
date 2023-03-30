@@ -1,4 +1,4 @@
-export class Credentials {
+export class CredentialsModel {
   email: string;
   password: string;
 
@@ -8,8 +8,8 @@ export class Credentials {
   }
 
   // This is a static method, so it can be called without instantiating the class
-  static fromJson(json: any): Credentials {
-    return new Credentials(
+  static fromJson(json: any): CredentialsModel {
+    return new CredentialsModel(
       json.email,
       json.password
     );

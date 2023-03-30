@@ -1,5 +1,15 @@
 {
 
   "hello": "Hello guys!",
-  "nothing_to_display" : "Nothing to display"
+  "nothing_to_display" : "Nothing to display",
+  "leisure_category_accommodations" : "Accommodations",
+  "leisure_category_sporting_event" : "Sporting events",
+  "leisure_category_cultural_event" : "Cultural events",
+  "leisure_category_bar" : "Bars",
+  "leisure_category_restaurant" : "Restaurants",
+  "leisure_category_unknown" : "Unknown",
+  "unknown" : "Unknown",
+  "close" : "Close",
+  "show_more" : "Show more"
+
 }

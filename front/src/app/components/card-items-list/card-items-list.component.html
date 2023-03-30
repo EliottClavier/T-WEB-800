@@ -5,6 +5,7 @@
     <li>
       <app-card-item
         [cardItem]="item"
+        (onItem)="onItemClicked($event)">
         data-cy-card-component></app-card-item>
     </li>
   </ul>

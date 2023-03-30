@@ -1,5 +1,5 @@
-import {AfterContentChecked, Component, Input} from '@angular/core';
-import {ItemModel} from "../../models/item/item.model";
+import {AfterContentChecked, Component, EventEmitter, Input, Output} from '@angular/core';
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {CardItemComponent} from "../card-item/card-item.component";
 import {TranslateService} from "@ngx-translate/core";
 
@@ -11,8 +11,11 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class CardItemsListComponent implements AfterContentChecked{
 
-  @Input() cardItems: ItemModel[] = [];
+  @Input() cardItems: LeisureItemModel[] = [];
    emptyMessage?: string;
+
+   @Output() cardItemClicked: EventEmitter<LeisureItemModel> = new EventEmitter<LeisureItemModel>();
+
 
   constructor(private translate: TranslateService) {
   }
@@ -20,4 +23,8 @@ export class CardItemsListComponent implements AfterContentChecked{
     ngAfterContentChecked(): void {
       this.emptyMessage = this.translate.instant('nothing_to_display')
     }
-}
+
+    onItemClicked($event: LeisureItemModel) {
+      this.cardItemClicked.emit($event);
+    }
+  }

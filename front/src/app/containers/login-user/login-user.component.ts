@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Credentials} from "../../models/credentials/credentials.model";
+import {CredentialsModel} from "../../models/credentials/credentialsModel";
 import {
   FormControl,
   FormGroup,
@@ -19,18 +19,18 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 
 export class LoginUserComponent {
-  public credentials: Credentials;
-  public loginForm: FormGroup;
-  public user: User;
-  public errorMessage: string;
-  public LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
-  public API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
+  credentials: CredentialsModel;
+  loginForm: FormGroup;
+  user: User;
+  errorMessage: string;
+  LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
+  API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   constructor(
     private _loginService: LoginService,
     public _dialogRef: MatDialogRef<LoginUserComponent>
   ) {
-    this.credentials = new Credentials('', '');
+    this.credentials = new CredentialsModel('', '');
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])

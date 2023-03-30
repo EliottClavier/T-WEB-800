@@ -1,16 +1,15 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
-import {
-  Form,
-  FormArray,
-  FormGroup,
-} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormGroup,} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {
-  buildSearchBarFormGroupControlsDetails
-} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {ItineraryMode} from "../../types/itinerary-mode.type";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SearchDates} from "../../types/SearchDates";
+import {getIsoStringFromDate} from "../../utils/date.utils";
 
 @Component({
   selector: 'app-explore',
@@ -30,6 +29,22 @@ export class ExploreComponent implements OnInit {
     isEditing: false,
   };
 
+  onActiveSearchBarChange($event: SearchBarEvent) {
+    this.activeSearchBar = $event;
+
+    let formArrayElement: FormArray = this.searchFormsArray;
+    let formControls = formArrayElement.at(this.activeSearchBar.index);
+    let location: LocationModel = formControls.get('location')?.value;
+
+    let start: Date = formControls.get('start')?.value;
+    let end: Date = formControls.get('end')?.value;
+    let intervalDate: SearchDates = {start, end};
+
+    let leisure: LeisureCategory = this._suggestionsStore.getCategory;
+
+    this._getPreviewSuggestions(leisure, location, intervalDate);
+  }
+
   public itineraryView: boolean = false;
 
   public itineraryMode: ItineraryMode = {
@@ -48,19 +63,20 @@ export class ExploreComponent implements OnInit {
     return this.searchFormsArrayControls[this.activeSearchBar.index];
   }
 
-  get selectedLocation(): Location {
-    return this.selectedSearchForm.get('location')?.value as Location;
+  get selectedLocation(): LocationModel {
+    return this.selectedSearchForm.get('location')?.value as LocationModel;
   }
 
-  get nextLocation(): Location | undefined {
-    return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as Location | undefined
+  get nextLocation(): LocationModel | undefined {
+    return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as LocationModel | undefined
   }
 
   constructor(
-    private _route: ActivatedRoute,
-    private _router: Router
-  ) {
+    private _route: ActivatedRoute, private _router: Router,
+    private _suggestionsService: SuggestionsService,
+    private _suggestionsStore: SuggestionsStoreService) {
   }
+
 
   public ngOnInit(): void {
     this._loadRouteParams();
@@ -79,7 +95,7 @@ export class ExploreComponent implements OnInit {
     if (lat && lng) {
       this.searchFormsArrayControls[0].patchValue({
         locationSearch: this._route.snapshot.params['location']!,
-        location: new Location(
+        location: new LocationModel(
           "",
           this._route.snapshot.params['location']!,
           Number(lat),
@@ -87,14 +103,23 @@ export class ExploreComponent implements OnInit {
         ),
         start: this._isValidDate(start) ? start : null,
         end: this._isValidDate(start) ? end : null,
-      });
+      })
     } else {
       this._router.navigate(['/']);
     }
   }
 
+  private _getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel, interval: SearchDates): void {
+    let start: string = getIsoStringFromDate(interval.start);
+    let end: string = getIsoStringFromDate(interval.end);
+    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe((data) => {
+      this._suggestionsStore.setSuggestionsData(data);
+    });
+
+  }
+
   public onViewChange(view: string): void {
-    switch(view) {
+    switch (view) {
       case "itinerary":
         this.itineraryView = true;
         if (!this.selectedSearchForm.get('travelMode')?.value) {
@@ -115,5 +140,25 @@ export class ExploreComponent implements OnInit {
     } else {
       this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.travelMode);
     }
+  }
+
+  public getLeisureSuggestions() {
+
+
+    let category = this._suggestionsStore.getCategory;
+    let location = this._suggestionsStore.getLocation;
+
+    let formArrayElement: FormArray = this.searchFormsArray;
+    let formControls = formArrayElement.at(this.activeSearchBar.index);
+
+    let start: Date = this.selectedSearchForm.get('start')?.value
+    let end: Date = this.selectedSearchForm.get('end')?.value
+
+    this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
+        next: (suggestions) => {
+          this._suggestionsStore.setSuggestionsData(suggestions);
+        },
+      }
+    );
   }
 }

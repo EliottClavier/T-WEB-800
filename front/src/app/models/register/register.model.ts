@@ -1,4 +1,4 @@
-export class Register {
+export class RegisterModel {
   firstName: string;
   lastName: string;
   email: string;
@@ -12,8 +12,8 @@ export class Register {
   }
 
   // This is a static method, so it can be called without instantiating the class
-  static fromJson(json: any): Register {
-    return new Register(
+  static fromJson(json: any): RegisterModel {
+    return new RegisterModel(
       json.firstName,
       json.lastName,
       json.email,

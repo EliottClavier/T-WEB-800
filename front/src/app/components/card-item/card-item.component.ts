@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ItemModel} from "../../models/item/item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 
 @Component({
@@ -11,15 +11,15 @@ import {ItemModel} from "../../models/item/item.model";
 
 export class CardItemComponent {
 
-  @Input() cardItem: ItemModel;
-  @Output() onItem = new EventEmitter<ItemModel>();
+  @Input() cardItem: LeisureItemModel;
+  @Output() onItem = new EventEmitter<LeisureItemModel>();
 
 
-  onClickItem(cardItem: ItemModel): void {
+  onClickItem(cardItem: LeisureItemModel): void {
     this.onItem.emit(cardItem);
   };
 
   constructor() {
-    this.cardItem = new ItemModel();
+    this.cardItem = new LeisureItemModel();
   }
 }
