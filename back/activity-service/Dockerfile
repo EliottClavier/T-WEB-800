@@ -10,4 +10,4 @@ RUN gradle build
 
 WORKDIR /
 RUN apk add --no-cache bash
-RUN mv /app-build/build/libs/user-service.jar /user.jar
+RUN mv /app-build/build/libs/activity-service.jar /activity.jar
