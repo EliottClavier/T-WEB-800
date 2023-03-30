@@ -1,6 +1,6 @@
 import {RegisterModel} from "./register.model";
 
-describe('RegisterModelTest', () => {
+describe('RegisterTest', () => {
   it('should create a new register', () => {
     const register = new RegisterModel('Albert', 'Test','test@gmail.com', 'password123');
 
