@@ -30,6 +30,7 @@ services:
     container_name: gateway
     image: eliottclavier/tripi-gateway:latest
     restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /gateway.jar"
     env_file:
       - ./env/gateway.env
       - ./env/discovery.env
@@ -39,6 +40,7 @@ services:
       VIRTUAL_HOST: ${GATEWAY_VIRTUAL_HOST}
       VIRTUAL_PORT: ${GATEWAY_PORT}
       LETSENCRYPT_HOST: ${GATEWAY_VIRTUAL_HOST}
+      JAVA_OPTS: "-DGATEWAY_PORT=${GATEWAY_PORT} -DDISCOVERY_HOST=${DDISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
     expose:
       - "${GATEWAY_PORT}"
     networks:
@@ -52,8 +54,11 @@ services:
     container_name: discovery
     image: eliottclavier/tripi-discovery:latest
     restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /discovery.jar"
     env_file:
       - ./env/discovery.env
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=localhost -DDISCOVERY_PORT=${DISCOVERY_PORT}"
     expose:
       - "${DISCOVERY_PORT}"
     networks:

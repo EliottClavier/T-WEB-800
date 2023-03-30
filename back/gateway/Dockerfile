@@ -7,4 +7,6 @@ COPY . /$HOME
 WORKDIR /$HOME
 RUN export LANG='en_US.UTF-8'
 RUN gradle build
-ENTRYPOINT ["java","-jar","/app-build/build/libs/gateway.jar"]
+
+WORKDIR /
+RUN mv /app-build/build/libs/gateway.jar /gateway.jar
