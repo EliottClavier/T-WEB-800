@@ -38,6 +38,4 @@ export class SuggestionsStoreService {
   get getLocation(): LocationModel {
     return this.getSuggestionsData()[0]?.location as LocationModel ;
   }
-
-
 }

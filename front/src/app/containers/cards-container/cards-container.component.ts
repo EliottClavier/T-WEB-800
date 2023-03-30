@@ -56,7 +56,6 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   subscribeItems() {
     this._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
       this._suggests = suggestions;
-
     });
   }
 
