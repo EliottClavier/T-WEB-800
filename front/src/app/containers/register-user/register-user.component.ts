@@ -24,14 +24,13 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 
 export class RegisterUserComponent {
-  newUser: RegisterModel;
-  matcher: MyErrorStateMatcher;
-  success: boolean;
-  user: User;
-  errorMessage: string;
+  public newUser: RegisterModel;
+  public matcher: MyErrorStateMatcher;
+  public user: User;
+  public errorMessage: string;
 
-  INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
-  API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
+  public INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
+  public API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   constructor(
     private _registerService: RegisterService,
@@ -39,7 +38,6 @@ export class RegisterUserComponent {
   ) {
     this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
-    this.success = false;
     this.user = new User(0, '', '', '');
     this.errorMessage = '';
    }
@@ -67,7 +65,6 @@ export class RegisterUserComponent {
       this._registerService.postUserRegister(this.newUser).subscribe({
         next: (value: any) => {
           this.user = value['data'];
-          this.success = true;
           this._dialogRef.close();
         },
         error: () => {

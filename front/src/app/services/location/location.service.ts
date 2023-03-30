@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {LocationModel} from "../../models/location/location.model";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,10 @@ export class LocationService {
   ) { }
 
   public getLocationSuggestions(search: string): Observable<LocationModel[]> {
-    return this.http.get<LocationModel[]>(`/api/locations/suggestion/${search}`);
+    return this.http.get<LocationModel[]>(`/api/locations/suggestion/${search}`)
+      .pipe(
+        map((result: any) => result.location)
+      );
   }
 
   public getLocationInformations(

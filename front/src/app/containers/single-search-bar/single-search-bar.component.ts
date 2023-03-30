@@ -28,10 +28,11 @@ export class SingleSearchBarComponent {
   public onLocationOptionClick(location: LocationModel): void {
     this.searchForm.patchValue({
       locationSearch: location.name,
-      location: location,
+      location: new LocationModel(location.id, location.name, location.lat, location.lng),
     });
 
   }
+
 
   public validate(): void {
     let location: LocationModel = this.searchForm.get('location')!.value;

@@ -25,6 +25,7 @@ describe('ExploreComponent', () => {
   let component: ExploreComponent;
   let spectator: Spectator<ExploreComponent>;
   let _route: ActivatedRoute;
+  let _router: Router;
   let _locationService: LocationService;
   let _suggestionService: SuggestionsService;
   let _suggestionStoreService: SuggestionsStoreService;
@@ -55,7 +56,6 @@ describe('ExploreComponent', () => {
     ],
     declarations: [
       ExploreComponent,
-      MultipleSearchBarsComponent
     ],
     imports: [
       AppModule
@@ -71,7 +71,7 @@ describe('ExploreComponent', () => {
     _locationService = spectator.inject(LocationService);
     _suggestionService = spectator.inject(SuggestionsService);
     _route = spectator.inject(ActivatedRoute);
-    let router = spectator.inject(Router);
+    _router = spectator.inject(Router);
 
     _multipleSearchComponent = spectator.inject(MultipleSearchBarsComponent);
     _route.snapshot.params = {
@@ -226,20 +226,6 @@ describe('ExploreComponent', () => {
       expect(component["_loadRouteParams"]).toHaveBeenCalled();
     });
 
-    it('should have a method to retrieve ActivatedRoute params with no coordinates and fill FormGroup on Init', () => {
-      spyOn<ExploreComponent, any>(component, "_loadRouteParams").and.callThrough();
-      _route.snapshot.queryParams = {
-        start: "2023-01-01",
-        end: "2023-01-02",
-      }
-      component.ngOnInit();
-      spectator.detectChanges();
-
-      expect(component.searchFormsArrayControls[0].get('location')!.value)!.toEqual(new LocationModel("", "Nan", 0, 0));
-      expect(component.searchFormsArrayControls[0].get('start')!.value)!.toEqual(new Date("2023-01-01"));
-      expect(component.searchFormsArrayControls[0].get('end')!.value)!.toEqual(new Date("2023-01-02"));
-      expect(component["_loadRouteParams"]).toHaveBeenCalled();
-    });
 
     it('should return true if date is valid', () => {
       expect(component["_isValidDate"](new Date("2023-01-01"))).toBeTruthy();
@@ -254,6 +240,17 @@ describe('ExploreComponent', () => {
     });
 
 
+
+    it('should redirect to / if lat or lng is not provided', () => {
+      spyOn<Router, any>(component["_router"], "navigate").and.callThrough();
+      _route.snapshot.queryParams = {
+        start: "2023-01-01",
+        end: "2023-01-02",
+      }
+      component.ngOnInit();
+      spectator.detectChanges();
+      expect(component["_router"].navigate).toHaveBeenCalledWith(['/']);
+    });
   });
   describe('Getting Suggestions information', () => {
 
@@ -323,38 +320,32 @@ describe('ExploreComponent', () => {
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
       });
 
-      it('should change itinerary mode to bicycling', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.BICYCLING});
-        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
-        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
-      });
-
-      it('should change itinerary mode to bus', () => {
-        component.onItineraryModeChange({
-          travelMode: google.maps.TravelMode.TRANSIT,
-          transitMode: google.maps.TransitMode.BUS
-        });
-        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
-        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
-      });
-
-      it('should change itinerary mode to train', () => {
-        component.onItineraryModeChange({
-          travelMode: google.maps.TravelMode.TRANSIT,
-          transitMode: google.maps.TransitMode.TRAIN
-        });
-        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
-        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
-      });
-
-      it('should change itinerary mode to flight', () => {
-        component.onItineraryModeChange({travelMode: "FLIGHT" as google.maps.TravelMode});
-        expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
-        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
-      });
+    it('should change itinerary mode to bicycling', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
     });
+
+    it('should change itinerary mode to bus', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.BUS });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
+    });
+
+    it('should change itinerary mode to train', () => {
+      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.TRAIN });
+      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
+    });
+
+    it('should change itinerary mode to flight', () => {
+      component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
+      expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
+      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
+    });
+  });
 
 
   });

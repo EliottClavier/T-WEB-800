@@ -18,6 +18,7 @@
           [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
           [searchForm]="searchForm"
           [noMarginBottom]="true"
+          (onLocationOptionChange)="onLocationOptionChange($event)"
           (onSearchBarSelect)="onSearchBarSelect($event)">
         </app-search-input>
 

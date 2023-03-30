@@ -14,94 +14,92 @@ describe('RegisterModel', () => {
   const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
   beforeEach(() => {
-    cy.visit('/register-user');
-    firstNameInput = cy.get('input[name="firstName"]');
-    lastNameInput = cy.get('input[name="lastName"]');
-    emailInput = cy.get('input[name="email"]');
-    passwordInput = cy.get('input[name="password"]');
-    confirmPasswordInput = cy.get('input[name="confirmPassword"]');
-    registerButton = cy.get('button[name="registerButton"]');
-
+    cy.visit('/');
+    cy.get('[header-register]').click()
+    firstNameInput = cy.get('input[register-first-name]');
+    lastNameInput = cy.get('input[register-last-name]');
+    emailInput = cy.get('input[register-email]');
+    passwordInput = cy.get('input[register-password]');
+    confirmPasswordInput = cy.get('input[register-confirm-password]');
+    registerButton = cy.get('app-simple-button[register-button] [simple-button]');
   });
 
   it('should display register page', () => {
-    cy.get('h1').invoke('text').should('equal', 'RegisterModel User');
+    cy.get('h1[register-title]').should('contain.text', 'Welcome among us !'.toUpperCase());
   });
 
   it('should display required error message if first name is empty', () => {
     firstNameInput.click();
     firstNameInput.clear();
     emailInput.click();
-    cy.get('#firstName mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_NAME);
+    cy.get('#firstName mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if last name is empty', () => {
-    lastNameInput.click();
-    lastNameInput.clear();
+    lastNameInput.click({ force: true });
+    lastNameInput.clear({ force: true });
     emailInput.click();
-    cy.get('#lastName mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_NAME);
+    cy.get('#lastName mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if email is empty', () => {
     emailInput.click();
     emailInput.clear();
     passwordInput.click();
-    cy.get('#email mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_EMAIL);
+    cy.get('#email mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_EMAIL);
   });
 
   it('should display required error message if password is empty', () => {
     passwordInput.click();
     passwordInput.clear();
-    confirmPasswordInput.click();
-    cy.get('#password mat-error').invoke('text').should('equal', REGISTER_RESPONSE.EMPTY_PASSWORD);
+    confirmPasswordInput.click({ force: true });
+    cy.get('#password mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_PASSWORD);
   });
 
   it('should display email error message if email format is invalid', () => {
-    emailInput.type('test.com');
-    passwordInput.click();
-    cy.get('#email mat-error').invoke('text').should('equal', REGISTER_RESPONSE.INVALID_EMAIL);
+    emailInput.type('test.com', { force: true });
+    passwordInput.click({ force: true });
+    cy.get('#email mat-error').should('contain.text', REGISTER_RESPONSE.INVALID_EMAIL);
   });
 
   it('should display password error message if password is too short', () => {
-    passwordInput.type('pass');
-    confirmPasswordInput.click();
-    cy.get('#password mat-error').invoke('text').should('equal', REGISTER_RESPONSE.SHORT_PASSWORD);
+    passwordInput.type('pass', { force: true });
+    confirmPasswordInput.click({ force: true });
+    cy.get('#password mat-error').should('contain.text', REGISTER_RESPONSE.SHORT_PASSWORD);
   });
 
   it('should display confirm password error message if confirm password is not equal to password', () => {
     passwordInput.type('Password123');
-    confirmPasswordInput.type('Password');
+    confirmPasswordInput.type('Password', { force: true });
     confirmPasswordInput.click();
-    cy.get('#confirmPassword mat-error').invoke('text').should('equal', REGISTER_RESPONSE.DIFFERENTS_PASSWORD);
+    cy.get('#confirmPassword mat-error').should('contain.text', REGISTER_RESPONSE.DIFFERENTS_PASSWORD);
   });
 
   it('should display success message if register is successful', () => {
-    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/201_register-user', statusCode: 201}).as('201_register');
-    registerButton = cy.get('button[name="registerButton"]');
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/register/201_register-user', statusCode: 201}).as('201_register');
+    registerButton = cy.get('app-simple-button[register-button] [simple-button]');
     firstNameInput.type('Albert');
-    lastNameInput.type('Test');
+    lastNameInput.type('Test', { force: true });
     emailInput.type('test@gmail.com');
-    passwordInput.type('Password123');
-    confirmPasswordInput.type('Password123');
-    registerButton.click();
+    passwordInput.type('Password123', { force: true });
+    confirmPasswordInput.type('Password123', { force: true });
+    registerButton.click({ force: true });
 
     cy.wait('@201_register').its('response.statusCode').should('eq', 201);
-
-    cy.get('.successRegister mat-card-content').invoke('text').should('equal', REGISTER_RESPONSE.SUCCESS_REGISTER);
   });
 
   it('should display error message if bad request', () => {
-    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/400_register-user', statusCode: 400}).as('400_register');
-    registerButton = cy.get('button[name="registerButton"]');
+    cy.intercept('POST', '/api/auth/register', {fixture: '../fixtures/register/400_register-user', statusCode: 400}).as('400_register');
+    registerButton = cy.get('app-simple-button[register-button] [simple-button]');
     firstNameInput.type('Albert');
-    lastNameInput.type('Test');
+    lastNameInput.type('Test', { force: true });
     emailInput.type('test@gmail.com');
-    passwordInput.type('Password123');
-    confirmPasswordInput.type('Password123');
-    registerButton.click();
+    passwordInput.type('Password123', { force: true });
+    confirmPasswordInput.type('Password123', { force: true });
+    registerButton.click({ force: true });
 
     cy.wait('@400_register').its('response.statusCode').should('eq', 400);
 
-    cy.get('mat-error[name="errorRequest"]').invoke('text').should('equal', API_RESPONSE.BAD_REQUEST);
+    cy.get('[register-error-request]').should('contain.text', API_RESPONSE.BAD_REQUEST);
   });
 });

@@ -42,6 +42,9 @@ import {
   MapTravelModeSelectionComponent
 } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselComponent } from './components/carousel/carousel.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapFiltersComponent,
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
+    CarouselComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -96,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    NgbModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',
@@ -118,5 +123,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule { }

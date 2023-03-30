@@ -86,7 +86,6 @@ describe('LoginUserComponent', () => {
     expect(component.user.firstName).toEqual('Albert');
     expect(component.user.lastName).toEqual('Test');
     expect(component.user.email).toEqual('test@gmail.com');
-    expect(component.success).toEqual(true);
   });
 
   it('should login with all informations', () => {
@@ -104,7 +103,6 @@ describe('LoginUserComponent', () => {
     expect(component.user.firstName).toEqual('');
     expect(component.user.lastName).toEqual('');
     expect(component.user.email).toEqual('');
-    expect(component.success).toEqual(false);
   });
 
   it('should not login with empty email', () => {
@@ -114,7 +112,6 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('');
     expect(component.credentials.password).toEqual('');
-    expect(component.success).toEqual(false);
   });
 
   it('should not login with empty password', () => {
@@ -124,7 +121,6 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('');
     expect(component.credentials.password).toEqual('');
-    expect(component.success).toEqual(false);
   });
 
   it('should not login with invalid email', () => {
@@ -134,7 +130,6 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('');
     expect(component.credentials.password).toEqual('');
-    expect(component.success).toEqual(false);
   });
 });
 

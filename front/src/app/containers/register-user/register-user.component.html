@@ -1,13 +1,11 @@
-<h1 mat-dialog-title [align]="'center'" class="m-0 my-3">
-  {{ 'Welcome among us !' | uppercase }}
-</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title register-title [align]="'center'" class="m-0 my-3">{{ 'Welcome among us !' | uppercase }}</h1>
+<div mat-dialog-content register-dialog>
   <form [formGroup]="registerForm">
     <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
         <mat-form-field id="firstName" appearance="outline" class="w-100">
           <mat-label for="firstName">First name </mat-label>
-          <input matInput type="text" formControlName="firstName" name="firstName" [ngClass]="{
+          <input matInput register-first-name type="text" formControlName="firstName" name="firstName" [ngClass]="{
           'is-invalid':
             registerForm.controls['firstName'].hasError('required')
           }">
@@ -18,7 +16,7 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
         <mat-form-field id="lastName" appearance="outline" class="w-100">
           <mat-label for="lastName">Last name </mat-label>
-          <input matInput type="text" formControlName="lastName" name="lastName" [ngClass]="{
+          <input matInput register-last-name type="text" formControlName="lastName" name="lastName" [ngClass]="{
           'is-invalid':
             registerForm.controls['lastName'].hasError('required')
           }">
@@ -31,7 +29,7 @@
       <div class="col-12 pt-2">
         <mat-form-field id="email" appearance="outline" class="w-100">
           <mat-label for="email">Email </mat-label>
-          <input matInput type="email" formControlName="email" name="email" [ngClass]="{
+          <input matInput register-email type="email" formControlName="email" name="email" [ngClass]="{
           'is-invalid':
             registerForm.controls['email'].hasError('required') ||
             registerForm.controls['email'].hasError('email')
@@ -47,7 +45,7 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
         <mat-form-field id="password" appearance="outline" class="w-100">
           <mat-label for="password">Password </mat-label>
-          <input matInput type="password" formControlName="password" name="password" [ngClass]="{
+          <input matInput register-password type="password" formControlName="password" name="password" [ngClass]="{
           'is-invalid':
             registerForm.controls['password'].hasError('required') ||
             registerForm.controls['password'].hasError('minlength')
@@ -60,7 +58,7 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
         <mat-form-field id="confirmPassword" appearance="outline" class="w-100">
           <mat-label for="password">Confirm password </mat-label>
-          <input matInput type="password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
+          <input matInput register-confirm-password type="password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
           <mat-error *ngIf="registerForm.hasError('notSame')">{{INFO_MESSAGES.DIFFERENTS_PASSWORD}}</mat-error>
           <mat-icon matSuffix>lock_open</mat-icon>
         </mat-form-field>
@@ -70,23 +68,18 @@
   <div
     mat-dialog-actions
     class="px-0"
-    *ngIf="!success; else logged"
     [align]="'center'">
     <mat-error
-      name="errorRequest"
+      register-error-request
       class="mb-3"
       *ngIf="this.errorMessage !== ''">{{this.errorMessage}}
     </mat-error>
     <app-simple-button
       class="w-100"
-      [label]="'RegisterModel'"
+      register-button
+      [label]="'Register'"
       (buttonClick)="createUser()">
     </app-simple-button>
   </div>
-  <ng-template #logged class="row justify-content-center" mat-dialog-content>
-    <div class="col-12 text-center">
-      {{INFO_MESSAGES.SUCCESS_REGISTER}}
-    </div>
-  </ng-template>
 </div>
 

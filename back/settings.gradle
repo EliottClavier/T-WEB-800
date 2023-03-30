@@ -1,1 +1,11 @@
-rootProject.name = 'back'
+include 'user-service'
+include 'gateway'
+include 'accomodation-service'
+include 'activity-service'
+include 'bar-service'
+include 'discovery'
+include 'restaurant-service'
+include 'trip-service'
+include 'transport-service'
+
+
