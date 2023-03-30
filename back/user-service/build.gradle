@@ -30,6 +30,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-commons:4.0.1'
 	implementation 'org.projectlombok:lombok:1.18.22'
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'com.h2database:h2'
@@ -37,6 +40,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.2.Final'
 	implementation 'org.glassfish:jakarta.el:4.0.2'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation 'org.jetbrains:annotations:23.0.0'

@@ -1,16 +1,17 @@
-import { MultipleSearchBarsComponent } from './multiple-search-bars.component';
+import {MultipleSearchBarsComponent} from './multiple-search-bars.component';
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {Router} from "@angular/router";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {MapComponent} from "../map/map.component";
 import {MapView} from "../../enums/map-view-const";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
@@ -151,6 +152,7 @@ describe('MultipleSearchBarsComponent', () => {
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeTruthy();
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeDisabled();
     });
+
   });
 
   describe('Search bars display', () => {
@@ -180,15 +182,15 @@ describe('MultipleSearchBarsComponent', () => {
       _locationService = spectator.inject(LocationService);
       // spyOn LocationService.getLocations() to mock API Call
       spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
-        return new BehaviorSubject<Location[]>([
-          new Location("1", locationName)
+        return new BehaviorSubject<LocationModel[]>([
+          new LocationModel("1", locationName)
         ])
       });
       spectator.detectChanges();
     });
 
     it('should update locationSearch and location', () => {
-      let location: Location = new Location("1", locationName);
+      let location: LocationModel = new LocationModel("1", locationName);
       component.onLocationOptionChange(location);
       spectator.detectChanges();
       expect(component.searchFormsArrayControls[0].get("locationSearch")!.value).toEqual(locationName);
@@ -289,7 +291,7 @@ describe('MultipleSearchBarsComponent', () => {
       let searchForm: FormGroup;
 
       beforeEach(() => {
-        searchForm = buildSearchBarFormGroupControlsDetails();
+        searchForm = buildStepFormGroupControlsDetails();
         component.searchFormsArrayControls.push(
           searchForm
         );
@@ -311,11 +313,11 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should return the correct travel mode icon depending on additional conditions', () => {
-        let searchForm: FormGroup = buildSearchBarFormGroupControlsDetails();
+        let searchForm: FormGroup = buildStepFormGroupControlsDetails();
         searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
         component.searchFormsArrayControls.push(
           searchForm,
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         spectator.detectChanges();
         // 0 is the default search bar which has no travel mode
@@ -327,13 +329,13 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should return true if the location is the search bar after the selected search bar is valid', () => {
-        searchForm.get("location")!.setValue(new Location("2", "Paris", 48.856614, 2.3522219));
+        searchForm.get("location")!.setValue(new LocationModel("2", "Paris", 48.856614, 2.3522219));
         spectator.detectChanges();
         expect(component.isNextLocationValid(0)).toBeTruthy();
       });
 
       it('should return false if the location is the search bar after the selected search bar is not valid', () => {
-        searchForm.get("location")!.setValue(new Location("2", "Paris", 200, 200));
+        searchForm.get("location")!.setValue(new LocationModel("2", "Paris", 200, 200));
         spectator.detectChanges();
         expect(component.isNextLocationValid(0)).toBeFalsy();
       });
@@ -350,8 +352,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when removing search bar when conditions match', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.activeSearchBar = {
           index: 0,
@@ -365,8 +367,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should not emit the view change to location event when removing search bar when index isn\'t in range', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.activeSearchBar = {
           index: 0,
@@ -380,8 +382,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.onSearchBarSelect({
           index: 0,
@@ -393,8 +395,8 @@ describe('MultipleSearchBarsComponent', () => {
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
         component.searchFormsArrayControls.push(
-          buildSearchBarFormGroupControlsDetails(),
-          buildSearchBarFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
+          buildStepFormGroupControlsDetails(),
         );
         component.onItinerarySelect({
           index: 0,

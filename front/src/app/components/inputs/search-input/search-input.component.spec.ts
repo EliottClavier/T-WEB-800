@@ -1,5 +1,5 @@
 import {SearchInputComponent} from './search-input.component';
-import {Location} from "../../../models/location/location.model";
+import {LocationModel} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {BehaviorSubject} from "rxjs";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
@@ -32,10 +32,10 @@ describe('SearchInputComponent', () => {
   });
 
   /* Fixtures */
-  let testLocationOptions: Location[] = [
-    new Location("1", "Paris"),
-    new Location("2", "Nantes"),
-    new Location("3", "Nanterre")
+  let testLocationOptions: LocationModel[] = [
+    new LocationModel("1", "Paris"),
+    new LocationModel("2", "Nantes"),
+    new LocationModel("3", "Nanterre")
   ];
 
   beforeEach(async () => {
@@ -46,8 +46,8 @@ describe('SearchInputComponent', () => {
 
     // spyOn LocationService.getLocations() to mock API Call
     spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
-      return new BehaviorSubject<Location[]>(testLocationOptions.filter(
-        (location: Location) => location.name.toLowerCase().startsWith(search.toLowerCase()))
+      return new BehaviorSubject<LocationModel[]>(testLocationOptions.filter(
+        (location: LocationModel) => location.name.toLowerCase().startsWith(search.toLowerCase()))
       );
     });
 
@@ -72,7 +72,7 @@ describe('SearchInputComponent', () => {
 
   it('should have base location FormControl inside searchForm FormGroup with base value', () => {
     expect(component.searchForm.get("location")).toBeDefined();
-    expect(component.searchForm.get("location")).toBeInstanceOf(FormControl<Location | null>);
+    expect(component.searchForm.get("location")).toBeInstanceOf(FormControl<LocationModel | null>);
     expect(component.searchForm.get("location")!.value).toEqual(null);
   });
 
@@ -96,7 +96,7 @@ describe('SearchInputComponent', () => {
     component["_getLocationSuggestions"](search);
 
     expect(component.locationOptions).toEqual(
-      testLocationOptions.filter((location: Location) => location.name.toLowerCase().includes(search.toLowerCase())
+      testLocationOptions.filter((location: LocationModel) => location.name.toLowerCase().includes(search.toLowerCase())
     ));
   });
 
@@ -131,13 +131,13 @@ describe('SearchInputComponent', () => {
   //   const locationSearch: string = "Nan";
   //   component.onLocationChange(locationSearch);
   //
-  //   expect(component.searchForm.get("location")!.value.getName).toEqual(locationSearch);
+  //   // expect(component.searchForm.get("location")!.value.getName).toEqual(locationSearch);
   //
-  //   let locationOption: Location = component.locationOptions[0];
+  //   let locationOption: LocationModel = component.locationOptions[0];
   //   component.onLocationOptionClick(locationOption);
   //
-  //   expect(component.searchForm.get("locationSearch")!.value).toEqual(locationOption.name);
-  //   expect(component.searchForm.get("location")!.value.getName).toEqual(locationOption.name);
+  //   // expect(component.searchForm.get("locationSearch")!.value).toEqual(locationOption.name);
+  //   // expect(component.searchForm.get("location")!.value.getName).toEqual(locationOption.name);
   //   expect(component.locationOptions).toEqual([]);
   // });
 
@@ -182,12 +182,12 @@ describe('SearchInputComponent', () => {
   //   expect(component.searchForm.get("locationSearch")!.value).toEqual(locationSearch);
   //   expect(component.searchForm.get("location")!.value.getName).toEqual(locationSearch);
   //   expect(component.locationOptions).toEqual(
-  //     testLocationOptions.filter((location: Location) =>
+  //     testLocationOptions.filter((location: LocationModel) =>
   //       location.name.toLowerCase().startsWith(locationSearch.toLowerCase()
   //   )));
   //   expect(spectator.queryAll('mat-option').length).toEqual(component.locationOptions.length);
   // });
-  //
+
   it('should trigger event on location option click', () => {
     spyOn<SearchInputComponent, any>(component, "onLocationOptionClick").and.callThrough();
 
@@ -196,7 +196,7 @@ describe('SearchInputComponent', () => {
     spectator.typeInElement(locationSearch, locationInput!);
     spectator.detectChanges();
 
-    let locationOption: Location = component.locationOptions[0];
+    let locationOption: LocationModel = component.locationOptions[0];
     spectator.click(spectator.query("[search-input-autocomplete]")!);
     spectator.detectChanges();
 
@@ -208,7 +208,7 @@ describe('SearchInputComponent', () => {
     expect(component.locationOptions).toEqual([]);
   });
 
-  it('should require location FormControl with value of type Location', () => {
+  it('should require location FormControl with value of type LocationModel', () => {
     component.searchForm.patchValue({
       locationSearch: "Nan",
       location: ""
@@ -221,15 +221,15 @@ describe('SearchInputComponent', () => {
       location: "Nan"
     });
 
-    // Should be equal to false because location is not a Location object
+    // Should be equal to false because location is not a LocationModel object
     expect(component.searchForm.valid).toEqual(false);
 
     component.searchForm.patchValue({
       locationSearch: "Nan",
-      location: new Location("1", "Nantes")
+      location: new LocationModel("1", "Nantes")
     });
 
-    // Should be equal to false because location is not a Location object
+    // Should be equal to false because location is not a LocationModel object
     expect(component.searchForm.valid).toEqual(true);
   });
 

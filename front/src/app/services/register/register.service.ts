@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Register} from "../../models/register/register.model";
+import {RegisterModel} from "../../models/register/register.model";
 import {User} from "../../models/user/User.model";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class RegisterService {
     private http: HttpClient,
   ) { }
 
-  public postUserRegister(user: Register): Observable<Object> {
+  public postUserRegister(user: RegisterModel): Observable<Object> {
     return this.http.post<Object>('/api/auth/register', user);
   }
 }

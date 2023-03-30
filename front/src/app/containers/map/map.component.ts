@@ -1,8 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
-import {ItemModel} from "../../models/item/item.model";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {map, Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 
@@ -49,22 +48,22 @@ export class MapComponent implements OnChanges {
   public markerAnimation: google.maps.Animation = google.maps.Animation.DROP;
 
   /* Markers */
-  @Input() public selectedLocation: Location = new Location(
+  @Input() public selectedLocation: LocationModel = new LocationModel(
     "",
     "",
     this.center.lat,
     this.center.lng
   );
-  @Input() public nextLocation: Location | undefined;
+  @Input() public nextLocation: LocationModel | undefined;
 
-  @Input() public markers: ItemModel[] = [];
-  @Input() public selectedMarkers: ItemModel[] = [];
-  @Input() public activeMarker: ItemModel | undefined;
+  @Input() public markers: LeisureItemModel[] = [];
+  @Input() public selectedMarkers: LeisureItemModel[] = [];
+  @Input() public activeMarker: LeisureItemModel | undefined;
 
   /* Map and map events */
   @ViewChild(GoogleMap, { static: false }) public map!: GoogleMap;
   @Output() public onBoundariesChange: EventEmitter<any> = new EventEmitter<any>();
-  @Output() public onMarkerClick: EventEmitter<ItemModel> = new EventEmitter<ItemModel>();
+  @Output() public onMarkerClick: EventEmitter<LeisureItemModel> = new EventEmitter<LeisureItemModel>();
 
   /* Itinerary and directions */
   @Input() public itineraryView: boolean = false;
@@ -128,16 +127,16 @@ export class MapComponent implements OnChanges {
     this.onBoundariesChange.emit(bounds);
   }
 
-  public onMapMarkerClick(marker: ItemModel): void {
+  public onMapMarkerClick(marker: LeisureItemModel): void {
     this.activeMarker = marker;
     this.onMarkerClick.emit(marker);
   }
 
-  private _isMarkerSelected(marker: ItemModel): boolean {
-    return this.selectedMarkers.some((selectedMarker) => marker.lat === selectedMarker.lat && marker.lng === selectedMarker.lng);
+  private _isMarkerSelected(marker: LeisureItemModel): boolean {
+    return this.selectedMarkers.some((selectedMarker) => marker.location.lat === selectedMarker.location.lat && marker.location.lng === selectedMarker.location.lng);
   }
 
-  public getMarkerImage(marker: ItemModel): string {
+  public getMarkerImage(marker: LeisureItemModel): string {
     let markerType: string;
     if (marker === this.activeMarker) {
       markerType = 'active';

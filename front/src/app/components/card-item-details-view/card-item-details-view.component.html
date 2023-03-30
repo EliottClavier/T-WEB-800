@@ -1,0 +1,35 @@
+<ng-container>
+  <mat-card
+    class="item-details"
+    data-cy-item-details>
+
+
+    <img
+      data-cy-item-details-image
+      mat-card-image
+      src="{{detailsItem?.image}}" alt="Photo of an item">
+    <div>
+      <mat-card-header>
+        <mat-card-title
+          data-cy-item-details-title>
+          {{detailsItem?.title}}
+        </mat-card-title>
+
+        <mat-card-subtitle
+          data-cy-item-details-subtitle>
+
+          {{detailsItem?.subtitle}}
+
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content
+        data-cy-item-details-description>
+        <p>    {{detailsItem?.description}}</p>
+      </mat-card-content>
+    </div>
+  </mat-card>
+
+  <app-simple-button (buttonClick)="onCloseDetailsView()" [label]=" 'close' | translate" data-cy-item-details-close-button></app-simple-button>
+  <app-simple-button (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)" [label]=" 'add_to_trip' | translate" data-cy-item-details-add-to-trip-button></app-simple-button>
+
+</ng-container>

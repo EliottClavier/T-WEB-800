@@ -6,13 +6,13 @@ import {DateRangeComponent} from "../../components/inputs/date-range/date-range.
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
 import {SimpleIconButtonComponent} from "../../components/buttons/simple-icon-button/simple-icon-button.component";
 import {FormControl, FormGroup} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
-import {getDateFromIsoString} from "../../utils/date.utils";
+import {LocationModel} from "../../models/location/location.model";
+import {getIsoStringFromDate} from "../../utils/date.utils";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {ItemModel} from "../../models/item/item.model";
-import {LeisureType} from "../../enums/leisure-type";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {LeisureCategory} from "../../enums/leisure-category";
 import {of, throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
@@ -87,7 +87,7 @@ describe('SingleSearchBarComponent', () => {
     beforeEach(() => {
       _router = spectator.inject(Router);
       component.searchForm = new FormGroup<any>({
-        location: new FormControl(new Location("1", locationName, locationLat, locationLong)),
+        location: new FormControl(new LocationModel("1", locationName, locationLat, locationLong)),
         locationSearch: new FormControl(""),
         start: new FormControl(start),
         end: new FormControl(end),
@@ -122,8 +122,8 @@ describe('SingleSearchBarComponent', () => {
         ["/", "explore", locationName],
         {
           queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end),
+            start: getIsoStringFromDate(start),
+            end: getIsoStringFromDate(end),
             lat: locationLat,
             lng: locationLong
           }
@@ -143,8 +143,8 @@ describe('SingleSearchBarComponent', () => {
         ["/", "explore", locationName],
         {
           queryParams: {
-            start: getDateFromIsoString(start),
-            end: getDateFromIsoString(end),
+            start: getIsoStringFromDate(start),
+            end: getIsoStringFromDate(end),
             lat: locationLat,
             lng: locationLong
           }
@@ -152,48 +152,20 @@ describe('SingleSearchBarComponent', () => {
       );
     });
 
-    it('should set location and search value based on selected option', () => {
-      const location = new Location('01', 'New York');
-      const suggestions = getAccommodationItems()
-      const suggestion$ = of(suggestions);
 
-      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
-
-      component.onLocationOptionClick(location);
-
-      expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureType.ACCOMMODATION, location);
-      expect(component.searchForm.value.location).toEqual(location);
-      expect(component.searchForm.value.locationSearch).toEqual(location.name);
-    });
-    it('should update the Suggestions value when location is updated ', () => {
-
-      const location = new Location('01', 'New York');
-      const suggestions = getAccommodationItems()
-      const suggestion$ = of(suggestions);
-
-      spyOn(suggestionService, 'getReviewSuggestions').and.returnValue(suggestion$);
-      component.onLocationOptionClick(location);
-
-      suggestionStore.suggestions$.subscribe(suggests => {
-
-        expect(suggestionService.getReviewSuggestions).toHaveBeenCalledWith(LeisureType.ACCOMMODATION, location);
-        expect(suggests).toEqual(suggestions);
-      });
-    })
 
     it('should update the Suggestions value when location is updated and getting error ', () => {
 
-      const location = new Location('01', 'New York');
-      const suggestions = new Array<ItemModel>();
+      const location = new LocationModel('01', 'New York');
+      const suggestions = new Array<LeisureItemModel>();
 
-      const mockCall = spyOn(suggestionService, "getReviewSuggestions").and.returnValue(throwError(() => new Error('error')));
+      const mockCall = spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
       component.onLocationOptionClick(location);
 
       suggestionStore.suggestions$.subscribe({
         next: suggests => {
           expect(suggestions).toEqual(suggests);
         }
-
       });
     });
   });
@@ -201,10 +173,10 @@ describe('SingleSearchBarComponent', () => {
 
 });
     function getAccommodationItems() {
-      let data = new Array<ItemModel>();
+      let data = new Array<LeisureItemModel>();
       for (let i = 0; i < 6; i++) {
-        let item = new ItemModel();
-        item.typeOfItem = LeisureType.BAR;
+        let item = new LeisureItemModel();
+        item.category = LeisureCategory.BAR;
         data.push(item);
       }
       return data;

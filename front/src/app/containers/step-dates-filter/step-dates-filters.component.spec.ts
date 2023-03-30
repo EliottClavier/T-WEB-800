@@ -1,16 +1,16 @@
-import { MapFiltersComponent } from './map-filters.component'
+import { StepDatesFiltersComponent } from './step-dates-filters.component'
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 
 describe('MapFiltersComponent', () => {
-  let component: MapFiltersComponent;
-  let spectator: Spectator<MapFiltersComponent>;
+  let component: StepDatesFiltersComponent;
+  let spectator: Spectator<StepDatesFiltersComponent>;
   const createComponent = createComponentFactory({
-    component: MapFiltersComponent,
+    component: StepDatesFiltersComponent,
     declarations: [
-      MapFiltersComponent
+      StepDatesFiltersComponent
     ],
     imports: [
       AppModule,

@@ -7,5 +7,4 @@ include 'discovery'
 include 'restaurant-service'
 include 'trip-service'
 include 'transport-service'
-
-
+include 'auth-service'

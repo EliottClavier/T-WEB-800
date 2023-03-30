@@ -1,9 +1,10 @@
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 export const isLocation = (): ValidatorFn => {
   return (control: AbstractControl) : ValidationErrors | null => {
-    return control.value instanceof Location ? null : { isLocation: true };
+    return control.value instanceof LocationModel ? null : { isLocation: true };
   }
 }
 
@@ -14,13 +15,13 @@ export const isValidTravelMode = (): ValidatorFn => {
   }
 }
 
-export const buildSearchBarFormGroupControls = (): FormGroup => {
+export const buildStepFormGroupControls = (): FormGroup => {
   let formGroup: FormGroup = new FormGroup({});
   formGroup.addControl(
     "locationSearch", new FormControl<string>("", [ Validators.required ]),
   );
   formGroup.addControl(
-    "location", new FormControl<Location | null>(null, [ Validators.required, isLocation() ])
+    "location", new FormControl<LocationModel | null>(null, [ Validators.required, isLocation() ])
   );
   formGroup.addControl(
     "start", new FormControl<Date | null>(null, [ Validators.required ])
@@ -31,10 +32,14 @@ export const buildSearchBarFormGroupControls = (): FormGroup => {
   return formGroup;
 }
 
-export const buildSearchBarFormGroupControlsDetails = (): FormGroup => {
-  let formGroup: FormGroup = buildSearchBarFormGroupControls();
+export const buildStepFormGroupControlsDetails = (): FormGroup => {
+  let formGroup: FormGroup = buildStepFormGroupControls();
   formGroup.addControl(
     "travelMode", new FormControl<string>("", [ Validators.required, isValidTravelMode() ])
   );
+  formGroup.addControl(
+    "leisures", new FormControl<LeisureItemModel[]>([], [ ])
+  );
+
   return formGroup;
 }

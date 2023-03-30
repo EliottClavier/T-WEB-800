@@ -1,5 +1,5 @@
 import { MapTravelModeSelectionComponent } from './map-travel-mode-selection.component'
-import {MapFiltersComponent} from "../map-filters/map-filters.component";
+import {StepDatesFiltersComponent} from "../step-dates-filter/step-dates-filters.component";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../app.module";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import java.util.zip.DataFormatException;
+
 @Repository
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
@@ -20,9 +22,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public User saveNewUserWithExceptions(User user) throws EmailAlreadyExistsException {
+    public User saveNewUserWithExceptions(User user) throws Exception {
         if(userRepository.existsByEmail(user.getEmail())) {
             throw new EmailAlreadyExistsException(user.getEmail());
+        }
+        if(user.getEmail() == null || user.getFirstname() == null || user.getLastname() == null) {
+            throw new Exception("Invalid entity");
         }
 
         return userRepository.save(user);
