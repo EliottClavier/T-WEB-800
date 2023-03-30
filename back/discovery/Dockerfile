@@ -9,4 +9,5 @@ RUN export LANG='en_US.UTF-8'
 RUN gradle build
 
 WORKDIR /
+RUN apk add --no-cache bash
 RUN mv /app-build/build/libs/discovery.jar /discovery.jar
