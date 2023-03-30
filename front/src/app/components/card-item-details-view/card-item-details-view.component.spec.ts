@@ -2,7 +2,12 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemDetailsViewComponent} from "./card-item-details-view.component";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {AppModule} from "../../app.module";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
+const dialogMock = {
+  close: () => { }
+};
 
 describe('CardItemDetailsViewComponent', () => {
   let spectator: Spectator<CardItemDetailsViewComponent>;
@@ -10,6 +15,11 @@ describe('CardItemDetailsViewComponent', () => {
   const createComponent = createComponentFactory({
     component: CardItemDetailsViewComponent,
     imports: [AppModule],
+    providers: [
+      {provide: MatDialogRef, useValue: dialogMock},
+      {provide:   MAT_DIALOG_DATA, useValue: new LeisureItemModel()   }
+
+    ],
   });
 
   beforeEach(() => {

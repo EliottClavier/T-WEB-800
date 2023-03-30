@@ -17,6 +17,7 @@ import {
 } from "../../utils/suggestions-mock.utils";
 import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
 import {CardItemDetailsViewComponent} from "../../components/card-item-details-view/card-item-details-view.component";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
 describe('Card container', () => {
@@ -28,14 +29,19 @@ describe('Card container', () => {
   let suggests: LeisureItemModel[]
   let accommodationItems: LeisureItemModel[] = getAccommodationItems();
 
+  const dialogMock = {
+    close: () => { }
+  }
   const createComponent = createComponentFactory({
     component: CardsContainerComponent,
     imports: [AppModule,],
     declarations: [CardItemsListComponent, CardItemDetailsViewComponent],
     providers: [
 
-      {
-        provide: SuggestionsService,
+      {provide: MatDialogRef, useValue: dialogMock},
+      {provide:   MAT_DIALOG_DATA, useValue: new LeisureItemModel()   },
+
+      {provide: SuggestionsService,
         // useValue: {getSuggestions: ()=> of(barItems)}
       },
       {
@@ -45,6 +51,7 @@ describe('Card container', () => {
       TranslateService,
     ],
   });
+
   afterEach(() => {
     spectator.fixture.destroy()
   });

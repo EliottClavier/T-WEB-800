@@ -3,7 +3,6 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LocationModel} from "../../models/location/location.model";
 
 @Component({
   selector: 'app-card-container',
@@ -17,7 +16,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   private _itemsSelected?: LeisureItemModel;
   @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>()
 
-  constructor(private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
+  constructor( private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
 
   }
 
