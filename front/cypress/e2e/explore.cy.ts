@@ -25,7 +25,7 @@ describe('Explore', () => {
 
       it('should have containers', () => {
         cy.get('app-multiple-search-bars[search-bar]').should('exist');
-        cy.get('app-map-filters[map-filters]').should('exist');
+        cy.get('app-step-dates-filters[map-filters]').should('exist');
         cy.get('app-map[map]').should('exist');
         cy.get('app-map[map] google-map').should('exist')
         cy.get('app-map-travel-mode-selection[map-travel-mode-selection]').should('not.exist');
@@ -33,8 +33,8 @@ describe('Explore', () => {
 
       it('should input filled with query params value', () => {
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').find('input').should('have.value', 'Nantes');
-        cy.get('app-map-filters[map-filters] app-date-range[filter-date-range] [date-range-input-start]').should('have.value', '1/1/2020');
-        cy.get('app-map-filters[map-filters] app-date-range[filter-date-range] [date-range-input-end]').should('have.value', '1/2/2020');
+        cy.get('app-step-dates-filters[map-filters] app-date-range[filter-date-range] [date-range-input-start]').should('have.value', '1/1/2020');
+        cy.get('app-step-dates-filters[map-filters] app-date-range[filter-date-range] [date-range-input-end]').should('have.value', '1/2/2020');
         cy.get('a[href^="https://maps.google.com/maps?ll=47.218371,-1.553621"]').should('exist');
       });
     });
@@ -65,7 +65,7 @@ describe('Explore', () => {
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').should('have.length', 1);
         cy.get('app-multiple-search-bars[search-bar] app-simple-icon-button[search-bar-add]').find('button').click();
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').should('have.length', 2);
-        cy.get('app-map-filters[map-filters] app-date-range[filter-date-range] [date-range-input-start]').should('have.value', '1/2/2020');
+        cy.get('app-step-dates-filters[map-filters] app-date-range[filter-date-range] [date-range-input-start]').should('have.value', '1/2/2020');
       });
 
       it('should switch to itinerary view', () => {
