@@ -49,6 +49,7 @@ services:
       - nginx-proxy
     depends_on:
       - database
+      - discovery
 
   discovery:
     container_name: discovery
@@ -58,11 +59,15 @@ services:
     env_file:
       - ./env/discovery.env
     environment:
+      VIRTUAL_HOST: ${DISCOVERY_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${DISCOVERY_PORT}
+      LETSENCRYPT_HOST: ${DISCOVERY_VIRTUAL_HOST}
       JAVA_OPTS: "-DDISCOVERY_HOST=localhost -DDISCOVERY_PORT=${DISCOVERY_PORT}"
     expose:
       - "${DISCOVERY_PORT}"
     networks:
       - back-net
+      - nginx-proxy
 
   database:
     container_name: database
