@@ -404,7 +404,7 @@ describe('ExploreComponent', () => {
     expect(spy).toHaveBeenCalledWith(LeisureCategory.SPORTING_EVENT);
     expect(spyService).toHaveBeenCalled();
   });
-  // it('should getPreviewSuggestions ERROR when ituser select a category', async() => {
+  // it('should getPreviewSuggestions return an ERROR when it called', async() => {
   //
   //   let spyService = await spyOn<SuggestionsService, any>(component["_suggestionsService"], 'getPreviewSuggestions').and.returnValue(new Error('Error'));
   //   await component.getPreviewSuggestions()

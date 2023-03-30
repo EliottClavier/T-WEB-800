@@ -112,7 +112,6 @@ export class ExploreComponent implements OnInit {
   getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
-    alert(leisure)
 
     this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe(  {
         next: (data) => {
