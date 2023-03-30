@@ -25,7 +25,7 @@ describe('RegisterModel', () => {
   });
 
   it('should display register page', () => {
-    cy.get('h1').invoke('text').should('equal', 'RegisterModel User');
+    cy.get('h1').invoke('text').should('equal', 'Register User');
   });
 
   it('should display required error message if first name is empty', () => {
