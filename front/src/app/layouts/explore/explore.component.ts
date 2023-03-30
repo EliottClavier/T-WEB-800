@@ -114,13 +114,15 @@ export class ExploreComponent implements OnInit {
     let end: string = getIsoStringFromDate(endInterval);
     alert(leisure)
 
-    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe((data) => {
+    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe(  {
+        next: (data) => {
         this._suggestionsStore.setSuggestionsData(data);
       },
-      (error) => {
+      error: (error) => {
         alert("error");
         this._suggestionsStore.setSuggestionsData(getAccommodationItems());
-      });
+      }
+  });
   }
 
   public onViewChange(view: string): void {

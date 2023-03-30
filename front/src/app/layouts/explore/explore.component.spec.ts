@@ -18,7 +18,7 @@ import {
   MapTravelModeSelectionComponent
 } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {getAccommodationItems, getBarItems, getSportingItems} from "../../utils/suggestions-mock.utils";
+import {getAccommodationItems, getSportingItems} from "../../utils/suggestions-mock.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {
@@ -246,7 +246,6 @@ describe('ExploreComponent', () => {
     });
 
 
-
     it('should redirect to / if lat or lng is not provided', () => {
       spyOn<Router, any>(component["_router"], "navigate").and.callThrough();
       _route.snapshot.queryParams = {
@@ -326,32 +325,38 @@ describe('ExploreComponent', () => {
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
       });
 
-    it('should change itinerary mode to bicycling', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
-    });
+      it('should change itinerary mode to bicycling', () => {
+        component.onItineraryModeChange({travelMode: google.maps.TravelMode.BICYCLING});
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
+      });
 
-    it('should change itinerary mode to bus', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.BUS });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
-    });
+      it('should change itinerary mode to bus', () => {
+        component.onItineraryModeChange({
+          travelMode: google.maps.TravelMode.TRANSIT,
+          transitMode: google.maps.TransitMode.BUS
+        });
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.BUS);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.BUS);
+      });
 
-    it('should change itinerary mode to train', () => {
-      component.onItineraryModeChange({ travelMode: google.maps.TravelMode.TRANSIT, transitMode: google.maps.TransitMode.TRAIN });
-      expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
-      expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
-    });
+      it('should change itinerary mode to train', () => {
+        component.onItineraryModeChange({
+          travelMode: google.maps.TravelMode.TRANSIT,
+          transitMode: google.maps.TransitMode.TRAIN
+        });
+        expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.TRANSIT);
+        expect(component.itineraryMode.transitMode).toEqual(google.maps.TransitMode.TRAIN);
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TransitMode.TRAIN);
+      });
 
-    it('should change itinerary mode to flight', () => {
-      component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
-      expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
-      expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
+      it('should change itinerary mode to flight', () => {
+        component.onItineraryModeChange({travelMode: "FLIGHT" as google.maps.TravelMode});
+        expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
+        expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
+      });
     });
-  });
 
 
   });
@@ -399,4 +404,17 @@ describe('ExploreComponent', () => {
     expect(spy).toHaveBeenCalledWith(LeisureCategory.SPORTING_EVENT);
     expect(spyService).toHaveBeenCalled();
   });
+  // it('should getPreviewSuggestions ERROR when ituser select a category', async() => {
+  //
+  //   let spyService = await spyOn<SuggestionsService, any>(component["_suggestionsService"], 'getPreviewSuggestions').and.returnValue(new Error('Error'));
+  //   await component.getPreviewSuggestions()
+  //   spyOn(window, 'alert');
+  //
+  //   setTimeout(() => {
+  //     expect(spyService).toHaveBeenCalled();
+  //     expect(window.alert).toHaveBeenCalledWith('error');
+  //
+  //   }, 0);
+  // });
+
 });
