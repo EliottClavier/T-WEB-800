@@ -34,7 +34,6 @@ services:
     env_file:
       - ./env/gateway.env
       - ./env/app.env
-      - ./env/database.env
     environment:
       VIRTUAL_HOST: ${GATEWAY_VIRTUAL_HOST}
       VIRTUAL_PORT: ${GATEWAY_PORT}
@@ -87,11 +86,13 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommocation.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
+    depends_on:
+      - discovery
 
   activity:
     container_name: activity
@@ -99,11 +100,13 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /activity.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
+    depends_on:
+      - discovery
 
   bar:
     container_name: bar
@@ -111,11 +114,13 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /bar.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
+    depends_on:
+      - discovery
 
   restaurant:
     container_name: restaurant
@@ -123,11 +128,13 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /restaurant.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
+    depends_on:
+      - discovery
 
   transport:
     container_name: transport
@@ -135,11 +142,13 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /transport.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
+    depends_on:
+      - discovery
 
   trip:
     container_name: trip
@@ -147,12 +156,15 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /trip.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
       - database-net
+    depends_on:
+      - discovery
+      - database
 
   user:
     container_name: user
@@ -160,12 +172,15 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /user.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
       - services-net
       - database-net
+    depends_on:
+      - discovery
+      - database
 
 
 volumes:
