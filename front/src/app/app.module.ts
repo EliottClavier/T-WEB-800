@@ -44,7 +44,7 @@ import {
 import {MatDialogModule} from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 
 
@@ -113,7 +113,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
         }
       },
-    )
+    ),
+    NgbCarousel
   ],
   exports: [
     RegisterUserComponent,

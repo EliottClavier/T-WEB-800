@@ -112,6 +112,8 @@ export class ExploreComponent implements OnInit {
   getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
+    alert(leisure)
+
     this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe((data) => {
         this._suggestionsStore.setSuggestionsData(data);
       },
@@ -144,6 +146,9 @@ export class ExploreComponent implements OnInit {
       this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.travelMode);
     }
   }
+  public onSelectedCategoryChange(value: LeisureCategory) {
+    this.getPreviewSuggestions(value);
+  }
 
   public getLeisureSuggestions() {
 
@@ -161,7 +166,7 @@ export class ExploreComponent implements OnInit {
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
-
+    alert(category)
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
