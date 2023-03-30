@@ -1,6 +1,6 @@
 import {CredentialsModel} from "./credentialsModel";
 
-describe('CredentialsModelTest', () => {
+describe('CredentialsTest', () => {
   it('should create a new credentials', () => {
     const credentials = new CredentialsModel('test@gmail.com', 'password123');
 

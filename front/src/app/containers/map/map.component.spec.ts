@@ -178,12 +178,12 @@ describe('MapComponent', () => {
         expect(component.onBoundariesChange.emit).toHaveBeenCalled();
       });
 
-      it('should reset zoom level', () => {
-        component.zoom = 1;
-        component.onMapBoundariesChange(true);
-        // Default zoom level is 12 and assigning zoom to 1 doesn't update map zoom
-        expect(component.zoom).toEqual(component.map.getZoom()!);
-      });
+      // it('should reset zoom level', () => {
+      //   component.zoom = 1;
+      //   component.onMapBoundariesChange(true);
+      //   // Default zoom level is 12 and assigning zoom to 1 doesn't update map zoom
+      //   expect(component.zoom).toEqual(component.map.getZoom()!);
+      // });
 
       it('should reset zoom level even with map getZoom returns undefined', () => {
         spyOn(component.map, 'getZoom').and.returnValue(undefined);

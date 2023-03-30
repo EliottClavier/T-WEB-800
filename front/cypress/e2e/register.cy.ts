@@ -1,7 +1,7 @@
 import {RegisterConst} from "../../src/app/enums/register-const";
 import {ApiResponseConst} from "../../src/app/enums/api-response-const";
 
-describe('RegisterModel', () => {
+describe('Register', () => {
 
   let firstNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
   let lastNameInput: Cypress.Chainable<JQuery<HTMLElement>>;
