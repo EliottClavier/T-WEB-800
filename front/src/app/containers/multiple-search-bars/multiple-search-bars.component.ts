@@ -27,10 +27,7 @@ export class MultipleSearchBarsComponent {
   @Output() public activeSearchBarChange: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
   @Output() public viewChange: EventEmitter<MapView> = new EventEmitter<MapView>();
 
-  constructor(
-    private _router: Router,
-  ) {
-  }
+  constructor() {}
 
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
@@ -45,7 +42,7 @@ export class MultipleSearchBarsComponent {
   }
 
   public isNextLocationValid(index: number): boolean {
-    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as Location | undefined;
+    let location: Location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as Location;
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
@@ -90,6 +87,13 @@ export class MultipleSearchBarsComponent {
     this.activeSearchBar = event;
     this.activeSearchBarChange.emit(this.activeSearchBar);
     this.viewChange.emit(MapView.ITINERARY);
+  }
+
+  public onLocationOptionChange(event: Location): void {
+    this.searchFormsArrayControls[this.activeSearchBar.index].patchValue({
+      locationSearch: event.name,
+      location: new Location(event.id, event.name, event.lat, event.lng)
+    });
   }
 
   public accessTravelModeIcon(searchBarIndex: number): string {

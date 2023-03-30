@@ -23,3 +23,12 @@ jobs:
       - name: Run tests
         working-directory: ./front
         run: npm run test:prod
+
+      - name: Run e2e Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ./front
+          record: false
+          browser: chrome
+          spec: cypress/**/*.cy.ts
+          start: npm start

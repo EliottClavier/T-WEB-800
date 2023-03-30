@@ -28,7 +28,7 @@ export class SingleSearchBarComponent {
   public onLocationOptionClick(location: Location): void {
     this.searchForm.patchValue({
       locationSearch: location.name,
-      location: location,
+      location: new Location(location.id, location.name, location.lat, location.lng),
     });
     this._suggestionService.getReviewSuggestions(LeisureType.ACCOMMODATION, location).subscribe(
       {

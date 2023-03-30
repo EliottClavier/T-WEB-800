@@ -68,9 +68,12 @@ describe('LocationService', () => {
 
     const req = httpMock.expectOne(`/api/locations/suggestion/${locationName}`);
     expect(req.request.method).toEqual('GET');
-    req.flush(testLocationOptions.filter(
-      (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
-    ), { status: 200, statusText: 'OK' });
+    req.flush({
+      location: testLocationOptions.filter(
+        (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
+      ),
+    }, { status: 200, statusText: 'OK' }
+    );
   });
 
   it('should retrieve location informations with location search', () => {
