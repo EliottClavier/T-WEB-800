@@ -10,11 +10,11 @@
             (viewChange)="onViewChange($event)"
           ></app-multiple-search-bars>
           <hr class="mx-2 my-4 border-lightgray-bottom">
-          <app-map-filters
+          <app-step-dates-filters
             map-filters
             *ngIf="activeSearchBar.index !== null"
             [selectedSearchForm]="selectedSearchForm"
-          ></app-map-filters>
+          ></app-step-dates-filters>
           <app-leisure-category-filter (onSelectedCategory)="onSelectedCategoryChange($event)">
 
           </app-leisure-category-filter>

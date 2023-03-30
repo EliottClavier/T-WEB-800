@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject, of} from "rxjs";
-import {MapFiltersComponent} from "../../containers/map-filters/map-filters.component";
+import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
@@ -116,8 +116,8 @@ describe('ExploreComponent', () => {
     });
 
     it('should have a map-filters component', () => {
-      let mapFilters = spectator.debugElement.query(By.css("app-map-filters"))!;
-      let mapFiltersComponent: MapFiltersComponent = mapFilters.componentInstance as MapFiltersComponent;
+      let mapFilters = spectator.debugElement.query(By.css("app-step-dates-filters"))!;
+      let mapFiltersComponent: StepDatesFiltersComponent = mapFilters.componentInstance as StepDatesFiltersComponent;
       expect(mapFiltersComponent).toBeDefined();
     });
 

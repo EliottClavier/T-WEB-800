@@ -31,7 +31,7 @@ import {LoginUserComponent} from "./containers/login-user/login-user.component";
 import {HeaderComponent} from './components/header/header.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import {MapComponent} from './containers/map/map.component';
-import {MapFiltersComponent} from "./containers/map-filters/map-filters.component";
+import {StepDatesFiltersComponent} from "./containers/step-dates-filter/step-dates-filters.component";
 import {CardItemComponent} from './components/card-item/card-item.component';
 import {CardItemsListComponent} from './components/card-items-list/card-items-list.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -73,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainComponent,
     CardsContainerComponent,
     MapComponent,
-    MapFiltersComponent,
+    StepDatesFiltersComponent,
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
     CarouselComponent,
