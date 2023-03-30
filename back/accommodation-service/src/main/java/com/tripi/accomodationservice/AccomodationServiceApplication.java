@@ -1,13 +1,13 @@
-package com.tripi.accomodationservice;
+package com.tripi.accommodationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AccomodationServiceApplication {
+public class AccommodationServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccomodationServiceApplication.class, args);
+		SpringApplication.run(AccommodationServiceApplication.class, args);
 	}
 
 }
