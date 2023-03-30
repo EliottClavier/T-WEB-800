@@ -203,16 +203,14 @@ describe('MapComponent', () => {
       });
     });
 
-     describe('on Events', () => {
-
-       it('should emit new boundaries on event', () => {
-         spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
-         spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
-         component.onMapBoundariesChange();
-         expect(component.onMapBoundariesChange).toHaveBeenCalled();
-         expect(component.onBoundariesChange.emit).toHaveBeenCalled();
-       });
-     });
+    describe('on Events (simplified)', () => {
+      it('should emit new boundaries on zoom change', async() => {
+        spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
+        spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
+        component.onMapBoundariesChange();
+        expect(component.onBoundariesChange.emit).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('Markers', () => {

@@ -4,6 +4,7 @@
     "**/*.ts",
     "../node_modules/cypress"
   ],
+  "exclude": [],
   "compilerOptions": {
     "sourceMap": false,
     "types": ["cypress"]

@@ -13,11 +13,13 @@ import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapComponent} from "../map/map.component";
 import {MapView} from "../../enums/map-view-const";
+import {LocationService} from "../../services/location/location.service";
+import {BehaviorSubject} from "rxjs";
 
 describe('MultipleSearchBarsComponent', () => {
   let component: MultipleSearchBarsComponent;
   let spectator: Spectator<MultipleSearchBarsComponent>;
-  let _router: Router;
+  let _locationService: LocationService;
 
   const createComponent = createComponentFactory({
     component: MultipleSearchBarsComponent,
@@ -171,24 +173,28 @@ describe('MultipleSearchBarsComponent', () => {
 
   describe('Validate research and redirection', () => {
     let locationName: string = "Paris";
-    let start: Date = new Date();
-    let end: Date = new Date();
 
     beforeEach(() => {
-      _router = spectator.inject(Router);
-      component.searchFormsArray.setControl(0, new FormGroup({
-        location: new FormControl(new LocationModel("1", locationName)),
-        locationSearch: new FormControl(""),
-        start: new FormControl(start),
-        end: new FormControl(end),
-      }));
+      component.activeSearchBar = {
+        index: 0,
+        isEditing: true
+      };
+      _locationService = spectator.inject(LocationService);
+      // spyOn LocationService.getLocations() to mock API Call
+      spyOn<LocationService, any>(_locationService, "getLocationSuggestions").and.callFake((search: string) => {
+        return new BehaviorSubject<LocationModel[]>([
+          new LocationModel("1", locationName)
+        ])
+      });
       spectator.detectChanges();
     });
 
-    it('should have Router injected', () => {
-      expect(component["_router"]).toBeDefined();
-      expect(component["_router"]).toBeTruthy();
-      expect(component["_router"]).toEqual(_router);
+    it('should update locationSearch and location', () => {
+      let location: LocationModel = new LocationModel("1", locationName);
+      component.onLocationOptionChange(location);
+      spectator.detectChanges();
+      expect(component.searchFormsArrayControls[0].get("locationSearch")!.value).toEqual(locationName);
+      expect(component.searchFormsArrayControls[0].get("location")!.value).toEqual(location);
     });
 
   });
@@ -280,31 +286,7 @@ describe('MultipleSearchBarsComponent', () => {
         expect(spectator.queryAll("[search-bar-input] [search-input][readonly]").length).toBe(component.searchFormsArrayControls.length - 1);
       });
     });
-    it('should emit the correct value when location is selected', () => {
 
-      let mockedValue: SearchBarEvent = {
-        index: 0,
-        isEditing: true,
-      };
-
-      let emittedValue: any;
-
-      spectator.component.activeSearchBarChange.subscribe((val) => (
-        emittedValue = val
-
-      ));
-      let spyEmit = spyOn(spectator.component.activeSearchBarChange, 'emit').and.callThrough();
-      spectator.component.activeSearchBarChange.emit(mockedValue)
-
-      expect(spyEmit).toHaveBeenCalled();
-      expect(emittedValue).toEqual(mockedValue);
-    });
-  });
-
-
-  describe('Up and down buttons', () => {
-
-    let length: number;
     describe('Itinerary display', function () {
       let searchForm: FormGroup;
 

@@ -21,7 +21,6 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class LoginUserComponent {
   credentials: CredentialsModel;
   loginForm: FormGroup;
-  success: boolean;
   user: User;
   errorMessage: string;
   LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
@@ -32,7 +31,6 @@ export class LoginUserComponent {
     public _dialogRef: MatDialogRef<LoginUserComponent>
   ) {
     this.credentials = new CredentialsModel('', '');
-    this.success = false;
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
@@ -47,7 +45,6 @@ export class LoginUserComponent {
       this._loginService.postLogin(this.credentials).subscribe({
         next: (value: any) => {
           this.user = value['data'];
-          this.success = true;
           this._dialogRef.close();
         },
         error: () => {

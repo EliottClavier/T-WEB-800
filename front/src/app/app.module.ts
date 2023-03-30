@@ -44,6 +44,9 @@ import {
 import {MatDialogModule} from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselComponent } from './components/carousel/carousel.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -73,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapFiltersComponent,
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
+    CarouselComponent,
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
   ],
@@ -115,8 +119,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterUserComponent,
     LoginUserComponent,
     RegisterUserComponent,
-    LeisureCategoryFilterComponent,
-    RadioButtonComponent,
     BrowserAnimationsModule,
     MatCardModule,
     TranslateModule
@@ -124,5 +126,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule { }

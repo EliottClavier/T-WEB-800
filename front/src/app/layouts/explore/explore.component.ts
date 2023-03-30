@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormGroup,} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
@@ -17,7 +17,6 @@ import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.u
   styleUrls: ['./explore.component.scss']
 })
 export class ExploreComponent implements OnInit {
-
 
   public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
@@ -46,7 +45,6 @@ export class ExploreComponent implements OnInit {
     this.getPreviewSuggestions(leisure, location, start, end);
   }
 
-
   public itineraryView: boolean = false;
 
   public itineraryMode: ItineraryMode = {
@@ -74,11 +72,11 @@ export class ExploreComponent implements OnInit {
   }
 
   constructor(
-    private _route: ActivatedRoute,
+    private _route: ActivatedRoute, private _router: Router,
     private _suggestionsService: SuggestionsService,
     private _suggestionsStore: SuggestionsStoreService) {
-
   }
+
 
   public ngOnInit(): void {
     this._loadRouteParams();
@@ -92,19 +90,23 @@ export class ExploreComponent implements OnInit {
     this.searchFormsArrayControls[0] = buildStepFormGroupControlsDetails();
     let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
     let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
-    let lat: string = this._route.snapshot.queryParams['lat'] || "0";
-    let lng: string = this._route.snapshot.queryParams['lng'] || "0";
-    this.searchFormsArrayControls[0].patchValue({
-      locationSearch: this._route.snapshot.params['location']!,
-      location: new LocationModel(
-        "",
-        this._route.snapshot.params['location']!,
-        Number(lat),
-        Number(lng),
-      ),
-      start: this._isValidDate(start) ? start : null,
-      end: this._isValidDate(start) ? end : null,
-    })
+    let lat: string = this._route.snapshot.queryParams['lat'];
+    let lng: string = this._route.snapshot.queryParams['lng'];
+    if (lat && lng) {
+      this.searchFormsArrayControls[0].patchValue({
+        locationSearch: this._route.snapshot.params['location']!,
+        location: new LocationModel(
+          "",
+          this._route.snapshot.params['location']!,
+          Number(lat),
+          Number(lng),
+        ),
+        start: this._isValidDate(start) ? start : null,
+        end: this._isValidDate(start) ? end : null,
+      })
+    } else {
+      this._router.navigate(['/']);
+    }
   }
 
   getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
@@ -123,6 +125,9 @@ export class ExploreComponent implements OnInit {
     switch (view) {
       case "itinerary":
         this.itineraryView = true;
+        if (!this.selectedSearchForm.get('travelMode')?.value) {
+          this.selectedSearchForm.get('travelMode')?.patchValue(google.maps.TravelMode.DRIVING);
+        }
         break;
       case "location":
       default:
@@ -157,32 +162,11 @@ export class ExploreComponent implements OnInit {
     let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
 
-    // let start: Date = formControls.get('start')?.value;
-    // let end: Date = formControls.get('end')?.value;
-    // let location: LocationModel = formControls.get('location')?.value;
-
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
         },
-        // error: (err) => {
-        //   this._suggestionsStore.setSuggestionsData(new Array<LeisureItemModel>());
-        // }
       }
     );
   }
-
-  selectedStartDate(){
-    return this.selectedSearchForm.get('start')?.value
-  }
-
-  selectedEndDate(){
-    return this.selectedSearchForm.get('start')?.value
-  }
-
-  onSelectedCategoryChange(value: LeisureCategory) {
-    this.getPreviewSuggestions(value, this.selectedLocation,  this.selectedStartDate(), this.selectedEndDate());
-  }
-
-
 }
