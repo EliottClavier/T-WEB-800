@@ -10,6 +10,7 @@
   "leisure_category_unknown" : "Unknown",
   "unknown" : "Unknown",
   "close" : "Close",
-  "show_more" : "Show more"
+  "show_more" : "Show more",
+  "add_to_step" : "Add to trip"
 
 }

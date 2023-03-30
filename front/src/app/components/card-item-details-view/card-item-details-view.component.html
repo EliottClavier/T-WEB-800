@@ -30,13 +30,14 @@
       </p>
     </div>
 
-    <div mat-dialog-actions>
-      <app-simple-button mat-dialog-close (buttonClick)="onCloseDetailsView()" [label]=" 'close' | translate"
-                         data-cy-item-details-close-button></app-simple-button>
+    <div mat-dialog-actions class="justify-content-end">
       <app-simple-button [mat-dialog-close]="true" cdkFocusInitial
                          (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)"
-                         [label]=" 'add_to_trip' | translate"
+                         [label]=" 'add_to_step' | translate" class="me-2"
                          data-cy-item-details-add-to-trip-button></app-simple-button>
+      <app-simple-button mat-dialog-close (buttonClick)="onCloseDetailsView()" [label]=" 'close' | translate" class="me-4"
+                         data-cy-item-details-close-button></app-simple-button>
+
 
     </div>
 
