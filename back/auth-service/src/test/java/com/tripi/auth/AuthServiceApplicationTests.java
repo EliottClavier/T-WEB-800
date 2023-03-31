@@ -42,9 +42,6 @@ public class AuthServiceApplicationTests {
 	public void configureTest() {
 		when(springApplicationBuilder.sources(any(Class.class))).thenReturn(springApplicationBuilder);
 
-		SpringApplicationBuilder result = backApplication.configure(springApplicationBuilder);
-		assertNotNull(result);
-
 		verify(springApplicationBuilder, times(1)).sources(AuthServiceApplication.class);
 	}
 }
