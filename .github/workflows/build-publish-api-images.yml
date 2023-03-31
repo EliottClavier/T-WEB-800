@@ -15,7 +15,7 @@ jobs:
       context: 'back/gateway'
       dockerfile: 'back/gateway/Dockerfile'
       image_name: 'tripi-gateway'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -26,7 +26,7 @@ jobs:
       context: 'back/discovery'
       dockerfile: 'back/discovery/Dockerfile'
       image_name: 'tripi-discovery'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
       context: 'back/accommodation'
       dockerfile: 'back/accommodation/Dockerfile'
       image_name: 'tripi-accommodation'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -48,7 +48,7 @@ jobs:
       context: 'back/activity'
       dockerfile: 'back/activity/Dockerfile'
       image_name: 'tripi-activity'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
       context: 'back/bar'
       dockerfile: 'back/bar/Dockerfile'
       image_name: 'tripi-bar'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -70,7 +70,7 @@ jobs:
       context: 'back/restaurant'
       dockerfile: 'back/restaurant/Dockerfile'
       image_name: 'tripi-restaurant'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -81,7 +81,7 @@ jobs:
       context: 'back/transport'
       dockerfile: 'back/transport/Dockerfile'
       image_name: 'tripi-transport'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -92,7 +92,7 @@ jobs:
       context: 'back/trip'
       dockerfile: 'back/trip/Dockerfile'
       image_name: 'tripi-trip'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -103,7 +103,7 @@ jobs:
       context: 'back/auth'
       dockerfile: 'back/auth/Dockerfile'
       image_name: 'tripi-auth'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -114,7 +114,7 @@ jobs:
       context: 'back/user'
       dockerfile: 'back/user/Dockerfile'
       image_name: 'tripi-user'
-      tag_name: ${{ github.event.inputs.tag_name }}
+      tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
