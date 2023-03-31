@@ -1,34 +1,86 @@
-name: Build and publish API image
+name: Build and publish API images
 
 on:
   workflow_call:
 
 jobs:
-  build_and_push_images:
-    name: Build and publish API Image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  build_and_push_gateway_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/gateway'
+      dockerfile: 'back/gateway/Dockerfile'
+      image_name: 'tripi-gateway'
+      tag_name: ${{ github.event.inputs.tag_name }}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+  build_and_push_discovery_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/discovery'
+      dockerfile: 'back/discovery/Dockerfile'
+      image_name: 'tripi-discovery'
+      tag_name: ${{ github.event.inputs.tag_name }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  build_and_push_accommodation_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/accommodation'
+      dockerfile: 'back/accommodation/Dockerfile'
+      image_name: 'tripi-accommodation'
+      tag_name: ${{ github.event.inputs.tag_name }}
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  build_and_push_activity_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/activity'
+      dockerfile: 'back/activity/Dockerfile'
+      image_name: 'tripi-activity'
+      tag_name: ${{ github.event.inputs.tag_name }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: back
-          file: back/Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/tripi-api:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/tripi-api:${{ github.ref_name }}
+  build_and_push_bar_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/bar'
+      dockerfile: 'back/bar/Dockerfile'
+      image_name: 'tripi-bar'
+      tag_name: ${{ github.event.inputs.tag_name }}
+
+  build_and_push_restaurant_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/restaurant'
+      dockerfile: 'back/restaurant/Dockerfile'
+      image_name: 'tripi-restaurant'
+      tag_name: ${{ github.event.inputs.tag_name }}
+
+  build_and_push_transport_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/transport'
+      dockerfile: 'back/transport/Dockerfile'
+      image_name: 'tripi-transport'
+      tag_name: ${{ github.event.inputs.tag_name }}
+
+  build_and_push_trip_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/trip'
+      dockerfile: 'back/trip/Dockerfile'
+      image_name: 'tripi-trip'
+      tag_name: ${{ github.event.inputs.tag_name }}
+
+  build_and_push_auth_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/auth'
+      dockerfile: 'back/auth/Dockerfile'
+      image_name: 'tripi-auth'
+      tag_name: ${{ github.event.inputs.tag_name }}
+
+  build_and_push_user_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'back/user'
+      dockerfile: 'back/user/Dockerfile'
+      image_name: 'tripi-user'
+      tag_name: ${{ github.event.inputs.tag_name }}
+

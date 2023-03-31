@@ -1,34 +1,13 @@
-name: Build and publish API image
+name: Build and publish App image
 
 on:
   workflow_call:
 
 jobs:
-  build_and_push_images:
-    name: Build and publish App Image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: front
-          file: front/Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/tripi-app:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/tripi-app:${{ github.ref_name }}
+  build_and_push_image:
+    uses: .github/workflows/build-and-push-image.yml@main
+    with:
+      context: 'front'
+      dockerfile: 'front/Dockerfile'
+      image_name: 'tripi-app'
+      tag_name: '${{ github.ref_name }}'

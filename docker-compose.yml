@@ -166,6 +166,20 @@ services:
       - discovery
       - database
 
+  auth:
+    container_name: auth
+    image: eliottclavier/tripi-auth:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /auth.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+
   user:
     container_name: user
     image: eliottclavier/tripi-user:latest
