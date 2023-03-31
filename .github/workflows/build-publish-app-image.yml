@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_and_push_image:
-    uses: .github/workflows/build-and-push-image.yml@main
+    uses: ./.github/workflows/build-and-push-image.yml@main
     with:
       context: 'front'
       dockerfile: 'front/Dockerfile'
