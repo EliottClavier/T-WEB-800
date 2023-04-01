@@ -2,13 +2,13 @@ import {TestBed} from '@angular/core/testing';
 
 import {SuggestionsStoreService} from './suggestions-store.service';
 import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spectator";
-import {LeisureItemModel} from "../models/leisures/leisure-item.model";
-import {SuggestionsService} from "../services/suggestions-service/suggestions.service";
-import {LeisureCategory} from "../enums/leisure-category";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {LeisureCategory} from "../../enums/leisure-category";
 import {BehaviorSubject} from "rxjs";
-import {SingleSearchBarComponent} from "../containers/single-search-bar/single-search-bar.component";
-import {getBarItems} from "../utils/suggestions-mock.utils";
-import {LocationModel} from "../models/location/location.model";
+import {SingleSearchBarComponent} from "../../containers/single-search-bar/single-search-bar.component";
+import {getBarItems} from "../../utils/suggestions-mock.utils";
+import {LocationModel} from "../../models/location/location.model";
 import {shouldBeautify} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 describe('SuggestionsStoreService', () => {

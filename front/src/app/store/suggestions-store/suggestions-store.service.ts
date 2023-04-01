@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {LeisureItemModel} from "../models/leisures/leisure-item.model";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {BehaviorSubject, Subject} from "rxjs";
-import {LeisureCategory} from "../enums/leisure-category";
-import {LocationModel} from "../models/location/location.model";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {LocationModel} from "../../models/location/location.model";
 
 @Injectable({
   providedIn: 'root'
@@ -53,4 +53,5 @@ export class SuggestionsStoreService {
   get getLocation(): LocationModel {
     return this.getSuggestionsData()[0]?.location as LocationModel;
   }
+
 }

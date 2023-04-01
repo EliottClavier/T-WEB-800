@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClient} from "@angular/common/http";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {LocationModel} from "../../models/location/location.model";
 import {Observable} from "rxjs";
 

@@ -7,7 +7,7 @@ import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-gro
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";

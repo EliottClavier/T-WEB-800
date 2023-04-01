@@ -14,7 +14,7 @@ import {SuggestionsService} from "../../services/suggestions-service/suggestions
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {of, throwError} from "rxjs";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 
 describe('SingleSearchBarComponent', () => {
 
