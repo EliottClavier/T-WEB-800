@@ -10,6 +10,7 @@ import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 @Component({
   selector: 'app-explore',
@@ -80,7 +81,13 @@ export class ExploreComponent implements OnInit {
 
   public ngOnInit(): void {
     this._loadRouteParams();
-  }
+    this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
+      if (item) {
+        this.onAddingLeisureInStep(item);
+      }});
+    }
+
+
 
   private _isValidDate(date: any): boolean {
     return date instanceof Date && !isNaN(date.getTime());
@@ -149,6 +156,13 @@ export class ExploreComponent implements OnInit {
   }
   public onSelectedCategoryChange(value: LeisureCategory) {
     this.getPreviewSuggestions(value);
+  }
+
+  public onAddingLeisureInStep(item: LeisureItemModel): void {
+    let leisures : LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
+    leisures.push(item);
+    this.selectedSearchForm.get('leisures')?.setValue(leisures);
+    alert((this.selectedSearchForm.get('leisures')?.value).length);
   }
 
   public getLeisureSuggestions() {

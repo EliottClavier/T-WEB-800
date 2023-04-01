@@ -31,7 +31,8 @@
     </div>
 
     <div mat-dialog-actions class="justify-content-end">
-      <app-simple-button [mat-dialog-close]="true" cdkFocusInitial
+<!--      <app-simple-button [mat-dialog-close]="false"-->
+      <app-simple-button [mat-dialog-close]="false"
                          (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)"
                          [label]=" 'add_to_step' | translate" class="me-2"
                          data-cy-item-details-add-to-trip-button></app-simple-button>

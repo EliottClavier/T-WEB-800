@@ -30,8 +30,6 @@ export class CardItemsListComponent implements AfterContentChecked {
   onItemClicked($event: LeisureItemModel) {
     this.itemSelected = $event;
     this.openDialog();
-
-
     this.cardItemClicked.emit($event);
   }
 
@@ -43,6 +41,7 @@ export class CardItemsListComponent implements AfterContentChecked {
     dialogRef.afterClosed().subscribe(result => {
       this.itemSelected = undefined;
     })
+
 
   }
 }

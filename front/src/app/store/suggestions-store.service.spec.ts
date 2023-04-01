@@ -9,6 +9,7 @@ import {BehaviorSubject} from "rxjs";
 import {SingleSearchBarComponent} from "../containers/single-search-bar/single-search-bar.component";
 import {getBarItems} from "../utils/suggestions-mock.utils";
 import {LocationModel} from "../models/location/location.model";
+import {shouldBeautify} from "@angular-devkit/build-angular/src/utils/environment-options";
 
 describe('SuggestionsStoreService', () => {
   let store: SuggestionsStoreService;
@@ -114,6 +115,15 @@ describe('SuggestionsStoreService', () => {
     expect(store.getLocation.name).toEqual("Tel Aviv");
     expect(store.getLocation.lat).toEqual(32.08);
     expect(store.getLocation.lng).toEqual(34.78);
+  });
+
+  it('should set leisure item', () => {
+    let items = getBarItems();
+    store.leisureItemToAdd$ = new BehaviorSubject<LeisureItemModel>(items[0]);
+    store.leisureItemToAdd$.subscribe((item) => {
+      expect(item).toEqual(items[0]);
+    });
+    store.setLeisureItemToAdd(items[0]);
   });
 });
 

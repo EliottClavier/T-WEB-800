@@ -404,6 +404,7 @@ describe('MultipleSearchBarsComponent', () => {
         })
         expect(component.viewChange.emit).toHaveBeenCalledWith(MapView.ITINERARY);
       });
+
     });
   });
 });

@@ -6,7 +6,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 const dialogMock = {
-  close: () => { }
+  close: () => {
+  }
 };
 
 describe('CardItemDetailsViewComponent', () => {
@@ -17,7 +18,7 @@ describe('CardItemDetailsViewComponent', () => {
     imports: [AppModule],
     providers: [
       {provide: MatDialogRef, useValue: dialogMock},
-      {provide:   MAT_DIALOG_DATA, useValue: new LeisureItemModel()   }
+      {provide: MAT_DIALOG_DATA, useValue: new LeisureItemModel()}
 
     ],
   });
@@ -79,20 +80,26 @@ describe('CardItemDetailsViewComponent', () => {
       expect(spectator.query('[data-cy-item-details-add-to-trip-button]')).toBeTruthy();
     });
 
-    it('should send add to trip information when button is clicking', async () => {
+    it('should input trip information when button is clicking', async () => {
 
       let items = getAccommodationItems();
       spectator.setInput('detailsItem', items[0]);
 
       let spy = await spyOn<CardItemDetailsViewComponent, any>(component, 'onAddItemToTrip').and.callThrough();
-      let spyEmit = await spyOn(component.onAddToTrip, 'emit').and.callThrough();
+
       await spectator.click('[data-cy-item-details-add-to-trip-button] [simple-button]');
 
       spectator.detectChanges();
 
       expect(spy).toHaveBeenCalledWith(items[0]);
-      expect(spyEmit).toHaveBeenCalledWith(items[0]);
 
+    });
+
+    it('should emit a add leisure item event when clicking on the add leisure item button', async () => {
+      component.detailsItem = getAccommodationItems()[0];
+      let spy = await spyOn<CardItemDetailsViewComponent, any>(component, 'onAddItemToTrip').and.callThrough();
+      await spectator.click('[mat-dialog-actions] [data-cy-item-details-add-to-trip-button] [simple-button]');
+      expect(spy).toHaveBeenCalled();
     });
   });
 });

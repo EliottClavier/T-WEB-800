@@ -14,7 +14,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   private _suggests: LeisureItemModel[] = new Array<LeisureItemModel>;
   category: string = "";
   private _itemsSelected?: LeisureItemModel;
-  @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>()
+  @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>();
 
   constructor( private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
 
@@ -60,6 +60,7 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
   onItemSelected($event: any) {
     this._itemsSelected = $event as LeisureItemModel;
+
   }
 
   onCloseDetails() {
