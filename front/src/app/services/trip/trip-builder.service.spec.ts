@@ -9,6 +9,7 @@ import {TripModel} from "../../models/trip/trip.model";
 import {StepModel} from "../../models/step/step.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import TravelMode = google.maps.TravelMode;
+import {getMockTrip, getMockTripForm} from "../../utils/trip.mock.utils";
 
 describe('TripBuilderService', () => {
   let service: TripBuilderService;
@@ -34,43 +35,13 @@ describe('TripBuilderService', () => {
     httpclient = spectator.inject(HttpClient);
     spectatorHttp = createHttp();
 
-    let date = getIsoStringFromDate(new Date());
-    let leisures = getAccommodationItems();
-    tripModel = new TripModel();
-    stepModel = new StepModel('0', 'step1', new LocationModel(), leisures, date, date);
-    stepModel.travelMode = TravelMode.DRIVING;
-    let step2Model = new StepModel('1', 'step2', new LocationModel(), leisures, date, date);
-    step2Model.travelMode = TravelMode.DRIVING;
-    tripModel.steps.push(stepModel);
-    tripModel.steps.push(step2Model);
-
-    let builder = new FormBuilder();
-    forms = builder.group({
-      searchFormsArray: builder.array([
-        builder.group({
-          locationSearch: step2Model.name,
-          location: step2Model.location,
-          travelMode: step2Model.travelMode,
-          start: new Date(step2Model.start),
-          end: new Date(step2Model.end),
-          leisures: step2Model.leisures,
-        }),
-        builder.group({
-          locationSearch: stepModel.name,
-          location: stepModel.location,
-          travelMode: stepModel.travelMode,
-          start: new Date(stepModel.start),
-          end: new Date(stepModel.end),
-          leisures: [stepModel.leisures],
-        }),
-      ])
-    });
+    tripModel = getMockTrip();
+    forms = getMockTripForm();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
 
   it('should StepsForms is defined', () => {
     expect(service.getTripFormsInstance).toBeDefined();
