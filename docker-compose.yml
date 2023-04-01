@@ -84,7 +84,7 @@ services:
     container_name: accommodation
     image: eliottclavier/tripi-accommodation:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommocation.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommodation.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
