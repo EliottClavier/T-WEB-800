@@ -11,4 +11,4 @@ RUN gradle build
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /
 RUN apk add --no-cache bash
-COPY --from=builder /app-build/build/libs/user-service.jar /user.jar
+COPY --from=builder /app-build/build/libs/discovery.jar /discovery.jar

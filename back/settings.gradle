@@ -1,6 +1,6 @@
 include 'user-service'
 include 'gateway'
-include 'accomodation-service'
+include 'accommodation-service'
 include 'activity-service'
 include 'bar-service'
 include 'discovery'
