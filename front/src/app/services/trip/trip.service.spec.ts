@@ -1,5 +1,12 @@
 import {TripService} from './trip.service';
-import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spectator";
+import {
+  createHttpFactory,
+  createServiceFactory,
+  HttpMethod,
+  mockProvider,
+  SpectatorHttp,
+  SpectatorService
+} from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {LocationModel} from "../../models/location/location.model";
@@ -8,10 +15,13 @@ import {TripStoreService} from "../../store/trip-store/trip-store.service";
 import {TripModel} from "../../models/trip/trip.model";
 import {TripBuilderService} from "./trip-builder.service";
 import {getMockTrips, getMockTripForm} from "../../utils/trip.mock.utils";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {SuggestionsService} from "../suggestions-service/suggestions.service";
 
 describe('TripService', () => {
 
   let http: HttpClient;
+  let spectatorHttp: SpectatorHttp<TripService>;
   let httpMock: HttpTestingController;
   let spectator: SpectatorService<TripService>;
   let service: TripService;
@@ -28,6 +38,7 @@ describe('TripService', () => {
         }}),
     ]
   });
+  const createHttp = createHttpFactory(TripService);
 
   beforeEach(() => {
     spectator = createService();
@@ -36,6 +47,7 @@ describe('TripService', () => {
     httpMock = spectator.inject(HttpTestingController);
     store = spectator.inject(TripStoreService);
     builder = spectator.inject(TripBuilderService);
+    spectatorHttp = createHttp();
   });
 
   it('should be created', () => {
@@ -59,5 +71,35 @@ describe('TripService', () => {
   it('should be send trip data', () => {
   let data = getMockTrips()
     expect(service.sendTripData(data)).toBeDefined();
+  });
+
+  it('should test HttpClient getTrip', () => {
+    let trips = getMockTrips()
+
+    spectatorHttp.service.getTripData().subscribe(
+      (data) => {
+        expect(data).toEqual(trips);
+      }
+    )
+
+    let req = spectatorHttp.expectOne(`/api/trips/`, HttpMethod.GET);
+    req.flush(trips);
+    expect(req.request.method).toEqual('GET');
+
+  });
+
+  it('should test HttpClient sendTrip', () => {
+    let trips = getMockTrips()
+
+    spectatorHttp.service.sendTripData(trips).subscribe(
+      (data) => {
+        expect(trips).toEqual(data);
+      }
+    )
+
+    let req = spectatorHttp.expectOne(`/api/trips/add`, HttpMethod.POST);
+    req.flush(trips);
+    expect(req.request.method).toEqual('POST');
+
   });
 });

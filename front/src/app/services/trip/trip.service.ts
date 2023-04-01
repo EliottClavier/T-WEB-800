@@ -9,16 +9,16 @@ import {Observable} from "rxjs";
 })
 export class TripService {
 
-  private url: string = '/api/trip/';
+  private url: string = '/api/trips/';
 
   constructor(private _httpclient: HttpClient) { }
 
   getTripData() :Observable<TripModel[]> {
-    return this._httpclient.get<TripModel[]>(`${this.url}all`);
+    return this._httpclient.get<TripModel[]>(`${this.url}`);
   }
 
-  sendTripData(data: TripModel[]) : Observable<TripModel> {
-    return this._httpclient.post<TripModel>(`${this.url}add`, data);
+  sendTripData(data: TripModel[]) : Observable<TripModel[]> {
+    return this._httpclient.post<TripModel[]>(`${this.url}add`, data);
   }
 
 }
