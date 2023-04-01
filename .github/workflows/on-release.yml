@@ -35,3 +35,7 @@ jobs:
 #    needs: [build_publish_api_images, build_publish_app_image]
     name: Deploy on remote server
     uses: ./.github/workflows/remote-deploy.yml
+    secrets:
+      SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
