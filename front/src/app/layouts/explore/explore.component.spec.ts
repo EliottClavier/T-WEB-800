@@ -5,7 +5,7 @@ import {MultipleSearchBarsComponent} from "../../containers/multiple-search-bars
 import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
@@ -25,6 +25,7 @@ import {
   LeisureCategoryFilterComponent
 } from "../../containers/leisure-category-filter/leisure-category-filter.component";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -35,6 +36,7 @@ describe('ExploreComponent', () => {
   let _suggestionService: SuggestionsService;
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
+  let _tripBuilderService: TripBuilderService;
   let accommodationItems = getAccommodationItems();
   let sportingItems = getSportingItems();
 
@@ -44,6 +46,7 @@ describe('ExploreComponent', () => {
       getSuggestions: () => of(accommodationItems),
       getPreviewSuggestions: () => of(sportingItems)
     }),
+      TripBuilderService,
       {
         provide: ActivatedRoute,
         useValue: {
@@ -77,6 +80,8 @@ describe('ExploreComponent', () => {
     component = spectator.component;
     _locationService = spectator.inject(LocationService);
     _suggestionService = spectator.inject(SuggestionsService);
+    _suggestionStoreService = spectator.inject(SuggestionsStoreService);
+    _tripBuilderService = spectator.inject(TripBuilderService);
     _route = spectator.inject(ActivatedRoute);
     _router = spectator.inject(Router);
 
@@ -433,6 +438,15 @@ describe('ExploreComponent', () => {
     // Check if the leisures array is created and contains the mock item
     const leisures = spectator.component.selectedSearchForm.get('leisures')?.value;
     expect(leisures).toEqual([mockItem]);
+  });
+
+  it('should call onSave when user click on save button', () => {
+    let spy = spyOn(component, 'onSaveTrip').and.callThrough();
+    let spyService = spyOn<TripBuilderService, any>(_tripBuilderService, 'saveTrip').and.callThrough();
+    spectator.click('[data-cy-explorer-save-button] [simple-button]');
+    spectator.detectChanges();
+    expect(spy).toHaveBeenCalled();
+    expect(spyService).toHaveBeenCalled();
   });
 
   // it('should getPreviewSuggestions return an ERROR when it called', async() => {

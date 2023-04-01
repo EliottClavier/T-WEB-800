@@ -11,6 +11,9 @@ import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {Subject} from "rxjs";
+import {FromNodeOptions} from "cypress/types/bluebird";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
 
 @Component({
   selector: 'app-explore',
@@ -19,11 +22,12 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 })
 export class ExploreComponent implements OnInit {
 
-  public searchForms: FormGroup = new FormGroup({
-    searchFormsArray: new FormArray<FormGroup>([
-      buildStepFormGroupControlsDetails(),
-    ]),
-  });
+  public searchForms: FormGroup = this._tripService.getTripFormsInstance()
+  // public searchForms: FormGroup = new FormGroup({
+  //   searchFormsArray: new FormArray<FormGroup>([
+  //     buildStepFormGroupControlsDetails(),
+  //   ]),
+  // });
 
   public activeSearchBar: SearchBarEvent = {
     index: 0,
@@ -31,18 +35,13 @@ export class ExploreComponent implements OnInit {
   };
 
   onActiveSearchBarChange($event: SearchBarEvent) {
+
     this.activeSearchBar = $event;
+    let location: LocationModel = this.selectedSearchForm.get('location')?.value;
+    let start: Date =  this.selectedSearchForm.get('start')?.value;
+    let end: Date =  this.selectedSearchForm.get('end')?.value;
 
-    let formArrayElement: FormArray = this.searchFormsArray;
-    let formControls = formArrayElement.at(this.activeSearchBar.index);
-    let location: LocationModel = formControls.get('location')?.value;
-
-    let start: Date = formControls.get('start')?.value;
-    let end: Date = formControls.get('end')?.value;
-
-    // let leisure: LeisureCategory = formControls.get('leisure')?.value;
     let leisure: LeisureCategory = this._suggestionsStore.getCategory;
-
     this.getPreviewSuggestions(leisure, location, start, end);
   }
 
@@ -75,7 +74,8 @@ export class ExploreComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute, private _router: Router,
     private _suggestionsService: SuggestionsService,
-    private _suggestionsStore: SuggestionsStoreService) {
+    private _suggestionsStore: SuggestionsStoreService,
+    private _tripService: TripBuilderService,) {
   }
 
 
@@ -178,5 +178,10 @@ export class ExploreComponent implements OnInit {
         },
       }
     );
+  }
+
+  onSaveTrip(tripName: string) {
+
+      this._tripService.saveTrip(tripName);
   }
 }

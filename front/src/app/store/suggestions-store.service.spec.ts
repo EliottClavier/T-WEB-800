@@ -87,7 +87,6 @@ describe('SuggestionsStoreService', () => {
     });
   });
 
-
   it('should  trigger the next Suggestions value when location updated', () => {
 
     const subjectSpy = spyOn(createService().service, 'setSuggestionsData').and.callThrough();
