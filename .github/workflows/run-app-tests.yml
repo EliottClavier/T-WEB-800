@@ -4,8 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  install_dependencies:
-    name: Install dependencies
+  run_unit_tests:
+    name: Run unit tests
     runs-on: ubuntu-latest
 
     steps:
@@ -20,18 +20,6 @@ jobs:
         working-directory: ./front
         run: npm ci
 
-  run_unit_tests:
-    name: Run tests
-    runs-on: ubuntu-latest
-    needs: install_dependencies
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js 19.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 19.x
-
       - name: Run unit tests
         working-directory: ./front
         run: npm run test:prod
@@ -39,7 +27,6 @@ jobs:
   run_e2e_tests:
     name: Run e2e tests
     runs-on: ubuntu-latest
-    needs: install_dependencies
     steps:
       - uses: actions/checkout@v2
 
