@@ -1,9 +1,10 @@
 <div class="ng-container"
      *ngIf="cardItems.length > 0; else emptyState">
   <ul
-    *ngFor="let item of cardItems">
+    *ngFor="let item of cardItems; let i = index">
     <li>
       <app-card-item
+        [id]="'card-'+i"
         [cardItem]="item"
         (onItem)="onItemClicked($event)">
         data-cy-card-component></app-card-item>

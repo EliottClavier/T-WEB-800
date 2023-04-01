@@ -2,7 +2,9 @@
 
   <h1 data-cy-item-category>{{this.category}}</h1>
 
-  <app-card-items data-cy-items [cardItems]="suggests" (cardItemClicked)="onItemSelected($event)"></app-card-items>
+  <app-card-items data-cy-items [cardItems]="suggests"
+                  (cardItemClicked)="onItemSelected($event)"
+                 ></app-card-items>
 
   <app-simple-button
     *ngIf="suggests.length >= 6"
@@ -12,7 +14,12 @@
   </app-simple-button>
 
   <div *ngIf="itemsSelected">
-    <app-item-details-view (onClose)="onCloseDetails()" data-cy-item-details></app-item-details-view>
+    <app-item-details-view
+      (onClose)="onCloseDetails()"
+
+      data-cy-item-details>
+
+    </app-item-details-view>
   </div>
 
 </div>

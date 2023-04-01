@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Output} from '@angular/core';
 import {LeisureItemModel} from 'src/app/models/leisures/leisure-item.model';
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 
 @Component({
   selector: 'app-item-details-view',
@@ -8,10 +10,12 @@ import {LeisureItemModel} from 'src/app/models/leisures/leisure-item.model';
 })
 export class CardItemDetailsViewComponent {
 
-  @Input() detailsItem?: LeisureItemModel;
+  detailsItem?: LeisureItemModel;
   @Output() onClose = new EventEmitter<void>();
-  @Output() onAddToTrip = new EventEmitter<LeisureItemModel>();
 
+  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private suggestionStore: SuggestionsStoreService) {
+    this.detailsItem = data.item;
+  }
 
   onCloseDetailsView() {
     this.onClose.emit();
@@ -19,7 +23,6 @@ export class CardItemDetailsViewComponent {
   }
 
   onAddItemToTrip(item: LeisureItemModel) {
-    this.onAddToTrip.emit(item);
-    console.log('add to trip');
+    this.suggestionStore.setLeisureItemToAdd(item)
   }
 }

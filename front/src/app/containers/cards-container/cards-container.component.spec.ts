@@ -4,7 +4,7 @@ import {CardsContainerComponent} from "./cards-container.component";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {BehaviorSubject, of} from "rxjs";
+import {of} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {
@@ -17,6 +17,7 @@ import {
 } from "../../utils/suggestions-mock.utils";
 import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
 import {CardItemDetailsViewComponent} from "../../components/card-item-details-view/card-item-details-view.component";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
 describe('Card container', () => {
@@ -28,11 +29,19 @@ describe('Card container', () => {
   let suggests: LeisureItemModel[]
   let accommodationItems: LeisureItemModel[] = getAccommodationItems();
 
+  const dialogMock = {
+    close: () => {
+    }
+  }
   const createComponent = createComponentFactory({
     component: CardsContainerComponent,
-    imports: [AppModule,],
+    imports: [AppModule],
     declarations: [CardItemsListComponent, CardItemDetailsViewComponent],
     providers: [
+      CardItemDetailsViewComponent,
+
+      {provide: MatDialogRef, useValue: dialogMock},
+      {provide: MAT_DIALOG_DATA, useValue: new LeisureItemModel()},
 
       {
         provide: SuggestionsService,
@@ -45,6 +54,7 @@ describe('Card container', () => {
       TranslateService,
     ],
   });
+
   afterEach(() => {
     spectator.fixture.destroy()
   });
@@ -214,7 +224,7 @@ describe('Card container', () => {
       });
       it('should get LeisureItems when OnShowMoreItems called', () => {
         expect(spectator.component.onShowMoreItems).toBeDefined();
-        let spy = spyOn(component, 'onShowMoreItems').and.callThrough( );
+        let spy = spyOn(component, 'onShowMoreItems').and.callThrough();
         let spy2 = spyOn(suggestionsService, 'getSuggestions').and.returnValue(of(barItems));
         suggestionsService.getSuggestions(accommodationItems[0].category, accommodationItems[0].location, "", "").subscribe((suggestions) => {
           expect(suggestions).toEqual(barItems);
@@ -238,7 +248,27 @@ describe('Card container', () => {
         expect(component.translateService).toEqual(translateService);
       });
     });
-
+    // it('should emit a add leisure item event when clicking on the add leisure item button', () => {
+    //   let item = getBarItems()[0];
+    //   component.itemsSelected = item;
+    //
+    //    let spy = spyOn<CardsContainerComponent, any>(component, 'onAddStepItem').and.callThrough();
+    //   const childComponent = spectator.inject(CardItemDetailsViewComponent);
+    //   let spyChild = spyOn<CardItemDetailsViewComponent, any>(childComponent, 'onAddItemToTrip').and.callThrough();
+    //   spectator.detectChanges();
+    //   childComponent.detailsItem = item;
+    //   expect(childComponent).toBeTruthy();
+    //   childComponent?.onAddItemToTrip(item);
+    //   expect(spyChild).toHaveBeenCalledWith(item);
+    //   expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
+    //
+    //   spectator.detectChanges();
+    //   expect(childComponent).toBeTruthy();
+    //   component.itemsSelected = item;
+    //   spectator.detectChanges();
+    //   expect(component.onAddStepItem).toHaveBeenCalled();
+    //   //   expect(spy).toHaveBeenCalledWith(item);
+    // });
   });
 });
 

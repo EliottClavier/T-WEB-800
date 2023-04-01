@@ -1,6 +1,6 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {LeisureItemModel} from "../models/leisures/leisure-item.model";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 import {LeisureCategory} from "../enums/leisure-category";
 import {LocationModel} from "../models/location/location.model";
 
@@ -9,11 +9,25 @@ import {LocationModel} from "../models/location/location.model";
 })
 export class SuggestionsStoreService {
 
+
   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
   private _getCategory?: LeisureCategory;
   private _getLocation?: LocationModel;
+  private _leisureItemToAdd$?: Subject<LeisureItemModel> = new Subject<LeisureItemModel>();
 
   constructor() {
+  }
+
+  public setLeisureItemToAdd(item: LeisureItemModel) {
+    this.leisureItemToAdd$.next(item);
+  }
+
+  get leisureItemToAdd$(): Subject<LeisureItemModel> {
+    return this._leisureItemToAdd$ as Subject<LeisureItemModel>;
+  }
+
+  set leisureItemToAdd$(value: Subject<LeisureItemModel>) {
+    this._leisureItemToAdd$ = value;
   }
 
   public get suggestions$(): BehaviorSubject<LeisureItemModel[]> {
@@ -35,7 +49,8 @@ export class SuggestionsStoreService {
   get getCategory(): LeisureCategory {
     return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
   }
+
   get getLocation(): LocationModel {
-    return this.getSuggestionsData()[0]?.location as LocationModel ;
+    return this.getSuggestionsData()[0]?.location as LocationModel;
   }
 }

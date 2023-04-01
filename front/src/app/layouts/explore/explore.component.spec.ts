@@ -5,7 +5,7 @@ import {MultipleSearchBarsComponent} from "../../containers/multiple-search-bars
 import {AppModule} from "../../app.module";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {MapComponent} from "../../containers/map/map.component";
-import {FormArray, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
@@ -24,6 +24,7 @@ import {LeisureCategory} from "../../enums/leisure-category";
 import {
   LeisureCategoryFilterComponent
 } from "../../containers/leisure-category-filter/leisure-category-filter.component";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -404,6 +405,36 @@ describe('ExploreComponent', () => {
     expect(spy).toHaveBeenCalledWith(LeisureCategory.SPORTING_EVENT);
     expect(spyService).toHaveBeenCalled();
   });
+  it('should subscribe to adding leisure item event and update value', () => {
+    let item = getAccommodationItems()[0];
+    let spy = spyOn(component, 'onAddingLeisureInStep').and.callThrough();
+    _suggestionStoreService = spectator.inject(SuggestionsStoreService)
+    _suggestionStoreService?.setLeisureItemToAdd(item);
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(item);
+  });
+
+  it('should create an array Leisure', () => {
+    let items = new Array<LeisureItemModel>();
+    expect(items).toBeDefined()
+
+  });
+
+  it('should add a leisure item to the leisures array', () => {
+    // Set up the necessary form controls for the test
+
+
+    // Create a mock LeisureItemModel
+    const mockItem: LeisureItemModel = getAccommodationItems()[0]
+
+    // Call the onAddingLeisureInStep method with the mock item
+    spectator.component.onAddingLeisureInStep(mockItem);
+
+    // Check if the leisures array is created and contains the mock item
+    const leisures = spectator.component.selectedSearchForm.get('leisures')?.value;
+    expect(leisures).toEqual([mockItem]);
+  });
+
   // it('should getPreviewSuggestions return an ERROR when it called', async() => {
   //
   //   let spyService = await spyOn<SuggestionsService, any>(component["_suggestionsService"], 'getPreviewSuggestions').and.returnValue(new Error('Error'));
