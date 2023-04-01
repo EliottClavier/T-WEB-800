@@ -68,6 +68,10 @@ export class ExploreComponent implements OnInit {
     return this.selectedSearchForm.get('location')?.value as LocationModel;
   }
 
+  get selectedMarkers(): LeisureItemModel[] {
+    return this.selectedSearchForm.get('leisures')?.value as LeisureItemModel[];
+  }
+
   get nextLocation(): LocationModel | undefined {
     return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as LocationModel | undefined
   }
