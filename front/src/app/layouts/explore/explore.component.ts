@@ -167,16 +167,6 @@ export class ExploreComponent implements OnInit {
 
   public getLeisureSuggestions() {
 
-    // let form  = buildStepFormGroupControlsDetails();
-
-    // let category = this._suggestionsStore.getCategory;
-    // let location = this._suggestionsStore.getLocation;
-    // let start = form.get('start')?.value;
-    // let end = form.get('end')?.value;
-
-    let formArrayElement: FormArray = this.searchFormsArray;
-    let formControls = formArrayElement.at(this.activeSearchBar.index);
-
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
