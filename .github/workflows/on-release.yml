@@ -14,24 +14,28 @@ jobs:
 #  run_api_tests:
 #    name: Run API tests
 #    uses: ./.github/workflows/run-api-tests.yml
-
-  build_publish_api_images:
+#
+#  build_publish_api_images:
 #    needs: [run_api_tests, run_app_tests]
-    name: Build and publish API images
-    uses: ./.github/workflows/build-publish-api-images.yml
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  build_publish_app_image:
+#    name: Build and publish API images
+#    uses: ./.github/workflows/build-publish-api-images.yml
+#    secrets:
+#      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+#      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+#
+#  build_publish_app_image:
 #    needs: [run_api_tests, run_app_tests]
-    name: Build and publish App image
-    uses: ./.github/workflows/build-publish-app-image.yml
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+#    name: Build and publish App image
+#    uses: ./.github/workflows/build-publish-app-image.yml
+#    secrets:
+#      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+#      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   deploy:
-    needs: [build_publish_api_images, build_publish_app_image]
+#    needs: [build_publish_api_images, build_publish_app_image]
     name: Deploy on remote server
     uses: ./.github/workflows/remote-deploy.yml
+    secrets:
+      SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
