@@ -18,6 +18,16 @@
           <app-leisure-category-filter (onSelectedCategory)="onSelectedCategoryChange($event)">
 
           </app-leisure-category-filter>
+          <app-simple-button class="'save-button"
+                             *ngIf="activeSearchBar.index !== null"
+                             [label]="'Save my trip'"
+                             (buttonClick)="onSaveTrip('tripname')" data-cy-explorer-save-button></app-simple-button>
+          <div></div>
+
+          <app-simple-button class="roadmap-button"
+                             *ngIf="activeSearchBar.index !== null"
+                             [label]="'See RoadMap trip'"
+                             (buttonClick)="undefined"></app-simple-button>
         </div>
       </div>
     </div>
@@ -48,5 +58,6 @@
           ></app-map-travel-mode-selection>
         </div>
       </div>
+    </div>
   </div>
 </div>
