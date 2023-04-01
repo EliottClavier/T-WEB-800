@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
 
@@ -25,6 +25,14 @@ services:
     depends_on:
       - gateway
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 128M
+        reservations:
+          cpus: '0.125'
+          memory: 128M
 
   gateway:
     container_name: gateway
@@ -48,6 +56,14 @@ services:
     depends_on:
       - database
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   discovery:
     container_name: discovery
@@ -65,6 +81,14 @@ services:
       - gateway-net
       - services-net
       - nginx-proxy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   database:
     container_name: database
@@ -78,6 +102,14 @@ services:
       - "${MARIADB_PORT}"
     networks:
       - database-net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   # Data services
   accommodation:
@@ -93,6 +125,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   activity:
     container_name: activity
@@ -107,6 +147,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   bar:
     container_name: bar
@@ -121,6 +169,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   restaurant:
     container_name: restaurant
@@ -135,6 +191,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   transport:
     container_name: transport
@@ -149,6 +213,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   trip:
     container_name: trip
@@ -165,6 +237,14 @@ services:
     depends_on:
       - discovery
       - database
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   auth:
     container_name: auth
@@ -179,6 +259,14 @@ services:
       - services-net
     depends_on:
       - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
   user:
     container_name: user
@@ -195,7 +283,14 @@ services:
     depends_on:
       - discovery
       - database
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
 
 volumes:
   database:
