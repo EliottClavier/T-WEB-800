@@ -59,4 +59,24 @@ describe('TransportService', () => {
     req.flush(transportOptionsMock,{ status: 200, statusText: 'OK' });
   });
 
+  it('should retrieve transport options with paramaters even without startDate', () => {
+    const directionsRequest: google.maps.DirectionsRequest = {
+      origin: "Nantes",
+      destination: "Paris",
+      travelMode: google.maps.TravelMode.DRIVING,
+    };
+
+    const transportRequest: TransportRequest = {
+      directionRequest: directionsRequest
+    }
+
+    service.getTransportOptions(transportRequest).subscribe(data => {
+      expect(data).toEqual(transportOptionsMock);
+    });
+
+    const req = httpMock.expectOne(`/api/transports?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(transportOptionsMock,{ status: 200, statusText: 'OK' });
+  });
+
 });
