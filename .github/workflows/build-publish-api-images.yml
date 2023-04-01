@@ -10,6 +10,7 @@ on:
 
 jobs:
   build_and_push_gateway_image:
+    name: Gateway image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/gateway'
@@ -21,6 +22,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_discovery_image:
+    name: Discovery image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/discovery'
@@ -32,6 +34,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_accommodation_image:
+    name: Accommodation image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/accommodation-service'
@@ -43,6 +46,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_activity_image:
+    name: Activity image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/activity-service'
@@ -54,6 +58,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_bar_image:
+    name: Bar image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/bar-service'
@@ -65,6 +70,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_restaurant_image:
+    name: Restaurant image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/restaurant-service'
@@ -76,6 +82,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_transport_image:
+    name: Transport image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/transport-service'
@@ -87,6 +94,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_trip_image:
+    name: Trip image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/trip-service'
@@ -98,6 +106,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_auth_image:
+    name: Auth image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/auth-service'
@@ -109,6 +118,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build_and_push_user_image:
+    name: User image
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'back/user-service'
