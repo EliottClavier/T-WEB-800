@@ -8,6 +8,7 @@ WORKDIR /$HOME
 RUN export LANG='en_US.UTF-8'
 RUN gradle build
 
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /
 RUN apk add --no-cache bash
-RUN mv /app-build/build/libs/discovery.jar /discovery.jar
+COPY --from=builder /app-build/build/libs/discovery.jar /discovery.jar
