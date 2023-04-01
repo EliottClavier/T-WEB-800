@@ -11,7 +11,7 @@ import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
 import {BehaviorSubject, of} from "rxjs";
 import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {

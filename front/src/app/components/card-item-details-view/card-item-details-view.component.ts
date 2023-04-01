@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, Output} from '@angular/core';
 import {LeisureItemModel} from 'src/app/models/leisures/leisure-item.model';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 
 @Component({
   selector: 'app-item-details-view',
