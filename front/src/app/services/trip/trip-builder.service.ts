@@ -17,9 +17,6 @@ export class TripBuilderService {
   private _stepsForms?: FormGroup;
   private _trip: TripModel = new TripModel();
 
-  get searchFormsArrayControls(): FormGroup[] {
-    return this._stepsForms?.controls as unknown as FormGroup[];
-  }
 
   getTripFormsInstance(): FormGroup {
     if (this._stepsForms == null) {

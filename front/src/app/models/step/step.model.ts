@@ -2,6 +2,7 @@ import {LeisureItemModel} from "../leisures/leisure-item.model";
 import {LocationModel} from "../location/location.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import TravelMode = google.maps.TravelMode;
+import { v4 as uuidv4 } from 'uuid';
 
 export class StepModel {
 
@@ -15,7 +16,7 @@ export class StepModel {
   private _index: number = 0;
 
   constructor(
-    id: string = "0", name: string = "",
+    id: string = uuidv4(), name: string = "",
     location: LocationModel = new LocationModel(),
     leisures: LeisureItemModel[] = new Array<LeisureItemModel>(),
     start: string = getIsoStringFromDate(new Date()),
@@ -78,8 +79,8 @@ export class StepModel {
     this._leisures = value;
   }
 
-  get travelMode(): google.maps.TravelMode {
-    return this._travelMode as google.maps.TravelMode;
+  get travelMode(): google.maps.TravelMode | undefined{
+    return this._travelMode as google.maps.TravelMode | undefined
   }
 
   set travelMode(value: google.maps.TravelMode | undefined) {
