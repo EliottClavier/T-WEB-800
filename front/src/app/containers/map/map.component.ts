@@ -1,9 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
+import {TransportRequest} from "../../types/transport-request.type";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {TransportOptions} from "../../types/transport-options.type";
+import {TransportService} from "../../services/transport/transport.service";
 
 @Component({
   selector: 'app-map',
@@ -72,7 +76,7 @@ export class MapComponent implements OnChanges {
   };
   public directionsResults: google.maps.DirectionsResult | undefined;
 
-  constructor(private _directionService: MapDirectionsService) {}
+  constructor(private _transportService: TransportService) {}
 
   public ngOnChanges(): void {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {
@@ -93,11 +97,11 @@ export class MapComponent implements OnChanges {
     return [google.maps.TravelMode.DRIVING, google.maps.TravelMode.WALKING, google.maps.TravelMode.BICYCLING, google.maps.TravelMode.TRANSIT].includes(travelMode)
   }
 
-  private _getDirections(request: google.maps.DirectionsRequest): Observable<MapDirectionsResponse> {
-    return this._directionService.route(request);
+  private _getDirections(request: TransportRequest): Observable<TransportOptions> {
+    return this._transportService.getTransportOptions(request);
   }
 
-  private _requestDirections(origin: string, destination: string, travelMode: google.maps.TravelMode, transitMode?: google.maps.TransitMode): void {
+  private _requestDirections(origin: string, destination: string, travelMode: google.maps.TravelMode, startDate: Date = new Date(), transitMode?: google.maps.TransitMode): void {
     const request: google.maps.DirectionsRequest = {
       origin: origin,
       destination: destination,
@@ -106,8 +110,13 @@ export class MapComponent implements OnChanges {
 
     transitMode && (request.transitOptions = { modes: [transitMode] });
 
-    this._getDirections(request).subscribe((response) => {
-      this.directionsResults = response.result;
+    let transportRequest: TransportRequest = {
+      directionRequest: request,
+      startDate: getIsoStringFromDate(startDate)
+    }
+
+    this._getDirections(transportRequest).subscribe((response) => {
+      this.directionsResults = response.routes;
     });
   }
 

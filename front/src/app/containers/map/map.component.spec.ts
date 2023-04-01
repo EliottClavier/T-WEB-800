@@ -4,16 +4,21 @@ import {AppModule} from "../../app.module";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {LocationModel} from "../../models/location/location.model";
-import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
+import {GoogleMap} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {By} from "@angular/platform-browser";
 import {BehaviorSubject, Observable} from "rxjs";
+import {TransportService} from "../../services/transport/transport.service";
+import {TransportRequest} from "../../types/transport-request.type";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {TransportOptions} from "../../types/transport-options.type";
 
 describe('MapComponent', () => {
   let component: MapComponent;
   let spectator: Spectator<MapComponent>;
   let http: HttpClient;
+  let _transportService: TransportService;
 
   const createComponent = createComponentFactory({
     component: MapComponent,
@@ -33,8 +38,18 @@ describe('MapComponent', () => {
     spectator = await createComponent();
     component = spectator.component;
     http = spectator.inject(HttpClient);
+    _transportService = spectator.inject(TransportService);
 
     component.selectedLocation = new LocationModel('', 'Nantes', 47.21121663814047, -1.5669571980709454)
+
+    spyOn<TransportService, any>(_transportService, "getTransportOptions").and.callFake((request: TransportRequest) => {
+      return new BehaviorSubject<TransportOptions>({
+        routes: {
+          routes: []
+        } as google.maps.DirectionsResult,
+        data: {}
+      });
+    });
 
     spectator.detectChanges();
   });
@@ -308,74 +323,60 @@ describe('MapComponent', () => {
   });
 
   describe('Directions and itinerary', () => {
-    let _directionService: MapDirectionsService;
-
     beforeEach(() => {
       component.itineraryView = true;
-      _directionService = spectator.inject(MapDirectionsService);
       spectator.detectChanges();
     });
 
-    describe('MapDirectionsService', () => {
-      it('should have MapDirectionsService injected', () => {
-        expect(component["_directionService"]).toBeDefined();
-        expect(component["_directionService"]).toBeTruthy();
-        expect(component["_directionService"]).toEqual(_directionService);
+    describe('TransportService', () => {
+      it('should have TransportService injected', () => {
+        expect(component["_transportService"]).toBeDefined();
+        expect(component["_transportService"]).toBeTruthy();
+        expect(component["_transportService"]).toEqual(_transportService);
       });
     });
 
     describe('_getDirections', () => {
-      it('should return Observable<google.maps.DirectionsResult> when calling _getDirections', () => {
+      it('should return Observable<TransportOptions> when calling _getDirections', () => {
         let request: google.maps.DirectionsRequest = {
           origin: 'Nantes',
           destination: 'Paris',
           travelMode: google.maps.TravelMode.DRIVING
         }
 
-        expect(component["_getDirections"](request)).toBeInstanceOf(Observable);
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(new Date())
+        }
+
+        expect(component["_getDirections"](transportRequest)).toBeInstanceOf(Observable);
       });
     });
 
     describe('_requestDirections', () => {
       it('should retrieve directions results for specific travel mode', () => {
-        // spyOn<MapDirectionsService, any>(_directionService, 'route').and.callThrough();
         spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
-        spyOn<MapDirectionsService, any>(_directionService, "route").and.callFake((request: google.maps.DirectionsRequest) => {
-          return new BehaviorSubject<MapDirectionsResponse>(
-            {
-              status: google.maps.DirectionsStatus.OK,
-              result: {
-                routes: []
-              }
-            }
-          );
-        });
-
         let request: google.maps.DirectionsRequest = {
           origin: 'Nantes',
           destination: 'Paris',
           travelMode: google.maps.TravelMode.DRIVING
         }
 
-        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode);
-        expect(_directionService.route).toHaveBeenCalledWith(request);
-        expect(component["_getDirections"]).toHaveBeenCalledWith(request);
+        let date = new Date();
+
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(date)
+        }
+
+        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date);
+        expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
+        expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
         expect(component.directionsResults).toEqual({ routes: [] });
       });
 
       it('should retrieve directions results for transit travel mode and specific transit mode', () => {
         spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
-        spyOn<MapDirectionsService, any>(_directionService, "route").and.callFake((request: google.maps.DirectionsRequest) => {
-          return new BehaviorSubject<MapDirectionsResponse>(
-            {
-              status: google.maps.DirectionsStatus.OK,
-              result: {
-                routes: []
-              }
-            }
-          );
-        });
-
         let request: google.maps.DirectionsRequest = {
           origin: 'Nantes',
           destination: 'Paris',
@@ -385,9 +386,16 @@ describe('MapComponent', () => {
           }
         }
 
-        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, request.transitOptions?.modes![0]);
-        expect(_directionService.route).toHaveBeenCalledWith(request);
-        expect(component["_getDirections"]).toHaveBeenCalledWith(request);
+        let date = new Date();
+
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(date)
+        }
+
+        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date, request.transitOptions?.modes![0]);
+        expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
+        expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
         expect(component.directionsResults).toEqual({ routes: [] });
       });
 
