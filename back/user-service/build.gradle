@@ -25,7 +25,7 @@ repositories {
 dependencies {
 	implementation platform('org.springframework.boot:spring-boot-dependencies:2.7.5')
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -33,7 +33,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.3'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.3'
 	implementation 'org.springframework.cloud:spring-cloud-commons:4.0.1'
-	implementation 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'com.h2database:h2'
 	implementation 'junit:junit:4.13.1'
