@@ -42,8 +42,8 @@ public class UserServiceIntegrationTest {
      */
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
-    public void shouldSaveUser() throws EmailAlreadyExistsException {
-        UserDto userDto = new UserDto(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+    public void shouldSaveUser() throws Exception {
+        UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
         UserDto savedUser = userService.saveUser(userDto);
 
         Assertions.assertNotNull(savedUser.getId());
@@ -56,7 +56,7 @@ public class UserServiceIntegrationTest {
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
     public void shouldNotSaveUserWithExistingEmail() {
-        UserDto userDto = new UserDto(null, "jacques@gmail.com", "testPassword", "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(null, "jacques@gmail.com", "testFirstname", "testLastname");
 
         Assertions.assertThrows(EmailAlreadyExistsException.class, () -> userService.saveUser(userDto));
         Assertions.assertEquals(4, userRepository.findAll().size());
@@ -67,19 +67,17 @@ public class UserServiceIntegrationTest {
      */
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
-    public void shouldUpdateUser() throws EmailAlreadyExistsException, UserDoesNotExistsException {
-        UserDto userDto = new UserDto(null, "testEmail", "testPassword", "testFirstname", "testLastname");
+    public void shouldUpdateUser() throws Exception {
+        UserDto userDto = new UserDto(null, "testEmail", "testFirstname", "testLastname");
         UserDto savedUser = userService.saveUser(userDto);
 
         savedUser.setFirstname("newFirstname");
         savedUser.setLastname("newLastname");
-        savedUser.setPassword("newPassword");
 
         UserDto updatedUser = userService.updateUser(savedUser);
 
         Assertions.assertEquals("newFirstname", updatedUser.getFirstname());
         Assertions.assertEquals("newLastname", updatedUser.getLastname());
-        Assertions.assertEquals("newPassword", updatedUser.getPassword());
     }
 
     /**
@@ -88,7 +86,7 @@ public class UserServiceIntegrationTest {
     @Test
     @Sql(scripts = "classpath:authentication/repository/insert_users.sql")
     public void shouldNotUpdateUserWithNotExistingUser() {
-        UserDto userDto = new UserDto(100, "testEmail", "testPassword", "testFirstname", "testLastname");
+        UserDto userDto = new UserDto(100, "testEmail", "testFirstname", "testLastname");
 
         Assertions.assertThrows(UserDoesNotExistsException.class, () -> userService.updateUser(userDto));
     }

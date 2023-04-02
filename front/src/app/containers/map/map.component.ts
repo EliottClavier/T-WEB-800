@@ -1,10 +1,16 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import {Location} from "../../models/location/location.model";
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
-import {ItemModel} from "../../models/item/item.model";
-import {LeisureType} from "../../enums/leisure-type";
-import {map, Observable} from 'rxjs';
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
+import {TransportRequest} from "../../types/transport-request.type";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {TransportOptions} from "../../types/transport-options.type";
+import {TransportService} from "../../services/transport/transport.service";
+import TravelMode = google.maps.TravelMode;
+import Polyline = google.maps.Polyline;
+import LatLng = google.maps.LatLng;
 
 @Component({
   selector: 'app-map',
@@ -49,22 +55,22 @@ export class MapComponent implements OnChanges {
   public markerAnimation: google.maps.Animation = google.maps.Animation.DROP;
 
   /* Markers */
-  @Input() public selectedLocation: Location = new Location(
+  @Input() public selectedLocation: LocationModel = new LocationModel(
     "",
     "",
     this.center.lat,
     this.center.lng
   );
-  @Input() public nextLocation: Location | undefined;
+  @Input() public nextLocation: LocationModel | undefined;
 
-  @Input() public markers: ItemModel[] = [];
-  @Input() public selectedMarkers: ItemModel[] = [];
-  @Input() public activeMarker: ItemModel | undefined;
+  @Input() public markers: LeisureItemModel[] = [];
+  @Input() public selectedMarkers: LeisureItemModel[] = [];
+  @Input() public activeMarker: LeisureItemModel | undefined;
 
   /* Map and map events */
   @ViewChild(GoogleMap, { static: false }) public map!: GoogleMap;
   @Output() public onBoundariesChange: EventEmitter<any> = new EventEmitter<any>();
-  @Output() public onMarkerClick: EventEmitter<ItemModel> = new EventEmitter<ItemModel>();
+  @Output() public onMarkerClick: EventEmitter<LeisureItemModel> = new EventEmitter<LeisureItemModel>();
 
   /* Itinerary and directions */
   @Input() public itineraryView: boolean = false;
@@ -73,7 +79,19 @@ export class MapComponent implements OnChanges {
   };
   public directionsResults: google.maps.DirectionsResult | undefined;
 
-  constructor(private _directionService: MapDirectionsService) {}
+  /* Polyline options for FLIGHT itinerary mode */
+  public polylineOptions: google.maps.PolylineOptions = {
+    strokeColor: '#4285F4',
+    strokeOpacity: 1.0,
+    strokeWeight: 5,
+    icons: [{
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+      }
+    }],
+  }
+
+  constructor(private _transportService: TransportService) {}
 
   public ngOnChanges(): void {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {
@@ -94,11 +112,11 @@ export class MapComponent implements OnChanges {
     return [google.maps.TravelMode.DRIVING, google.maps.TravelMode.WALKING, google.maps.TravelMode.BICYCLING, google.maps.TravelMode.TRANSIT].includes(travelMode)
   }
 
-  private _getDirections(request: google.maps.DirectionsRequest): Observable<MapDirectionsResponse> {
-    return this._directionService.route(request);
+  private _getDirections(request: TransportRequest): Observable<TransportOptions> {
+    return this._transportService.getTransportOptions(request);
   }
 
-  private _requestDirections(origin: string, destination: string, travelMode: google.maps.TravelMode, transitMode?: google.maps.TransitMode): void {
+  private _requestDirections(origin: string, destination: string, travelMode: google.maps.TravelMode, startDate: Date = new Date(), transitMode?: google.maps.TransitMode): void {
     const request: google.maps.DirectionsRequest = {
       origin: origin,
       destination: destination,
@@ -107,8 +125,13 @@ export class MapComponent implements OnChanges {
 
     transitMode && (request.transitOptions = { modes: [transitMode] });
 
-    this._getDirections(request).subscribe((response) => {
-      this.directionsResults = response.result;
+    let transportRequest: TransportRequest = {
+      directionRequest: request,
+      startDate: getIsoStringFromDate(startDate)
+    }
+
+    this._getDirections(transportRequest).subscribe((response) => {
+      this.directionsResults = response.routes;
     });
   }
 
@@ -128,16 +151,16 @@ export class MapComponent implements OnChanges {
     this.onBoundariesChange.emit(bounds);
   }
 
-  public onMapMarkerClick(marker: ItemModel): void {
+  public onMapMarkerClick(marker: LeisureItemModel): void {
     this.activeMarker = marker;
     this.onMarkerClick.emit(marker);
   }
 
-  private _isMarkerSelected(marker: ItemModel): boolean {
-    return this.selectedMarkers.some((selectedMarker) => marker.lat === selectedMarker.lat && marker.lng === selectedMarker.lng);
+  private _isMarkerSelected(marker: LeisureItemModel): boolean {
+    return this.selectedMarkers.some((selectedMarker) => marker.location.lat === selectedMarker.location.lat && marker.location.lng === selectedMarker.location.lng);
   }
 
-  public getMarkerImage(marker: ItemModel): string {
+  public getMarkerImage(marker: LeisureItemModel): string {
     let markerType: string;
     if (marker === this.activeMarker) {
       markerType = 'active';
@@ -147,5 +170,23 @@ export class MapComponent implements OnChanges {
       markerType = 'default';
     }
     return `assets/images/markers/${markerType}-pin.svg`;
+  }
+
+  public castStringToTravelMode(travelMode: string): google.maps.TravelMode {
+    return travelMode as google.maps.TravelMode;
+  }
+
+  public drawFlightPolyline(): LatLng[] {
+    if (!this.selectedLocation.hasValidCoordinates() || !this.nextLocation?.hasValidCoordinates()) return [];
+    return [
+      new google.maps.LatLng(
+        this.selectedLocation.lat,
+        this.selectedLocation.lng
+      ),
+      new google.maps.LatLng(
+        this.nextLocation.lat,
+        this.nextLocation.lng
+      ),
+    ]
   }
 }

@@ -12,10 +12,10 @@ export class SimpleButtonComponent {
   @Input() public label: string = '';
   @Input() public height: string = '56px';
 
-  @Output() public buttonClick: EventEmitter<void> = new EventEmitter<void>();
+  @Output() public buttonClick: EventEmitter<any> = new EventEmitter<any>();
 
-  public onClickButton(): void {
-    this.buttonClick.emit();
+  public onClickButton($event? : any): void {
+    this.buttonClick.emit($event);
   }
 
 }

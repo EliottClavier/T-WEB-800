@@ -3,24 +3,24 @@ import { TestBed } from '@angular/core/testing';
 import { LocationService } from './location.service';
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {Location} from "../../models/location/location.model";
-import {getDateFromIsoString} from "../../utils/date.utils";
-import {LeisureType} from "../../enums/leisure-type";
+import {LocationModel} from "../../models/location/location.model";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {LeisureCategory} from "../../enums/leisure-category";
 
 describe('LocationService', () => {
   let service: LocationService;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  let testLocationOptions: Location[] = [
-    new Location("1", "Paris"),
-    new Location("2", "Lyon"),
-    new Location("3", "Marseille"),
-    new Location("4", "Nantes"),
-    new Location("5", "Nanterre"),
+  let testLocationOptions: LocationModel[] = [
+    new LocationModel("1", "Paris"),
+    new LocationModel("2", "Lyon"),
+    new LocationModel("3", "Marseille"),
+    new LocationModel("4", "Nantes"),
+    new LocationModel("5", "Nanterre"),
   ];
 
-  let testLeisure = LeisureType.ACCOMMODATION;
+  let testLeisure = LeisureCategory.ACCOMMODATION;
 
   let testLocationInformations: any[] = [
     {
@@ -29,7 +29,7 @@ describe('LocationService', () => {
     },
     {
       "name": "firstBar",
-      "type": LeisureType.BAR,
+      "type": LeisureCategory.BAR,
     },
     {
       "name": "secondAccommodation",
@@ -62,15 +62,17 @@ describe('LocationService', () => {
 
     service.getLocationSuggestions(locationName).subscribe(data => {
       expect(data).toEqual(testLocationOptions.filter(
-        (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
+        (location: LocationModel) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
       ));
     });
 
     const req = httpMock.expectOne(`/api/locations/suggestion/${locationName}`);
     expect(req.request.method).toEqual('GET');
-    req.flush(testLocationOptions.filter(
-      (location: Location) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
-    ), { status: 200, statusText: 'OK' });
+    req.flush({
+     location: testLocationOptions.filter(
+      (location: LocationModel) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
+    )},
+      { status: 200, statusText: 'OK' });
   });
 
   it('should retrieve location informations with location search', () => {
@@ -83,7 +85,7 @@ describe('LocationService', () => {
     });
 
     const req = httpMock.expectOne(
-      `/api/locations/search/${locationName}/${testLeisure}?start=${getDateFromIsoString(new Date())}&end=${getDateFromIsoString(new Date())}`
+      `/api/locations/search/${locationName}/${testLeisure}?start=${getIsoStringFromDate(new Date())}&end=${getIsoStringFromDate(new Date())}`
     );
     expect(req.request.method).toEqual('GET');
     req.flush(testLocationInformations.filter(
@@ -103,7 +105,7 @@ describe('LocationService', () => {
     });
 
     const req = httpMock.expectOne(
-      `/api/locations/search/${locationName}/${testLeisure}?start=${getDateFromIsoString(start)}&end=${getDateFromIsoString(end)}`
+      `/api/locations/search/${locationName}/${testLeisure}?start=${getIsoStringFromDate(start)}&end=${getIsoStringFromDate(end)}`
     );
     expect(req.request.method).toEqual('GET');
     req.flush(testLocationInformations.filter(

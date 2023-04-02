@@ -11,7 +11,6 @@ export class DateRangeComponent implements OnInit {
   @Input() public searchForm: FormGroup = new FormGroup<any>({});
 
   public ngOnInit(): void {
-    // Add controls
     this._initForm();
   }
 

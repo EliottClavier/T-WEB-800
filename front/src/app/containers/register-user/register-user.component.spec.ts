@@ -88,7 +88,6 @@ describe('RegisterUserComponent', () => {
     expect(component.user.firstName).toEqual('Albert');
     expect(component.user.lastName).toEqual('Test');
     expect(component.user.email).toEqual('test@gmail.com');
-    expect(component.success).toEqual(true);
   });
 
   it('should create a new user with all informations but is bad request', () => {
@@ -108,7 +107,6 @@ describe('RegisterUserComponent', () => {
     expect(component.user.firstName).toEqual('');
     expect(component.user.lastName).toEqual('');
     expect(component.user.email).toEqual('');
-    expect(component.success).toEqual(false);
     expect(component.errorMessage).toEqual(API_RESPONSE.BAD_REQUEST);
   });
 

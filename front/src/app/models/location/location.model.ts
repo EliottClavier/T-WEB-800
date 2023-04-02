@@ -1,4 +1,4 @@
-export class Location {
+export class LocationModel {
 
 
   private _id: string;
@@ -13,8 +13,10 @@ export class Location {
     this._lng = lng;
   }
 
+
+
   public hasValidCoordinates(): boolean {
-    return -90 <= this._lat && this._lat <= 90 && -90 <= this._lng && this._lng <= 90;
+    return -90 <= this._lat && this._lat <= 90 && -180 <= this._lng && this._lng <= 180;
   }
 
   // Getter
@@ -49,5 +51,9 @@ export class Location {
 
   set lat(value: number) {
     this._lat = value;
+  }
+
+  getCoordinates(): string {
+    return this.lng + "-" + this.lat;
   }
 }

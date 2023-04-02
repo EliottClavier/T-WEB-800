@@ -27,7 +27,7 @@ public class UserRepositoryImplTest {
 
     @Test
     public void shouldThrowEmailAlreadyExistsException() {
-        User user = new User(null, "jacques@gmail.com", "test", "test", "test");
+        User user = new User(null, "jacques@gmail.com", "test", "test");
 
         Mockito.when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
 

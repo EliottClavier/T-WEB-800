@@ -1,8 +1,8 @@
-import {Register} from "./register.model";
+import {RegisterModel} from "./register.model";
 
-describe('RegisterModelTest', () => {
+describe('RegisterTest', () => {
   it('should create a new register', () => {
-    const register = new Register('Albert', 'Test','test@gmail.com', 'password123');
+    const register = new RegisterModel('Albert', 'Test','test@gmail.com', 'password123');
 
     expect(register.firstName).toBe('Albert');
     expect(register.lastName).toBe('Test');
@@ -18,7 +18,7 @@ describe('RegisterModelTest', () => {
       password: 'password123'
     };
 
-    const credentials = Register.fromJson(json);
+    const credentials = RegisterModel.fromJson(json);
 
     expect(credentials.firstName).toBe('Albert');
     expect(credentials.lastName).toBe('Test');
@@ -27,7 +27,7 @@ describe('RegisterModelTest', () => {
   });
 
   it('should convert register to JSON', () => {
-    const register = new Register('Albert', 'Test', 'test@gmail.com', 'password123');
+    const register = new RegisterModel('Albert', 'Test', 'test@gmail.com', 'password123');
 
     const json = register.toJson();
 

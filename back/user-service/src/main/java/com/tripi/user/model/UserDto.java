@@ -15,8 +15,6 @@ public class UserDto {
     @NotEmpty(message = "Email is required")
     private String email;
 
-    private String password;
-
     @NotNull(message = "First name is required")
     @NotEmpty(message = "First name is required")
     private String firstname;
@@ -25,10 +23,9 @@ public class UserDto {
     @NotEmpty(message = "Last name is required")
     private String lastname;
 
-    public UserDto(Integer id, String email, String password, String firstname, String lastname) {
+    public UserDto(Integer id, String email, String firstname, String lastname) {
         this.id = id;
         this.email = email;
-        this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
     }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Location} from "../../../models/location/location.model";
+import {LocationModel} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {SearchBarEvent} from "../../../types/search-bar-event.type";
@@ -19,7 +19,7 @@ export class SearchInputComponent implements OnInit {
   @Output() public onSearchBarSelect: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
 
   @Output() public onLocationOptionChange: EventEmitter<any> = new EventEmitter<any>();
-  public locationOptions: Location[] = [];
+  public locationOptions: LocationModel[] = [];
 
   @Input() public noMarginBottom: boolean = false;
 
@@ -33,7 +33,7 @@ export class SearchInputComponent implements OnInit {
       "locationSearch", new FormControl<string>("", [ Validators.required ]),
     );
     this.searchForm.addControl(
-      "location", new FormControl<Location | null>(null, [ Validators.required, isLocation() ])
+      "location", new FormControl<LocationModel | null>(null, [ Validators.required, isLocation() ])
     );
 
     // Change detection
@@ -53,18 +53,18 @@ export class SearchInputComponent implements OnInit {
 
   private _getLocationSuggestions(search: string): void {
     this._locationService.getLocationSuggestions(search).subscribe(
-      (locations: Location[]) => {
+      (locations: LocationModel[]) => {
         this.locationOptions = locations;
       });
   }
 
   public onLocationChange(value: string): void {
     let location: AbstractControl = this.searchForm.get("location")!;
-    location!.setValue(value ? new Location("", value) : null);
+    location!.setValue(value ? new LocationModel("", value) : null);
     location.value && location.value.name ? this._getLocationSuggestions(location.value.name) : this.locationOptions = [];
   }
 
-  public onLocationOptionClick(location: Location): void {
+  public onLocationOptionClick(location: LocationModel): void {
     this.onLocationOptionChange.emit(location);
     this.locationOptions = [];
   }

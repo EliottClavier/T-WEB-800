@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Credentials} from "../../models/credentials/credentials.model";
+import {CredentialsModel} from "../../models/credentials/credentialsModel";
 import {
   FormControl,
   FormGroup,
@@ -19,9 +19,8 @@ import {MatDialogRef} from "@angular/material/dialog";
 })
 
 export class LoginUserComponent {
-  credentials: Credentials;
+  credentials: CredentialsModel;
   loginForm: FormGroup;
-  success: boolean;
   user: User;
   errorMessage: string;
   LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
@@ -31,8 +30,7 @@ export class LoginUserComponent {
     private _loginService: LoginService,
     public _dialogRef: MatDialogRef<LoginUserComponent>
   ) {
-    this.credentials = new Credentials('', '');
-    this.success = false;
+    this.credentials = new CredentialsModel('', '');
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
@@ -47,7 +45,6 @@ export class LoginUserComponent {
       this._loginService.postLogin(this.credentials).subscribe({
         next: (value: any) => {
           this.user = value['data'];
-          this.success = true;
           this._dialogRef.close();
         },
         error: () => {

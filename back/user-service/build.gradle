@@ -1,20 +1,15 @@
 plugins {
 	id 'java'
-	id 'war'
 	id 'org.springframework.boot' version '3.0.3'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
-apply plugin: 'war'
-war {
+jar {
 	enabled = true
-	archiveName = 'ROOT.war'
-	baseName = 'ROOT'
-	version = '0.0.1'
 }
 
 group = 'com.tripi.back'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
@@ -35,20 +30,24 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.projectlombok:lombok:1.18.22'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-commons:4.0.1'
+	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'com.h2database:h2'
 	implementation 'junit:junit:4.13.1'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.2.Final'
 	implementation 'org.glassfish:jakarta.el:4.0.2'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation 'org.jetbrains:annotations:23.0.0'
 
 	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 

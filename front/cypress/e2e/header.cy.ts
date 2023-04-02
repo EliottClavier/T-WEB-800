@@ -1,13 +1,13 @@
 describe('Header', () => {
-  it('should navigate to "/login" when login button is clicked', () => {
+  it('should open login dialog on click', () => {
     cy.visit('/');
-    cy.get('.login').click();
-    cy.url().should('include', '/login');
+    cy.get('[header-login]').click();
+    cy.get('[login-dialog]').should('exist');
   });
 
-  it('should navigate to "/register-user" when register button is clicked', () => {
+  it('should open register dialog on click', () => {
     cy.visit('/');
-    cy.get('.register').click();
-    cy.url().should('include', '/register-user');
+    cy.get('[header-register]').click();
+    cy.get('[register-dialog]').should('exist');
   });
 });

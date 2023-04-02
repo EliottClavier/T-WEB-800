@@ -12,7 +12,7 @@
     map-marker
     *ngFor="let marker of markers"
     (mapClick)="onMapMarkerClick(marker)"
-    [position]="{ lat: marker.lat, lng: marker.lng }"
+    [position]="{ lat: marker.location.lat, lng: marker.location.lng }"
     [title]="marker.title"
     [options]="{
       animation: markerAnimation,
@@ -22,10 +22,15 @@
       }
      }"
   ></map-marker>
+  <map-polyline
+    map-flight-polyline
+    *ngIf="itineraryView && itineraryMode.travelMode === castStringToTravelMode('FLIGHT')"
+    [path]="drawFlightPolyline()"
+    [options]="polylineOptions">
+  </map-polyline>
   <map-directions-renderer
     map-directions-renderer
     *ngIf="itineraryView && directionsResults"
     [directions]="directionsResults">
   </map-directions-renderer>
 </google-map>
-<div style="margin-bottom: 50em"></div>

@@ -24,7 +24,6 @@ public class UserService {
 
     @Autowired
     UserService(UserRepository userRepository, ModelMapper modelMapper) {
-
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
@@ -37,7 +36,7 @@ public class UserService {
         return modelMapper.map(userDto, User.class);
     }
 
-    public UserDto saveUser(UserDto userDto) throws EmailAlreadyExistsException {
+    public UserDto saveUser(UserDto userDto) throws Exception {
         User user = userRepository.saveNewUserWithExceptions(convertToEntity(userDto));
         return convertToDto(user);
     }
@@ -62,9 +61,6 @@ public class UserService {
         }
         userToUpdate.setEmail(user.getEmail());
         userToUpdate.setFirstname(user.getFirstname());
-        if (user.getPassword() != null) {
-            userToUpdate.setPassword(user.getPassword());
-        }
         userToUpdate.setLastname(user.getLastname());
         return convertToDto(userRepository.save(userToUpdate));
     }

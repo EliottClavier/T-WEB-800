@@ -24,14 +24,14 @@ class UserDtoTest {
 
     @Test
     void testAllFieldsValid() {
-        UserDto userDto = new UserDto(1, "test@example.com", "password123", "Jacques", "Occo");
+        UserDto userDto = new UserDto(1, "test@example.com", "Jacques", "Occo");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertTrue(violations.isEmpty());
     }
 
     @Test
     void testEmptyEmail() {
-        UserDto userDto = new UserDto(1, "", "password123", "Jacques", "Occo");
+        UserDto userDto = new UserDto(1, "", "Jacques", "Occo");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("Email is required", violations.iterator().next().getMessage());
@@ -39,7 +39,7 @@ class UserDtoTest {
 
     @Test
     void testEmptyFirstName() {
-        UserDto userDto = new UserDto(1, "test@example.com", "password123", "", "Occo");
+        UserDto userDto = new UserDto(1, "test@example.com", "", "Occo");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("First name is required", violations.iterator().next().getMessage());
@@ -47,7 +47,7 @@ class UserDtoTest {
 
     @Test
     void testEmptyLastName() {
-        UserDto userDto = new UserDto(null, "test@example.com", "password123", "Jacques", "");
+        UserDto userDto = new UserDto(null, "test@example.com", "Jacques", "");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("Last name is required", violations.iterator().next().getMessage());
@@ -55,7 +55,7 @@ class UserDtoTest {
 
     @Test
     void testNullEmail() {
-        UserDto userDto = new UserDto(null, null, "password123", "Jacques", "Occo");
+        UserDto userDto = new UserDto(null, null, "Jacques", "Occo");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("Email is required", violations.iterator().next().getMessage());
@@ -63,7 +63,7 @@ class UserDtoTest {
 
     @Test
     void testNullFirstName() {
-        UserDto userDto = new UserDto(null, "test@example.com", "password123", null, "Occo");
+        UserDto userDto = new UserDto(null, "test@example.com", null, "Occo");
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("First name is required", violations.iterator().next().getMessage());
@@ -71,7 +71,7 @@ class UserDtoTest {
 
     @Test
     void testNullLastName() {
-        UserDto userDto = new UserDto(null, "test@example.com", "password123", "Jacques", null);
+        UserDto userDto = new UserDto(null, "test@example.com", "Jacques", null);
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
         assertFalse(violations.isEmpty());
         assertEquals("Last name is required", violations.iterator().next().getMessage());
@@ -86,9 +86,6 @@ class UserDtoTest {
 
         userDto.setEmail("test@example.com");
         assertEquals("test@example.com", userDto.getEmail());
-
-        userDto.setPassword("password123");
-        assertEquals("password123", userDto.getPassword());
 
         userDto.setFirstname("Jacques");
         assertEquals("Jacques", userDto.getFirstname());

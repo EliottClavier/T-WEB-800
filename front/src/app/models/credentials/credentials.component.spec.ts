@@ -1,8 +1,8 @@
-import {Credentials} from "./credentials.model";
+import {CredentialsModel} from "./credentialsModel";
 
-describe('CredentialsModelTest', () => {
+describe('CredentialsTest', () => {
   it('should create a new credentials', () => {
-    const credentials = new Credentials('test@gmail.com', 'password123');
+    const credentials = new CredentialsModel('test@gmail.com', 'password123');
 
     expect(credentials.email).toBe('test@gmail.com');
     expect(credentials.password).toBe('password123');
@@ -14,14 +14,14 @@ describe('CredentialsModelTest', () => {
       password: 'password123'
     };
 
-    const credentials = Credentials.fromJson(json);
+    const credentials = CredentialsModel.fromJson(json);
 
     expect(credentials.email).toBe('test@gmail.com');
     expect(credentials.password).toBe('password123');
   });
 
   it('should convert credentials to JSON', () => {
-    const credentials = new Credentials( 'test@gmail.com', 'password123');
+    const credentials = new CredentialsModel( 'test@gmail.com', 'password123');
 
     const json = credentials.toJson();
 

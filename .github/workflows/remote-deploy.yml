@@ -2,6 +2,16 @@ name: Deploy on remote server
 
 on:
   workflow_call:
+    secrets:
+        SERVER_USERNAME:
+            description: 'Username of the server'
+            required: true
+        SERVER_IP:
+            description: 'IP of the server'
+            required: true
+        SERVER_SSH_KEY:
+            description: 'SSH key of the server'
+            required: true
 
 jobs:
   deploy:

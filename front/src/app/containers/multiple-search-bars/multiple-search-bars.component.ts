@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildSearchBarFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
-import {Location} from "../../models/location/location.model";
+import {LocationModel} from "../../models/location/location.model";
 import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
 
 @Component({
@@ -16,7 +16,7 @@ export class MultipleSearchBarsComponent {
 
   @Input() public searchForms: FormGroup = new FormGroup({
     searchFormsArray: new FormArray<FormGroup>([
-      buildSearchBarFormGroupControlsDetails(),
+      buildStepFormGroupControlsDetails(),
     ]),
   });
 
@@ -27,10 +27,7 @@ export class MultipleSearchBarsComponent {
   @Output() public activeSearchBarChange: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
   @Output() public viewChange: EventEmitter<MapView> = new EventEmitter<MapView>();
 
-  constructor(
-    private _router: Router,
-  ) {
-  }
+  constructor() {}
 
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
@@ -45,12 +42,12 @@ export class MultipleSearchBarsComponent {
   }
 
   public isNextLocationValid(index: number): boolean {
-    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as Location | undefined;
+    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as LocationModel;
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
   public addSearchBar(): void {
-    let newFormGroup: FormGroup = buildSearchBarFormGroupControlsDetails();
+    let newFormGroup: FormGroup = buildStepFormGroupControlsDetails();
     if (this.lastSearchBar.get("end")?.value) {
       newFormGroup.setControl(
         "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [ Validators.required ])
@@ -90,6 +87,13 @@ export class MultipleSearchBarsComponent {
     this.activeSearchBar = event;
     this.activeSearchBarChange.emit(this.activeSearchBar);
     this.viewChange.emit(MapView.ITINERARY);
+  }
+
+  public onLocationOptionChange(event: LocationModel): void {
+    this.searchFormsArrayControls[this.activeSearchBar.index].patchValue({
+      locationSearch: event.name,
+      location: new LocationModel(event.id, event.name, event.lat, event.lng)
+    });
   }
 
   public accessTravelModeIcon(searchBarIndex: number): string {
