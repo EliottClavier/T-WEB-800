@@ -30,7 +30,7 @@ export class ExploreComponent implements OnInit {
     isEditing: false,
   };
 
-  onActiveSearchBarChange($event: SearchBarEvent) {
+  public onActiveSearchBarChange($event: SearchBarEvent) {
     this.activeSearchBar = $event;
 
     let formArrayElement: FormArray = this.searchFormsArray;
@@ -68,6 +68,10 @@ export class ExploreComponent implements OnInit {
     return this.selectedSearchForm.get('location')?.value as LocationModel;
   }
 
+  get selectedMarkers(): LeisureItemModel[] {
+    return this.selectedSearchForm.get('leisures')?.value as LeisureItemModel[];
+  }
+
   get nextLocation(): LocationModel | undefined {
     return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as LocationModel | undefined
   }
@@ -78,16 +82,14 @@ export class ExploreComponent implements OnInit {
     private _suggestionsStore: SuggestionsStoreService) {
   }
 
-
   public ngOnInit(): void {
     this._loadRouteParams();
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);
-      }});
-    }
-
-
+      }
+    });
+  }
 
   private _isValidDate(date: any): boolean {
     return date instanceof Date && !isNaN(date.getTime());
@@ -116,7 +118,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
+  public getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
 
@@ -125,7 +127,6 @@ export class ExploreComponent implements OnInit {
         this._suggestionsStore.setSuggestionsData(data);
       },
       error: (error) => {
-        alert("error");
         this._suggestionsStore.setSuggestionsData(getAccommodationItems());
       }
   });
@@ -162,16 +163,13 @@ export class ExploreComponent implements OnInit {
     let leisures : LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
     leisures.push(item);
     this.selectedSearchForm.get('leisures')?.setValue(leisures);
-    alert((this.selectedSearchForm.get('leisures')?.value).length);
   }
 
   public getLeisureSuggestions() {
-
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
-    alert(category)
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
