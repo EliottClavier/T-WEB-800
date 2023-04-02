@@ -16,6 +16,7 @@ describe('SimpleButtonComponent', () => {
     component = spectator.component;
 
     component.label = "Test";
+    component.buttonType = "flat";
 
     spectator.detectChanges();
   });
@@ -86,5 +87,21 @@ describe('SimpleButtonComponent', () => {
     spectator.detectChanges();
     button = spectator.query('[simple-button]')!;
     expect(button).toHaveStyle({height: component.height});
+  });
+
+  it('should have a mat-flat-button by default', () => {
+    expect(spectator.query('button[mat-flat-button][simple-button]')).toBeTruthy();
+  });
+
+  it('should have a mat-stroked-button', () => {
+    component.buttonType = 'stroked';
+    spectator.detectChanges();
+    expect(spectator.query('button[mat-stroked-button][simple-button]')).toBeTruthy();
+  });
+
+  it('should have a mat-flat-button with an icon', () => {
+    component.icon = 'add';
+    spectator.detectChanges();
+    expect(spectator.query('button[mat-flat-button][simple-button]>mat-icon')).toHaveText('add');
   });
 });

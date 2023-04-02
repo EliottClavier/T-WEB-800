@@ -1,7 +1,12 @@
-
-<div >
-  <label *ngFor="let option of radioLabelList; let i = index" [attr.data-index]="i" >
-    <input data-cy-radio-button-item [id]="'item-' + i" type="radio" [name]="option" [value]="i"  [(ngModel)]="selectedOption">
+<mat-radio-group
+  class="row flex-column"
+  [(ngModel)]="selectedOption">
+  <mat-radio-button
+    data-cy-radio-button-item
+    class="px-0"
+    *ngFor="let option of radioLabelList; let i = index"
+    [value]="i" [id]="'item-' + i" [name]="option" [checked]="i === 0"
+    (change)="selectedOption = i">
     {{ option }}
-  </label>
-</div>
+  </mat-radio-button>
+</mat-radio-group>

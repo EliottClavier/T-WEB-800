@@ -46,6 +46,7 @@ import { LeisureCategoryFilterComponent } from './containers/leisure-category-fi
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
 import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -104,6 +105,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatRadioModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',
