@@ -13,6 +13,8 @@ import {TransportService} from "../../services/transport/transport.service";
 import {TransportRequest} from "../../types/transport-request.type";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TransportOptions} from "../../types/transport-options.type";
+import LatLng = google.maps.LatLng;
+import TravelMode = google.maps.TravelMode;
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -446,11 +448,59 @@ describe('MapComponent', () => {
       });
     });
 
+    describe('castStringToTravelMode', function () {
+      it('should return a string as a TravelMode', () => {
+        expect(component.castStringToTravelMode("DRIVING")).toEqual(google.maps.TravelMode.DRIVING);
+        expect(component.castStringToTravelMode("FLIGHT")).toEqual("FLIGHT" as TravelMode);
+      });
+    });
+
+    describe('drawFlightPolyline', () => {
+      beforeEach(() => {
+        component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
+        component.nextLocation = new LocationModel("2", "Paris", 20, 60);
+        spectator.detectChanges();
+      });
+
+      it('should return empty array if selectedLocation is invalid', () => {
+        component.selectedLocation = new LocationModel("", "", 200, 200)
+        let result: LatLng[] = component.drawFlightPolyline();
+        expect(result).toEqual([]);
+      });
+
+      it('should return empty array if nextLocation is invalid', () => {
+        component.nextLocation = new LocationModel("", "", 200, 200);
+        let result: LatLng[] = component.drawFlightPolyline();
+        expect(result).toEqual([]);
+      });
+
+      it('should return array of LatLngLiteral if selectedLocation and nextLocation are valid', () => {
+        let result: any = component.drawFlightPolyline();
+        result = result.map((latLng: LatLng) => {
+          return { lat: latLng.lat(), lng: latLng.lng() }
+        });
+        expect(result.length).toEqual(2);
+        expect(result[0].lat).toEqual(10);
+        expect(result[0].lng).toEqual(50);
+        expect(result[1].lat).toEqual(20);
+        expect(result[1].lng).toEqual(60);
+      });
+    });
+
     describe('Templates', () => {
       it('should have a map-directions-renderer element when destinationsResults is defined', () => {
         component.directionsResults = { routes: [] };
+        component.itineraryMode.travelMode = "DRIVING" as TravelMode;
         spectator.detectChanges();
         expect(spectator.query('map-directions-renderer[map-directions-renderer]')).toBeTruthy();
+      });
+
+      it('should have a map-polyline element when travelMode is FLIGHT', () => {
+        component.directionsResults = { routes: [] };
+        component.itineraryMode.travelMode = "FLIGHT" as TravelMode;
+        spectator.detectChanges();
+        expect(component.itineraryMode.travelMode).toEqual("FLIGHT" as TravelMode);
+        expect(spectator.query('map-polyline[map-flight-polyline]')).toBeTruthy();
       });
     });
   });

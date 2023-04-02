@@ -8,6 +8,9 @@ import {TransportRequest} from "../../types/transport-request.type";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TransportOptions} from "../../types/transport-options.type";
 import {TransportService} from "../../services/transport/transport.service";
+import TravelMode = google.maps.TravelMode;
+import Polyline = google.maps.Polyline;
+import LatLng = google.maps.LatLng;
 
 @Component({
   selector: 'app-map',
@@ -75,6 +78,18 @@ export class MapComponent implements OnChanges {
     travelMode: google.maps.TravelMode.DRIVING,
   };
   public directionsResults: google.maps.DirectionsResult | undefined;
+
+  /* Polyline options for FLIGHT itinerary mode */
+  public polylineOptions: google.maps.PolylineOptions = {
+    strokeColor: '#4285F4',
+    strokeOpacity: 1.0,
+    strokeWeight: 5,
+    icons: [{
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+      }
+    }],
+  }
 
   constructor(private _transportService: TransportService) {}
 
@@ -155,5 +170,23 @@ export class MapComponent implements OnChanges {
       markerType = 'default';
     }
     return `assets/images/markers/${markerType}-pin.svg`;
+  }
+
+  public castStringToTravelMode(travelMode: string): google.maps.TravelMode {
+    return travelMode as google.maps.TravelMode;
+  }
+
+  public drawFlightPolyline(): LatLng[] {
+    if (!this.selectedLocation.hasValidCoordinates() || !this.nextLocation?.hasValidCoordinates()) return [];
+    return [
+      new google.maps.LatLng(
+        this.selectedLocation.lat,
+        this.selectedLocation.lng
+      ),
+      new google.maps.LatLng(
+        this.nextLocation.lat,
+        this.nextLocation.lng
+      ),
+    ]
   }
 }
