@@ -42,6 +42,7 @@ import { MapTravelModeSelectionComponent } from './containers/map-travel-mode-se
 import { MatDialogModule } from "@angular/material/dialog";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapFiltersComponent,
     MapTravelModeSelectionComponent,
     CarouselComponent,
+    FooterComponent,
   ],
   imports: [
     GoogleMapsModule,
