@@ -20,7 +20,9 @@ export class StepModel {
     location: LocationModel = new LocationModel(),
     leisures: LeisureItemModel[] = new Array<LeisureItemModel>(),
     start: string = getIsoStringFromDate(new Date()),
-    end: string = getIsoStringFromDate(new Date())) {
+    end: string = getIsoStringFromDate(new Date()),
+    travelMode?: TravelMode,
+  ) {
 
     this._id = id;
     this._name = name;
@@ -28,6 +30,7 @@ export class StepModel {
     this._location = location;
     this._start = start;
     this._end = end;
+    this._travelMode = travelMode;
 
   }
 

@@ -66,13 +66,11 @@ export class TripBuilderService {
   }
 
   public saveTrip(tripName: string) {
-
     this._getStepModelFromTripFormGroup()
     this._trip.name = tripName;
-    this._trip.steps
-    this._trip.isSaved = true
-    this._getTripDates()
-    console.log("res : ", this._trip);
+    this._trip.steps;
+    this._trip.isSaved = true;
+    this._getTripDates();
     return this._trip
   }
 }

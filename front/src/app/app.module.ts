@@ -47,6 +47,7 @@ import { RadioButtonComponent } from './components/inputs/radio-button/radio-but
 import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
+import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -106,6 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatRadioModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',

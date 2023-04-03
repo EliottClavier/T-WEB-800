@@ -1,4 +1,4 @@
-package com.tripi.accomodationservice;
+package com.tripi.accommodationservice;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = AccomodationServiceApplication.class)
-public class AccomodationServiceApplicationTests {
+@SpringBootTest(classes = AccommodationServiceApplication.class)
+public class AccommodationServiceApplicationTests {
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -24,6 +24,6 @@ public class AccomodationServiceApplicationTests {
 	@Test
 	public void mainTest() {
 		String[] args = new String[]{};
-		AccomodationServiceApplication.main(args);
+		AccommodationServiceApplication.main(args);
 	}
 }

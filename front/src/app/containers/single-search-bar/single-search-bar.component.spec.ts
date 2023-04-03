@@ -99,7 +99,7 @@ describe('SingleSearchBarComponent', () => {
       spyOn(component["_router"], 'navigate').and.stub();
       spyOn(component, 'validate').and.callThrough();
 
-      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
+      let button = spectator.query("app-simple-button[search-bar-validate] [simple-button]")!;
       spectator.click(button);
 
       expect(button).not.toBeDisabled();
@@ -135,7 +135,7 @@ describe('SingleSearchBarComponent', () => {
       spyOn(component, 'validate').and.callThrough();
       spyOn(component["_router"], 'navigate').and.stub();
 
-      let button = spectator.query("app-simple-button[search-bar-validate]>[simple-button]")!;
+      let button = spectator.query("app-simple-button[search-bar-validate] [simple-button]")!;
       spectator.click(button);
 
       expect(component.validate).toHaveBeenCalled();

@@ -9,14 +9,9 @@ import {
 } from "@ngneat/spectator";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {LocationModel} from "../../models/location/location.model";
-import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TripStoreService} from "../../store/trip-store/trip-store.service";
-import {TripModel} from "../../models/trip/trip.model";
 import {TripBuilderService} from "./trip-builder.service";
-import {getMockTrips, getMockTripForm} from "../../utils/trip.mock.utils";
-import {LeisureCategory} from "../../enums/leisure-category";
-import {SuggestionsService} from "../suggestions-service/suggestions.service";
+import {getMockTrips} from "../../utils/trip.mock.utils";
 
 describe('TripService', () => {
 
