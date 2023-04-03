@@ -1,0 +1,9 @@
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 16px;
+}
+
+.close:hover {
+    cursor: pointer;
+}

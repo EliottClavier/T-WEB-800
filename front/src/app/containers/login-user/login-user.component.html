@@ -1,3 +1,6 @@
+<div class="close" >
+  <mat-icon fontIcon="close icon" (click)="closeLoginDialog()"></mat-icon>
+</div>
 <h1 mat-dialog-title login-title [align]="'center'" class="m-0 my-3">{{ 'Hello again !' | uppercase }}</h1>
 <div mat-dialog-content login-dialog>
   <form [formGroup]="loginForm" class="row justify-content-center">
@@ -27,15 +30,8 @@
     </div>
     <mat-error login-error-request *ngIf="this.errorMessage !== ''">{{this.errorMessage}}</mat-error>
   </form>
-  <div
-    mat-dialog-actions
-    class="px-0"
-    [align]="'center'">
-      <app-simple-button
-        class="w-100"
-        login-button
-        [label]="'Login'"
-        (buttonClick)="loginUser()">
-      </app-simple-button>
+  <div mat-dialog-actions class="px-0" [align]="'center'">
+    <app-simple-button class="w-100" login-button [label]="'Login'" (buttonClick)="loginUser()">
+    </app-simple-button>
   </div>
 </div>

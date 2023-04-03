@@ -1,15 +1,11 @@
-import {Component} from '@angular/core';
-import {CredentialsModel} from "../../models/credentials/credentialsModel";
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
-import {LoginConst} from "../../enums/login-const";
-import {User} from "../../models/user/User.model";
-import {ApiResponseConst} from "../../enums/api-response-const";
-import {LoginService} from "../../services/login/login.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import { Component } from '@angular/core';
+import { CredentialsModel } from "../../models/credentials/credentialsModel";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { LoginConst } from "../../enums/login-const";
+import { User } from "../../models/user/User.model";
+import { ApiResponseConst } from "../../enums/api-response-const";
+import { LoginService } from "../../services/login/login.service";
+import { MatDialogRef } from "@angular/material/dialog";
 
 
 @Component({
@@ -54,5 +50,9 @@ export class LoginUserComponent {
     }
   }
 
+  public closeLoginDialog(): void {
+    console.log("close");
+    this._dialogRef.close("test");
+  }
 }
 

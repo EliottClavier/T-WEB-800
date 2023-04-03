@@ -73,6 +73,11 @@ export class RegisterUserComponent {
       });
     }
   }
+
+  public closeRegisterDialog(): void {
+    console.log("close");
+    this._dialogRef.close("test");
+  }
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
