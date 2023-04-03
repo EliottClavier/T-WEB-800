@@ -26,6 +26,19 @@ import {
 } from "../../containers/leisure-category-filter/leisure-category-filter.component";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {TripService} from "../../services/trip/trip.service";
+import {
+  AddSummaryHeader,
+  AddSummaryLeisures,
+  AddSummaryMap,
+  AddSummaryText,
+  BuildCanvas,
+  BuildUrl, SavePdf
+} from "../../utils/pdf/pdf.utils";
+import {TripModel} from "../../models/trip/trip.model";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {StepModel} from "../../models/step/step.model";
+import TravelMode = google.maps.TravelMode;
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -461,5 +474,162 @@ describe('ExploreComponent', () => {
   //
   //   }, 0);
   // });
+
+  describe('PDF Export', () => {
+    let _tripService: TripBuilderService;
+    let trip: TripModel;
+
+    beforeEach(() => {
+      _tripService = spectator.inject(TripBuilderService);
+      trip = new TripModel();
+      trip.name = "Trip name";
+      trip.startDate = getIsoStringFromDate(new Date());
+      trip.endDate = getIsoStringFromDate(new Date());
+      trip.steps = [
+        new StepModel(
+          "1",
+          "Nantes",
+          new LocationModel("1", "Nantes", 47.219615480985965, -1.55627203138153),
+          [
+            new LeisureItemModel(
+              "1",
+              "Hotel",
+              "",
+              "Hotel description",
+              './assets/images/default_image.jpg',
+              new LocationModel("1", "Nantes", 47.24274536406868, -1.5948089748020868),
+              LeisureCategory.ACCOMMODATION,
+              getIsoStringFromDate(new Date()),
+              4,
+              100
+            ),
+            new LeisureItemModel(
+              "2",
+              "Restaurant",
+              "",
+              "Restaurant description",
+              './assets/images/default_image.jpg',
+              new LocationModel("1", "Nantes", 47.243949509046125, -1.5530154675910486),
+              LeisureCategory.RESTAURANT,
+              getIsoStringFromDate(new Date()),
+              4,
+              100
+            ),
+          ],
+          getIsoStringFromDate(new Date()),
+          getIsoStringFromDate(new Date()),
+          "DRIVING" as TravelMode
+        ),
+        new StepModel(
+          "2",
+          "Paris",
+          new LocationModel("2", "Paris", 48.8941339490254, 2.364876797684228),
+          [
+            new LeisureItemModel(
+              "3",
+              "Hotel",
+              "",
+              "Hotel description description description description description description description description description description description description description description description description description ",
+              './assets/images/default_image.jpg',
+              new LocationModel("2", "Paris", 48.8941339490254, 2.364876797684228),
+              LeisureCategory.ACCOMMODATION,
+              getIsoStringFromDate(new Date()),
+              4,
+              100,
+            ),
+            // Cultural event
+            new LeisureItemModel(
+              "4",
+              "Cultural event",
+              "",
+              "Cultural event description",
+              './assets/images/default_image.jpg',
+              new LocationModel("2", "Paris", 48.8941339490254, 2.364876797684228),
+              LeisureCategory.CULTURAL_EVENT,
+              getIsoStringFromDate(new Date()),
+              4,
+              100,
+            ),
+          ],
+          getIsoStringFromDate(new Date()),
+          getIsoStringFromDate(new Date()),
+          "FLIGHT" as TravelMode
+        ),
+        new StepModel(
+          "3",
+          "Pékin",
+          new LocationModel("2", "Pékin", 39.91853605897336, 116.40154015421919),
+          []
+        ),
+      ];
+      spyOn<TripBuilderService, any>(_tripService, 'saveTrip').and.returnValue(trip);
+      spectator.detectChanges();
+    });
+
+    it('should have _tripService service injected', () => {
+      expect(component["_tripService"]).toBeDefined();
+      expect(component["_tripService"]).toBeTruthy();
+      expect(component["_tripService"]).toEqual(_tripService);
+    });
+
+    it('should call generateSummary when user click on export button', async () => {
+      spyOn<ExploreComponent, any>(component, 'generateSummary').and.callThrough();
+      spectator.click('[generate-pdf-button] [simple-button]');
+      expect(component.generateSummary).toHaveBeenCalled();
+    });
+
+    it('should retrieve saved TripModel', async () => {
+      await component.generateSummary();
+      expect(component["_tripService"].saveTrip).toHaveBeenCalled();
+    });
+
+    it('should build a canvas', async () => {
+      spyOn<any, any>(BuildCanvas, 'buildCanvas').and.callThrough();
+      await component.generateSummary();
+      expect(BuildCanvas.buildCanvas).toHaveBeenCalledTimes(1);
+    });
+
+    it('should build a summary header inside pdf', async () => {
+      spyOn<any, any>(AddSummaryHeader, 'addSummaryHeader').and.callThrough();
+      await component.generateSummary();
+      expect(AddSummaryHeader.addSummaryHeader).toHaveBeenCalledTimes(1);
+    });
+
+    it('should build a road map and leisures maps inside pdf', async () => {
+      spyOn<any, any>(AddSummaryMap, 'addSummaryMap').and.callThrough();
+      await component.generateSummary();
+      expect(AddSummaryMap.addSummaryMap).toHaveBeenCalledTimes(1 + trip.steps.length);
+    });
+
+    it('should build leisures summary inside pdf', async () => {
+      spyOn<any, any>(AddSummaryLeisures, 'addSummaryLeisures').and.callThrough();
+      await component.generateSummary();
+      expect(AddSummaryLeisures.addSummaryLeisures).toHaveBeenCalled();
+    });
+
+    it('should write travel itinerary', async () => {
+      spyOn<any, any>(AddSummaryText, 'addSummaryText').and.callThrough();
+      await component.generateSummary();
+      expect(AddSummaryText.addSummaryText).toHaveBeenCalledWith(
+        jasmine.anything(), `${trip.steps[0].location.name} => ${trip.steps[0].travelMode} => ${trip.steps[1].location.name}`, jasmine.anything(), jasmine.anything()
+      );
+    });
+
+    it('should write TO DEFINE when no travel mode is defined', async () => {
+      spyOn<any, any>(AddSummaryText, 'addSummaryText').and.callThrough();
+      trip.steps[1].travelMode = undefined;
+      await component.generateSummary();
+
+      expect(AddSummaryText.addSummaryText).toHaveBeenCalledWith(
+        jasmine.anything(), `${trip.steps[1].location.name} => TO DEFINE => ${trip.steps[2].location.name}`, jasmine.anything(), jasmine.anything()
+      );
+    });
+
+    it('should save pdf', async () => {
+      spyOn<any, any>(SavePdf, 'savePdf').and.callThrough();
+      await component.generateSummary();
+      expect(SavePdf.savePdf).toHaveBeenCalled();
+    });
+  });
 
 });

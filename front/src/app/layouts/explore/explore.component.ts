@@ -9,11 +9,20 @@ import {SuggestionsService} from "../../services/suggestions-service/suggestions
 import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
-import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {Subject} from "rxjs";
-import {FromNodeOptions} from "cypress/types/bluebird";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import { jsPDF } from 'jspdf';
+import {TripModel} from "../../models/trip/trip.model";
+import {StepModel} from "../../models/step/step.model";
+import {
+  AddSummaryHeader,
+  AddSummaryLeisures,
+  AddSummaryMap,
+  AddSummaryText,
+  BuildCanvas,
+  BuildTripUrl, BuildUrl, SavePdf
+} from "../../utils/pdf/pdf.utils";
 
 @Component({
   selector: 'app-explore',
@@ -180,8 +189,66 @@ export class ExploreComponent implements OnInit {
     );
   }
 
-  onSaveTrip(tripName: string) {
+  public onSaveTrip(tripName: string) {
+    this._tripService.saveTrip(tripName);
+  }
 
-      this._tripService.saveTrip(tripName);
+  public async generateSummary() {
+    let trip: TripModel = this._tripService.saveTrip('tripname');
+
+    /* PDF properties */
+    let currentY = 20;
+    let doc = new jsPDF();
+
+    /* Canvas properties */
+    let { canvas, context, width, height } = BuildCanvas.buildCanvas();
+
+    /* First page header */
+    currentY = AddSummaryHeader.addSummaryHeader(doc, trip, currentY);
+
+    /* Final roadmap */
+    currentY = await AddSummaryMap.addSummaryMap(
+      doc, currentY, canvas, context, width, height,
+      BuildTripUrl.buildTripUrl(trip.steps, canvas.width, canvas.height)
+    );
+
+    /* Travel mode per step visualization */
+    trip.steps.map((step: StepModel, index: number) => {
+      if (index + 1 < trip.steps.length) {
+        let text = `${step.location.name} => ${step.travelMode || 'TO DEFINE'} => ${trip.steps[index + 1].location.name}`;
+        currentY = AddSummaryText.addSummaryText(doc, text, currentY, 16);
+      }
+    });
+
+    /* Page break */
+    doc.addPage();
+    currentY = 20;
+
+    /* Leisures per step visualization */
+    for (const [index, step] of trip.steps.entries()) {
+      /* Add step header */
+      AddSummaryText.addSummaryText(doc, `#${index + 1} ${step.location.name}`, currentY, 16);
+      currentY = AddSummaryText.addSummaryText(doc, `${step.start} // ${step.end}`, currentY, 16, true);
+
+      /* Add step centralized map */
+      currentY = await AddSummaryMap.addSummaryMap(
+        doc, currentY, canvas, context, width, height, BuildUrl.buildUrl(step, canvas.width, canvas.height)
+      );
+
+      /* Add leisures header with number of leisures selected */
+      currentY = AddSummaryText.addSummaryText(doc, `Leisures planned (${step.leisures.length})`, currentY, 16);
+
+      /* Add leisures sortes by category */
+      currentY = AddSummaryLeisures.addSummaryLeisures(doc, currentY, step);
+
+      /* Add a page break for the next step only if it exists */
+      if (index + 1 < trip.steps.length) {
+        doc.addPage();
+        currentY = 20;
+      }
+    }
+
+    /* Save PDF */
+    SavePdf.savePdf(doc, "summary.pdf");
   }
 }
