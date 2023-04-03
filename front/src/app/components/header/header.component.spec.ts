@@ -56,23 +56,4 @@ describe('HeaderComponent', () => {
     expect(component.openLoginDialog).toHaveBeenCalled();
     expect(component["_dialog"].open).toHaveBeenCalled();
   });
-
-  // it('should open register dialog on click', () => {
-  //   spyOn<HeaderComponent, any>(component, 'openRegisterDialog').and.callThrough();
-  //   spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
-  //   component.openRegisterDialog();
-  //   spectator.detectChanges();
-  //   expect(component.openRegisterDialog).toHaveBeenCalled();
-  //   expect(component["_dialog"].open).toHaveBeenCalled();
-  // });
-
-  // it('should open register dialog', () => {
-  //   spyOn<HeaderComponent, any>(component, 'openRegisterDialog').and.callThrough();
-  //   spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
-  //   spectator.click('[header-register] button');
-  //   spectator.detectChanges();
-  //   expect(component.openRegisterDialog).toHaveBeenCalled();
-  //   expect(component["_dialog"].open).toHaveBeenCalled();
-  // });
-
 })

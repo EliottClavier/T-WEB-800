@@ -2,16 +2,27 @@
   <div class="col-12 mx-0 p-0">
     <div class="row justify-content-between mx-0 p-0">
       <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 mx-0 p-0">
-        <app-search-input search-bar-input [searchForm]="searchForm"
-          (onLocationOptionChange)="onLocationOptionClick($event)" class="col-5 px-0">
+        <app-search-input 
+          search-bar-input 
+          [searchForm]="searchForm"
+          (onLocationOptionChange)="onLocationOptionClick($event)" 
+          class="col-5 px-0">
         </app-search-input>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mx-0 p-0">
-        <app-date-range search-bar-date-range [searchForm]="searchForm" class="col-5 px-0"></app-date-range>
+        <app-date-range 
+          search-bar-date-range 
+          [searchForm]="searchForm" 
+          class="col-5 px-0"></app-date-range>
       </div>
       <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 mx-0 p-0">
-        <app-simple-button search-bar-validate class="col-2 px-0" *ngIf="searchForm" [label]="'Validate'"
-          [isDisabled]="searchForm.invalid" (buttonClick)="validate()">
+        <app-simple-button 
+          search-bar-validate 
+          class="col-2 px-0" 
+          *ngIf="searchForm" 
+          [label]="'Validate'"
+          [isDisabled]="searchForm.invalid" 
+          (buttonClick)="validate()">
         </app-simple-button>
       </div>
     </div>

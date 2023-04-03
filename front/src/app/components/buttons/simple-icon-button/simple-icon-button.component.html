@@ -1,12 +1,24 @@
 <div [ngSwitch]="buttonType">
-  <button simple-icon-button mat-mini-fab *ngSwitchCase="'mini-fab'" [color]="color"
-    [ngClass]="{'mat-button-icon-no-interaction': noInteraction}" [disabled]="isDisabled || noInteraction"
-    [hidden]="isHidden" [style]="{'height': size, 'width': size}" (click)="onClickButton()">
+  <button simple-icon-button 
+    mat-mini-fab 
+    *ngSwitchCase="'mini-fab'" 
+    [color]="color"
+    [ngClass]="{'mat-button-icon-no-interaction': noInteraction}" 
+    [disabled]="isDisabled || noInteraction"
+    [hidden]="isHidden" 
+    [style]="{'height': size, 'width': size}" 
+    (click)="onClickButton()">
     <mat-icon simple-icon>{{ icon }}</mat-icon>
   </button>
-  <button simple-icon-button mat-icon-button *ngSwitchDefault [color]="color"
-    [ngClass]="{'mat-button-icon-no-interaction': noInteraction}" [disabled]="isDisabled || noInteraction"
-    [hidden]="isHidden" [style]="{'height': size, 'width': size}" (click)="onClickButton()">
+  <button simple-icon-button 
+    mat-icon-button 
+    *ngSwitchDefault 
+    [color]="color"
+    [ngClass]="{'mat-button-icon-no-interaction': noInteraction}" 
+    [disabled]="isDisabled || noInteraction"
+    [hidden]="isHidden" 
+    [style]="{'height': size, 'width': size}" 
+    (click)="onClickButton()">
     <mat-icon simple-icon>{{ icon }}</mat-icon>
   </button>
 </div>
