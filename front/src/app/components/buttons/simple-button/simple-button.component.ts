@@ -11,6 +11,7 @@ export class SimpleButtonComponent {
   @Input() public isHidden: boolean = false;
   @Input() public label: string = '';
   @Input() public height: string = '56px';
+  @Input() public icon: string = '';
 
   @Output() public buttonClick: EventEmitter<any> = new EventEmitter<any>();
 

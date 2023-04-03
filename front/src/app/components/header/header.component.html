@@ -6,15 +6,10 @@
     </h1>
     <div class="navigation col-2">
       <div class="row">
-        <app-simple-button header-history class="col-3" [height]="'2rem'" [label]="'History'"></app-simple-button>
-        <app-simple-button header-map class="col-3" [height]="'2rem'" [label]="'Map'"></app-simple-button>
-        <app-simple-button header-login class="col-3" [height]="'2rem'" [label]="'Login'" (buttonClick)="openLoginDialog()"></app-simple-button>
-        <app-simple-button header-register class="col-3" [height]="'2rem'" [label]="'Register'" (buttonClick)="openRegisterDialog()"></app-simple-button>
-        <div class="icons">
-          <i class="pi pi-history" style="font-size: 2rem; color: #484848" ></i>
-          <i class="pi pi-map" style="font-size: 2rem; color: #484848"></i>
-          <i class="pi pi-user" style="font-size: 2rem; color: #484848"></i>
-        </div>
+        <app-simple-button header-history class="col-3" [height]="'2rem'" [icon]="'history icon'"></app-simple-button>
+        <app-simple-button header-map class="col-3" [height]="'2rem'" [icon]="'map icon'"></app-simple-button>
+        <app-simple-button header-login class="col-3" [height]="'2rem'" [icon]="'perm_identity'" (buttonClick)="openLoginDialog()"></app-simple-button>
+        <app-simple-button header-register class="col-3" [height]="'2rem'" [icon]="'perm_identity'" (buttonClick)="openRegisterDialog()"></app-simple-button>
       </div>
     </div>
   </div>

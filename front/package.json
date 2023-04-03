@@ -32,7 +32,6 @@
     "@types/google.maps": "^3.52.3",
     "bootstrap": "^5.2.3",
     "jest-marbles": "^3.0.3",
-    "ng-bootstrap": "^1.6.3",
     "primeicons": "^6.0.1",
     "rxjs": "~7.8.0",
     "saucelabs": "^4.7.0",
