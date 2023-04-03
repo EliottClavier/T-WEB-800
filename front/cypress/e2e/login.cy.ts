@@ -63,7 +63,7 @@ describe('Login', () => {
 
   it('should open register dialog on click', () => {
     cy.visit('/');
-    cy.get('[login-modal]').click();
+    cy.get('[header-login]').click();
     cy.get('[register-dialog]').should('exist');
   });
 });

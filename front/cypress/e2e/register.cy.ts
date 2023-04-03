@@ -15,6 +15,7 @@ describe('Register', () => {
 
   beforeEach(() => {
     cy.visit('/');
+    cy.get('[header-login]').click();
     cy.get('[register-modal]').click()
     firstNameInput = cy.get('input[register-first-name]');
     lastNameInput = cy.get('input[register-last-name]');
@@ -105,7 +106,8 @@ describe('Register', () => {
 
   it('should open login dialog on click', () => {
     cy.visit('/');
+    cy.get('[header-login]').click();
     cy.get('[register-modal]').click();
-    cy.get('[login-dialog]').should('exist');
+    cy.get('[header-login]').should('exist');
   });
 });
