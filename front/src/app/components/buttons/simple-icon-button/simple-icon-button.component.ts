@@ -21,5 +21,4 @@ export class SimpleIconButtonComponent {
   public onClickButton(): void {
     this.buttonClick.emit();
   }
-
 }

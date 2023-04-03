@@ -6,10 +6,9 @@
     </h1>
     <div class="navigation col-2">
       <div class="row">
-        <app-simple-button header-history class="col-3" [height]="'2rem'" [icon]="'history icon'"></app-simple-button>
-        <app-simple-button header-map class="col-3" [height]="'2rem'" [icon]="'map icon'"></app-simple-button>
-        <app-simple-button header-login class="col-3" [height]="'2rem'" [icon]="'perm_identity'" (buttonClick)="openLoginDialog()"></app-simple-button>
-        <app-simple-button header-register class="col-3" [height]="'2rem'" [icon]="'perm_identity'" (buttonClick)="openRegisterDialog()"></app-simple-button>
+        <app-simple-icon-button class="col-3" [icon]="'history icon'"></app-simple-icon-button>
+        <app-simple-icon-button class="col-3" [icon]="'map icon'"></app-simple-icon-button>
+        <app-simple-icon-button class="col-3" [icon]="'perm_identity'" (buttonClick)="openLoginDialog()"></app-simple-icon-button>
       </div>
     </div>
   </div>

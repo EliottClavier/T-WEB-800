@@ -1,20 +1,14 @@
-import {Component} from '@angular/core';
-import {RegisterModel} from "../../models/register/register.model";
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  FormGroupDirective, NgForm,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from "@angular/forms";
-import {ErrorStateMatcher} from "@angular/material/core";
-import {RegisterConst} from "../../enums/register-const";
-import {RegisterService} from "../../services/register/register.service";
-import {User} from "../../models/user/User.model";
-import {ApiResponseConst} from "../../enums/api-response-const";
-import {MatDialogRef} from "@angular/material/dialog";
+import { Component } from '@angular/core';
+import { RegisterModel } from "../../models/register/register.model";
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
+import { RegisterConst } from "../../enums/register-const";
+import { RegisterService } from "../../services/register/register.service";
+import { User } from "../../models/user/User.model";
+import { ApiResponseConst } from "../../enums/api-response-const";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
+import { LoginUserComponent } from '../login-user/login-user.component';
 
 
 @Component({
@@ -34,18 +28,19 @@ export class RegisterUserComponent {
 
   constructor(
     private _registerService: RegisterService,
-    private _dialogRef: MatDialogRef<RegisterUserComponent>
+    private _dialogRef: MatDialogRef<RegisterUserComponent>,
+    private _dialog: MatDialog,
   ) {
     this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
     this.user = new User(0, '', '', '');
     this.errorMessage = '';
-   }
+  }
 
   ngOnInit(): void {
   }
 
-  checkPassword: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
+  checkPassword: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     let pass = group.get('password')?.value;
     let confirmPass = group.get('confirmPassword')?.value;
     return pass === confirmPass ? null : { notSame: true }
@@ -57,7 +52,7 @@ export class RegisterUserComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl(''),
-  }, {validators: this.checkPassword});
+  }, { validators: this.checkPassword });
 
   createUser() {
     if (this.registerForm.valid) {
@@ -75,8 +70,14 @@ export class RegisterUserComponent {
   }
 
   public closeRegisterDialog(): void {
-    console.log("close");
-    this._dialogRef.close("test");
+    this._dialogRef.close();
+  }
+
+  public openLoginDialog(): void {
+    this._dialogRef.close();
+    this._dialog.open(LoginUserComponent, {
+      scrollStrategy: new NoopScrollStrategy()
+    });
   }
 }
 

@@ -1,7 +1,8 @@
-<div class="close" >
+<div class="close">
   <mat-icon fontIcon="close icon" (click)="closeRegisterDialog()"></mat-icon>
 </div>
-<h1 mat-dialog-title register-title [align]="'center'" class="m-0 my-3">{{ 'Welcome among us !' | uppercase }}</h1>
+<h1 mat-dialog-title register-title [align]="'center'" class="m-0 my-3 title">{{ 'Welcome among us !' | uppercase }}
+</h1>
 <div mat-dialog-content register-dialog>
   <form [formGroup]="registerForm">
     <div class="row">
@@ -61,28 +62,23 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
         <mat-form-field id="confirmPassword" appearance="outline" class="w-100">
           <mat-label for="password">Confirm password </mat-label>
-          <input matInput register-confirm-password type="password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher]="matcher">
+          <input matInput register-confirm-password type="password" formControlName="confirmPassword"
+            name="confirmPassword" [errorStateMatcher]="matcher">
           <mat-error *ngIf="registerForm.hasError('notSame')">{{INFO_MESSAGES.DIFFERENTS_PASSWORD}}</mat-error>
           <mat-icon matSuffix>lock_open</mat-icon>
         </mat-form-field>
       </div>
     </div>
   </form>
-  <div
-    mat-dialog-actions
-    class="px-0"
-    [align]="'center'">
-    <mat-error
-      register-error-request
-      class="mb-3"
-      *ngIf="this.errorMessage !== ''">{{this.errorMessage}}
+  <div mat-dialog-actions class="px-0" [align]="'center'">
+    <mat-error register-error-request class="mb-3" *ngIf="this.errorMessage !== ''">{{this.errorMessage}}
     </mat-error>
-    <app-simple-button
-      class="w-100"
-      register-button
-      [label]="'Register'"
-      (buttonClick)="createUser()">
+    <app-simple-button class="w-100" register-button [label]="'REGISTER'" (buttonClick)="createUser()">
     </app-simple-button>
   </div>
+  <div class="switch">
+    <div class="sign-up">
+      Not a member? <span (click)="openLoginDialog()">Sign-up</span>
+    </div>
+  </div>
 </div>
-

@@ -5,6 +5,26 @@
     margin: 16px;
 }
 
-.close:hover {
+mat-icon:hover {
     cursor: pointer;
+}
+
+.sign-in {
+    display: flex;
+    justify-content: center;
+    margin-top: 8rem;
+    font-style: italic;
+    color: #11765E;
+
+    span {
+        text-decoration-line: underline;
+    }
+    span:hover {
+        cursor: pointer;
+    }
+}
+
+.title {
+    font-size: 2rem;
+    color: #11765E;
 }

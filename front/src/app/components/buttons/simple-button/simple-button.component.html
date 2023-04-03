@@ -1,7 +1,4 @@
 <button class="w-100" simple-button mat-flat-button color="primary" (click)="onClickButton()" [disabled]="isDisabled"
   [hidden]="isHidden" [style.height]="height">
   {{label}}
-  <div *ngIf="icon">
-    <mat-icon fontIcon="{{icon}}"></mat-icon>
-  </div>
 </button>
