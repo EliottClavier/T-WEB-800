@@ -15,7 +15,7 @@ describe('Register', () => {
 
   beforeEach(() => {
     cy.visit('/');
-    cy.get('[header-register]').click()
+    cy.get('[register-modal]').click()
     firstNameInput = cy.get('input[register-first-name]');
     lastNameInput = cy.get('input[register-last-name]');
     emailInput = cy.get('input[register-email]');
@@ -101,5 +101,11 @@ describe('Register', () => {
     cy.wait('@400_register').its('response.statusCode').should('eq', 400);
 
     cy.get('[register-error-request]').should('contain.text', API_RESPONSE.BAD_REQUEST);
+  });
+
+  it('should open login dialog on click', () => {
+    cy.visit('/');
+    cy.get('[register-modal]').click();
+    cy.get('[login-dialog]').should('exist');
   });
 });

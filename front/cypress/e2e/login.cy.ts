@@ -60,4 +60,10 @@ describe('Login', () => {
     cy.wait('@401_login').its('response.statusCode').should('eq', 401);
     cy.get('[login-error-request]').should('contain.text', API_RESPONSE.BAD_CREDENTIALS);
   });
+
+  it('should open register dialog on click', () => {
+    cy.visit('/');
+    cy.get('[login-modal]').click();
+    cy.get('[register-dialog]').should('exist');
+  });
 });
