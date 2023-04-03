@@ -73,8 +73,8 @@ export class ExploreComponent implements OnInit {
     private _suggestionsStore: SuggestionsStoreService,
     private _tripService: TripBuilderService,
     private _dialog: MatDialog) {
-  }
 
+  }
 
   public ngOnInit(): void {
     this._loadRouteParams();

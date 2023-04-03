@@ -37,7 +37,7 @@ export class MultipleSearchBarsComponent implements OnInit {
     //   console.log()
     //   this.hasLeisure(state.length);
     // });
-    this.hasLeisure(this.activeSearchBar.index);
+    // this.hasLeisure(this.activeSearchBar.index);
 
   }
 
@@ -58,22 +58,22 @@ export class MultipleSearchBarsComponent implements OnInit {
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
-  public hasLeisure(index: number): number {
-    console.log('indextest  : ', 0)
-    console.log('index  : ', index)
-
-    console.log('leisures', this.tripBuilderService.getTripFormsInstance()?.value.forEach((step: any) => {
-      console.log('step : ', step)
-    }));
-    let len;
-
-    let leisureNbr = this.tripBuilderService.getTripFormsInstance().get("leisures")?.valueChanges.subscribe((value: LeisureItemModel[]) => {
-      len = value.length
-      console.log('value  : ', value.length)
-      console.log('hasleisure : ', leisureNbr)
-    });
-
-    return len || 0
+  public hasLeisure(): number {
+    // console.log('indextest  : ', 0)
+    // // console.log('index  : ', index)
+    //
+    // console.log('leisures', this.tripBuilderService.getTripFormsInstance()?.value.forEach((step: any) => {
+    //   console.log('step : ', step)
+    // }));
+    // let len;
+    //
+    // let leisureNbr = this.tripBuilderService.getTripFormsInstance().get("leisures")?.valueChanges.subscribe((value: LeisureItemModel[]) => {
+    //   len = value.length
+    //   console.log('value  : ', value.length)
+    //   console.log('hasleisure : ', leisureNbr)
+    // });
+    //
+     return  0
   }
 
   public addSearchBar(): void {
