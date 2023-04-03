@@ -32,14 +32,14 @@ describe('Register', () => {
     firstNameInput.click();
     firstNameInput.clear();
     emailInput.click();
-    cy.get('#firstName mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
+    cy.get('#firstname mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if last name is empty', () => {
     lastNameInput.click({ force: true });
     lastNameInput.clear({ force: true });
     emailInput.click();
-    cy.get('#lastName mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
+    cy.get('#lastname mat-error').should('contain.text', REGISTER_RESPONSE.EMPTY_NAME);
   });
 
   it('should display required error message if email is empty', () => {

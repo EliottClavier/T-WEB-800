@@ -3,22 +3,17 @@ import {
   FormControl,
   FormGroup,
   FormGroupDirective,
-  FormsModule,
-  ReactiveFormsModule,
   Validators
 } from "@angular/forms";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 import {LoginService} from "../../services/login/login.service";
-import {User} from "../../models/user/User.model";
+import {UserModel} from "../../models/user/user.model";
 import {BehaviorSubject, throwError} from "rxjs";
-import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";
-import {MatCardModule} from "@angular/material/card";
-import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatDialogRef} from "@angular/material/dialog";
 import {AppModule} from "../../app.module";
+import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
 describe('LoginUserComponent', () => {
   let component: LoginUserComponent;
@@ -27,7 +22,7 @@ describe('LoginUserComponent', () => {
   let form: FormGroupDirective;
   let spectator: Spectator<LoginUserComponent>;
   let _loginService: LoginService;
-  let userMock: User;
+  let userMock: UserModel;
   let _dialogRef: MatDialogRef<LoginUserComponent>;
 
   const dialogMock = {
@@ -64,28 +59,24 @@ describe('LoginUserComponent', () => {
 
   it('should login with all informations', () => {
     component.loginForm.setValue({ email: 'test@gmail.com', password: 'Password123' });
-    const userMock = {
-      "status": 201,
-      "data": {
-        "id": 1,
-        "firstName": "Albert",
-        "lastName": "Test",
-        "email": "test@gmail.com"
-      }
-    }
+
+    const userResponseMock: UserModel = new UserModel(
+      new UserInformationsModel(1, "Albert", "Test", "test@gmail.com"),
+      "token"
+    )
 
     spyOn<LoginService, any>(_loginService, "postLogin").and.callFake((credentials: string) => {
-      return new BehaviorSubject<Object>(userMock);
+      return new BehaviorSubject<UserModel>(userResponseMock);
     });
 
     component.loginUser();
 
     expect(component.credentials.email).toEqual('test@gmail.com');
     expect(component.credentials.password).toEqual('Password123');
-    expect(component.user.id).toEqual(1);
-    expect(component.user.firstName).toEqual('Albert');
-    expect(component.user.lastName).toEqual('Test');
-    expect(component.user.email).toEqual('test@gmail.com');
+    expect(component.user.user.id).toEqual(1);
+    expect(component.user.user.firstname).toEqual('Albert');
+    expect(component.user.user.lastname).toEqual('Test');
+    expect(component.user.user.email).toEqual('test@gmail.com');
   });
 
   it('should login with all informations', () => {
@@ -99,10 +90,10 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('test@gmail.com');
     expect(component.credentials.password).toEqual('Password123');
-    expect(component.user.id).toEqual(0);
-    expect(component.user.firstName).toEqual('');
-    expect(component.user.lastName).toEqual('');
-    expect(component.user.email).toEqual('');
+    expect(component.user.user.id).toEqual(0);
+    expect(component.user.user.firstname).toEqual('');
+    expect(component.user.user.lastname).toEqual('');
+    expect(component.user.user.email).toEqual('');
   });
 
   it('should not login with empty email', () => {

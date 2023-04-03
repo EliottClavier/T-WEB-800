@@ -12,9 +12,10 @@ import {
 import {ErrorStateMatcher} from "@angular/material/core";
 import {RegisterConst} from "../../enums/register-const";
 import {RegisterService} from "../../services/register/register.service";
-import {User} from "../../models/user/User.model";
+import {UserModel} from "../../models/user/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatDialogRef} from "@angular/material/dialog";
+import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
 
 @Component({
@@ -26,7 +27,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class RegisterUserComponent {
   public newUser: RegisterModel;
   public matcher: MyErrorStateMatcher;
-  public user: User;
+  public user: UserModel;
   public errorMessage: string;
 
   public INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
@@ -38,7 +39,7 @@ export class RegisterUserComponent {
   ) {
     this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
-    this.user = new User(0, '', '', '');
+    this.user = new UserModel(new UserInformationsModel(0, '', '', ''), '');
     this.errorMessage = '';
    }
 
@@ -52,8 +53,8 @@ export class RegisterUserComponent {
   }
 
   registerForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl(''),
@@ -61,10 +62,10 @@ export class RegisterUserComponent {
 
   createUser() {
     if (this.registerForm.valid) {
-      this.newUser = new RegisterModel(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      this.newUser = new RegisterModel(this.registerForm.get('firstname')?.value, this.registerForm.get('lastname')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
       this._registerService.postUserRegister(this.newUser).subscribe({
-        next: (value: any) => {
-          this.user = value['data'];
+        next: (result: any) => {
+          this.user = result;
           this._dialogRef.close();
         },
         error: () => {

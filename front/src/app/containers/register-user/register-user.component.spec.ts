@@ -10,9 +10,10 @@ import {RegisterService} from "../../services/register/register.service";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {HttpErrorResponse} from "@angular/common/http";
 import {BehaviorSubject, throwError} from "rxjs";
-import {User} from "../../models/user/User.model";
+import {UserModel} from "../../models/user/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialogRef} from "@angular/material/dialog";
+import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
@@ -22,7 +23,7 @@ describe('RegisterUserComponent', () => {
   let matcher: MyErrorStateMatcher;
   let spectator: Spectator<RegisterUserComponent>;
   let _registerService: RegisterService;
-  let userMock: User;
+  let userMock: UserModel;
   let _dialogRef: MatDialogRef<RegisterUserComponent>;
 
   const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
@@ -63,35 +64,30 @@ describe('RegisterUserComponent', () => {
   });
 
   it('should create a new user with all informations', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
-    const userMock = {
-      "status": 201,
-      "data": {
-        "id": 1,
-        "firstName": "Albert",
-        "lastName": "Test",
-        "email": "test@gmail.com"
-      }
-    }
+    component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
+    const userResponseMock: UserModel = new UserModel(
+      new UserInformationsModel(1, "Albert", "Test", "test@gmail.com"),
+      "token"
+    )
 
     spyOn<RegisterService, any>(_registerService, "postUserRegister").and.callFake((user: string) => {
-      return new BehaviorSubject<Object>(userMock);
+      return new BehaviorSubject<UserModel>(userResponseMock);
     });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toEqual('Albert');
-    expect(component.newUser.lastName).toEqual('Test');
+    expect(component.newUser.firstname).toEqual('Albert');
+    expect(component.newUser.lastname).toEqual('Test');
     expect(component.newUser.email).toEqual('test@gmail.com');
     expect(component.newUser.password).toEqual('Password123');
-    expect(component.user.id).toEqual(1);
-    expect(component.user.firstName).toEqual('Albert');
-    expect(component.user.lastName).toEqual('Test');
-    expect(component.user.email).toEqual('test@gmail.com');
+    expect(component.user.user.id).toEqual(1);
+    expect(component.user.user.firstname).toEqual('Albert');
+    expect(component.user.user.lastname).toEqual('Test');
+    expect(component.user.user.email).toEqual('test@gmail.com');
   });
 
   it('should create a new user with all informations but is bad request', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     spyOn<RegisterService, any>(_registerService, "postUserRegister").and.returnValue(
       throwError(() => new HttpErrorResponse({error: API_RESPONSE.BAD_REQUEST, status: 400}))
@@ -99,72 +95,72 @@ describe('RegisterUserComponent', () => {
 
     component.createUser();
 
-    expect(component.newUser.firstName).toEqual('Albert');
-    expect(component.newUser.lastName).toEqual('Test');
+    expect(component.newUser.firstname).toEqual('Albert');
+    expect(component.newUser.lastname).toEqual('Test');
     expect(component.newUser.email).toEqual('test@gmail.com');
     expect(component.newUser.password).toEqual('Password123');
-    expect(component.user.id).toEqual(0);
-    expect(component.user.firstName).toEqual('');
-    expect(component.user.lastName).toEqual('');
-    expect(component.user.email).toEqual('');
+    expect(component.user.user.id).toEqual(0);
+    expect(component.user.user.firstname).toEqual('');
+    expect(component.user.user.lastname).toEqual('');
+    expect(component.user.user.email).toEqual('');
     expect(component.errorMessage).toEqual(API_RESPONSE.BAD_REQUEST);
   });
 
   it('should create a new user with invalid email', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: 'Test', email: 'test', password: 'Password123', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: 'test', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toBe('');
-    expect(component.newUser.lastName).toBe('');
+    expect(component.newUser.firstname).toBe('');
+    expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
     expect(component.registerForm.controls.email.errors).toEqual({email: true});
   });
 
   it('should create a new user with first name is empty', () => {
-    component.registerForm.setValue({ firstName: '', lastName: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: '', lastname: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toBe('');
-    expect(component.newUser.lastName).toBe('');
+    expect(component.newUser.firstname).toBe('');
+    expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.registerForm.controls.firstName.errors).toEqual({required: true});
+    expect(component.registerForm.controls.firstname.errors).toEqual({required: true});
   });
 
   it('should create a new user with last name is empty', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: '', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: 'Albert', lastname: '', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toBe('');
-    expect(component.newUser.lastName).toBe('');
+    expect(component.newUser.firstname).toBe('');
+    expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.registerForm.controls.lastName.errors).toEqual({required: true});
+    expect(component.registerForm.controls.lastname.errors).toEqual({required: true});
   });
 
   it('should create a new user with email is empty', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: 'Test', email: '', password: 'Password123', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: '', password: 'Password123', confirmPassword: 'Password123' });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toBe('');
-    expect(component.newUser.lastName).toBe('');
+    expect(component.newUser.firstname).toBe('');
+    expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
     expect(component.registerForm.controls.email.errors).toEqual({required: true});
   });
 
   it('should create a new user with password is empty', () => {
-    component.registerForm.setValue({ firstName: 'Albert', lastName: 'Test', email: 'test@gmail.com', password: '', confirmPassword: 'Password123' });
+    component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: 'test@gmail.com', password: '', confirmPassword: 'Password123' });
 
     component.createUser();
 
-    expect(component.newUser.firstName).toBe('');
-    expect(component.newUser.lastName).toBe('');
+    expect(component.newUser.firstname).toBe('');
+    expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
     expect(component.registerForm.controls.password.errors).toEqual({required: true});

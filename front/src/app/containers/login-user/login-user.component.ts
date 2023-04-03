@@ -1,15 +1,16 @@
 import {Component} from '@angular/core';
-import {CredentialsModel} from "../../models/credentials/credentialsModel";
+import {CredentialsModel} from "../../models/credentials/credentials.model";
 import {
   FormControl,
   FormGroup,
   Validators
 } from "@angular/forms";
 import {LoginConst} from "../../enums/login-const";
-import {User} from "../../models/user/User.model";
+import {UserModel} from "../../models/user/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {LoginService} from "../../services/login/login.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class LoginUserComponent {
   credentials: CredentialsModel;
   loginForm: FormGroup;
-  user: User;
+  user: UserModel;
   errorMessage: string;
   LOGIN_RESPONSE = new LoginConst().INFO_MESSAGES;
   API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
@@ -35,7 +36,7 @@ export class LoginUserComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
-    this.user = new User(0, '', '', '');
+    this.user = new UserModel(new UserInformationsModel(0, '', '', ''), '');
     this.errorMessage = '';
   }
 
@@ -43,8 +44,8 @@ export class LoginUserComponent {
     if (this.loginForm.valid) {
       this.credentials = this.loginForm.value;
       this._loginService.postLogin(this.credentials).subscribe({
-        next: (value: any) => {
-          this.user = value['data'];
+        next: (result: any) => {
+          this.user = result;
           this._dialogRef.close();
         },
         error: () => {

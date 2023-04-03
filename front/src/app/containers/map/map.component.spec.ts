@@ -487,15 +487,15 @@ describe('MapComponent', () => {
       });
     });
 
-    describe('Templates', () => {
-      it('should have a map-directions-renderer element when destinationsResults is defined', () => {
+    describe('Templates', async () => {
+      it('should have a map-directions-renderer element when destinationsResults is defined', async () => {
         component.directionsResults = { routes: [] };
         component.itineraryMode.travelMode = "DRIVING" as TravelMode;
         spectator.detectChanges();
         expect(spectator.query('map-directions-renderer[map-directions-renderer]')).toBeTruthy();
       });
 
-      it('should have a map-polyline element when travelMode is FLIGHT', () => {
+      it('should have a map-polyline element when travelMode is FLIGHT', async () => {
         component.directionsResults = { routes: [] };
         component.itineraryMode.travelMode = "FLIGHT" as TravelMode;
         spectator.detectChanges();
