@@ -26,5 +26,4 @@ export class HeaderComponent {
       scrollStrategy: new NoopScrollStrategy()
     });
   }
-
 }

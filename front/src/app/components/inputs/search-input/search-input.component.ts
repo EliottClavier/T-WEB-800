@@ -23,6 +23,8 @@ export class SearchInputComponent implements OnInit {
 
   @Input() public noMarginBottom: boolean = false;
 
+  @Input() public hasLeisureNbr: number = 0;
+
   constructor(
     private _locationService: LocationService,
   ) { }

@@ -11,6 +11,7 @@ export class SuggestionsStoreService {
 
 
   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
+
   private _getCategory?: LeisureCategory;
   private _getLocation?: LocationModel;
   private _leisureItemToAdd$?: Subject<LeisureItemModel> = new Subject<LeisureItemModel>();

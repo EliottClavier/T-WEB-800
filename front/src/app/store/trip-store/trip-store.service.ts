@@ -13,14 +13,6 @@ export class TripStoreService {
   private _trips$ = this._trips.asObservable();
 
 
-  // get trip(): BehaviorSubject<TripModel[]> {
-  //   return this._trips;
-  // }
-  //
-  // set trip(value: BehaviorSubject<TripModel[]>) {
-  //   this._trips = value;
-  // }
-
   addTrip(trip: TripModel) {
     this._trips.next([...this._trips.getValue(), trip]);
 

@@ -66,7 +66,6 @@ export class TripBuilderService {
   }
 
   public saveTrip(tripName: string) {
-    console.log("trip : ", this.getTripFormsInstance()?.controls['searchFormsArray'].value)
 
     this._getStepModelFromTripFormGroup()
     this._trip.name = tripName;

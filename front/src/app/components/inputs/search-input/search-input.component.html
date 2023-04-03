@@ -5,6 +5,13 @@
   [ngClass]="{ 'no-margin-bottom': noMarginBottom }"
   (click)="onSelectSearchBar()">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
+
+  <button *ngIf="hasLeisureNbr"
+    class="leisure-counter"
+    mat-icon-button search-input-prefix matPrefix
+    (click)="undefined">
+    <mat-label>{{hasLeisureNbr}}</mat-label>
+  </button>
   <input
     search-input
     [readonly]="readonly"

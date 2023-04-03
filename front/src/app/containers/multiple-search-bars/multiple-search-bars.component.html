@@ -15,6 +15,7 @@
           search-bar-input
           class="col-8 px-0"
           [id]="i"
+          [hasLeisureNbr]="hasLeisure(i)"
           [readonly]="i !== activeSearchBar.index || i === activeSearchBar.index && !activeSearchBar.isEditing"
           [searchForm]="searchForm"
           [noMarginBottom]="true"

@@ -9,11 +9,12 @@ import {SuggestionsService} from "../../services/suggestions-service/suggestions
 import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
-import {getAccommodationItems, getBarItems} from "../../utils/suggestions-mock.utils";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {Subject} from "rxjs";
-import {FromNodeOptions} from "cypress/types/bluebird";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {MatDialog} from "@angular/material/dialog";
+import {SaveTripDialogComponent} from "../../containers/save-trip-dialog/save-trip-dialog.component";
 
 @Component({
   selector: 'app-explore',
@@ -23,11 +24,6 @@ import {TripBuilderService} from "../../services/trip/trip-builder.service";
 export class ExploreComponent implements OnInit {
 
   public searchForms: FormGroup = this._tripService.getTripFormsInstance()
-  // public searchForms: FormGroup = new FormGroup({
-  //   searchFormsArray: new FormArray<FormGroup>([
-  //     buildStepFormGroupControlsDetails(),
-  //   ]),
-  // });
 
   public activeSearchBar: SearchBarEvent = {
     index: 0,
@@ -38,8 +34,8 @@ export class ExploreComponent implements OnInit {
 
     this.activeSearchBar = $event;
     let location: LocationModel = this.selectedSearchForm.get('location')?.value;
-    let start: Date =  this.selectedSearchForm.get('start')?.value;
-    let end: Date =  this.selectedSearchForm.get('end')?.value;
+    let start: Date = this.selectedSearchForm.get('start')?.value;
+    let end: Date = this.selectedSearchForm.get('end')?.value;
 
     let leisure: LeisureCategory = this._suggestionsStore.getCategory;
     this.getPreviewSuggestions(leisure, location, start, end);
@@ -75,19 +71,23 @@ export class ExploreComponent implements OnInit {
     private _route: ActivatedRoute, private _router: Router,
     private _suggestionsService: SuggestionsService,
     private _suggestionsStore: SuggestionsStoreService,
-    private _tripService: TripBuilderService,) {
+    private _tripService: TripBuilderService,
+    private _dialog: MatDialog) {
   }
 
 
   public ngOnInit(): void {
     this._loadRouteParams();
+
+    this.onAddingLeisureInStep(getAccommodationItems()[0]) // A SUPPRIMER
+
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);
-      }});
-    }
-
-
+        console.log(item);
+      }
+    });
+  }
 
   private _isValidDate(date: any): boolean {
     return date instanceof Date && !isNaN(date.getTime());
@@ -120,15 +120,15 @@ export class ExploreComponent implements OnInit {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
 
-    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe(  {
-        next: (data) => {
+    this._suggestionsService.getPreviewSuggestions(leisure, location, start, end)?.subscribe({
+      next: (data) => {
         this._suggestionsStore.setSuggestionsData(data);
       },
       error: (error) => {
         alert("error");
         this._suggestionsStore.setSuggestionsData(getAccommodationItems());
       }
-  });
+    });
   }
 
   public onViewChange(view: string): void {
@@ -154,12 +154,13 @@ export class ExploreComponent implements OnInit {
       this.selectedSearchForm.get('travelMode')?.patchValue(itineraryMode.travelMode);
     }
   }
+
   public onSelectedCategoryChange(value: LeisureCategory) {
     this.getPreviewSuggestions(value);
   }
 
   public onAddingLeisureInStep(item: LeisureItemModel): void {
-    let leisures : LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
+    let leisures: LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
     leisures.push(item);
     this.selectedSearchForm.get('leisures')?.setValue(leisures);
     alert((this.selectedSearchForm.get('leisures')?.value).length);
@@ -180,8 +181,23 @@ export class ExploreComponent implements OnInit {
     );
   }
 
-  onSaveTrip(tripName: string) {
+  onSaveTrip(tripName?: string) {
 
+    if(tripName != undefined) {
       this._tripService.saveTrip(tripName);
+      return;
+    }
+
+
+    let dialogRef = this._dialog.open(SaveTripDialogComponent, {
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      result != undefined && (this._tripService.saveTrip(result) && alert("Thanks")) || alert("error");
+
+
+    });
   }
 }

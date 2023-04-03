@@ -2,7 +2,7 @@
         simple-button
         mat-flat-button
         color="primary"
-        (click)="onClickButton()"
+        (click)="!isDisabled && onClickButton()"
         [disabled]="isDisabled"
         [hidden]="isHidden"
         [style.height]="height">
