@@ -11,7 +11,7 @@ export class SimpleIconButtonComponent {
   @Input() public isDisabled: boolean = false;
   @Input() public isHidden: boolean = false;
   @Input() public icon: string = '';
-  @Input() public color: ThemePalette = 'primary';
+  @Input() public color: string = '#484848' //ThemePalette = 'primary';
   @Input() public buttonType: 'mini-fab' | 'icon' = 'icon';
   @Input() public noInteraction: boolean = false;
   @Input() public size: string = '56px';

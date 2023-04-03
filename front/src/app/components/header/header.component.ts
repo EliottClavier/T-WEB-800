@@ -20,10 +20,4 @@ export class HeaderComponent {
       scrollStrategy: new NoopScrollStrategy()
     });
   }
-
-  public openRegisterDialog(): void {
-    this._dialog.open(RegisterUserComponent, {
-      scrollStrategy: new NoopScrollStrategy()
-    });
-  }
 }
