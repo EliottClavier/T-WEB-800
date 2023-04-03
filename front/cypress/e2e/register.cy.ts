@@ -17,7 +17,6 @@ describe('Register', () => {
     cy.visit('/');
     cy.get('[header-login]').click();
     cy.get('[login-modal]').click();
-    cy.get('[register-modal]').click()
     firstNameInput = cy.get('input[register-first-name]');
     lastNameInput = cy.get('input[register-last-name]');
     emailInput = cy.get('input[register-email]');
