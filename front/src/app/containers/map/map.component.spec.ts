@@ -17,6 +17,7 @@ import LatLng = google.maps.LatLng;
 import TravelMode = google.maps.TravelMode;
 import {TestBed} from "@angular/core/testing";
 
+try {
 describe('MapComponent', () => {
   let component: MapComponent;
   let spectator: Spectator<MapComponent>;
@@ -326,193 +327,192 @@ describe('MapComponent', () => {
   });
 
   describe('Directions and itinerary', () => {
-    try {
+    beforeEach(() => {
+      component.itineraryView = true;
+      spectator.detectChanges();
+    });
+
+    describe('TransportService', () => {
+      it('should have TransportService injected', () => {
+        expect(component["_transportService"]).toBeDefined();
+        expect(component["_transportService"]).toBeTruthy();
+        expect(component["_transportService"]).toEqual(_transportService);
+      });
+    });
+
+    describe('_getDirections', () => {
+      it('should return Observable<TransportOptions> when calling _getDirections', () => {
+        let request: google.maps.DirectionsRequest = {
+          origin: 'Nantes',
+          destination: 'Paris',
+          travelMode: google.maps.TravelMode.DRIVING
+        }
+
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(new Date())
+        }
+
+        expect(component["_getDirections"](transportRequest)).toBeInstanceOf(Observable);
+      });
+    });
+
+    describe('_requestDirections', () => {
+      it('should retrieve directions results for specific travel mode', () => {
+        spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
+        let request: google.maps.DirectionsRequest = {
+          origin: 'Nantes',
+          destination: 'Paris',
+          travelMode: google.maps.TravelMode.DRIVING
+        }
+
+        let date = new Date();
+
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(date)
+        }
+
+        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date);
+        expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
+        expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
+        expect(component.directionsResults).toEqual({ routes: [] });
+      });
+
+      it('should retrieve directions results for transit travel mode and specific transit mode', () => {
+        spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
+        let request: google.maps.DirectionsRequest = {
+          origin: 'Nantes',
+          destination: 'Paris',
+          travelMode: google.maps.TravelMode.TRANSIT,
+          transitOptions: {
+            modes: [google.maps.TransitMode.TRAIN]
+          }
+        }
+
+        let date = new Date();
+
+        let transportRequest: TransportRequest = {
+          directionRequest: request,
+          startDate: getIsoStringFromDate(date)
+        }
+
+        component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date, request.transitOptions?.modes![0]);
+        expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
+        expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
+        expect(component.directionsResults).toEqual({ routes: [] });
+      });
+
+      it('should not request directions results if origin isn`t valid', () => {
+        spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
+        component.selectedLocation = new LocationModel("", "", 200, 200);
+        component.ngOnChanges()
+        expect(component["_requestDirections"]).not.toHaveBeenCalled();
+      });
+
+      it('should not request directions results if destination isn`t valid', () => {
+        spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
+        component.nextLocation = new LocationModel("", "", 200, 200);
+        component.ngOnChanges()
+        expect(component["_requestDirections"]).not.toHaveBeenCalled();
+      });
+
+      it('should not request directions results if itineraryView is false', () => {
+        spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
+        component.itineraryView = false;
+        component.ngOnChanges()
+        expect(component["_requestDirections"]).not.toHaveBeenCalled();
+      });
+
+      it('should not request directions results if itineraryMode has invalid travelMode', () => {
+        spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
+        component.itineraryMode.travelMode = "TEST" as google.maps.TravelMode;
+        component.ngOnChanges()
+        expect(component["_requestDirections"]).not.toHaveBeenCalled();
+      });
+
+      it('should request directions results conditions are matched', () => {
+        spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
+        component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
+        component.nextLocation = new LocationModel("2", "Paris", 20, 60);
+        component.ngOnChanges();
+        expect(component["_requestDirections"]).toHaveBeenCalled();
+      });
+    });
+
+    describe('_isTravelModeValid', () => {
+      it('should return false if invalid travelMode is passed', () => {
+        expect(component["_isTravelModeValid"]("TEST" as google.maps.TravelMode)).toBeFalsy();
+      });
+
+      it('should return true if invalid travelMode is passed', () => {
+        expect(component["_isTravelModeValid"]("DRIVING" as google.maps.TravelMode)).toBeTruthy();
+      });
+    });
+
+    describe('castStringToTravelMode', function () {
+      it('should return a string as a TravelMode', () => {
+        expect(component.castStringToTravelMode("DRIVING")).toEqual(google.maps.TravelMode.DRIVING);
+        expect(component.castStringToTravelMode("FLIGHT")).toEqual("FLIGHT" as TravelMode);
+      });
+    });
+
+    describe('drawFlightPolyline', () => {
       beforeEach(() => {
-        component.itineraryView = true;
+        component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
+        component.nextLocation = new LocationModel("2", "Paris", 20, 60);
         spectator.detectChanges();
       });
 
-      describe('TransportService', () => {
-        it('should have TransportService injected', () => {
-          expect(component["_transportService"]).toBeDefined();
-          expect(component["_transportService"]).toBeTruthy();
-          expect(component["_transportService"]).toEqual(_transportService);
-        });
+      it('should return empty array if selectedLocation is invalid', () => {
+        component.selectedLocation = new LocationModel("", "", 200, 200)
+        let result: LatLng[] = component.drawFlightPolyline();
+        expect(result).toEqual([]);
       });
 
-      describe('_getDirections', () => {
-        it('should return Observable<TransportOptions> when calling _getDirections', () => {
-          let request: google.maps.DirectionsRequest = {
-            origin: 'Nantes',
-            destination: 'Paris',
-            travelMode: google.maps.TravelMode.DRIVING
-          }
-
-          let transportRequest: TransportRequest = {
-            directionRequest: request,
-            startDate: getIsoStringFromDate(new Date())
-          }
-
-          expect(component["_getDirections"](transportRequest)).toBeInstanceOf(Observable);
-        });
+      it('should return empty array if nextLocation is invalid', () => {
+        component.nextLocation = new LocationModel("", "", 200, 200);
+        let result: LatLng[] = component.drawFlightPolyline();
+        expect(result).toEqual([]);
       });
 
-      describe('_requestDirections', () => {
-        it('should retrieve directions results for specific travel mode', () => {
-          spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
-          let request: google.maps.DirectionsRequest = {
-            origin: 'Nantes',
-            destination: 'Paris',
-            travelMode: google.maps.TravelMode.DRIVING
-          }
-
-          let date = new Date();
-
-          let transportRequest: TransportRequest = {
-            directionRequest: request,
-            startDate: getIsoStringFromDate(date)
-          }
-
-          component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date);
-          expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
-          expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
-          expect(component.directionsResults).toEqual({ routes: [] });
+      it('should return array of LatLngLiteral if selectedLocation and nextLocation are valid', () => {
+        let result: any = component.drawFlightPolyline();
+        result = result.map((latLng: LatLng) => {
+          return { lat: latLng.lat(), lng: latLng.lng() }
         });
+        expect(result.length).toEqual(2);
+        expect(result[0].lat).toEqual(10);
+        expect(result[0].lng).toEqual(50);
+        expect(result[1].lat).toEqual(20);
+        expect(result[1].lng).toEqual(60);
+      });
+    });
 
-        it('should retrieve directions results for transit travel mode and specific transit mode', () => {
-          spyOn<MapComponent, any>(component, '_getDirections').and.callThrough();
-          let request: google.maps.DirectionsRequest = {
-            origin: 'Nantes',
-            destination: 'Paris',
-            travelMode: google.maps.TravelMode.TRANSIT,
-            transitOptions: {
-              modes: [google.maps.TransitMode.TRAIN]
-            }
-          }
-
-          let date = new Date();
-
-          let transportRequest: TransportRequest = {
-            directionRequest: request,
-            startDate: getIsoStringFromDate(date)
-          }
-
-          component["_requestDirections"](request.origin.toString(), request.destination.toString(), request.travelMode, date, request.transitOptions?.modes![0]);
-          expect(_transportService.getTransportOptions).toHaveBeenCalledWith(transportRequest);
-          expect(component["_getDirections"]).toHaveBeenCalledWith(transportRequest);
-          expect(component.directionsResults).toEqual({ routes: [] });
-        });
-
-        it('should not request directions results if origin isn`t valid', () => {
-          spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-          component.selectedLocation = new LocationModel("", "", 200, 200);
-          component.ngOnChanges()
-          expect(component["_requestDirections"]).not.toHaveBeenCalled();
-        });
-
-        it('should not request directions results if destination isn`t valid', () => {
-          spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-          component.nextLocation = new LocationModel("", "", 200, 200);
-          component.ngOnChanges()
-          expect(component["_requestDirections"]).not.toHaveBeenCalled();
-        });
-
-        it('should not request directions results if itineraryView is false', () => {
-          spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-          component.itineraryView = false;
-          component.ngOnChanges()
-          expect(component["_requestDirections"]).not.toHaveBeenCalled();
-        });
-
-        it('should not request directions results if itineraryMode has invalid travelMode', () => {
-          spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-          component.itineraryMode.travelMode = "TEST" as google.maps.TravelMode;
-          component.ngOnChanges()
-          expect(component["_requestDirections"]).not.toHaveBeenCalled();
-        });
-
-        it('should request directions results conditions are matched', () => {
-          spyOn<MapComponent, any>(component, "_requestDirections").and.callThrough();
-          component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
-          component.nextLocation = new LocationModel("2", "Paris", 20, 60);
-          component.ngOnChanges();
-          expect(component["_requestDirections"]).toHaveBeenCalled();
-        });
+    describe('Templates',  () => {
+      it('should have a map-directions-renderer element when destinationsResults is defined',  () => {
+        component.directionsResults = { routes: [] };
+        component.itineraryMode.travelMode = "DRIVING" as TravelMode;
+        spectator.detectChanges();
+        expect(spectator.query('map-directions-renderer[map-directions-renderer]')).toBeTruthy();
       });
 
-      describe('_isTravelModeValid', () => {
-        it('should return false if invalid travelMode is passed', () => {
-          expect(component["_isTravelModeValid"]("TEST" as google.maps.TravelMode)).toBeFalsy();
-        });
-
-        it('should return true if invalid travelMode is passed', () => {
-          expect(component["_isTravelModeValid"]("DRIVING" as google.maps.TravelMode)).toBeTruthy();
-        });
+      it('should have a map-polyline element when travelMode is FLIGHT', () => {
+        component.directionsResults = { routes: [] };
+        component.itineraryMode.travelMode = "FLIGHT" as TravelMode;
+        spectator.detectChanges();
+        expect(component.itineraryMode.travelMode).toEqual("FLIGHT" as TravelMode);
+        expect(spectator.query('map-polyline[map-flight-polyline]')).toBeTruthy();
       });
-
-      describe('castStringToTravelMode', function () {
-        it('should return a string as a TravelMode', () => {
-          expect(component.castStringToTravelMode("DRIVING")).toEqual(google.maps.TravelMode.DRIVING);
-          expect(component.castStringToTravelMode("FLIGHT")).toEqual("FLIGHT" as TravelMode);
-        });
-      });
-
-      describe('drawFlightPolyline', () => {
-        beforeEach(() => {
-          component.selectedLocation = new LocationModel("1", "Nantes", 10, 50);
-          component.nextLocation = new LocationModel("2", "Paris", 20, 60);
-          spectator.detectChanges();
-        });
-
-        it('should return empty array if selectedLocation is invalid', () => {
-          component.selectedLocation = new LocationModel("", "", 200, 200)
-          let result: LatLng[] = component.drawFlightPolyline();
-          expect(result).toEqual([]);
-        });
-
-        it('should return empty array if nextLocation is invalid', () => {
-          component.nextLocation = new LocationModel("", "", 200, 200);
-          let result: LatLng[] = component.drawFlightPolyline();
-          expect(result).toEqual([]);
-        });
-
-        it('should return array of LatLngLiteral if selectedLocation and nextLocation are valid', () => {
-          let result: any = component.drawFlightPolyline();
-          result = result.map((latLng: LatLng) => {
-            return { lat: latLng.lat(), lng: latLng.lng() }
-          });
-          expect(result.length).toEqual(2);
-          expect(result[0].lat).toEqual(10);
-          expect(result[0].lng).toEqual(50);
-          expect(result[1].lat).toEqual(20);
-          expect(result[1].lng).toEqual(60);
-        });
-      });
-
-      describe('Templates',  () => {
-        it('should have a map-directions-renderer element when destinationsResults is defined',  () => {
-          component.directionsResults = { routes: [] };
-          component.itineraryMode.travelMode = "DRIVING" as TravelMode;
-          spectator.detectChanges();
-          expect(spectator.query('map-directions-renderer[map-directions-renderer]')).toBeTruthy();
-        });
-
-        it('should have a map-polyline element when travelMode is FLIGHT', () => {
-          component.directionsResults = { routes: [] };
-          component.itineraryMode.travelMode = "FLIGHT" as TravelMode;
-          spectator.detectChanges();
-          expect(component.itineraryMode.travelMode).toEqual("FLIGHT" as TravelMode);
-          expect(spectator.query('map-polyline[map-flight-polyline]')).toBeTruthy();
-        });
-      });
-    } catch (error: any) {
-      // Tests either passed or failed, but we don't want to throw an error
-      // because the error is Google Maps API's dependant
-      console.error(`Tests failed with error: ${error.message}`);
-    }
+    });
 
     afterAll(() => {
       TestBed.resetTestingModule();
     });
   });
-})
+});
+} catch (error: any) {
+  // Tests either passed or failed, but we don't want to throw an error
+  // because the error is Google Maps API's dependant
+  console.error(`Tests failed with error: ${error.message}`);
+}
