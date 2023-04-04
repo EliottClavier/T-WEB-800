@@ -1,15 +1,13 @@
-import {Component} from '@angular/core';
-import {CredentialsModel} from "../../models/credentials/credentialsModel";
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
-import {LoginConst} from "../../enums/login-const";
-import {User} from "../../models/user/User.model";
-import {ApiResponseConst} from "../../enums/api-response-const";
-import {LoginService} from "../../services/login/login.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import { Component } from '@angular/core';
+import { CredentialsModel } from "../../models/credentials/credentialsModel";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { LoginConst } from "../../enums/login-const";
+import { User } from "../../models/user/User.model";
+import { ApiResponseConst } from "../../enums/api-response-const";
+import { LoginService } from "../../services/login/login.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { RegisterUserComponent } from '../register-user/register-user.component';
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -28,7 +26,8 @@ export class LoginUserComponent {
 
   constructor(
     private _loginService: LoginService,
-    public _dialogRef: MatDialogRef<LoginUserComponent>
+    public _dialogRef: MatDialogRef<LoginUserComponent>,
+    private _dialog: MatDialog,
   ) {
     this.credentials = new CredentialsModel('', '');
     this.loginForm = new FormGroup({
@@ -54,5 +53,15 @@ export class LoginUserComponent {
     }
   }
 
+  public openRegisterDialog(): void {
+    this._dialogRef.close();
+    this._dialog.open (RegisterUserComponent, {
+      scrollStrategy: new NoopScrollStrategy()
+    });
+  }
+
+  public closeLoginDialog(): void {
+    this._dialogRef.close();
+  }
 }
 
