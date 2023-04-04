@@ -160,4 +160,14 @@ describe('AuthService', () => {
       expect(result).toEqual(null);
     });
   });
+
+  describe('disconnect', () => {
+    it('should disconnect user', () => {
+      service["user"] = user;
+      localStorage.setItem('token', 'fakeToken');
+      service.disconnect();
+      expect(service["user"]).toBeUndefined();
+      expect(localStorage.getItem('token')).toEqual(null);
+    });
+  });
 });

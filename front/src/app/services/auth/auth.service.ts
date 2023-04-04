@@ -57,6 +57,11 @@ export class AuthService {
     }
   }
 
+  public disconnect(): void {
+    localStorage.removeItem('token');
+    this.user = undefined;
+  }
+
   get user(): UserModel | undefined {
     return this._user;
   }
