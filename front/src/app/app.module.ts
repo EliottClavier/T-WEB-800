@@ -99,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatInputModule,
     MatSelectModule,
+    MatRadioModule,
     MatAutocompleteModule,
     MatSidenavModule,
     MatCardModule,
