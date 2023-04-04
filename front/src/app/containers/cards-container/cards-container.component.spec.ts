@@ -163,13 +163,13 @@ describe('Card container', () => {
           console.log(e)
         }
       });
+      });
 
       it('should display the item details view when leisure items is selected', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];
         component.onItemSelected(item);
 
-        console.log('item ' + spectator.component.itemsSelected?.category);
         spectator.detectChanges()
         expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
 
@@ -269,6 +269,6 @@ describe('Card container', () => {
     //   expect(component.onAddStepItem).toHaveBeenCalled();
     //   //   expect(spy).toHaveBeenCalledWith(item);
     // });
-  });
+  // });
 });
 

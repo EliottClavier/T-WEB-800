@@ -49,6 +49,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
 import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
+import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
     SaveTripDialogComponent,
+    UserLeisuresDialogComponent,
   ],
   imports: [
     GoogleMapsModule,

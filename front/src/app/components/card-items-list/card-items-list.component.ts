@@ -24,6 +24,7 @@ export class CardItemsListComponent implements AfterContentChecked {
   }
 
   ngAfterContentChecked(): void {
+    console.log('cardItems', this.cardItems);
     this.emptyMessage = this.translate.instant('nothing_to_display')
   }
 

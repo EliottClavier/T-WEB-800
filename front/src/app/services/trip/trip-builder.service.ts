@@ -31,6 +31,14 @@ export class TripBuilderService {
     return this._stepsForms;
   }
 
+  get searchFormsArray(): FormArray {
+    return this.getTripFormsInstance().get('searchFormsArray') as FormArray;
+  }
+
+  get searchFormsArrayControls(): FormGroup[] {
+    return this.searchFormsArray.controls as FormGroup[];
+  }
+
   public activeStepBar: SearchBarEvent = {
     index: 0,
     isEditing: false,
