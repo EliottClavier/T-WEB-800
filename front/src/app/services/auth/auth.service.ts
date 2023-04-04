@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, catchError, Observable, tap} from "rxjs";
 import {UserModel} from "../../models/users/user.model";
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,10 @@ export class AuthService {
     }
 
     // Token exists, check its validity
-    return this.http.get('/api/auth/valid-token').pipe(
+    return this.http.get(`/api/auth/valid-token?token=${token}`).pipe(
       tap(() => {
         // Token is valid, retrieve UserModel object
-        this._getUserByToken(token).subscribe(
+        this.getUserByToken(token).subscribe(
           (user: UserModel) => {
             this.user = user;
           }
@@ -37,13 +38,23 @@ export class AuthService {
     );
   }
 
-  private _getUserByToken(token: string): Observable<UserModel> {
-    return this.http.get<UserModel>(`/api/users/me`, {
+  public getUserByToken(token: string): Observable<UserModel> {
+    let tokenInfos: any = this._decodeTokenInfos(token);
+    return this.http.get<UserModel>(`/api/users/by-email/${tokenInfos.email}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         WWW_Authenticate: `Basic`
       }
     });
+  }
+
+  private _decodeTokenInfos(token: string): Object | null {
+    try {
+      let jwt: any = jwt_decode(token);
+      return JSON.parse(jwt.sub);
+    } catch (err) {
+      return null;
+    }
   }
 
   get user(): UserModel | undefined {

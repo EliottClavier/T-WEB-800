@@ -14,6 +14,7 @@ import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AppModule} from "../../app.module";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
+import {AuthService} from "../../services/auth/auth.service";
 
 describe('LoginUserComponent', () => {
   let component: LoginUserComponent;
@@ -69,8 +70,13 @@ describe('LoginUserComponent', () => {
       return new BehaviorSubject<UserModel>(userResponseMock);
     });
 
+    spyOn<AuthService, any>(component["_authService"], "getUserByToken").and.callFake((token: string) => {
+      return new BehaviorSubject<UserModel>(userResponseMock);
+    });
+
     component.loginUser();
 
+    expect(component["_authService"].getUserByToken).toHaveBeenCalled();
     expect(component.credentials.email).toEqual('test@gmail.com');
     expect(component.credentials.password).toEqual('Password123');
     expect(component.user.user.id).toEqual(1);

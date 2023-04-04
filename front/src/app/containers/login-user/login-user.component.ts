@@ -13,6 +13,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import {RegisterUserComponent} from "../register-user/register-user.component";
+import {AuthService} from "../../services/auth/auth.service";
 
 
 @Component({
@@ -31,6 +32,7 @@ export class LoginUserComponent {
 
   constructor(
     private _loginService: LoginService,
+    private _authService: AuthService,
     public _dialogRef: MatDialogRef<LoginUserComponent>,
     private _dialog: MatDialog,
   ) {
@@ -48,8 +50,12 @@ export class LoginUserComponent {
       this.credentials = this.loginForm.value;
       this._loginService.postLogin(this.credentials).subscribe({
         next: (result: any) => {
-          this.user = result;
-          localStorage.setItem('token', this.user.token);
+          localStorage.setItem('token', result.token);
+          this._authService.getUserByToken(result.token).subscribe(
+            (user: UserModel) => {
+              this._authService.user = this.user = user;
+            }
+          );
           this._dialogRef.close();
         },
         error: () => {

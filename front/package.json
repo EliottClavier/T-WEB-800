@@ -34,8 +34,9 @@
     "html2canvas": "^1.4.1",
     "jest-marbles": "^3.0.3",
     "jspdf": "^2.5.1",
+    "jwt-decode": "^3.1.2",
     "rxjs": "~7.8.0",
-    "saucelabs": "^4.7.0",
+    "saucelabs": "^7.2.1",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0",
     "zone.js": "~0.12.0"
