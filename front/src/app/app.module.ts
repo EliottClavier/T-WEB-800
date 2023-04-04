@@ -45,6 +45,7 @@ import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
+    NotFoundComponent,
   ],
   imports: [
     GoogleMapsModule,
