@@ -44,8 +44,9 @@ import {
 import {MatDialogModule} from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
-import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
 import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardItemDetailsViewComponent,
     MapTravelModeSelectionComponent,
     CarouselComponent,
+    FooterComponent,
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
     SaveTripDialogComponent,
@@ -107,7 +109,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatRadioModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',

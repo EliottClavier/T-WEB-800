@@ -22,6 +22,12 @@
       }
      }"
   ></map-marker>
+  <map-polyline
+    map-flight-polyline
+    *ngIf="itineraryView && itineraryMode.travelMode === castStringToTravelMode('FLIGHT')"
+    [path]="drawFlightPolyline()"
+    [options]="polylineOptions">
+  </map-polyline>
   <map-directions-renderer
     map-directions-renderer
     *ngIf="itineraryView && directionsResults"

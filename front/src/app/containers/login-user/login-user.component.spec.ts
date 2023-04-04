@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {createComponentFactory, Spectator} from "@ngneat/spectator";
+import {byTestId, createComponentFactory, Spectator} from "@ngneat/spectator";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -130,6 +130,24 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('');
     expect(component.credentials.password).toEqual('');
+  });
+
+  it('should open register dialog on click', () => {
+    spyOn<LoginUserComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    component.openRegisterDialog();
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
+  it('should open register dialog', () => {
+    spyOn<LoginUserComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    spectator.click('[login-modal]');
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
   });
 });
 

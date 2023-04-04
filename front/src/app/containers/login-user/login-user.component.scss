@@ -1,0 +1,30 @@
+
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 16px;
+}
+
+mat-icon:hover {
+    cursor: pointer;
+}
+
+.sign-in {
+    display: flex;
+    justify-content: center;
+    margin-top: 8rem;
+    font-style: italic;
+    color: #11765E;
+
+    span {
+        text-decoration-line: underline;
+    }
+    span:hover {
+        cursor: pointer;
+    }
+}
+
+.title {
+    font-size: 2rem;
+    color: #11765E;
+}

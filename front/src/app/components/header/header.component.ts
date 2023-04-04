@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {LoginUserComponent} from "../../containers/login-user/login-user.component";
-import {RegisterUserComponent} from "../../containers/register-user/register-user.component";
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {RegisterUserComponent} from "../../containers/register-user/register-user.component";
 
 @Component({
   selector: 'app-header',

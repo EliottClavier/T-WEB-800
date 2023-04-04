@@ -73,6 +73,10 @@ export class ExploreComponent implements OnInit {
     return this.selectedSearchForm.get('location')?.value as LocationModel;
   }
 
+  get selectedMarkers(): LeisureItemModel[] {
+    return this.selectedSearchForm.get('leisures')?.value as LeisureItemModel[];
+  }
+
   get nextLocation(): LocationModel | undefined {
     return this.searchFormsArrayControls[this.activeSearchBar.index + 1]?.get('location')?.value as LocationModel | undefined
   }
@@ -88,14 +92,9 @@ export class ExploreComponent implements OnInit {
 
   public ngOnInit(): void {
     this._loadRouteParams();
-
-    // console.log(this.searchFormsArrayControls[0].get('leisures')?.value)
-     this.onAddingLeisureInStep(getAccommodationItems()[0]) // A SUPPRIMER
-    this.onAddingLeisureInStep(getAccommodationItems()[0])
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);
-        console.log(item);
       }
     });
   }
@@ -127,7 +126,7 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
+  public getPreviewSuggestions(leisure: LeisureCategory = LeisureCategory.ACCOMMODATION, location: LocationModel = new LocationModel("", "Nantes", 42.555, 37.444), startInterval: Date = new Date(), endInterval: Date = new Date()): void {
     let start: string = getIsoStringFromDate(startInterval);
     let end: string = getIsoStringFromDate(endInterval);
 
@@ -174,7 +173,7 @@ export class ExploreComponent implements OnInit {
     let leisures: LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
     leisures.push(item);
     this.selectedSearchForm.get('leisures')?.setValue(leisures);
-    alert((this.selectedSearchForm.get('leisures')?.value).length);
+
   }
 
   public getLeisureSuggestions() {
@@ -183,7 +182,6 @@ export class ExploreComponent implements OnInit {
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
-    alert(category)
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
