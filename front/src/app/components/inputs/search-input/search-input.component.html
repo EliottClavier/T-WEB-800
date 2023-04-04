@@ -6,7 +6,7 @@
   (click)="onSelectSearchBar()">
   <mat-label search-input-autocomplete-label>Destination</mat-label>
 
-  <button *ngIf="hasLeisureNbr"
+  <button *ngIf="displayLeisureCounter"
     class="leisure-counter"
     mat-icon-button search-input-prefix matPrefix
     (click)="undefined">

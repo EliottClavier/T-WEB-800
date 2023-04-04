@@ -89,8 +89,9 @@ export class ExploreComponent implements OnInit {
   public ngOnInit(): void {
     this._loadRouteParams();
 
-    // this.onAddingLeisureInStep(getAccommodationItems()[0]) // A SUPPRIMER
-
+    // console.log(this.searchFormsArrayControls[0].get('leisures')?.value)
+     this.onAddingLeisureInStep(getAccommodationItems()[0]) // A SUPPRIMER
+    this.onAddingLeisureInStep(getAccommodationItems()[0])
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);

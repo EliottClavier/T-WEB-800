@@ -6,7 +6,6 @@ import {MapView} from "../../enums/map-view-const";
 import {LocationModel} from "../../models/location/location.model";
 import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 @Component({
   selector: 'app-multiple-search-bars',
@@ -16,11 +15,9 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 export class MultipleSearchBarsComponent implements OnInit {
 
   @Input() public hasLeisureNbr: number = 0;
-  @Input() public searchForms: FormGroup = new FormGroup({
-    searchFormsArray: new FormArray<FormGroup>([
-      buildStepFormGroupControlsDetails(),
-    ]),
-  });
+  @Input() public searchForms: FormGroup = this.tripBuilderService.getTripFormsInstance();
+
+  public leisuresLength: number[] = [];
 
   @Input() public activeSearchBar: SearchBarEvent = {
     index: 0,
@@ -32,13 +29,10 @@ export class MultipleSearchBarsComponent implements OnInit {
   constructor(private tripBuilderService: TripBuilderService) {
   }
 
-  ngOnInit(): void {
-    // this.tripBuilderService.getTripFormsInstance().subscribe((state) => {
-    //   console.log()
-    //   this.hasLeisure(state.length);
-    // });
-    // this.hasLeisure(this.activeSearchBar.index);
 
+  ngOnInit(): void {
+    this.hasLeisure();
+    console.log(this.leisuresLength)
   }
 
   get searchFormsArray(): FormArray {
@@ -58,22 +52,14 @@ export class MultipleSearchBarsComponent implements OnInit {
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
-  public hasLeisure(): number {
-    // console.log('indextest  : ', 0)
-    // // console.log('index  : ', index)
-    //
-    // console.log('leisures', this.tripBuilderService.getTripFormsInstance()?.value.forEach((step: any) => {
-    //   console.log('step : ', step)
-    // }));
-    // let len;
-    //
-    // let leisureNbr = this.tripBuilderService.getTripFormsInstance().get("leisures")?.valueChanges.subscribe((value: LeisureItemModel[]) => {
-    //   len = value.length
-    //   console.log('value  : ', value.length)
-    //   console.log('hasleisure : ', leisureNbr)
-    // });
-    //
-     return  0
+  public hasLeisure(): number[] {
+    this.leisuresLength = [];
+    this.searchFormsArrayControls.forEach((step, index) => {
+
+      this.leisuresLength.push(step.get("leisures")?.value.length);
+    });
+
+    return this.leisuresLength;
   }
 
   public addSearchBar(): void {
