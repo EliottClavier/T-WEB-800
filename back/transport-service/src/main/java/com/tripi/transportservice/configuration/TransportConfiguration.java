@@ -3,11 +3,17 @@ package com.tripi.transportservice.configuration;
 import com.amadeus.Amadeus;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
+import com.tripi.transportservice.enumeration.Source;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.google.maps.GeoApiContext;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 public class TransportConfiguration {
@@ -20,6 +26,9 @@ public class TransportConfiguration {
 
     @Value("${google.apiKey}")
     private String googleKey;
+
+    @Value("${sources}")
+    private String[] sources;
 
     @Bean
     public Amadeus getAmadeus() {
@@ -37,6 +46,13 @@ public class TransportConfiguration {
     public DirectionsApiRequest getDirectionsApi() {
         GeoApiContext context = getGeoApiContext();
         return DirectionsApi.newRequest(context);
+    }
+
+    @Bean
+    public List<Source> activeSources() {
+        return Arrays.stream(sources)
+                .map(Source::valueOf)
+                .collect(Collectors.toList());
     }
 
 }
