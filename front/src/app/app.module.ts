@@ -42,7 +42,7 @@ import { MapTravelModeSelectionComponent} from './containers/map-travel-mode-sel
 import { MatDialogModule } from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
-import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
@@ -120,7 +120,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
       },
     ),
-    NgbCarousel
+    NgbCarousel,
+    NgbModule,
   ],
   exports: [
     RegisterUserComponent,
