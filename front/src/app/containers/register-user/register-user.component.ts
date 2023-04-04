@@ -12,7 +12,7 @@ import {
 import {ErrorStateMatcher} from "@angular/material/core";
 import {RegisterConst} from "../../enums/register-const";
 import {RegisterService} from "../../services/register/register.service";
-import {UserModel} from "../../models/user/user.model";
+import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
@@ -66,6 +66,7 @@ export class RegisterUserComponent {
       this._registerService.postUserRegister(this.newUser).subscribe({
         next: (result: any) => {
           this.user = result;
+          localStorage.setItem('token', this.user.token);
           this._dialogRef.close();
         },
         error: () => {

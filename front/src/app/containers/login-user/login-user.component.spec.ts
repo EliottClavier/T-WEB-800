@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {LoginService} from "../../services/login/login.service";
-import {UserModel} from "../../models/user/user.model";
+import {UserModel} from "../../models/users/user.model";
 import {BehaviorSubject, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";

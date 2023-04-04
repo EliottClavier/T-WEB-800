@@ -15,7 +15,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {SearchInputComponent} from './components/inputs/search-input/search-input.component';
-import {HttpClient, HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {DateRangeComponent} from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -46,6 +46,7 @@ import { LeisureCategoryFilterComponent } from './containers/leisure-category-fi
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
 import {NgbCarousel, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import {TokenInterceptor} from "./interceptors/token.interceptor";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -124,7 +125,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule,
     TranslateModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

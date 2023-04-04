@@ -10,7 +10,7 @@ import {RegisterService} from "../../services/register/register.service";
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {HttpErrorResponse} from "@angular/common/http";
 import {BehaviorSubject, throwError} from "rxjs";
-import {UserModel} from "../../models/user/user.model";
+import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";

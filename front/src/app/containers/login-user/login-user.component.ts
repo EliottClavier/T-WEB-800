@@ -6,7 +6,7 @@ import {
   Validators
 } from "@angular/forms";
 import {LoginConst} from "../../enums/login-const";
-import {UserModel} from "../../models/user/user.model";
+import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {LoginService} from "../../services/login/login.service";
 import {MatDialogRef} from "@angular/material/dialog";
@@ -46,6 +46,7 @@ export class LoginUserComponent {
       this._loginService.postLogin(this.credentials).subscribe({
         next: (result: any) => {
           this.user = result;
+          localStorage.setItem('token', this.user.token);
           this._dialogRef.close();
         },
         error: () => {
