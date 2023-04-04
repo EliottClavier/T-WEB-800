@@ -41,7 +41,5 @@ export class CardItemsListComponent implements AfterContentChecked {
     dialogRef.afterClosed().subscribe(result => {
       this.itemSelected = undefined;
     })
-
-
   }
 }
