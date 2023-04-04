@@ -1,4 +1,4 @@
-package com.tripi.user.model;
+package com.tripi.common.model.user;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = UserDto.class)
 class UserDtoTest {
     private Validator validator;
 
