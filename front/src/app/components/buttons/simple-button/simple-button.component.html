@@ -1,10 +1,26 @@
-<button class="w-100"
-        simple-button
-        mat-flat-button
-        color="primary"
-        (click)="onClickButton()"
-        [disabled]="isDisabled"
-        [hidden]="isHidden"
-        [style.height]="height">
-  {{ label }}
-</button>
+<div [ngSwitch]="buttonType">
+  <button class="w-100"
+          *ngSwitchCase="'stroked'"
+          simple-button
+          mat-stroked-button
+          color="primary"
+          (click)="!isDisabled && (onClickButton())"
+          [disabled]="isDisabled"
+          [hidden]="isHidden"
+          [style.height]="height">
+    {{ label }}
+    <mat-icon matSuffix *ngIf="icon" class="ml-2">{{ icon }}</mat-icon>
+  </button>
+  <button class="w-100"
+          *ngSwitchDefault
+          simple-button
+          mat-flat-button
+          color="primary"
+          (click)="!isDisabled && (onClickButton())"
+          [disabled]="isDisabled"
+          [hidden]="isHidden"
+          [style.height]="height">
+    {{ label }}
+    <mat-icon *ngIf="icon" class="ml-2">{{ icon }}</mat-icon>
+  </button>
+</div>

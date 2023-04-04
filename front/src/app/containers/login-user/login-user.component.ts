@@ -9,8 +9,10 @@ import {LoginConst} from "../../enums/login-const";
 import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {LoginService} from "../../services/login/login.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {RegisterUserComponent} from "../register-user/register-user.component";
 
 
 @Component({
@@ -29,7 +31,8 @@ export class LoginUserComponent {
 
   constructor(
     private _loginService: LoginService,
-    public _dialogRef: MatDialogRef<LoginUserComponent>
+    public _dialogRef: MatDialogRef<LoginUserComponent>,
+    private _dialog: MatDialog,
   ) {
     this.credentials = new CredentialsModel('', '');
     this.loginForm = new FormGroup({
@@ -56,5 +59,15 @@ export class LoginUserComponent {
     }
   }
 
+  public openRegisterDialog(): void {
+    this._dialogRef.close();
+    this._dialog.open (RegisterUserComponent, {
+      scrollStrategy: new NoopScrollStrategy()
+    });
+  }
+
+  public closeLoginDialog(): void {
+    this._dialogRef.close();
+  }
 }
 

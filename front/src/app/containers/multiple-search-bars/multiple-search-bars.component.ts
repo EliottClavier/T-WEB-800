@@ -1,24 +1,23 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
 import {LocationModel} from "../../models/location/location.model";
 import {getTravelModeIcon} from "../../utils/travel-mode/travel-mode.utils";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
 
 @Component({
   selector: 'app-multiple-search-bars',
   templateUrl: './multiple-search-bars.component.html',
   styleUrls: ['./multiple-search-bars.component.scss']
 })
-export class MultipleSearchBarsComponent {
+export class MultipleSearchBarsComponent implements OnInit {
 
-  @Input() public searchForms: FormGroup = new FormGroup({
-    searchFormsArray: new FormArray<FormGroup>([
-      buildStepFormGroupControlsDetails(),
-    ]),
-  });
+  @Input() public hasLeisureNbr: number = 0;
+  @Input() public searchForms: FormGroup = this.tripBuilderService.getTripFormsInstance();
+
+  public leisuresLength: number[] = [];
 
   @Input() public activeSearchBar: SearchBarEvent = {
     index: 0,
@@ -27,7 +26,14 @@ export class MultipleSearchBarsComponent {
   @Output() public activeSearchBarChange: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
   @Output() public viewChange: EventEmitter<MapView> = new EventEmitter<MapView>();
 
-  constructor() {}
+  constructor(private tripBuilderService: TripBuilderService) {
+  }
+
+
+  ngOnInit(): void {
+    this.hasLeisure();
+    console.log(this.leisuresLength)
+  }
 
   get searchFormsArray(): FormArray {
     return this.searchForms.get('searchFormsArray') as FormArray;
@@ -46,11 +52,21 @@ export class MultipleSearchBarsComponent {
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
+  public hasLeisure(): number[] {
+    this.leisuresLength = [];
+    this.searchFormsArrayControls.forEach((step, index) => {
+
+      this.leisuresLength.push(step.get("leisures")?.value.length);
+    });
+
+    return this.leisuresLength;
+  }
+
   public addSearchBar(): void {
     let newFormGroup: FormGroup = buildStepFormGroupControlsDetails();
     if (this.lastSearchBar.get("end")?.value) {
       newFormGroup.setControl(
-        "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [ Validators.required ])
+        "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [Validators.required])
       );
     }
     this.searchFormsArray.push(newFormGroup);

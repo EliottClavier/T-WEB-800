@@ -11,7 +11,7 @@ import {UserModel} from "../../models/users/user.model";
 import {BehaviorSubject, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ApiResponseConst} from "../../enums/api-response-const";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AppModule} from "../../app.module";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
@@ -121,6 +121,24 @@ describe('LoginUserComponent', () => {
 
     expect(component.credentials.email).toEqual('');
     expect(component.credentials.password).toEqual('');
+  });
+
+  it('should open register dialog on click', () => {
+    spyOn<LoginUserComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    component.openRegisterDialog();
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
+  it('should open register dialog', () => {
+    spyOn<LoginUserComponent, any>(component, 'openRegisterDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    spectator.click('[login-modal]');
+    spectator.detectChanges();
+    expect(component.openRegisterDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
   });
 });
 

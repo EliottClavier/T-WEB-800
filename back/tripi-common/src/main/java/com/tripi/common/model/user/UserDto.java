@@ -1,4 +1,4 @@
-package com.tripi.user.model;
+package com.tripi.common.model.user;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

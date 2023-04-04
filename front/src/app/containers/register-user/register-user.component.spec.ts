@@ -1,5 +1,5 @@
-import {MyErrorStateMatcher, RegisterUserComponent} from './register-user.component';
-import {AppModule} from "../../app.module";
+import { MyErrorStateMatcher, RegisterUserComponent } from './register-user.component';
+import { AppModule } from "../../app.module";
 import {
   FormControl,
   FormGroup,
@@ -12,7 +12,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {BehaviorSubject, throwError} from "rxjs";
 import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 
 describe('RegisterUserComponent', () => {
@@ -39,7 +39,7 @@ describe('RegisterUserComponent', () => {
     ],
     providers: [
       RegisterService,
-      {provide: MatDialogRef, useValue: dialogMock},
+      { provide: MatDialogRef, useValue: dialogMock },
     ],
   });
 
@@ -90,7 +90,7 @@ describe('RegisterUserComponent', () => {
     component.registerForm.setValue({ firstname: 'Albert', lastname: 'Test', email: 'test@gmail.com', password: 'Password123', confirmPassword: 'Password123' });
 
     spyOn<RegisterService, any>(_registerService, "postUserRegister").and.returnValue(
-      throwError(() => new HttpErrorResponse({error: API_RESPONSE.BAD_REQUEST, status: 400}))
+      throwError(() => new HttpErrorResponse({ error: API_RESPONSE.BAD_REQUEST, status: 400 }))
     );
 
     component.createUser();
@@ -115,7 +115,7 @@ describe('RegisterUserComponent', () => {
     expect(component.newUser.lastname).toBe('');
     expect(component.newUser.email).toBe('');
     expect(component.newUser.password).toBe('');
-    expect(component.registerForm.controls.email.errors).toEqual({email: true});
+    expect(component.registerForm.controls.email.errors).toEqual({ email: true });
   });
 
   it('should create a new user with first name is empty', () => {
@@ -208,6 +208,22 @@ describe('RegisterUserComponent', () => {
     const result = matcher.isErrorState(control, form);
     expect(result).toBeTrue();
   });
+
+  it('should open login dialog', () => {
+    spyOn<RegisterUserComponent, any>(component, 'openLoginDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    component.openLoginDialog();
+    spectator.detectChanges();
+    expect(component.openLoginDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
+
+  it('should open login dialog on click', () => {
+    spyOn<RegisterUserComponent, any>(component, 'openLoginDialog').and.callThrough();
+    spyOn<MatDialog, any>(component["_dialog"], 'open').and.callThrough();
+    spectator.click('[register-modal]');
+    spectator.detectChanges();
+    expect(component.openLoginDialog).toHaveBeenCalled();
+    expect(component["_dialog"].open).toHaveBeenCalled();
+  });
 });
-
-
