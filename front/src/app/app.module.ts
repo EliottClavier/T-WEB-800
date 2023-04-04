@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterUserComponent } from './containers/register-user/register-user.component';
@@ -37,15 +38,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
 import { CardItemDetailsViewComponent } from './components/card-item-details-view/card-item-details-view.component';
-import { MapTravelModeSelectionComponent } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
+import { MapTravelModeSelectionComponent} from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
-import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
+import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
+import { MatRadioModule } from "@angular/material/radio";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
     NotFoundComponent,
+    SaveTripDialogComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -96,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatInputModule,
     MatSelectModule,
+    MatRadioModule,
     MatAutocompleteModule,
     MatSidenavModule,
     MatCardModule,
@@ -106,7 +110,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    NgbModule,
     TranslateModule.forRoot(
       {
         defaultLanguage: 'en',

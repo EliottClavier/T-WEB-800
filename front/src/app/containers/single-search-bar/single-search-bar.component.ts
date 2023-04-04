@@ -6,7 +6,7 @@ import {getIsoStringFromDate} from "../../utils/date.utils";
 import {buildStepFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 @Component({

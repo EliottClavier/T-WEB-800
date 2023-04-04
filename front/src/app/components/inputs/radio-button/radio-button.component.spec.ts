@@ -39,7 +39,7 @@ describe('RadioButtonComponent', () => {
     expect(component.radioLabelList).toBeDefined();
   });
 
-  it('Should display a list of radio button', () => {
+  it('should display a list of radio button', () => {
     spectator.setInput("radioLabelList", ["test1", "test2"]);
     expect(spectator.queryAll("[data-cy-radio-button-item]").length).toEqual(2);
   });

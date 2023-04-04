@@ -1,6 +1,6 @@
 import {AfterContentChecked, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 

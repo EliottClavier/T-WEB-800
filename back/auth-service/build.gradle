@@ -53,6 +53,8 @@ dependencies {
 
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+	implementation project(':tripi-common')
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
