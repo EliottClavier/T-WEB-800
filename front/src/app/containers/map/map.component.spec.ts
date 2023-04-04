@@ -15,6 +15,7 @@ import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TransportOptions} from "../../types/transport-options.type";
 import LatLng = google.maps.LatLng;
 import TravelMode = google.maps.TravelMode;
+import {TestBed} from "@angular/core/testing";
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -509,5 +510,9 @@ describe('MapComponent', () => {
       // because the error is Google Maps API's dependant
       console.error(`Tests failed with error: ${error.message}`);
     }
+
+    afterAll(() => {
+      TestBed.resetTestingModule();
+    });
   });
 })
