@@ -97,8 +97,6 @@ export class SearchInputComponent implements OnInit {
         data: {index: this.id}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
 
-    });
   }
 }

@@ -11,19 +11,20 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 })
 export class UserLeisuresDialogComponent implements OnInit {
 
-  public index: number;
+
   public searchForms?: FormGroup;
-  public leisures: LeisureItemModel[] = [];
+  public stepFormInfo = {} as { index: number, leisures: LeisureItemModel[] };
+
 
   constructor(
     public dialogRef: MatDialogRef<UserLeisuresDialogComponent>,
     public _tripService: TripBuilderService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.index = data.index as number;
+    this.stepFormInfo.index = data.index as number;
   }
 
   ngOnInit(): void {
-    this.leisures = (this._tripService.searchFormsArrayControls[this.index]?.get("leisures")?.value) as LeisureItemModel[];
+    this.stepFormInfo.leisures = (this._tripService.searchFormsArrayControls[this.stepFormInfo.index]?.get("leisures")?.value) as LeisureItemModel[];
   }
 
 }
