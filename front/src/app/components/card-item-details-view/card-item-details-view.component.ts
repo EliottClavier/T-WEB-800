@@ -29,8 +29,6 @@ export class CardItemDetailsViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
   }
 
   onCloseDetailsView() {
