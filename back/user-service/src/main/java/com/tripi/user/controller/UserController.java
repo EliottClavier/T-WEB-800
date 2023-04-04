@@ -2,7 +2,7 @@ package com.tripi.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripi.user.manager.UserManager;
-import com.tripi.user.model.UserDto;
+import com.tripi.common.model.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

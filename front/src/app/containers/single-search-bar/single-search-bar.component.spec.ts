@@ -105,6 +105,7 @@ describe('SingleSearchBarComponent', () => {
       expect(button).not.toBeDisabled();
       expect(component.searchForm.invalid).toBeFalse();
       expect(component.validate).toHaveBeenCalled();
+      expect(component["_router"].navigate).toHaveBeenCalled;
     });
 
     it('should have Router injected', () => {

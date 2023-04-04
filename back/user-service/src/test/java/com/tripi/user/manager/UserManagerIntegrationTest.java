@@ -1,6 +1,6 @@
 package com.tripi.user.manager;
 
-import com.tripi.user.model.UserDto;
+import com.tripi.common.model.user.UserDto;
 import com.tripi.user.model.UserResponse;
 import com.tripi.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;

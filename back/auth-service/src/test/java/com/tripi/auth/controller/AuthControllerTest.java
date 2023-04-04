@@ -1,12 +1,13 @@
 package com.tripi.auth.controller;
 
-import com.tripi.auth.controller.AuthController;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripi.auth.exception.CredentialsDoesNotExistsException;
 import com.tripi.auth.exception.EmailAlreadyExistsException;
 import com.tripi.auth.exception.EmailDoesNotExistException;
 import com.tripi.auth.model.CredentialsDto;
 import com.tripi.auth.requests.AuthRequest;
 import com.tripi.auth.service.CredentialsService;
+import com.tripi.common.model.user.UserDto;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,56 +38,56 @@ class AuthControllerTest {
     CredentialsService credentialsService;
 
     @Test
-    public void testRegister() throws EmailAlreadyExistsException {
-        AuthRequest authRequest = new AuthRequest("test@gmail.com", "password");
+    public void testRegister() throws EmailAlreadyExistsException, JsonProcessingException {
+        AuthRequest authRequest = new AuthRequest(1, "test@gmail.com", "Jacques", "Occo", "password");
         when(credentialsService.saveCredentials(new CredentialsDto())).thenReturn(new CredentialsDto());
-        ResponseEntity<String> responseEntity = authController.register(authRequest);
+        ResponseEntity<?> responseEntity = authController.register(authRequest);
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testRegisterWithInvalidEmail() throws EmailAlreadyExistsException {
-        AuthRequest authRequest = new AuthRequest("testgmail.com", "password");
+    public void testRegisterWithInvalidEmail() throws EmailAlreadyExistsException, JsonProcessingException {
+        AuthRequest authRequest = new AuthRequest(1, "testgmail.com", "Jacques", "Occo", "password");
         when(credentialsService.saveCredentials(new CredentialsDto())).thenReturn(new CredentialsDto());
-        ResponseEntity<String> responseEntity = authController.register(authRequest);
+        ResponseEntity<?> responseEntity = authController.register(authRequest);
         assertEquals(400, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testRegisterWithInvalidPassword() throws EmailAlreadyExistsException {
-        AuthRequest authRequest = new AuthRequest("test@gmail.com", "pass");
+    public void testRegisterWithInvalidPassword() throws EmailAlreadyExistsException, JsonProcessingException {
+        AuthRequest authRequest = new AuthRequest(1, "test@gmail.com", "Jacques", "Occo", "pass");
         when(credentialsService.saveCredentials(new CredentialsDto())).thenReturn(new CredentialsDto());
-        ResponseEntity<String> responseEntity = authController.register(authRequest);
+        ResponseEntity<?> responseEntity = authController.register(authRequest);
         assertEquals(400, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testLogin() throws EmailDoesNotExistException {
-        AuthRequest authRequest = new AuthRequest("michel@gmail.com", "michel");
+    public void testLogin() throws EmailDoesNotExistException, JsonProcessingException {
+        AuthRequest authRequest = new AuthRequest(1, "michel@gmail.com", "Michel", "Polnaref", "michel");
         String password = new BCryptPasswordEncoder().encode("michel");
         CredentialsDto credentialsDto = new CredentialsDto();
         credentialsDto.setEmail("michel@gmail.com");
         credentialsDto.setPassword(password);
         when(credentialsService.getCredentialsByEmail(authRequest.getEmail())).thenReturn(credentialsDto);
-        ResponseEntity<String> responseEntity = authController.login(authRequest);
+        ResponseEntity<?> responseEntity = authController.login(authRequest);
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testLoginFailed() throws EmailDoesNotExistException {
-        AuthRequest authRequest = new AuthRequest("michel@gmail.com", "michel123");
+    public void testLoginFailed() throws EmailDoesNotExistException, JsonProcessingException {
+        AuthRequest authRequest = new AuthRequest(1, "michel@gmail.com", "Michel", "Polnaref", "michel123");
         String password = new BCryptPasswordEncoder().encode("michel");
         CredentialsDto credentialsDto = new CredentialsDto();
         credentialsDto.setEmail(authRequest.getEmail());
         credentialsDto.setPassword(password);
         when(credentialsService.getCredentialsByEmail(authRequest.getEmail())).thenReturn(credentialsDto);
-        ResponseEntity<String> responseEntity = authController.login(authRequest);
+        ResponseEntity<?> responseEntity = authController.login(authRequest);
         assertEquals(400, responseEntity.getStatusCode().value());
     }
 
     @Test
     public void testUpdatePassword() throws CredentialsDoesNotExistsException, EmailAlreadyExistsException, EmailDoesNotExistException {
-        AuthRequest authRequest = new AuthRequest("michel@gmail.com", "michel1456");
+        AuthRequest authRequest = new AuthRequest(1, "michel@gmail.com", "Michel", "Polnaref", "michel1456");
         String password = new BCryptPasswordEncoder().encode("michel");
         String newPassword = new BCryptPasswordEncoder().encode("michel1456");
         CredentialsDto credentialsDto = new CredentialsDto();
@@ -95,34 +96,37 @@ class AuthControllerTest {
         when(credentialsService.getCredentialsByEmail(authRequest.getEmail())).thenReturn(credentialsDto);
         credentialsDto.setPassword(newPassword);
         when(credentialsService.saveCredentials(credentialsDto)).thenReturn(credentialsDto);
-        ResponseEntity<String> responseEntity = authController.updatePassword(authRequest);
+        ResponseEntity<?> responseEntity = authController.updatePassword(authRequest);
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testGenerateToken() throws EmailDoesNotExistException {
-        String responseEntity = authController.generateToken("michel@gmail.com");
+    public void testGenerateToken() throws EmailDoesNotExistException, JsonProcessingException {
+        UserDto userDto = new UserDto(1, "test@gmail.com", "Jacques", "Occo");
+        String responseEntity = authController.generateToken(userDto);
         assertNotNull(responseEntity);
     }
 
     @Test
-    public void testValidateToken() throws EmailDoesNotExistException {
-        String token = authController.generateToken("michel@gmail.com");
-        ResponseEntity<String> responseEntity = authController.validateToken(token);
+    public void testValidateToken() throws EmailDoesNotExistException, JsonProcessingException {
+        UserDto userDto = new UserDto(1, "test@gmail.com", "Jacques", "Occo");
+        String token = authController.generateToken(userDto);
+        ResponseEntity<Boolean> responseEntity = authController.validateToken(token);
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 
     @Test
-    public void testValidateTokenFailed() throws EmailDoesNotExistException {
-        String token = authController.generateToken("michel@gmail.com");
+    public void testValidateTokenFailed() throws EmailDoesNotExistException, JsonProcessingException {
+        UserDto userDto = new UserDto(1, "test@gmail.com", "Jacques", "Occo");
+        String token = authController.generateToken(userDto);
         token = token + "123";
-        ResponseEntity<String> responseEntity = authController.validateToken(token);
+        ResponseEntity<Boolean> responseEntity = authController.validateToken(token);
         assertEquals(400, responseEntity.getStatusCode().value());
     }
 
     @Test
     public void testDeleteCredentials() throws EmailDoesNotExistException, CredentialsDoesNotExistsException {
-        AuthRequest authRequest = new AuthRequest("michel@gmail.com", "michel");
+        AuthRequest authRequest = new AuthRequest(1, "michel@gmail.com", "Michel", "Polnaref", "michel");
         String password = new BCryptPasswordEncoder().encode("michel");
         CredentialsDto credentialsDto = new CredentialsDto();
         credentialsDto.setId(1);
@@ -130,7 +134,7 @@ class AuthControllerTest {
         credentialsDto.setPassword(password);
         when(credentialsService.getCredentialsByEmail(authRequest.getEmail())).thenReturn(credentialsDto);
         doNothing().when(credentialsService).deleteCredentials(credentialsDto.getId());
-        ResponseEntity<String> responseEntity = authController.delete(authRequest);
+        ResponseEntity<?> responseEntity = authController.delete(authRequest);
         assertEquals(200, responseEntity.getStatusCode().value());
     }
 }

@@ -3,7 +3,7 @@ package com.tripi.user.manager;
 import com.tripi.user.exception.EmailAlreadyExistsException;
 import com.tripi.user.exception.EmailDoesNotExistException;
 import com.tripi.user.exception.UserDoesNotExistsException;
-import com.tripi.user.model.UserDto;
+import com.tripi.common.model.user.UserDto;
 import com.tripi.user.model.UserResponse;
 import com.tripi.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

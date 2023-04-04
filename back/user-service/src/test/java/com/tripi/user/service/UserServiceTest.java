@@ -2,7 +2,7 @@ package com.tripi.user.service;
 
 import com.tripi.user.exception.UserDoesNotExistsException;
 import com.tripi.user.model.User;
-import com.tripi.user.model.UserDto;
+import com.tripi.common.model.user.UserDto;
 import com.tripi.user.exception.EmailAlreadyExistsException;
 import com.tripi.user.exception.EmailDoesNotExistException;
 import com.tripi.user.repository.UserRepository;
@@ -18,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 
