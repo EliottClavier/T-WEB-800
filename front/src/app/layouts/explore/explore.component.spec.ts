@@ -445,7 +445,6 @@ describe('ExploreComponent', () => {
 
     // Call the onAddingLeisureInStep method with the mock item
     spectator.component.onAddingLeisureInStep(mockItem);
-    console.log()
     // Check if the leisures array is created and contains the mock item
     const leisures = spectator.component.selectedSearchForm.get('leisures')?.value;
     expect(leisures).toEqual([mockItem]);

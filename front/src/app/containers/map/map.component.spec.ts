@@ -36,8 +36,8 @@ describe('MapComponent', () => {
     ],
   });
 
-  beforeEach(async () => {
-    spectator = await createComponent();
+  beforeEach(() => {
+    spectator = createComponent();
     component = spectator.component;
     http = spectator.inject(HttpClient);
     _transportService = spectator.inject(TransportService);
@@ -99,7 +99,7 @@ describe('MapComponent', () => {
       });
     });
 
-    it('should take all width available and relative height', async () => {
+    it('should take all width available and relative height', () => {
       expect(spectator.query('google-map[map]')?.getAttribute('height')).toEqual('65vh');
       expect(spectator.query('google-map[map]')?.getAttribute('width')).toEqual('100%');
     });
@@ -221,7 +221,7 @@ describe('MapComponent', () => {
     });
 
     describe('on Events (simplified)', () => {
-      it('should emit new boundaries on zoom change', async() => {
+      it('should emit new boundaries on zoom change', () => {
         spyOn<MapComponent, any>(component, 'onMapBoundariesChange').and.callThrough();
         spyOn<EventEmitter<any>, any>(component.onBoundariesChange, 'emit').and.callThrough();
         component.onMapBoundariesChange();
@@ -488,15 +488,15 @@ describe('MapComponent', () => {
         });
       });
 
-      describe('Templates', async () => {
-        it('should have a map-directions-renderer element when destinationsResults is defined', async () => {
+      describe('Templates',  () => {
+        it('should have a map-directions-renderer element when destinationsResults is defined',  () => {
           component.directionsResults = { routes: [] };
           component.itineraryMode.travelMode = "DRIVING" as TravelMode;
           spectator.detectChanges();
           expect(spectator.query('map-directions-renderer[map-directions-renderer]')).toBeTruthy();
         });
 
-        it('should have a map-polyline element when travelMode is FLIGHT', async () => {
+        it('should have a map-polyline element when travelMode is FLIGHT', () => {
           component.directionsResults = { routes: [] };
           component.itineraryMode.travelMode = "FLIGHT" as TravelMode;
           spectator.detectChanges();
