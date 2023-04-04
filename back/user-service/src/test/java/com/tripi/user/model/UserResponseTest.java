@@ -1,6 +1,7 @@
 package com.tripi.user.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.tripi.common.model.user.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;

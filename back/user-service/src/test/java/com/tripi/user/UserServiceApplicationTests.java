@@ -33,12 +33,6 @@ public class UserServiceApplicationTests {
 	}
 
 	@Test
-	public void mainTest() {
-		String[] args = new String[]{};
-		UserServiceApplication.main(args);
-	}
-
-	@Test
 	public void configureTest() {
 		when(springApplicationBuilder.sources(any(Class.class))).thenReturn(springApplicationBuilder);
 

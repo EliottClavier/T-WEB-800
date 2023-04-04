@@ -1,7 +1,7 @@
 package com.tripi.user.service;
 
 import com.tripi.user.exception.UserDoesNotExistsException;
-import com.tripi.user.model.UserDto;
+import com.tripi.common.model.user.UserDto;
 import com.tripi.user.exception.EmailAlreadyExistsException;
 import com.tripi.user.exception.EmailDoesNotExistException;
 import com.tripi.user.repository.UserRepository;

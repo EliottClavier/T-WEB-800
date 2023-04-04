@@ -5,7 +5,7 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {of} from "rxjs";
-import {SuggestionsStoreService} from "../../store/suggestions-store.service";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {
   getAccommodationItems,
