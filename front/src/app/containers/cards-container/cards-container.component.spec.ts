@@ -152,13 +152,13 @@ describe('Card container', () => {
 
           const itemListComponent = spectator.query(CardItemsListComponent);
           suggests = component.suggests = getAccommodationItems();
-          let item = suggests[0];
+          let itemIndex = 0;
 
           let spy = spyOn(component, 'onItemSelected').and.callThrough();
 
           spectator.setInput({suggests: suggests});
-          itemListComponent?.onItemClicked(item);
-          expect(spy).toHaveBeenCalledWith(item);
+          itemListComponent?.onItemClicked(itemIndex);
+          expect(spy).toHaveBeenCalledWith(suggests[itemIndex]);
         } catch (e) {
           console.log(e)
         }
