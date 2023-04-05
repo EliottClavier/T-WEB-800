@@ -2,8 +2,8 @@
   "status": 201,
   "data": {
     "id": 1,
-    "firstName": "Marc",
-    "lastName": "DUTRONC",
+    "firstname": "Marc",
+    "lastname": "DUTRONC",
     "email": "test@gmail.com"
   }
 }

@@ -11,6 +11,7 @@
   "unknown" : "Unknown",
   "close" : "Close",
   "show_more" : "Show more",
-  "add_to_step" : "Add to trip"
+  "add_to_step" : "Add to trip",
+  "delete_to_step" : "Delete from trip"
 
 }

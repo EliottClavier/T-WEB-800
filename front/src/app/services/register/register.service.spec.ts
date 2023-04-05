@@ -47,8 +47,8 @@ describe('RegisterService', () => {
     service.postUserRegister(user).subscribe(data => {
       expect(typeof data).toEqual('object');
       expect(data).toEqual(jasmine.objectContaining({
-        firstName: 'Albert',
-        lastName: 'Test',
+        firstname: 'Albert',
+        lastname: 'Test',
         email: 'test@gmail.com',
         password: 'Password123'
       }));

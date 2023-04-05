@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ThemePalette} from "@angular/material/core";
 
 @Component({
   selector: 'app-simple-button',
@@ -13,6 +14,7 @@ export class SimpleButtonComponent {
   @Input() public height: string = '56px';
   @Input() public buttonType: 'flat' | 'stroked' = 'flat';
   @Input() public icon: string = '';
+  @Input() public color: ThemePalette = 'primary';
 
   @Output() public buttonClick: EventEmitter<any> = new EventEmitter<any>();
 

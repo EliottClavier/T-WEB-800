@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 import {Observable} from "rxjs";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {CredentialsModel} from "../../models/credentials/credentialsModel";
+import {CredentialsModel} from "../../models/credentials/credentials.model";
 
 describe('LoginService', () => {
   let service: LoginService;

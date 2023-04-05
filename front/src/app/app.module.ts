@@ -15,7 +15,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {SearchInputComponent} from './components/inputs/search-input/search-input.component';
-import {HttpClient, HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientJsonpModule, HttpClientModule} from "@angular/common/http"
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {DateRangeComponent} from './components/inputs/date-range/date-range.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -47,8 +47,12 @@ import { RadioButtonComponent } from './components/inputs/radio-button/radio-but
 import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
-import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
+import {MatRadioModule} from "@angular/material/radio";
+import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {AuthGuard} from "./guards/auth.guard";
+import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -83,7 +87,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
+    NotFoundComponent,
     SaveTripDialogComponent,
+    UserLeisuresDialogComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -120,7 +126,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
       },
     ),
-    NgbCarousel
+    NgbCarousel,
+    NgbModule,
   ],
   exports: [
     RegisterUserComponent,
@@ -130,7 +137,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule,
     TranslateModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

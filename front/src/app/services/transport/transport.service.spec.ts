@@ -3,8 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TransportService } from './transport.service';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {LocationModel} from "../../models/location/location.model";
-import {TransportOptions} from "../../types/transport-options.type";
+import {TransportDirections} from "../../types/transport-options.type";
 import {TransportRequest} from "../../types/transport-request.type";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 
@@ -13,9 +12,8 @@ describe('TransportService', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  let transportOptionsMock: TransportOptions = {
-    routes: {} as google.maps.DirectionsResult,
-    data: {},
+  let transportOptionsMock: TransportDirections = {
+    directionsResult: {} as google.maps.DirectionsResult
   }
 
   beforeEach(() => {
@@ -54,7 +52,7 @@ describe('TransportService', () => {
       expect(data).toEqual(transportOptionsMock);
     });
 
-    const req = httpMock.expectOne(`/api/transports?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
+    const req = httpMock.expectOne(`/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
     expect(req.request.method).toEqual('GET');
     req.flush(transportOptionsMock,{ status: 200, statusText: 'OK' });
   });
@@ -74,7 +72,7 @@ describe('TransportService', () => {
       expect(data).toEqual(transportOptionsMock);
     });
 
-    const req = httpMock.expectOne(`/api/transports?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
+    const req = httpMock.expectOne(`/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
     expect(req.request.method).toEqual('GET');
     req.flush(transportOptionsMock,{ status: 200, statusText: 'OK' });
   });
