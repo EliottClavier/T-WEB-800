@@ -5,3 +5,10 @@
     width: 100vw;
     background-color: #11765E;
 }
+
+.footer-element p {
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    margin-top: 3%;
+}

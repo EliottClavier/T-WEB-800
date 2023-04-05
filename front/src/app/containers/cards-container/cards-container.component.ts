@@ -69,8 +69,5 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
   onShowMoreItems() {
     this.onGetSuggestions.emit();
-
   }
-
-
 }

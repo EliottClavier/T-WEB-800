@@ -1,0 +1,31 @@
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: -40px;
+    margin-top: 16px;
+    margin-right: 16px;
+}
+
+mat-icon:hover {
+    cursor: pointer;
+}
+
+.card-component {
+    display: flex;
+}
+
+.item-details img {
+    margin-right: 2rem;
+    max-width: 600px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-button {
+    display: flex;
+    justify-content: end;
+}

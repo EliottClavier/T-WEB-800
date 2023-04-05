@@ -1,29 +1,36 @@
+
 <ng-container>
+  <div class="close">
+    <mat-icon fontIcon="close icon" (buttonClick)="onCloseDetailsView()"></mat-icon>
+  </div>
   <div class="item-details" data-cy-item-details>
-    <h1 mat-dialog-title data-cy-item-details-title>{{detailsItem?.title}}</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content class="card-component">
       <img data-cy-item-details-image mat-card-image src="{{detailsItem?.image}}" alt="Photo of an item">
-      <h4 data-cy-item-details-subtitle>{{detailsItem?.subtitle}}</h4>
-      <p data-cy-item-details-description>{{detailsItem?.description}}</p>
-      <p data-cy-item-details-rating>{{detailsItem?.rating}}</p>
-      <p data-cy-item-details-price>{{detailsItem?.price}}</p>
-    </div>
-    <div mat-dialog-actions class="justify-content-end">
-      <!--      <app-simple-button [mat-dialog-close]="false"-->
-      <app-simple-button 
-        [mat-dialog-close]="false" 
-        (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)"
-        [label]=" 'add_to_step' | translate" 
-        class="me-2" 
-        data-cy-item-details-add-to-trip-button>
-      </app-simple-button>
-      <app-simple-button 
-        mat-dialog-close 
-        (buttonClick)="onCloseDetailsView()" 
-        [label]=" 'close' | translate"
-        class="me-4" 
-        data-cy-item-details-close-button>
-      </app-simple-button>
+      <div class="content">
+        <div class="content-text">
+          <h1 mat-dialog-title data-cy-item-details-title>{{detailsItem?.title}}</h1>
+          <h4 data-cy-item-details-subtitle>{{detailsItem?.subtitle}}</h4>
+          <p data-cy-item-details-description>{{detailsItem?.description}}</p>
+          <p data-cy-item-details-rating>{{detailsItem?.rating}}</p>
+          <p data-cy-item-details-price>{{detailsItem?.price}}</p>
+        </div>
+        <div mat-dialog-actions class="content-button">
+          <app-simple-button 
+            [mat-dialog-close]="false" 
+            (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)"
+            [label]=" 'add_to_step' | translate" 
+            class="me-2" 
+            data-cy-item-details-add-to-trip-button>
+          </app-simple-button>
+          <app-simple-button 
+            mat-dialog-close 
+            (buttonClick)="onCloseDetailsView()" 
+            [label]=" 'close' | translate"
+            class="me-4" 
+            data-cy-item-details-close-button>
+          </app-simple-button>
+        </div>
+      </div>
     </div>
   </div>
 </ng-container>
