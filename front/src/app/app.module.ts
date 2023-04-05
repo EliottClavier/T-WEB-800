@@ -50,6 +50,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
 import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {AuthGuard} from "./guards/auth.guard";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -137,6 +138,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: TokenInterceptor,
       multi: true
     },
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })
