@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = {"com.tripi", "com.tripi.auth"})
 @Import({ WebSecurityConfiguration.class })
 @EnableJpaRepositories(basePackages = "com.tripi.auth.repository")
+@EnableDiscoveryClient
 public class AuthServiceApplication extends SpringBootServletInitializer {
 
 	@Override
