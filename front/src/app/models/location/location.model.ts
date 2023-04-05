@@ -1,6 +1,4 @@
 export class LocationModel {
-
-
   private _id: string;
   private _name: string;
   private _lng: number;
@@ -12,8 +10,6 @@ export class LocationModel {
     this._lat = lat;
     this._lng = lng;
   }
-
-
 
   public hasValidCoordinates(): boolean {
     return -90 <= this._lat && this._lat <= 90 && -180 <= this._lng && this._lng <= 180;

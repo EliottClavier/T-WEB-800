@@ -169,11 +169,10 @@ describe('Card container', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];
         component.onItemSelected(item);
-
         spectator.detectChanges()
         expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
-
       });
+
       it('should hidden the item details view when leisure items is not more selected', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];

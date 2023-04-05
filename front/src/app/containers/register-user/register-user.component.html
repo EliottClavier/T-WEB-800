@@ -7,25 +7,25 @@
   <form [formGroup]="registerForm">
     <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
-        <mat-form-field id="firstName" appearance="outline" class="w-100">
-          <mat-label for="firstName">First name </mat-label>
-          <input matInput register-first-name type="text" formControlName="firstName" name="firstName" [ngClass]="{
+        <mat-form-field id="firstname" appearance="outline" class="w-100">
+          <mat-label for="firstname">First name </mat-label>
+          <input matInput register-first-name type="text" formControlName="firstname" name="firstname" [ngClass]="{
           'is-invalid':
-            registerForm.controls['firstName'].hasError('required')
+            registerForm.controls['firstname'].hasError('required')
           }">
           <mat-icon matSuffix>person_outline</mat-icon>
-          <mat-error *ngIf="registerForm.hasError('required', 'firstName')">{{INFO_MESSAGES.EMPTY_NAME}}</mat-error>
+          <mat-error *ngIf="registerForm.hasError('required', 'firstname')">{{INFO_MESSAGES.EMPTY_NAME}}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 pt-2">
-        <mat-form-field id="lastName" appearance="outline" class="w-100">
-          <mat-label for="lastName">Last name </mat-label>
-          <input matInput register-last-name type="text" formControlName="lastName" name="lastName" [ngClass]="{
+        <mat-form-field id="lastname" appearance="outline" class="w-100">
+          <mat-label for="lastname">Last name </mat-label>
+          <input matInput register-last-name type="text" formControlName="lastname" name="lastname" [ngClass]="{
           'is-invalid':
-            registerForm.controls['lastName'].hasError('required')
+            registerForm.controls['lastname'].hasError('required')
           }">
           <mat-icon matSuffix>person_outline</mat-icon>
-          <mat-error *ngIf="registerForm.hasError('required', 'lastName')">{{INFO_MESSAGES.EMPTY_NAME}}</mat-error>
+          <mat-error *ngIf="registerForm.hasError('required', 'lastname')">{{INFO_MESSAGES.EMPTY_NAME}}</mat-error>
         </mat-form-field>
       </div>
     </div>
