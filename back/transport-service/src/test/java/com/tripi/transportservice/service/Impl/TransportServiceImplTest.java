@@ -2,156 +2,145 @@ package com.tripi.transportservice.service.Impl;
 
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
-import com.tripi.transportservice.adapters.AmadeusAdapter;
-import com.tripi.transportservice.adapters.GoogleAdapter;
+import com.tripi.transportservice.adapters.DataAdapter;
+import com.tripi.transportservice.adapters.DirectionsAdapter;
 import com.tripi.transportservice.enumeration.Source;
 import com.tripi.transportservice.response.DataResponse;
-import com.tripi.transportservice.response.TransportResponse;
-import jakarta.annotation.Resource;
-import org.junit.jupiter.api.Assertions;
+import com.tripi.transportservice.response.DirectionResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 class TransportServiceImplTest {
 
-    @Mock
-    private AmadeusAdapter amadeusAdapter;
+    private final List<Source> activeSources = new ArrayList<>();
+    private final List<DirectionsAdapter> directionsAdapters = new ArrayList<>();
+    private final List<DataAdapter> dataAdapters = new ArrayList<>();
 
-    @Mock
-    private GoogleAdapter googleAdapter;
-
-    @InjectMocks
     private TransportServiceImpl transportService;
+
+    @Mock
+    private DirectionsAdapter directionsAdapter;
+
+    @Mock
+    private DataAdapter dataAdapter;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        directionsAdapters.add(directionsAdapter);
+        dataAdapters.add(dataAdapter);
+
+        transportService = new TransportServiceImpl(activeSources, directionsAdapters, dataAdapters);
     }
 
     @Test
-    public void testGetTransportsWithAllSources() throws IOException, InterruptedException, ApiException {
+    void getDirections_ReturnsCorrectValue() throws IOException, InterruptedException, ApiException {
         // Arrange
-        List<Source> activeSources = new ArrayList<>();
-        activeSources.add(Source.AMADEUS);
         activeSources.add(Source.GOOGLEMAPS);
-        transportService = new TransportServiceImpl(amadeusAdapter, googleAdapter, activeSources);
 
-        String origin = "Paris, France";
-        String destination = "Lyon, France";
+        String origin = "Paris";
+        String destination = "London";
         String travelMode = "driving";
-        String startDate = "2023-04-02";
-        Date expectedDate = Date.from(LocalDate.parse(startDate).atStartOfDay().atZone(ZoneId.of("Europe/Paris")).toInstant());
-        LocalDateTime now = LocalDateTime.of(2023, 4, 2, 10, 0);
-        ZoneOffset zoneOffSet = ZoneId.of("Europe/Paris").getRules().getOffset(now);
-        List<DataResponse> expectedDataResponse = new ArrayList<>();
-        DataResponse expectedData = new DataResponse();
-        expectedData.setDuration("2h30");
-        expectedData.setPrice("50€");
-        expectedData.setType("train");
-        expectedDataResponse.add(expectedData);
-        when(amadeusAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedData);
-        DirectionsResult expectedDirectionsResult = new DirectionsResult();
-        when(googleAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedDirectionsResult);
-        TransportResponse expectedTransportResponse = new TransportResponse();
-        expectedTransportResponse.setDirectionsResult(expectedDirectionsResult);
-        expectedTransportResponse.setData(expectedDataResponse);
+        Date startDate = new Date();
+
+        DirectionsResult directionsResult = new DirectionsResult();
+        when(directionsAdapter.getSource()).thenReturn(Source.GOOGLEMAPS);
+        when(directionsAdapter.getDirections(origin, destination, travelMode, startDate)).thenReturn(directionsResult);
+
+        DirectionResponse expectedDirectionResponse = new DirectionResponse();
+        expectedDirectionResponse.setDirectionsResult(directionsResult);
+
+        List<DirectionResponse> expectedDirectionResponses = new ArrayList<>();
+        expectedDirectionResponses.add(expectedDirectionResponse);
 
         // Act
-        TransportResponse result = transportService.getTransports(origin, destination, travelMode, startDate);
+        List<DirectionResponse> actualDirectionResponses = transportService.getDirections(origin, destination, travelMode, startDate);
 
         // Assert
-        assertNotNull(result.getDirectionsResult());
-        assertEquals("train", result.getData().get(0).getType());
-        assertEquals("2h30", result.getData().get(0).getDuration());
-        assertEquals("50€", result.getData().get(0).getPrice());
+        assertEquals(expectedDirectionResponses.size(), actualDirectionResponses.size());
+        assertEquals(expectedDirectionResponses.get(0).getDirectionsResult(), actualDirectionResponses.get(0).getDirectionsResult());
     }
 
     @Test
-    public void testGetTransportsWithAmadeus() throws IOException, InterruptedException, ApiException {
+    void getDirectionsWithoutGoogle() throws IOException, InterruptedException, ApiException {
         // Arrange
-        List<Source> activeSources = new ArrayList<>();
+        String origin = "Paris";
+        String destination = "London";
+        String travelMode = "driving";
+        Date startDate = new Date();
+
+        DirectionsResult directionsResult = new DirectionsResult();
+        when(directionsAdapter.getSource()).thenReturn(Source.GOOGLEMAPS);
+        when(directionsAdapter.getDirections(origin, destination, travelMode, startDate)).thenReturn(directionsResult);
+
+        DirectionResponse expectedDirectionResponse = new DirectionResponse();
+        expectedDirectionResponse.setDirectionsResult(directionsResult);
+
+        List<DirectionResponse> expectedDirectionResponses = new ArrayList<>();
+        expectedDirectionResponses.add(expectedDirectionResponse);
+
+        // Act
+        List<DirectionResponse> actualDirectionResponses = transportService.getDirections(origin, destination, travelMode, startDate);
+
+        // Assert
+        assertEquals(0, actualDirectionResponses.size());
+    }
+
+    @Test
+    void getData_ReturnsCorrectValue() throws IOException, InterruptedException, ApiException {
+        // Arrange
         activeSources.add(Source.AMADEUS);
-        transportService = new TransportServiceImpl(amadeusAdapter, googleAdapter, activeSources);
 
-        String origin = "Paris, France";
-        String destination = "Lyon, France";
+        String origin = "Paris";
+        String destination = "London";
         String travelMode = "driving";
-        String startDate = "2023-04-02";
-        Date expectedDate = Date.from(LocalDate.parse(startDate).atStartOfDay().atZone(ZoneId.of("Europe/Paris")).toInstant());
-        LocalDateTime now = LocalDateTime.of(2023, 4, 2, 10, 0);
-        ZoneOffset zoneOffSet = ZoneId.of("Europe/Paris").getRules().getOffset(now);
-        List<DataResponse> expectedDataResponse = new ArrayList<>();
-        DataResponse expectedData = new DataResponse();
-        expectedData.setDuration("2h30");
-        expectedData.setPrice("50€");
-        expectedData.setType("train");
-        expectedDataResponse.add(expectedData);
-        when(amadeusAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedData);
-        DirectionsResult expectedDirectionsResult = new DirectionsResult();
-        when(googleAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedDirectionsResult);
-        TransportResponse expectedTransportResponse = new TransportResponse();
-        expectedTransportResponse.setDirectionsResult(expectedDirectionsResult);
-        expectedTransportResponse.setData(expectedDataResponse);
+        Date startDate = new Date();
+
+        DataResponse dataResponse = new DataResponse();
+        when(dataAdapter.getSource()).thenReturn(Source.AMADEUS);
+        when(dataAdapter.getData(origin, destination, travelMode, startDate)).thenReturn(dataResponse);
+
+        List<DataResponse> expectedDataResponses = new ArrayList<>();
+        expectedDataResponses.add(dataResponse);
 
         // Act
-        TransportResponse result = transportService.getTransports(origin, destination, travelMode, startDate);
+        List<DataResponse> actualDataResponses = transportService.getData(origin, destination, travelMode, startDate);
 
         // Assert
-        assertNull(result.getDirectionsResult());
-        assertEquals("train", result.getData().get(0).getType());
-        assertEquals("2h30", result.getData().get(0).getDuration());
-        assertEquals("50€", result.getData().get(0).getPrice());
+        assertEquals(expectedDataResponses.size(), actualDataResponses.size());
+        assertEquals(expectedDataResponses.get(0), actualDataResponses.get(0));
     }
 
     @Test
-    public void testGetTransportsWithGoogleMaps() throws IOException, InterruptedException, ApiException {
+    void getDataWithoutAmadeus() throws IOException, InterruptedException, ApiException {
         // Arrange
-        List<Source> activeSources = new ArrayList<>();
-        activeSources.add(Source.GOOGLEMAPS);
-        transportService = new TransportServiceImpl(amadeusAdapter, googleAdapter, activeSources);
-
-        String origin = "Paris, France";
-        String destination = "Lyon, France";
+        String origin = "Paris";
+        String destination = "London";
         String travelMode = "driving";
-        String startDate = "2023-04-02";
-        Date expectedDate = Date.from(LocalDate.parse(startDate).atStartOfDay().atZone(ZoneId.of("Europe/Paris")).toInstant());
-        LocalDateTime now = LocalDateTime.of(2023, 4, 2, 10, 0);
-        ZoneOffset zoneOffSet = ZoneId.of("Europe/Paris").getRules().getOffset(now);
-        List<DataResponse> expectedDataResponse = new ArrayList<>();
-        DataResponse expectedData = new DataResponse();
-        expectedData.setDuration("2h30");
-        expectedData.setPrice("50€");
-        expectedData.setType("train");
-        expectedDataResponse.add(expectedData);
-        when(amadeusAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedData);
-        DirectionsResult expectedDirectionsResult = new DirectionsResult();
-        when(googleAdapter.getTransports(any(), any(), any(), any())).thenReturn(expectedDirectionsResult);
-        TransportResponse expectedTransportResponse = new TransportResponse();
-        expectedTransportResponse.setDirectionsResult(expectedDirectionsResult);
-        expectedTransportResponse.setData(expectedDataResponse);
+        Date startDate = new Date();
+
+        DataResponse dataResponse = new DataResponse();
+        when(dataAdapter.getSource()).thenReturn(Source.AMADEUS);
+        when(dataAdapter.getData(origin, destination, travelMode, startDate)).thenReturn(dataResponse);
+
+        List<DataResponse> expectedDataResponses = new ArrayList<>();
+        expectedDataResponses.add(dataResponse);
 
         // Act
-        TransportResponse result = transportService.getTransports(origin, destination, travelMode, startDate);
+        List<DataResponse> actualDataResponses = transportService.getData(origin, destination, travelMode, startDate);
 
         // Assert
-        assertNotNull(result.getDirectionsResult());
-        assertEquals(result.getData().size(), 0);
+        assertEquals(0, actualDataResponses.size());
     }
 }

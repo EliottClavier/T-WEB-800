@@ -1,12 +1,16 @@
 package com.tripi.transportservice.service;
 
 import com.google.maps.errors.ApiException;
-import com.tripi.transportservice.response.TransportResponse;
+import com.tripi.transportservice.response.DataResponse;
+import com.tripi.transportservice.response.DirectionResponse;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 public interface TransportService {
-    TransportResponse getTransports(String origin, String destination, String travelMode, String startDate) throws IOException, InterruptedException, ApiException;
+    List<DirectionResponse> getDirections(String origin, String destination, String travelMode, Date startDate) throws IOException, InterruptedException, ApiException;
+
+    List<DataResponse> getData(String origin, String destination, String travelMode, Date startDate) throws IOException, InterruptedException, ApiException;
 
 }

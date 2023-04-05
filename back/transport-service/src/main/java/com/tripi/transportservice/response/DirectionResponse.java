@@ -3,14 +3,10 @@ package com.tripi.transportservice.response;
 import com.google.maps.model.DirectionsResult;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class TransportResponse {
+public class DirectionResponse {
 
     DirectionsResult directionsResult;
-
-    List<DataResponse> data;
 
     public DirectionsResult getDirectionsResult() {
         return directionsResult;
@@ -18,14 +14,6 @@ public class TransportResponse {
 
     public void setDirectionsResult(DirectionsResult directionsResult) {
         this.directionsResult = directionsResult;
-    }
-
-    public List<DataResponse> getData() {
-        return data;
-    }
-
-    public void setData(List<DataResponse> data) {
-        this.data = data;
     }
 
 }

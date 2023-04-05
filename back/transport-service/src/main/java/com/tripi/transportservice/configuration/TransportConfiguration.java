@@ -28,7 +28,7 @@ public class TransportConfiguration {
     private String googleKey;
 
     @Value("${sources}")
-    private String[] sources;
+    private String[] activeSources;
 
     @Bean
     public Amadeus getAmadeus() {
@@ -50,7 +50,7 @@ public class TransportConfiguration {
 
     @Bean
     public List<Source> activeSources() {
-        return Arrays.stream(sources)
+        return Arrays.stream(activeSources)
                 .map(Source::valueOf)
                 .collect(Collectors.toList());
     }

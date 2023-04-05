@@ -1,59 +1,55 @@
 package com.tripi.transportservice.service.Impl;
 
 import com.google.maps.errors.ApiException;
-import com.tripi.transportservice.adapters.AmadeusAdapter;
-import com.tripi.transportservice.adapters.GoogleAdapter;
+import com.tripi.transportservice.adapters.DataAdapter;
+import com.tripi.transportservice.adapters.DirectionsAdapter;
+import com.tripi.transportservice.adapters.data.AmadeusAdapter;
+import com.tripi.transportservice.adapters.directions.GoogleAdapter;
 import com.tripi.transportservice.enumeration.Source;
 import com.tripi.transportservice.response.DataResponse;
-import com.tripi.transportservice.response.TransportResponse;
+import com.tripi.transportservice.response.DirectionResponse;
 import com.tripi.transportservice.service.TransportService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class TransportServiceImpl implements TransportService {
-    @Resource
-    private final AmadeusAdapter amadeusAdapter;
-
-    @Resource
-    private final GoogleAdapter googleAdapter;
-
     private final List<Source> activeSources;
+    private final List<DirectionsAdapter> directionsAdapters;
+    private final List<DataAdapter> dataAdapters;
 
-    public TransportServiceImpl(AmadeusAdapter amadeusAdapter, GoogleAdapter googleAdapter, List<Source> activeSources) {
-        this.amadeusAdapter = amadeusAdapter;
-        this.googleAdapter = googleAdapter;
+    public TransportServiceImpl(List<Source> activeSources, List<DirectionsAdapter> directionsAdapters, List<DataAdapter> dataAdapters) {
         this.activeSources = activeSources;
+        this.directionsAdapters = directionsAdapters;
+        this.dataAdapters = dataAdapters;
     }
 
     @Override
-    public TransportResponse getTransports(String origin, String destination, String travelMode, String startDate) throws IOException, InterruptedException, ApiException {
-        LocalDateTime now = LocalDateTime.now();
-        ZoneId zone = ZoneId.of("Europe/Paris");
-        ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
-        Date date = Date.from(LocalDate.parse(startDate).atStartOfDay().toInstant(zoneOffSet));
-
-        List<DataResponse> dataResponse = new ArrayList<>();
-        if (activeSources.contains(Source.AMADEUS)) {
-            dataResponse.add(amadeusAdapter.getTransports(origin, destination, travelMode, date));
+    public List<DirectionResponse> getDirections(String origin, String destination, String travelMode, Date startDate) throws IOException, InterruptedException, ApiException {
+        List<DirectionResponse> directionsResults = new ArrayList<>();
+        for (DirectionsAdapter directionsAdapter : directionsAdapters) {
+            if (activeSources.contains(directionsAdapter.getSource())) {
+                DirectionResponse directionResponse = new DirectionResponse();
+                directionResponse.setDirectionsResult(directionsAdapter.getDirections(origin, destination, travelMode, startDate));
+                directionsResults.add(directionResponse);
+            }
         }
+        return directionsResults;
+    }
 
-        TransportResponse transportResponse = new TransportResponse();
-        if (activeSources.contains(Source.GOOGLEMAPS)) {
-            transportResponse.setDirectionsResult(googleAdapter.getTransports(origin, destination, travelMode, date));
+    @Override
+    public List<DataResponse> getData(String origin, String destination, String travelMode, Date startDate) throws IOException, InterruptedException, ApiException {
+        List<DataResponse> dataResponses = new ArrayList<>();
+        for (DataAdapter dataAdapter : dataAdapters) {
+            if (activeSources.contains(dataAdapter.getSource())) {
+                dataResponses.add(dataAdapter.getData(origin, destination, travelMode, startDate));
+            }
         }
-        transportResponse.setData(dataResponse);
-
-
-        return transportResponse;
+        return dataResponses;
     }
 }
