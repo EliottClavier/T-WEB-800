@@ -7,10 +7,11 @@ on:
         description: 'Docker build context'
         required: true
         type: string
-      dockerfile:
-        description: 'Dockerfile path'
-        required: true
+      service_name:
+        description: 'Service name'
+        required: false
         type: string
+        default: ''
       image_name:
         description: 'Docker image name'
         required: true
@@ -49,8 +50,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ${{ inputs.context }}
-          file: ${{ inputs.dockerfile }}
+          file: ${{ inputs.context }}/Dockerfile
           push: true
+          build-args: |
+            SERVICE_NAME=${{ inputs.service_name }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.image_name }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag_name }}

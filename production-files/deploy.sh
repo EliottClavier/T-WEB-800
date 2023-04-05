@@ -13,7 +13,7 @@ git pull
 docker pull eliottclavier/tripi-discovery:latest
 docker pull eliottclavier/tripi-gateway:latest
 docker pull eliottclavier/tripi-app:latest
-docker pull eliottclavier/tripi-accomodation:latest
+docker pull eliottclavier/tripi-accommodation:latest
 docker pull eliottclavier/tripi-activity:latest
 docker pull eliottclavier/tripi-bar:latest
 docker pull eliottclavier/tripi-restaurant:latest

@@ -49,8 +49,8 @@ spring:
           uri: lb://transport-service
           predicates:
             - Path=/transports/**
-        - id: accomodation-service
-          uri: lb://accomodation-service
+        - id: accommodation-service
+          uri: lb://accommodation-service
           predicates:
             - Path=/sleep/**
         - id: user-service
