@@ -116,7 +116,7 @@ services:
     container_name: accommodation
     image: eliottclavier/tripi-accommodation:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommodation.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommodation-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -138,7 +138,7 @@ services:
     container_name: activity
     image: eliottclavier/tripi-activity:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /activity.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /activity-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -160,7 +160,7 @@ services:
     container_name: bar
     image: eliottclavier/tripi-bar:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /bar.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /bar-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -182,7 +182,7 @@ services:
     container_name: restaurant
     image: eliottclavier/tripi-restaurant:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /restaurant.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /restaurant-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -204,7 +204,29 @@ services:
     container_name: transport
     image: eliottclavier/tripi-transport:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /transport.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /transport-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  localisation:
+    container_name: localisation
+    image: eliottclavier/tripi-localisation:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /localisation-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -226,7 +248,7 @@ services:
     container_name: trip
     image: eliottclavier/tripi-trip:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /trip.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /trip-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD}"
     expose:
@@ -250,7 +272,7 @@ services:
     container_name: auth
     image: eliottclavier/tripi-auth:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /auth.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /auth-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
     expose:
@@ -272,7 +294,7 @@ services:
     container_name: user
     image: eliottclavier/tripi-user:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /user.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /user-service.jar"
     environment:
       JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD}"
     expose:
