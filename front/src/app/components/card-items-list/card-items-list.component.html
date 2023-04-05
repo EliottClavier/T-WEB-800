@@ -6,7 +6,7 @@
       <app-card-item
         [id]="'card-'+i"
         [cardItem]="item"
-        (onItem)="onItemClicked($event)">
+        (onItem)="onItemClicked(i)">
         data-cy-card-component></app-card-item>
     </li>
   </ul>

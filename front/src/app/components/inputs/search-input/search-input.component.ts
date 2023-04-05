@@ -1,9 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {LocationModel} from "../../../models/location/location.model";
 import {LocationService} from "../../../services/location/location.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {SearchBarEvent} from "../../../types/search-bar-event.type";
 import {isLocation} from "../../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {SaveTripDialogComponent} from "../../../containers/save-trip-dialog/save-trip-dialog.component";
+import {UserLeisuresDialogComponent} from "../../../containers/user-leisures/user-leisures-dialog.component";
 
 @Component({
   selector: 'app-search-input',
@@ -27,7 +30,7 @@ export class SearchInputComponent implements OnInit {
   @Input() public displayLeisureCounter: boolean = false;
 
   constructor(
-    private _locationService: LocationService,
+    private _locationService: LocationService,  private _dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
@@ -87,4 +90,13 @@ export class SearchInputComponent implements OnInit {
     this.readonly = false;
   }
 
+  showLeisures() {
+    let dialogRef = this._dialog.open(UserLeisuresDialogComponent, {
+      autoFocus: false,
+      maxHeight: '90vh',
+        data: {index: this.id}
+    });
+
+
+  }
 }

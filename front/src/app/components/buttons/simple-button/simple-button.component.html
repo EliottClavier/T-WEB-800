@@ -3,7 +3,7 @@
           *ngSwitchCase="'stroked'"
           simple-button
           mat-stroked-button
-          color="primary"
+          [color]="color"
           (click)="!isDisabled && (onClickButton())"
           [disabled]="isDisabled"
           [hidden]="isHidden"
@@ -15,7 +15,7 @@
           *ngSwitchDefault
           simple-button
           mat-flat-button
-          color="primary"
+          [color]="color"
           (click)="!isDisabled && (onClickButton())"
           [disabled]="isDisabled"
           [hidden]="isHidden"

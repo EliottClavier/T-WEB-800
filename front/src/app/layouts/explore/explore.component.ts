@@ -92,6 +92,7 @@ export class ExploreComponent implements OnInit {
 
   public ngOnInit(): void {
     this._loadRouteParams();
+
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);
@@ -135,7 +136,7 @@ export class ExploreComponent implements OnInit {
         this._suggestionsStore.setSuggestionsData(data);
       },
       error: (error) => {
-        alert("error");
+        // alert("error");
         this._suggestionsStore.setSuggestionsData(getAccommodationItems());
       }
     });
