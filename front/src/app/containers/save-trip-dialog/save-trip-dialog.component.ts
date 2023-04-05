@@ -8,8 +8,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class SaveTripDialogComponent {
 
-
-
   constructor(
     public dialogRef: MatDialogRef<SaveTripDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dataDialog: string){

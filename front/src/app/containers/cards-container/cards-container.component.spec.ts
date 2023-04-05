@@ -152,16 +152,17 @@ describe('Card container', () => {
 
           const itemListComponent = spectator.query(CardItemsListComponent);
           suggests = component.suggests = getAccommodationItems();
-          let item = suggests[0];
+          let itemIndex = 0;
 
           let spy = spyOn(component, 'onItemSelected').and.callThrough();
 
           spectator.setInput({suggests: suggests});
-          itemListComponent?.onItemClicked(item);
-          expect(spy).toHaveBeenCalledWith(item);
+          itemListComponent?.onItemClicked(itemIndex);
+          expect(spy).toHaveBeenCalledWith(suggests[itemIndex]);
         } catch (e) {
           console.log(e)
         }
+      });
       });
 
       it('should display the item details view when leisure items is selected', () => {
@@ -170,8 +171,8 @@ describe('Card container', () => {
         component.onItemSelected(item);
         spectator.detectChanges()
         expect(spectator.query('[data-cy-item-details]')).toBeTruthy();
-
       });
+
       it('should hidden the item details view when leisure items is not more selected', () => {
         suggests = getAccommodationItems();
         let item = suggests[0];
@@ -267,6 +268,6 @@ describe('Card container', () => {
     //   expect(component.onAddStepItem).toHaveBeenCalled();
     //   //   expect(spy).toHaveBeenCalledWith(item);
     // });
-  });
+  // });
 });
 

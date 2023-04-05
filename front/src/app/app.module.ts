@@ -47,10 +47,12 @@ import { RadioButtonComponent } from './components/inputs/radio-button/radio-but
 import { NgbCarousel, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
-import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
+import {MatRadioModule} from "@angular/material/radio";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
 import {AuthGuard} from "./guards/auth.guard";
+import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -85,7 +87,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     LeisureCategoryFilterComponent,
     RadioButtonComponent,
+    NotFoundComponent,
     SaveTripDialogComponent,
+    UserLeisuresDialogComponent,
   ],
   imports: [
     GoogleMapsModule,
@@ -122,7 +126,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
       },
     ),
-    NgbCarousel
+    NgbCarousel,
+    NgbModule,
   ],
   exports: [
     RegisterUserComponent,

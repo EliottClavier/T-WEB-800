@@ -1,14 +1,44 @@
 package com.tripi.auth.requests;
 
 public class AuthRequest {
+    private Integer id;
     private String email;
+    private String firstname;
+    private String lastname;
     private String password;
 
     public AuthRequest() {}
 
-    public AuthRequest(String email, String password) {
+    public AuthRequest(Integer id, String email, String firstname, String lastname, String password) {
+        this.id = id;
         this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.password = password;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {

@@ -1,17 +1,25 @@
 package com.tripi.auth.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.tripi.auth.exception.CredentialsDoesNotExistsException;
 import com.tripi.auth.exception.EmailAlreadyExistsException;
 import com.tripi.auth.exception.EmailDoesNotExistException;
 import com.tripi.auth.model.CredentialsDto;
 import com.tripi.auth.requests.AuthRequest;
+import com.tripi.auth.response.AuthResponse;
 import com.tripi.auth.service.CredentialsService;
+import com.tripi.common.model.user.UserDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.Resource;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +38,11 @@ public class AuthController {
     @Resource
     private CredentialsService credentialsService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody AuthRequest authRequest) throws EmailAlreadyExistsException {
+    public ResponseEntity<?> register(@RequestBody AuthRequest authRequest) throws EmailAlreadyExistsException, JsonProcessingException {
         if (!authRequest.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             return ResponseEntity.badRequest().body("Invalid email");
         }
@@ -43,16 +54,20 @@ public class AuthController {
         credentialsDto.setEmail(authRequest.getEmail());
         credentialsDto.setPassword(password);
         credentialsService.saveCredentials(credentialsDto);
-        String token = generateToken(authRequest.getEmail());
-        return ResponseEntity.ok(token);
+        UserDto userDto = new UserDto(authRequest.getId(), authRequest.getFirstname(), authRequest.getLastname(), authRequest.getEmail());
+        String token = generateToken(userDto);
+        AuthResponse authResponse = new AuthResponse(userDto, token);
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) throws EmailDoesNotExistException {
+    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) throws EmailDoesNotExistException, JsonProcessingException {
         CredentialsDto credentialsDto = credentialsService.getCredentialsByEmail(authRequest.getEmail());
         if (passwordEncoder().matches(authRequest.getPassword(), credentialsDto.getPassword())) {
-            String token = generateToken(authRequest.getEmail());
-            return ResponseEntity.ok(token);
+            UserDto userDto = new UserDto(authRequest.getId(), authRequest.getFirstname(), authRequest.getLastname(), authRequest.getEmail());
+            String token = generateToken(userDto);
+            AuthResponse authResponse = new AuthResponse(userDto, token);
+            return ResponseEntity.ok(authResponse);
         } else {
             return ResponseEntity.badRequest().body("Login failed");
         }
@@ -68,12 +83,12 @@ public class AuthController {
     }
 
     @GetMapping("/validate-token")
-    public ResponseEntity<String> validateToken(@RequestParam String token) {
+    public ResponseEntity<Boolean> validateToken(@RequestParam String token) {
         try {
             Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token);
-            return ResponseEntity.ok("Token is valid");
+            return ResponseEntity.ok(true);
         } catch (JwtException | IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Token is invalid");
+            return ResponseEntity.badRequest().body(false);
         }
     }
 
@@ -84,12 +99,14 @@ public class AuthController {
         return ResponseEntity.ok("User deleted");
     }
 
-    public static String generateToken(String email) {
+    public static String generateToken(UserDto userDto) throws JsonProcessingException {
         Instant now = Instant.now();
         Instant expirationTime = now.plusSeconds(EXPIRATION_TIME);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userDtoJson = objectMapper.writeValueAsString(userDto);
 
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userDtoJson)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expirationTime))
                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
