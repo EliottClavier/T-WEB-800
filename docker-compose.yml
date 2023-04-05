@@ -118,7 +118,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommodation-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
@@ -140,7 +140,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /activity-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
@@ -162,7 +162,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /bar-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
@@ -184,7 +184,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /restaurant-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
@@ -206,7 +206,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /transport-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DAMADEUS_KEY=${AMADEUS_KEY} -DAMADEUS_SECRET=${AMADEUS_SECRET} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
@@ -228,7 +228,7 @@ services:
     restart: unless-stopped
     command: /bin/bash -c "java $${JAVA_OPTS} -jar /localisation-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT}"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:
