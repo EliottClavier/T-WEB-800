@@ -217,7 +217,6 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-
   public async generateSummary() {
     let trip: TripModel = this._tripBuilderService.saveTrip('tripname');
 
