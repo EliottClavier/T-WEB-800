@@ -5,9 +5,7 @@ import {LocationModel} from "../../models/location/location.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {buildStepFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 @Component({
   selector: 'app-single-search-bar',
@@ -30,9 +28,7 @@ export class SingleSearchBarComponent {
       locationSearch: location.name,
       location: new LocationModel(location.id, location.name, location.lat, location.lng),
     });
-
   }
-
 
   public validate(): void {
     let location: LocationModel = this.searchForm.get('location')!.value;

@@ -17,13 +17,13 @@ export class SuggestionsService {
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
 
-  getPreviewSuggestions(category: LeisureCategory, location : LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
+  getPreviewSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
+    console.log(category + " " + location.name + " " + start + " " + end)
 
     return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 
-  getSuggestions(category: LeisureCategory, location: LocationModel, start : string, end: string ): Observable<LeisureItemModel[]> {
-
-    return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+  getSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
+ return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 }

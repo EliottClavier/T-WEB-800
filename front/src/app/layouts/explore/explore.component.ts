@@ -52,7 +52,7 @@ export class ExploreComponent implements OnInit {
     let start: Date = this.selectedSearchForm.get('start')?.value;
     let end: Date = this.selectedSearchForm.get('end')?.value;
 
-    let leisure: LeisureCategory = this._suggestionsStore.getCategory;
+    let leisure: LeisureCategory = this._suggestionsStore.category;
     this.getPreviewSuggestions(leisure, location, start, end);
   }
 
@@ -174,6 +174,7 @@ export class ExploreComponent implements OnInit {
   }
 
   public onSelectedCategoryChange(value: LeisureCategory) {
+    this._suggestionsStore.category = value;
     this.getPreviewSuggestions(value);
   }
 
@@ -188,7 +189,8 @@ export class ExploreComponent implements OnInit {
 
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
-    let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
+    // let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
+    let category: LeisureCategory = this._suggestionsStore.category;
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {

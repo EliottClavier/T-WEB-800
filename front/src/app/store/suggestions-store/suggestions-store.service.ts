@@ -13,7 +13,7 @@ export class SuggestionsStoreService {
 
   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
 
-  private _getCategory?: LeisureCategory;
+  private _category?: LeisureCategory;
   private _getLocation?: LocationModel;
   private _leisureItemToAdd$?: Subject<LeisureItemModel> = new Subject<LeisureItemModel>();
 
@@ -48,8 +48,14 @@ export class SuggestionsStoreService {
     this._suggestions$.next(data);
   }
 
-  get getCategory(): LeisureCategory {
-    return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
+  // get getCategory(): LeisureCategory {
+  //   return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
+  // }
+  get category(): LeisureCategory {
+    return this._category as LeisureCategory || LeisureCategory.UNKNOWN;
+  }
+  set category(value: LeisureCategory) {
+    this._category = value as LeisureCategory;
   }
 
   get getLocation(): LocationModel {
