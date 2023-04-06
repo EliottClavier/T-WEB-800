@@ -1,0 +1,39 @@
+
+# Service name
+spring:
+  application:
+    name: transport-service
+
+# Spring Server setup
+server:
+  address: 0.0.0.0
+  port: ${DATA_SERVICE_PORT}
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+# Eureka configuration    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: ${SERVICE_HOST:localhost}
+    prefer-ip-address: false
+
+ # Amadeus API Configuration
+amadeus:
+  enabled: true
+  apiKey: ${AMADEUS_KEY}
+  apiSecret: ${AMADEUS_SECRET}
+
+# Google Configuration
+google:
+  apiKey: ${GOOGLE_KEY}
+
+# Sources
+sources: GOOGLEMAPS,AMADEUS
+
