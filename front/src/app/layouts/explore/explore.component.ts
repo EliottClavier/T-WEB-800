@@ -12,9 +12,9 @@ import {getIsoStringFromDate} from "../../utils/date.utils";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {SaveTripDialogComponent} from "../../containers/save-trip-dialog/save-trip-dialog.component";
-import { jsPDF } from 'jspdf';
+import {jsPDF} from 'jspdf';
 import {TripModel} from "../../models/trip/trip.model";
 import {StepModel} from "../../models/step/step.model";
 import {
@@ -23,7 +23,9 @@ import {
   AddSummaryMap,
   AddSummaryText,
   BuildCanvas,
-  BuildTripUrl, BuildUrl, SavePdf
+  BuildTripUrl,
+  BuildUrl,
+  SavePdf
 } from "../../utils/pdf/pdf.utils";
 import {TripService} from "../../services/trip/trip.service";
 import {TripStoreService} from "../../store/trip-store/trip-store.service";
@@ -35,6 +37,7 @@ import {TripStoreService} from "../../store/trip-store/trip-store.service";
 })
 export class ExploreComponent implements OnInit {
 
+  private dialogRef?: MatDialogRef<SaveTripDialogComponent>;
   public searchForms: FormGroup = this._tripBuilderService.getTripFormsInstance()
 
   public activeSearchBar: SearchBarEvent = {
@@ -196,22 +199,24 @@ export class ExploreComponent implements OnInit {
   }
 
   public onSaveTrip(tripName?: string) {
-    if(tripName != undefined) {
-      let trip = this._tripBuilderService.saveTrip(tripName);
-      this._tripService.sendTripData(trip).subscribe({
-        next: (data) => {
-          this._tripStore.addTrip(data);
-        }
-      });
-      return;
-    }
-    let dialogRef = this._dialog.open(SaveTripDialogComponent, {
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      result != undefined && (this._tripBuilderService.saveTrip(result) && alert("Thanks")) || alert("error");
-    });
+    const searchFormsArray = this._tripBuilderService.getName();
+
+    if (tripName != undefined) {
+      let trip = this._tripBuilderService.saveTrip(tripName);
+      this._tripService.sendTripAndUpdateStore(trip)
+
+    } else if (searchFormsArray.length != 0) {
+      let trip = this._tripBuilderService.saveTrip(searchFormsArray);
+      this._tripService.sendTripAndUpdateStore(trip);
+    } else {
+      this.dialogRef = this._dialog.open(SaveTripDialogComponent, {});
+      this.dialogRef.afterClosed().subscribe(result => {
+        this._tripBuilderService.saveTrip(result)
+      });
+    }
   }
+
 
   public async generateSummary() {
     let trip: TripModel = this._tripBuilderService.saveTrip('tripname');
@@ -221,7 +226,7 @@ export class ExploreComponent implements OnInit {
     let doc = new jsPDF();
 
     /* Canvas properties */
-    let { canvas, context, width, height } = BuildCanvas.buildCanvas();
+    let {canvas, context, width, height} = BuildCanvas.buildCanvas();
 
     /* First page header */
     currentY = AddSummaryHeader.addSummaryHeader(doc, trip, currentY);

@@ -32,6 +32,9 @@ export const buildStepFormGroupControls = (): FormGroup => {
   formGroup.addControl(
     "id", new FormControl<string>("" )
   );
+  formGroup.addControl(
+    "name", new FormControl<string>("" )
+  );
   return formGroup;
 }
 

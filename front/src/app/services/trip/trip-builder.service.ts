@@ -6,8 +6,8 @@ import {LocationModel} from "../../models/location/location.model";
 import {TripModel} from "../../models/trip/trip.model";
 import {StepModel} from "../../models/step/step.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
-import TravelMode = google.maps.TravelMode;
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import TravelMode = google.maps.TravelMode;
 
 
 @Injectable({
@@ -35,6 +35,14 @@ export class TripBuilderService {
       }
     }
     return this._stepsForms;
+  }
+
+  setName(value: string) {
+    this._trip.name = value;
+
+  }
+  getName(): string {
+    return this._trip.name;
   }
 
   set stepsForms(value: FormGroup) {
