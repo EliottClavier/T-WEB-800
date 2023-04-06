@@ -65,7 +65,7 @@ describe('TripService', () => {
 
   it('should be send trip data', () => {
   let data = getMockTrips()
-    expect(service.sendTripData(data)).toBeDefined();
+    expect(service.sendTripsData(data)).toBeDefined();
   });
 
   it('should test HttpClient getTrip', () => {
@@ -86,7 +86,7 @@ describe('TripService', () => {
   it('should test HttpClient sendTrip', () => {
     let trips = getMockTrips()
 
-    spectatorHttp.service.sendTripData(trips).subscribe(
+    spectatorHttp.service.sendTripsData(trips).subscribe(
       (data) => {
         expect(trips).toEqual(data);
       }

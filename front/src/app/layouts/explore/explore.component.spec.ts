@@ -564,9 +564,9 @@ describe('ExploreComponent', () => {
     });
 
     it('should have _tripService service injected', () => {
-      expect(component["_tripService"]).toBeDefined();
-      expect(component["_tripService"]).toBeTruthy();
-      expect(component["_tripService"]).toEqual(_tripService);
+      expect(component["_tripBuilderService"]).toBeDefined();
+      expect(component["_tripBuilderService"]).toBeTruthy();
+      expect(component["_tripBuilderService"]).toEqual(_tripService);
     });
 
     it('should call generateSummary when user click on export button', async () => {
@@ -577,7 +577,7 @@ describe('ExploreComponent', () => {
 
     it('should retrieve saved TripModel', async () => {
       await component.generateSummary();
-      expect(component["_tripService"].saveTrip).toHaveBeenCalled();
+      expect(component["_tripBuilderService"].saveTrip).toHaveBeenCalled();
     });
 
     it('should build a canvas', async () => {

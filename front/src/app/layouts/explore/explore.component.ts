@@ -25,6 +25,8 @@ import {
   BuildCanvas,
   BuildTripUrl, BuildUrl, SavePdf
 } from "../../utils/pdf/pdf.utils";
+import {TripService} from "../../services/trip/trip.service";
+import {TripStoreService} from "../../store/trip-store/trip-store.service";
 
 @Component({
   selector: 'app-explore',
@@ -33,7 +35,7 @@ import {
 })
 export class ExploreComponent implements OnInit {
 
-  public searchForms: FormGroup = this._tripService.getTripFormsInstance()
+  public searchForms: FormGroup = this._tripBuilderService.getTripFormsInstance()
 
   public activeSearchBar: SearchBarEvent = {
     index: 0,
@@ -85,7 +87,9 @@ export class ExploreComponent implements OnInit {
     private _route: ActivatedRoute, private _router: Router,
     private _suggestionsService: SuggestionsService,
     private _suggestionsStore: SuggestionsStoreService,
-    private _tripService: TripBuilderService,
+    private _tripBuilderService: TripBuilderService,
+    private _tripService: TripService,
+    private _tripStore: TripStoreService,
     private _dialog: MatDialog) {
 
   }
@@ -193,19 +197,24 @@ export class ExploreComponent implements OnInit {
 
   public onSaveTrip(tripName?: string) {
     if(tripName != undefined) {
-      this._tripService.saveTrip(tripName);
+      let trip = this._tripBuilderService.saveTrip(tripName);
+      this._tripService.sendTripData(trip).subscribe({
+        next: (data) => {
+          this._tripStore.addTrip(data);
+        }
+      });
       return;
     }
     let dialogRef = this._dialog.open(SaveTripDialogComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      result != undefined && (this._tripService.saveTrip(result) && alert("Thanks")) || alert("error");
+      result != undefined && (this._tripBuilderService.saveTrip(result) && alert("Thanks")) || alert("error");
     });
   }
 
   public async generateSummary() {
-    let trip: TripModel = this._tripService.saveTrip('tripname');
+    let trip: TripModel = this._tripBuilderService.saveTrip('tripname');
 
     /* PDF properties */
     let currentY = 20;

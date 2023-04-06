@@ -29,6 +29,9 @@ export const buildStepFormGroupControls = (): FormGroup => {
   formGroup.addControl(
     "end", new FormControl<Date | null>(null, [ Validators.required ])
   );
+  formGroup.addControl(
+    "id", new FormControl<string>("" )
+  );
   return formGroup;
 }
 

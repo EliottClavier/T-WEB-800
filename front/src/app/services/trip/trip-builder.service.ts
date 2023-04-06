@@ -7,12 +7,14 @@ import {TripModel} from "../../models/trip/trip.model";
 import {StepModel} from "../../models/step/step.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import TravelMode = google.maps.TravelMode;
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripBuilderService {
+
 
   private _stepsForms?: FormGroup;
   private _trip: TripModel = new TripModel();
@@ -26,9 +28,17 @@ export class TripBuilderService {
             buildStepFormGroupControlsDetails(),
           ]),
         });
+      const searchFormsArray = this._stepsForms?.get('searchFormsArray') as FormArray;
+      const idFormControl = searchFormsArray?.at(0)?.get('id');
+      if (idFormControl) {
+        idFormControl.setValue(this._trip.id);
+      }
     }
-
     return this._stepsForms;
+  }
+
+  set stepsForms(value: FormGroup) {
+    this._stepsForms = value;
   }
 
   get searchFormsArray(): FormArray {
@@ -47,24 +57,29 @@ export class TripBuilderService {
   constructor() {
   }
 
- private _getStepModelFromTripFormGroup(): TripModel {
+  private _getStepModelFromTripFormGroup(): TripModel {
 
-    let index = 1;
+    let index = 0;
     let travelLength = this.getTripFormsInstance()?.controls['searchFormsArray'].value.length;
+    this._trip.steps = new Array<StepModel>();
     this.getTripFormsInstance()?.controls['searchFormsArray'].value.forEach((step: any) => {
 
       let stepModel = new StepModel();
+      stepModel.index = index;
       stepModel.name = step.locationSearch as string;
       stepModel.location = step.location as LocationModel;
-
+      stepModel.leisures = step.leisures as LeisureItemModel[];
       stepModel.start = getIsoStringFromDate(step.start);
       stepModel.end = getIsoStringFromDate(step.end);
-      stepModel.index = index--;
+      stepModel.index = index++;
+
       index == -travelLength ? stepModel.travelMode = undefined : (stepModel.travelMode = step.travelMode as TravelMode);
 
       this._trip.steps.push(stepModel);
 
     });
+
+    console.log(this.getTripFormsInstance()?.controls['searchFormsArray'].value)
     return this._trip
   }
 

@@ -16,8 +16,16 @@ export class TripService {
     return this._httpclient.get<TripModel[]>(`${this.url}`);
   }
 
-  sendTripData(data: TripModel[]) : Observable<TripModel[]> {
+  sendTripsData(data: TripModel[]) : Observable<TripModel[]> {
+
+
     return this._httpclient.post<TripModel[]>(`${this.url}add`, data);
+  }
+  sendTripData(data: TripModel) : Observable<TripModel> {
+
+      console.log(JSON.stringify(data));
+
+    return this._httpclient.post<TripModel>(`${this.url}add`, data);
   }
 
 }
