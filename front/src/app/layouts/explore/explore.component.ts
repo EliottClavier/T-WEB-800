@@ -182,14 +182,12 @@ export class ExploreComponent implements OnInit {
     let leisures: LeisureItemModel[] = this.selectedSearchForm.get('leisures')?.value;
     leisures.push(item);
     this.selectedSearchForm.get('leisures')?.setValue(leisures);
-
   }
 
   public getLeisureSuggestions() {
 
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
-    // let category: LeisureCategory = this.selectedSearchForm.get('leisure')?.value
     let category: LeisureCategory = this._suggestionsStore.category;
     let location: LocationModel = this.selectedSearchForm.get('location')?.value
     this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
