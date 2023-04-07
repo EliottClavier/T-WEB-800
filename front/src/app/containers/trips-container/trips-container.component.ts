@@ -58,8 +58,6 @@ export class TripsContainerComponent implements OnInit {
       undefined,
       undefined);
 
-
-
     }
 
 
@@ -73,5 +71,6 @@ export class TripsContainerComponent implements OnInit {
 
   onDelete(id: string) {
 
+    this.tripStore.deleteTrip(id);
   }
 }

@@ -26,5 +26,16 @@ export class TripStoreService {
   getTrips(): TripModel[] {
     return this._trips.getValue();
   }
+  deleteTrip(id: string) {
+    console.log('deleteTrip : ', id);
+    const trips = this._trips.getValue();
+    const index = trips.findIndex(trip => trip.id === id);
+    if (index !== -1) {
+      trips.splice(index, 1);
+      this._trips.next(trips);
+    }
+    console.log(this._trips.getValue().length);
+
+  }
 
 }
