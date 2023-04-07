@@ -1,13 +1,25 @@
-<header class="sticky-top h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none border-bottom"
-  style="z-index: 1;">
-  <div class="row justify-content-between align-items-center p-3 m-0">
+
+<div class="menu-hamburger" (click)="drawer.open()">
+  <mat-icon>menu</mat-icon>
+</div>
+
+<mat-drawer #drawer class="sidebar" mode="side">
+  <div class="sidebar-navigation">
+    <app-simple-icon-button [icon]="'history icon'"></app-simple-icon-button><span>History</span>
+    <app-simple-icon-button [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
+    <app-simple-icon-button [icon]="'perm_identity'" header-login (buttonClick)="openLoginDialog()"></app-simple-icon-button><span style="margin-right: 2rem;">Login</span>
+  </div>
+</mat-drawer>
+
+<header class="sticky-top h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none border-bottom" style="z-index: 1;">
+  <div class="align-items-center p-1 m-0 header-elements">
     <h1 class="col-2 text-center">T-WEB-800</h1>
-    <div class="col-2">
+    <div class="col-2.5">
       <div class="navigation">
         <app-simple-icon-button [icon]="'history icon'"></app-simple-icon-button><span>History</span>
         <app-simple-icon-button [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
         <app-simple-icon-button [icon]="'perm_identity'" header-login
-          (buttonClick)="openLoginDialog()"></app-simple-icon-button><span>Login</span>
+          (buttonClick)="openLoginDialog()"></app-simple-icon-button><span style="margin-right: 2rem;">Login</span>
       </div>
     </div>
   </div>

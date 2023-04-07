@@ -11,6 +11,8 @@ import {RegisterUserComponent} from "../../containers/register-user/register-use
 })
 export class HeaderComponent {
 
+  public showFiller: boolean = false;
+
   constructor(
     private _dialog: MatDialog,
   ) { }

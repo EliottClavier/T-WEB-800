@@ -91,7 +91,8 @@ export class MapComponent implements OnChanges {
     }],
   }
 
-  constructor(private _transportService: TransportService) {}
+  constructor(
+    private _transportService: TransportService) {}
 
   public ngOnChanges(): void {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {

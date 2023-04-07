@@ -1,12 +1,12 @@
 
 <ng-container>
-  <div class="close">
-    <mat-icon fontIcon="close icon" (buttonClick)="onCloseDetailsView()"></mat-icon>
-  </div>
   <div class="item-details" data-cy-item-details>
     <div mat-dialog-content class="card-component">
       <img data-cy-item-details-image mat-card-image src="{{detailsItem?.image}}" alt="Photo of an item">
       <div class="content">
+        <div class="close">
+          <mat-icon data-cy-item-details-close-button fontIcon="close icon" (click)="closeDetailCardDialog()"></mat-icon>
+        </div>
         <div class="content-text">
           <h1 mat-dialog-title data-cy-item-details-title>{{detailsItem?.title}}</h1>
           <h4 data-cy-item-details-subtitle>{{detailsItem?.subtitle}}</h4>
@@ -21,13 +21,6 @@
             [label]=" 'add_to_step' | translate" 
             class="me-2" 
             data-cy-item-details-add-to-trip-button>
-          </app-simple-button>
-          <app-simple-button 
-            mat-dialog-close 
-            (buttonClick)="onCloseDetailsView()" 
-            [label]=" 'close' | translate"
-            class="me-4" 
-            data-cy-item-details-close-button>
           </app-simple-button>
         </div>
       </div>

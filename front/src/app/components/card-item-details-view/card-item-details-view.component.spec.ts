@@ -66,9 +66,9 @@ describe('CardItemDetailsViewComponent', () => {
       let items = getAccommodationItems();
       spectator.setInput('detailsItem', items[0]);
 
-      let spy = await spyOn(component, 'onCloseDetailsView').and.callThrough()
+      let spy = await spyOn(component, 'closeDetailCardDialog').and.callThrough();
 
-      await spectator.click('[data-cy-item-details-close-button] [simple-button]');
+      await spectator.click('[data-cy-item-details-close-button]');
 
       spectator.detectChanges();
 

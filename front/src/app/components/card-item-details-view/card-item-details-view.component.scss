@@ -1,9 +1,7 @@
 .close {
     display: flex;
     flex-direction: row-reverse;
-    margin-bottom: -40px;
-    margin-top: 16px;
-    margin-right: 16px;
+    margin-right: -8px;
 }
 
 mat-icon:hover {
@@ -16,16 +14,15 @@ mat-icon:hover {
 
 .item-details img {
     margin-right: 2rem;
-    max-width: 600px;
+    width: 600px;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.content-text {
+    margin-top: 30px;
 }
 
 .content-button {
-    display: flex;
-    justify-content: end;
+    position: absolute;
+    bottom: 12px;
+    right: 0px;
 }
