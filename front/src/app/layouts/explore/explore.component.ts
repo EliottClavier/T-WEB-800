@@ -204,6 +204,7 @@ export class ExploreComponent implements OnInit {
 
     if (tripName != undefined) {
       let trip = this._tripBuilderService.saveTrip(tripName);
+      console.log('trip : ', trip);
       this._tripService.sendTripAndUpdateStore(trip)
 
     } else if (searchFormsArray.length != 0) {

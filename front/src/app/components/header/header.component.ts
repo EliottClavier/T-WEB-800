@@ -5,6 +5,7 @@ import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserModel} from "../../models/users/user.model";
 import {tap} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -40,4 +42,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  myTrips() {
+    this.router.navigate(['/my-trips']);
+
+  }
+
+  home() {
+    this.router.navigate(['/']);
+  }
 }

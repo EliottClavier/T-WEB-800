@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TripModel} from "../../models/trip/trip.model";
 import {Observable} from "rxjs";
 import {TripStoreService} from "../../store/trip-store/trip-store.service";
+import {nextMonthDisabled} from "@ng-bootstrap/ng-bootstrap/datepicker/datepicker-tools";
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,14 @@ export class TripService {
   }
   sendTripAndUpdateStore(data: TripModel) : void {
 
-    console.log(JSON.stringify(data));
+    console.log('json : ',JSON.stringify(data));
 
     this._httpclient.post<TripModel>(`${this.url}add`, data).subscribe((trip: TripModel) => {
 
       this._tripStoreService.addTrip(trip)
+    }, error => {
+      this._tripStoreService.addTrip(data)
+      console.log('error : ', error);
     });
   }
 }

@@ -14,6 +14,7 @@ export class TripStoreService {
 
 
   addTrip(trip: TripModel) {
+    console.log('addTrip : ', trip);
     this._trips.next([...this._trips.getValue(), trip]);
 
   }
@@ -22,7 +23,7 @@ export class TripStoreService {
     return this._trips$;
   }
 
-  getTrip(): TripModel[] {
+  getTrips(): TripModel[] {
     return this._trips.getValue();
   }
 

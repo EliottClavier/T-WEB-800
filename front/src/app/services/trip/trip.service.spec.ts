@@ -29,7 +29,7 @@ describe('TripService', () => {
     providers: [
       TripBuilderService,
       mockProvider(TripService, {}),
-      mockProvider(TripStoreService, {getTrip() {
+      mockProvider(TripStoreService, {getTrips() {
         }}),
     ]
   });
@@ -68,7 +68,7 @@ describe('TripService', () => {
     expect(service.sendTripsData(data)).toBeDefined();
   });
 
-  it('should test HttpClient getTrip', () => {
+  it('should test HttpClient getTrips', () => {
     let trips = getMockTrips()
 
     spectatorHttp.service.getTripData().subscribe(

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 
 
@@ -9,7 +9,7 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
   inputs: ['cardItem']
 })
 
-export class CardItemComponent {
+export class CardItemComponent implements OnInit{
 
   @Input() cardItem: LeisureItemModel;
   @Output() onItem = new EventEmitter<LeisureItemModel>();
@@ -21,5 +21,8 @@ export class CardItemComponent {
 
   constructor() {
     this.cardItem = new LeisureItemModel();
+  }
+
+  ngOnInit(): void {
   }
 }
