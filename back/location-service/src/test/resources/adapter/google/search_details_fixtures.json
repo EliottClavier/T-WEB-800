@@ -1,0 +1,153 @@
+{
+  "result": {
+    "address_components": [
+      {
+        "long_name": "Nantes",
+        "short_name": "Nantes",
+        "types": [
+          "locality",
+          "political"
+        ]
+      },
+      {
+        "long_name": "Loire-Atlantique",
+        "short_name": "Loire-Atlantique",
+        "types": [
+          "administrative_area_level_2",
+          "political"
+        ]
+      },
+      {
+        "long_name": "Pays de la Loire",
+        "short_name": "Pays de la Loire",
+        "types": [
+          "administrative_area_level_1",
+          "political"
+        ]
+      },
+      {
+        "long_name": "France",
+        "short_name": "FR",
+        "types": [
+          "country",
+          "political"
+        ]
+      }
+    ],
+    "adr_address": "<span class=\"locality\">Nantes</span>, <span class=\"country-name\">France</span>",
+    "formatted_address": "Nantes, France",
+    "geometry": {
+      "location": {
+        "lat": 47.218371,
+        "lng": -1.553621
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 47.29583777591137,
+          "lng": -1.478894655210392
+        },
+        "southwest": {
+          "lat": 47.18062770895678,
+          "lng": -1.64177427337974
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
+    "icon_background_color": "#7B9EB0",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+    "name": "Nantes",
+    "photos": [
+      {
+        "height": 1600,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/111893951906975831329\">lysiane bernaz</a>"
+        ],
+        "photo_reference": "AUjq9jkFOUJZDwFVL98cpqwZCyw4ApoPp0pdP0IoXX0vwB4l_nOghUW78X1ko_NPftzt7bX2yBct_cnvJY-uRpb1a5lOwkmnTflSVeUkLUaP4SYGe-IuZuEcJT5H_aiPiOyQtdARrbCCRbTFXVfsU0IO6LCnxbR0aYnEU2QroKbrE1ffVQEx",
+        "width": 1200
+      },
+      {
+        "height": 2248,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/115834038224402648715\">jeremie Boiteux</a>"
+        ],
+        "photo_reference": "AUjq9jlnpxMwSSN8Jk5IF3QJ6B9ucOwISapuGxCuiGYQHQ_AdfgeDWipLZt48ktaXgrxNC4dZNME0LRkipHfmkwkwEd_6sxwvbSB7jqSKv8f8ve3trPBhFF-0hcPZ4a5yNcBetV6OTYfA28ACxPwvr5U6uYotWHYZJgwhMxAPLuylNTPgzIo",
+        "width": 4000
+      },
+      {
+        "height": 750,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/104466005256044944108\">Alby Set</a>"
+        ],
+        "photo_reference": "AUjq9jmgRzlFVQ_br90f_u1j6j0LNrKexiPOki1IsLxHTo_3ppBBP7XKMHbUDZMIXI65L8R_RbUdFTLVznPxZwDyCjsJXE_M1jEVt49KMawP00ZaewkJDshw7ZZ75C0t9h1as68uO_7crglOjtBPTOAYLTp4c4za6wkvVaR4c4Mbx9MTA5qS",
+        "width": 1000
+      },
+      {
+        "height": 3000,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/103137779918429822453\">Gilles B</a>"
+        ],
+        "photo_reference": "AUjq9jnZfyBYO8kydz9sp3H0MJike5kT7Y18HWB6cN9B8QZ0ez8o0VwpaURo3kUkUIJdXygqcYoGp53C-YJWZNGFK4wguPcOYbbzEieYe99ijqbaZtVW10xC-ydfMhF-c_CRP_C45uBDkDGCnV5HZEYowiemjg8DImoIRT3-LPRv4Kyu06JG",
+        "width": 4000
+      },
+      {
+        "height": 480,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/117264802734293297295\">Suleyman Musazade</a>"
+        ],
+        "photo_reference": "AUjq9jmxohDyjzNchbtxHIHHgr-O1N-00MJoyDxmGFB876i-E3xIfuO070DSV2zOwmtG787jKw-LE1N1_nxWbA3Wt9GwLoyo1tFuahyNFP31_7vTyfx_uPtnclqSg5RXeJ0Lz9KhrtDjowynXCF-si0EVj6B0hHAmlwQ5zauWt_EkQH-VsQn",
+        "width": 719
+      },
+      {
+        "height": 771,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/109222968837487479280\">lechat</a>"
+        ],
+        "photo_reference": "AUjq9jk9S4DKTDoaK9n1r6QCvoM7pnCL7yMbeiGvE6hj0AEbyTCK5lg4WG9P7WkDkITPqkCEp1zhRI_5kw-YCPX81VWV8JQh5BYUysszNhtpRgdn5llQHd-Nomom0xOrSID-MoCZSsQhIJHGISlCSOeZuD7dOqlnVFQGhEwEByG370jtVlwd",
+        "width": 1080
+      },
+      {
+        "height": 1816,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/114562004952570577616\">Manoj Alagesan</a>"
+        ],
+        "photo_reference": "AUjq9jmk1BgGmj8IKT-V927GI2tHSbIHeZE49YktR8_rSOpvyfc1jIAGGN2nkZPrmdC5C3zeJGxmpt9fU_6rAc4fnaqZqPTNulk2IlKB7peKMTi4KZbnnDa1fDeagRYwgKEO2QoCrlv3VY_BA6DTm4SZFi9nfqc33hXyetqyZdnqedFaixJE",
+        "width": 4032
+      },
+      {
+        "height": 4096,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/117365507869005912607\">Nicolas Portolleau</a>"
+        ],
+        "photo_reference": "AUjq9jmYVkyZFgGmvcikIHju7MgKsxtRhJxBNAaH71hR5VE_CeMu03OSG6UiwLxcgU4yGE1BroIOEfXkeVihZ9quPwBL6sCPvwkzY3qHM8HyVvZ-vOcZ44m8zmEAysygvb4RngnoedA47QQl00FFA2mXwcPiXJkOC6OWE2A3589CYQVHbjh9",
+        "width": 2304
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112439303790595337745\">Isabelle CARME</a>"
+        ],
+        "photo_reference": "AUjq9jkEDOP21kAZiKPKCxoQouDlDHEHX3eICLYvEY0qpXPWDaJA2xGq1GoN2333xVmef30Ga42VoxHmPDmrVRPAeuvpraqfcT4lhkLc_mCAUSltvn4hchgUgQAR3rnI0qv8Imdqb6TSaBY4c837SRsSkuXoc7DJ_tBnwmrdUvFB67gJTUsA",
+        "width": 1816
+      },
+      {
+        "height": 1080,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/108368986859139616031\">Kh Hayya</a>"
+        ],
+        "photo_reference": "AUjq9jkvRrqAnEXSIW5uNdMnfuz28BXgSyxzu3xp6avwBArNM3KI9NKx0IIxGRh4vUdDQtD1FpbN-22kT8KaurYRVPKWalluKAabaBq347m-4aVimz5f0bOwzSKxkmYbpBKq40_B9jdMM9Q7bBv7wsz-uGuzQxQzM8L0O78kxzSOioFigwjx",
+        "width": 1080
+      }
+    ],
+    "place_id": "ChIJra6o8IHuBUgRMO0NHlI3DQQ",
+    "reference": "ChIJra6o8IHuBUgRMO0NHlI3DQQ",
+    "types": [
+      "locality",
+      "political"
+    ],
+    "url": "https://maps.google.com/?q=Nantes,+France&ftid=0x4805ee81f0a8aead:0x40d37521e0ded30",
+    "utc_offset": 120,
+    "vicinity": "Nantes",
+    "website": "http://www.nantes.fr/"
+  },
+  "status": "OK"
+}
