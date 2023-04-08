@@ -40,7 +40,7 @@ public class StepTest {
     
     @Test
     public void testStepConstructorAndGetters() throws JsonProcessingException {
-        Step step = new Step("testStepId", "Marseille", mapper.writeValueAsString(locationDto), leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
+        Step step = new Step("testStepId", 1, "Marseille", mapper.writeValueAsString(locationDto), leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
         Assertions.assertEquals("testStepId", step.getStepId());
         Assertions.assertEquals("Marseille", step.getName());
         Assertions.assertEquals(locationDto.getName(), step.getLocation().getName());
@@ -80,7 +80,7 @@ public class StepTest {
 
     @Test
     void testGetLocationWithInvalidJson() {
-        Step step = new Step("testStepId", "Marseille", "location", leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
+        Step step = new Step("testStepId", 1, "Marseille", "location", leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
 
         assertThrows(RuntimeException.class, () -> {
             step.getLocation();

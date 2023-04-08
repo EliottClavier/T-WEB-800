@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -74,12 +75,14 @@ public class TripServiceTest {
         locationDto.setLng(5.36978);
         Integer userId = 1;
         Trip trip = new Trip();
+        trip.setId(1L);
         trip.setTripId("T001");
         trip.setName("Trip 1");
         trip.setStartDate(startDate);
         trip.setEndDate(endDate);
         Step step = new Step();
         step.setStepId("S001");
+        step.setStepIndex(1);
         step.setName("Step 1");
         step.setStart(startDate);
         step.setEnd(endDate);
@@ -98,6 +101,7 @@ public class TripServiceTest {
         step.setLeisures(Collections.singletonList(leisureItem));
         trip.setSteps(Collections.singletonList(step));
         when(tripRepository.findByUserId(userId)).thenReturn(Collections.singletonList(trip));
+        when(stepRepository.findByTripIdOrderByStepIndex(1L)).thenReturn(Collections.singletonList(step));
 
         // Act
         ResponseEntity<List<TripResponse>> response = tripService.getTrip(userId);
@@ -196,12 +200,14 @@ public class TripServiceTest {
         locationDto.setLng(5.36978);
         Integer userId = 1;
         Trip trip = new Trip();
+        trip.setId(1L);
         trip.setTripId("T001");
         trip.setName("Trip 1");
         trip.setStartDate(startDate);
         trip.setEndDate(endDate);
         Step step = new Step();
         step.setStepId("S001");
+        step.setStepIndex(1);
         step.setName("Step 1");
         step.setStart(startDate);
         step.setEnd(endDate);
@@ -210,6 +216,7 @@ public class TripServiceTest {
         step.setLeisures(Collections.emptyList());
         trip.setSteps(Collections.singletonList(step));
         when(tripRepository.findByUserId(userId)).thenReturn(Collections.singletonList(trip));
+        when(stepRepository.findByTripIdOrderByStepIndex(anyLong())).thenReturn(trip.getSteps());
 
         // Act
         ResponseEntity<List<TripResponse>> response = tripService.getTrip(userId);

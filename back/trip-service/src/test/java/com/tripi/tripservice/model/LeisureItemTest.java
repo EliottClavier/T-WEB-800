@@ -34,7 +34,7 @@ class LeisureItemTest {
         leisureItems.add(leisureItem1);
         leisureItems.add(leisureItem2);
         trip = new Trip();
-        step = new Step("testStepId", "Marseille", mapper.writeValueAsString(location), leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
+        step = new Step("testStepId", 1, "Marseille", mapper.writeValueAsString(location), leisureItems, startDate, endDate, TravelMode.DRIVING, trip);
 
     }
 

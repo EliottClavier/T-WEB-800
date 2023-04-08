@@ -63,8 +63,10 @@ public class TripService {
                 tripResponses.add(tripResponse);
                 continue;
             }
-            for (Step step : trip.getSteps()) {
+            List<Step> stepList = stepRepository.findByTripIdOrderByStepIndex(trip.getId());
+            for (Step step : stepList) {
                 StepResponse stepResponse = new StepResponse();
+                stepResponse.setStepIndex(step.getStepIndex());
                 stepResponse.setStart(convertDateToString(step.getStart()));
                 stepResponse.setEnd(convertDateToString(step.getEnd()));
                 stepResponse.setId(step.getStepId());
@@ -127,6 +129,7 @@ public class TripService {
             Step step = new Step();
             step.setTrip(trip);
             step.setStepId(stepRequest.getId());
+            step.setStepIndex(stepRequest.getStepIndex());
             step.setName(stepRequest.getName());
             step.setStart(convertStringToDate(stepRequest.getStart()));
             step.setEnd(convertStringToDate(stepRequest.getEnd()));

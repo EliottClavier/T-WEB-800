@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 public class StepResponse {
     private String id;
+    private Integer stepIndex;
     private String name;
     private List<LeisureItemResponse> leisures;
     private LocationDto location;

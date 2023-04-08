@@ -29,7 +29,7 @@ class StepRequestTest {
         stepRequest.setTravelMode(TravelMode.DRIVING);
         stepRequest.setLocation(locationRequest);
         stepRequest.setLeisures(leisureItems);
-        stepRequest.setIndex(1);
+        stepRequest.setStepIndex(1);
 
         assertEquals("id", stepRequest.getId());
         assertEquals("name", stepRequest.getName());
@@ -40,7 +40,7 @@ class StepRequestTest {
         assertEquals(locationRequest.getLat(), stepRequest.getLocation().getLat());
         assertEquals(locationRequest.getLng(), stepRequest.getLocation().getLng());
         assertEquals(2, stepRequest.getLeisures().size());
-        assertEquals(1, stepRequest.getIndex());
+        assertEquals(1, stepRequest.getStepIndex());
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class StepRequest {
-    private Integer index;
+    private Integer stepIndex;
     private String id;
     private String name;
     private List<LeisureItemRequest> leisures;

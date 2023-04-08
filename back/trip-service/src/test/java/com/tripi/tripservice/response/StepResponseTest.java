@@ -22,6 +22,7 @@ class StepResponseTest {
         leisureItems.add(leisureItem2);
         StepResponse stepResponse = new StepResponse();
         stepResponse.setId("id");
+        stepResponse.setStepIndex(1);
         stepResponse.setName("name");
         stepResponse.setStart("2023-06-05");
         stepResponse.setEnd("2023-06-07");
@@ -30,6 +31,7 @@ class StepResponseTest {
         stepResponse.setLeisures(leisureItems);
 
         assertEquals("id", stepResponse.getId());
+        assertEquals(1, stepResponse.getStepIndex());
         assertEquals("name", stepResponse.getName());
         assertEquals("2023-06-05", stepResponse.getStart());
         assertEquals("2023-06-07", stepResponse.getEnd());

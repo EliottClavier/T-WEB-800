@@ -22,6 +22,7 @@ public class Step {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String stepId;
+    private Integer stepIndex;
     private String name;
     private String location;
     @OneToMany(mappedBy = "step", cascade = CascadeType.ALL)
@@ -35,9 +36,10 @@ public class Step {
 
     public Step() {}
 
-    public Step(String stepId, String name, String location, List<LeisureItem> leisures,
+    public Step(String stepId, Integer stepIndex, String name, String location, List<LeisureItem> leisures,
                 Date start, Date end, TravelMode travelMode, Trip trip) {
         this.stepId = stepId;
+        this.stepIndex = stepIndex;
         this.name = name;
         this.location = location;
         this.leisures = leisures;
