@@ -188,21 +188,23 @@ export class ExploreComponent implements OnInit {
   }
 
   public onSaveTrip(tripName?: string) {
-
+    console.log(this._tripBuilderService.getTripFormsInstance().value[0]?.id);
     const searchFormsArray = this._tripBuilderService.getName();
 
     if (tripName != undefined) {
       let trip = this._tripBuilderService.saveTrip(tripName);
-      console.log('trip : ', trip);
+      // console.log('trip : ', trip);
       this._tripService.sendTripAndUpdateStore(trip)
 
-    } else if (searchFormsArray.length != 0) {
+    } else if (searchFormsArray?.length != 0) {
       let trip = this._tripBuilderService.saveTrip(searchFormsArray);
       this._tripService.sendTripAndUpdateStore(trip);
     } else {
       this.dialogRef = this._dialog.open(SaveTripDialogComponent, {});
       this.dialogRef.afterClosed().subscribe(result => {
         this._tripBuilderService.saveTrip(result)
+        this.onSaveTrip(result);
+
       });
     }
   }
@@ -211,5 +213,11 @@ export class ExploreComponent implements OnInit {
 
     let trip: TripModel = this._tripBuilderService.saveTrip('tripname');
     await getPdf(trip);
+  }
+
+  newTripForm() {
+    // this._tripBuilderService.setTripFormsInstance(undefined);
+    this._tripBuilderService.newTrip();
+    this._router.navigate(['/']);
   }
 }

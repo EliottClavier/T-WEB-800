@@ -9,6 +9,7 @@ import {TripsContainerComponent} from "./containers/trips-container/trips-contai
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'explore/:location', component: ExploreComponent },
+  { path: 'explore', component: ExploreComponent },
   { path: 'my-trips', component: TripsContainerComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];

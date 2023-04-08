@@ -19,6 +19,9 @@ export class TripBuilderService {
   private _stepsForms?: FormGroup;
   private _trip: TripModel = new TripModel();
 
+  setTripFormsInstance(tripForm: FormGroup |undefined) {
+    this._stepsForms = tripForm;
+  }
 
   getTripFormsInstance(): FormGroup {
     if (this._stepsForms == null) {
@@ -28,19 +31,28 @@ export class TripBuilderService {
             buildStepFormGroupControlsDetails(),
           ]),
         });
-      const searchFormsArray = this._stepsForms?.get('searchFormsArray') as FormArray;
-      const idFormControl = searchFormsArray?.at(0)?.get('id');
-      if (idFormControl) {
-        idFormControl.setValue(this._trip.id);
-      }
+
+
     }
+
+    const searchFormsArray = this._stepsForms?.get('searchFormsArray') as FormArray;
+    const idFormControl = searchFormsArray?.at(0)?.get('id');
+    if (idFormControl) {
+
+      idFormControl.patchValue(this._trip.id);
+
+    }
+    // console.log('trip id ' + this._stepsForms?.controls['searchFormsArray'].value[0].id);
+    // console.log('idFormControl ' + idFormControl?.value);
+    // console.log('idTrip ' + this._trip.id);
     return this._stepsForms;
   }
 
-  setName(value: string) {
+  setName(value: string ) {
     this._trip.name = value;
 
   }
+
   getName(): string {
     return this._trip.name;
   }
@@ -65,6 +77,38 @@ export class TripBuilderService {
   constructor() {
   }
 
+  public getTripFormFromTripModel(trip: TripModel): FormGroup<any> {
+    this.newTrip()
+    this._trip = trip;
+    console.log('getTripFormFromTripModel ' + trip.name);
+    console.log('getTripFormFromTripModel ' + trip.id);
+    console.log('getTripFormFromTripModel ' + this._trip.id);
+    let form = this.getTripFormsInstance();
+    (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.patchValue(trip.id);
+    console.log('getTripFormFromTripModel ' + (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.value);
+    // this._stepsForms?.reset();
+    this._trip.steps.forEach((step: StepModel) => {
+      console.log('step index ' + step.index);
+      (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('locationSearch')?.patchValue(step?.name);
+    this.searchFormsArray.controls[step?.index].get('location')?.patchValue(step?.location);
+    this.searchFormsArray.controls[step?.index].get('start')?.patchValue(new Date(step?.start));
+    this.searchFormsArray.controls[step?.index].get('end')?.patchValue(new Date(step?.end));
+    this.searchFormsArray.controls[step?.index].get('id')?.patchValue(step?.id);
+    this.searchFormsArray.controls[step?.index].get('name')?.patchValue(step?.name);
+    this.searchFormsArray.controls[step?.index].get('leisures')?.patchValue(step?.leisures);
+    this.searchFormsArray.controls[step?.index].get('travelMode')?.patchValue(step?.travelMode);
+      console.log('step form'+ this.searchFormsArray.controls[step?.index].get('locationSearch')?.value)
+    });
+    this.searchFormsArray.value.forEach((form: FormGroup) => {
+
+      console.log('form ' +  form.value);
+    })
+    return this._stepsForms as FormGroup;
+  }
+  private _isValidDate(date: any): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+
   private _getStepModelFromTripFormGroup(): TripModel {
 
     let index = 0;
@@ -73,12 +117,14 @@ export class TripBuilderService {
     this.getTripFormsInstance()?.controls['searchFormsArray'].value.forEach((step: any) => {
 
       let stepModel = new StepModel();
+
+      // stepModel.id = step.id;
       stepModel.index = index;
       stepModel.name = step.locationSearch as string;
       stepModel.location = step.location as LocationModel;
       stepModel.leisures = step.leisures as LeisureItemModel[];
       stepModel.start = getIsoStringFromDate(step.start);
-      stepModel.end = getIsoStringFromDate(step.end);
+      stepModel.end = getIsoStringFromDate(step.end || step.start);
       stepModel.index = index++;
 
       index == -travelLength ? stepModel.travelMode = undefined : (stepModel.travelMode = step.travelMode as TravelMode);
@@ -87,7 +133,7 @@ export class TripBuilderService {
 
     });
 
-    console.log(this.getTripFormsInstance()?.controls['searchFormsArray'].value)
+    // console.log(this.getTripFormsInstance()?.controls['searchFormsArray'].value)
     return this._trip
   }
 
@@ -100,8 +146,14 @@ export class TripBuilderService {
     this._getStepModelFromTripFormGroup()
     this._trip.name = tripName;
     this._trip.steps;
-    this._trip.isSaved = true;
     this._getTripDates();
     return this._trip
+  }
+
+  newTrip() {
+    this._trip = new TripModel();
+    this._stepsForms?.reset();
+    this.setName("");
+    this.getTripFormsInstance()
   }
 }

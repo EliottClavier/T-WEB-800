@@ -13,9 +13,19 @@ export class TripStoreService {
   private _trips$ = this._trips.asObservable();
 
 
-  addTrip(trip: TripModel) {
-    console.log('addTrip : ', trip);
-    this._trips.next([...this._trips.getValue(), trip]);
+  addTrip(nextTrip: TripModel) {
+
+    const index = this._trips.getValue().findIndex(trip => trip.id === nextTrip.id);
+
+    if (index >= 0) {
+      // Si l'objet existe, remplacez-le par l'objet mis à jour
+      const trips = [...this._trips.getValue()];
+      trips[index] = nextTrip;
+      this._trips.next(trips);
+    } else {
+      // Si l'objet n'existe pas, ajoutez-le au tableau
+      this._trips.next([...this._trips.getValue(), nextTrip]);
+    }
 
   }
 
@@ -45,6 +55,6 @@ export class TripStoreService {
       return trips[index];
     }
 
-    return undefined;
+    return new TripModel();
   }
 }

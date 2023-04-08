@@ -9,7 +9,6 @@ export class TripModel{
   private _steps: StepModel[];
   private _startDate: string = '';
   private _endDate: string = '';
-  private _isSaved: boolean = false;
 
   constructor(id: string = uuidv4(), name : string= '' ,steps: StepModel[]= []) {
 
@@ -56,13 +55,5 @@ export class TripModel{
 
   set endDate(value: string) {
     this._endDate = value;
-  }
-
-  get isSaved(): boolean {
-    return this._isSaved;
-  }
-
-  set isSaved(value: boolean) {
-    this._isSaved = value;
   }
 }

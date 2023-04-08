@@ -9,7 +9,7 @@
         (onItem)="onItemClicked(i)">
         data-cy-trip-component></app-card-item>
       <app-simple-icon-button
-        search-bar-remove
+        trip-remove
         class="col-2 px-0"
         [icon]="'delete'"
         [color]="'warn'"
@@ -17,7 +17,7 @@
         (buttonClick)="onDelete(item.id)">
       </app-simple-icon-button>
       <app-simple-icon-button
-        search-bar-explore
+        trip-update
         class="col-2 px-0"
         [icon]="'map icon'"
         [color]="'primary'"
@@ -25,7 +25,7 @@
         (buttonClick)="onUpdate(item.id)">
       </app-simple-icon-button>
       <app-simple-icon-button
-        search-bar-explore
+        trip-pdf
         class="col-2 px-0"
         [icon]="'picture_as_pdf'"
         [color]="'primary'"
