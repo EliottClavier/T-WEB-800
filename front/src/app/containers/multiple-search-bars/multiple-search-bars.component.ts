@@ -37,13 +37,7 @@ export class MultipleSearchBarsComponent implements OnInit {
 
   }
 
-  // get searchFormsArray(): FormArray {
-  //   return this.searchForms.get('searchFormsArray') as FormArray;
-  // }
 
-  // get searchFormsArrayControls(): FormGroup[] {
-  //   return this.tripBuilderService.searchFormsArray.controls as FormGroup[];
-  // }
 
   get lastSearchBar(): FormGroup {
     return this.tripBuilderService.searchFormsArrayControls[this.tripBuilderService.searchFormsArrayControls.length - 1];

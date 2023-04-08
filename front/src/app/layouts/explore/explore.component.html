@@ -3,8 +3,9 @@
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 h-container-fixed">
       <div class="row position-relative">
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
-         <app-simple-button (buttonClick)="newTripForm()" [label]="'New Trip'"></app-simple-button>
-          <app-multiple-search-bars
+          <div class="row">  <app-simple-button (buttonClick)="newTripForm()" [label]="'New Trip'" [icon]="'add_circle_outline'"></app-simple-button>
+          </div>
+         <app-multiple-search-bars
             search-bar
             [searchForms]="searchForms"
             (activeSearchBarChange)="onActiveSearchBarChange($event)"

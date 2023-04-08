@@ -101,7 +101,7 @@ export class ExploreComponent implements OnInit {
   }
 
   private _loadRouteParams(): void {
-    this.searchFormsArrayControls[0] = buildStepFormGroupControlsDetails();
+    // this.searchFormsArrayControls[0] = buildStepFormGroupControlsDetails();
     let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
     let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
     let lat: string = this._route.snapshot.queryParams['lat'];
