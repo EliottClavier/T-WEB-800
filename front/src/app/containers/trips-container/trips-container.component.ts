@@ -6,6 +6,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {TripModel} from "../../models/trip/trip.model";
 import cypressConfig from "../../../../cypress.config";
 import {TripStoreService} from "../../store/trip-store/trip-store.service";
+import {getPdf} from "../../utils/pdf/pdf.utils";
 
 @Component({
   selector: 'app-trips-container',
@@ -72,5 +73,10 @@ export class TripsContainerComponent implements OnInit {
   onDelete(id: string) {
 
     this.tripStore.deleteTrip(id);
+  }
+
+  onPdf(id: string) {
+    const trip : TripModel | undefined = this.tripStore.getTripById(id);
+    trip && getPdf(trip);
   }
 }

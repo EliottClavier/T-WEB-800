@@ -38,4 +38,13 @@ export class TripStoreService {
 
   }
 
+  getTripById(id: string) {
+    const trips = this._trips.getValue();
+    const index = trips.findIndex(trip => trip.id === id);
+    if (index !== -1) {
+      return trips[index];
+    }
+
+    return undefined;
+  }
 }

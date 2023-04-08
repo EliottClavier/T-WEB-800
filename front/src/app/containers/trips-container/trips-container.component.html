@@ -24,6 +24,14 @@
         [isDisabled]="false"
         (buttonClick)="onUpdate(item.id)">
       </app-simple-icon-button>
+      <app-simple-icon-button
+        search-bar-explore
+        class="col-2 px-0"
+        [icon]="'picture_as_pdf'"
+        [color]="'primary'"
+        [isDisabled]="false"
+        (buttonClick)="onPdf(item.id)">
+      </app-simple-icon-button>
     </li>
   </ul>
 </div>
