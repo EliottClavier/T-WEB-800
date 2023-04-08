@@ -29,7 +29,7 @@ describe('TripService', () => {
     providers: [
       TripBuilderService,
       mockProvider(TripService, {}),
-      mockProvider(TripStoreService, {getTrip() {
+      mockProvider(TripStoreService, {getTrips() {
         }}),
     ]
   });
@@ -64,7 +64,7 @@ describe('TripService', () => {
   });
 
   it('should be send trip data', () => {
-  let data = getMockTrips()
+  let data = getMockTrips()[0]
     expect(service.sendTripData(data)).toBeDefined();
   });
 
@@ -77,23 +77,23 @@ describe('TripService', () => {
       }
     )
 
-    let req = spectatorHttp.expectOne(`/api/trips/`, HttpMethod.GET);
+    let req = spectatorHttp.expectOne(`/api/trip/all?id=undefined`, HttpMethod.GET);
     req.flush(trips);
     expect(req.request.method).toEqual('GET');
 
   });
 
   it('should test HttpClient sendTrip', () => {
-    let trips = getMockTrips()
+    let trip = getMockTrips()[0]
 
-    spectatorHttp.service.sendTripData(trips).subscribe(
+    spectatorHttp.service.sendTripData(trip).subscribe(
       (data) => {
-        expect(trips).toEqual(data);
+        expect(trip).toEqual(data);
       }
     )
 
-    let req = spectatorHttp.expectOne(`/api/trips/add`, HttpMethod.POST);
-    req.flush(trips);
+    let req = spectatorHttp.expectOne(`/api/trip`, HttpMethod.POST);
+    req.flush(trip);
     expect(req.request.method).toEqual('POST');
 
   });

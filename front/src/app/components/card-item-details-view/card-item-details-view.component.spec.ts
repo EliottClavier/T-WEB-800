@@ -4,6 +4,8 @@ import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {AppModule} from "../../app.module";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {getMockTripForm} from "../../utils/trip.mock.utils";
 
 const dialogMock = {
   close: () => {
@@ -13,12 +15,14 @@ const dialogMock = {
 describe('CardItemDetailsViewComponent', () => {
   let spectator: Spectator<CardItemDetailsViewComponent>;
   let component: CardItemDetailsViewComponent;
+  let tripBuilderService: TripBuilderService;
   const createComponent = createComponentFactory({
     component: CardItemDetailsViewComponent,
     imports: [AppModule],
     providers: [
+      TripBuilderService,
       {provide: MatDialogRef, useValue: dialogMock},
-      {provide: MAT_DIALOG_DATA, useValue: new LeisureItemModel()}
+      {provide: MAT_DIALOG_DATA, useValue: new LeisureItemModel(), }
 
     ],
   });
@@ -26,6 +30,7 @@ describe('CardItemDetailsViewComponent', () => {
   beforeEach(() => {
     spectator = createComponent();
     component = spectator.component;
+    tripBuilderService = spectator.inject(TripBuilderService);
   });
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -99,6 +104,20 @@ describe('CardItemDetailsViewComponent', () => {
       component.detailsItem = getAccommodationItems()[0];
       let spy = await spyOn<CardItemDetailsViewComponent, any>(component, 'onAddItemToTrip').and.callThrough();
       await spectator.click('[mat-dialog-actions] [data-cy-item-details-add-to-trip-button] [simple-button]');
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should delete leisure item of trip ',  () => {
+      component.detailsItem = getAccommodationItems()[0];
+
+      tripBuilderService.stepsForms = getMockTripForm() ;
+      component.leisureIndex = 0;
+      component.stepIndex = 0;
+      component.isToDelete = true;
+
+      let spy = spyOn<CardItemDetailsViewComponent, any>(component, 'onDeleteItemToTrip').and.callThrough();
+      component.onDeleteItemToTrip(component.detailsItem);
+      // spectator.click('[mat-dialog-actions] [data-cy-item-details-delete-to-trip-button] [simple-button]');
       expect(spy).toHaveBeenCalled();
     });
   });

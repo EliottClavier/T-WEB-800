@@ -10,7 +10,6 @@ import {LocationModel} from "../../models/location/location.model";
 import {Observable} from "rxjs";
 import {addMatchers} from 'jasmine-marbles';
 
-
 describe('SuggestionsService', () => {
 
   let spectator: SpectatorService<SuggestionsService>;
