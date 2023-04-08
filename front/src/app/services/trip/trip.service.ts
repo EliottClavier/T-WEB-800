@@ -10,28 +10,31 @@ import {nextMonthDisabled} from "@ng-bootstrap/ng-bootstrap/datepicker/datepicke
 })
 export class TripService {
 
-  private url: string = '/api/trip/';
+  private url: string = '/api/trip';
 
-  constructor(private _httpclient: HttpClient, private _tripStoreService: TripStoreService) { }
-
-  getTripData() :Observable<TripModel[]> {
-    return this._httpclient.get<TripModel[]>(`${this.url}all?id=`);
+  constructor(private _httpclient: HttpClient, private _tripStoreService: TripStoreService) {
   }
 
-  sendTripsData(data: TripModel[]) : Observable<TripModel[]> {
+  getTripData(): Observable<TripModel[]> {
+    return this._httpclient.get<TripModel[]>(`${this.url}/all?id=`);
+  }
+
+  sendTripsData(data: TripModel[]): Observable<TripModel[]> {
 
 
     return this._httpclient.post<TripModel[]>(`${this.url}`, data);
   }
-  sendTripData(data: TripModel) : Observable<TripModel> {
 
-      console.log(JSON.stringify(data));
+  sendTripData(data: TripModel): Observable<TripModel> {
+
+    console.log(JSON.stringify(data));
 
     return this._httpclient.post<TripModel>(`${this.url}`, data);
   }
-  sendTripAndUpdateStore(data: TripModel) : void {
 
-    console.log('json : ',JSON.stringify(data));
+  sendTripAndUpdateStore(data: TripModel): void {
+
+    console.log('json : ', JSON.stringify(data));
 
     this._httpclient.post<TripModel>(`${this.url}`, data).subscribe((trip: TripModel) => {
 
@@ -40,5 +43,11 @@ export class TripService {
       this._tripStoreService.addOrUpdateTrip(data)
       console.log('error : ', error);
     });
+  }
+
+  deleteTrip(id: string): Observable<any> {
+
+    return this._httpclient.delete<TripModel>(`${this.url}?id=${id}`);
+
   }
 }

@@ -7,6 +7,7 @@ import {getPdf} from "../../utils/pdf/pdf.utils";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {Router} from "@angular/router";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {TripService} from "../../services/trip/trip.service";
 
 @Component({
   selector: 'app-trips-container',
@@ -27,6 +28,7 @@ export class TripsContainerComponent implements OnInit {
   constructor(private translate: TranslateService,
               public tripStore: TripStoreService,
               private tripBuilderService: TripBuilderService,
+              private tripService: TripService,
               private router: Router) {
   }
 
@@ -64,7 +66,6 @@ export class TripsContainerComponent implements OnInit {
 
   }
 
-
   ngOnDestroy(): void {
 
   }
@@ -72,7 +73,6 @@ export class TripsContainerComponent implements OnInit {
   onUpdate(id: string) {
 
     const trip: TripModel = this.tripStore.getTripById(id);
-
 
     this.tripBuilderService.getTripFormFromTripModel(trip);
 
@@ -99,7 +99,20 @@ export class TripsContainerComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.tripStore.deleteTrip(id);
+    const trips = this.tripStore.getTrips();
+    const index = trips.findIndex(trip => trip.id === id);
+    if (index !== -1) {
+      this.tripService.deleteTrip(id).subscribe({
+        next: () => {
+          console.log('Trip deleted');
+          this.tripStore.deleteTrip(id);
+        },
+        error: (err) => {
+          console.log(err);
+          this.tripStore.deleteTrip(id);
+        }
+      });
+    }
   }
 
   onPdf(id: string) {

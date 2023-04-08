@@ -80,24 +80,17 @@ export class TripBuilderService {
   public getTripFormFromTripModel(trip: TripModel): FormGroup<any> {
     this.newTrip()
     this._trip = trip;
-    console.log('getTripFormFromTripModel ' + trip.name);
-    console.log('getTripFormFromTripModel ' + trip.id);
-    console.log('getTripFormFromTripModel ' + this._trip.id);
 
-    let form = this.getTripFormsInstance();
+    this.getTripFormsInstance();
 
     (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.patchValue(trip.id);
-    console.log('getTripFormFromTripModel ' + (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.value);
 
-      let stepsLength: number = this._trip?.steps?.length;
-      for(let i = 0; i < stepsLength-1; i++) {
-        this.searchFormsArray.controls.push(buildStepFormGroupControlsDetails())
-      }
+    let stepsLength: number = this._trip?.steps?.length;
+    for (let i = 0; i < stepsLength - 1; i++) {
+      this.searchFormsArray.controls.push(buildStepFormGroupControlsDetails())
+    }
 
     this._trip?.steps?.forEach((step: StepModel) => {
-      console.log('step index ' + step.index);
-      console.log('step name ' + step.name);
-      console.log('controls.length ' + this.searchFormsArray.controls.length);
 
       (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(step?.index)?.get('locationSearch')?.patchValue(step?.name);
       this.searchFormsArray.controls[step?.index].get('location')?.patchValue(step?.location);
@@ -128,7 +121,7 @@ export class TripBuilderService {
 
       console.log('sratrt date ' + step.start);
       console.log('end date ' + step.end);
-      // stepModel.id = step.id;
+      stepModel.id = step.id;
       stepModel.index = index;
       stepModel.name = step.locationSearch as string;
       stepModel.location = step.location as LocationModel;

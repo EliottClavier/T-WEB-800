@@ -3,7 +3,6 @@ import {FormArray, FormGroup,} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureCategory} from "../../enums/leisure-category";
@@ -94,6 +93,7 @@ export class ExploreComponent implements OnInit {
         this.onAddingLeisureInStep(item);
       }
     });
+    this.getPreviewSuggestions(LeisureCategory.ACCOMMODATION);
   }
 
   private _isValidDate(date: any): boolean {
@@ -101,7 +101,6 @@ export class ExploreComponent implements OnInit {
   }
 
   private _loadRouteParams(): void {
-    // this.searchFormsArrayControls[0] = buildStepFormGroupControlsDetails();
     let start: Date | null = this._route.snapshot.queryParams['start'] ? new Date(this._route.snapshot.queryParams['start']) : null;
     let end: Date | null = this._route.snapshot.queryParams['end'] ? new Date(this._route.snapshot.queryParams['end']) : null;
     let lat: string = this._route.snapshot.queryParams['lat'];

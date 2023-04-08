@@ -19,11 +19,12 @@ export class SuggestionsService {
 
   getPreviewSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
     console.log(category + " " + location.name + " " + start + " " + end)
-
+    category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
     return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 
   getSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
- return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+    category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
+    return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 }
