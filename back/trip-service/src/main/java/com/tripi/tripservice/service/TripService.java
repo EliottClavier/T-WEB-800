@@ -14,7 +14,6 @@ import com.tripi.tripservice.request.TripRequest;
 import com.tripi.tripservice.response.LeisureItemResponse;
 import com.tripi.tripservice.response.StepResponse;
 import com.tripi.tripservice.response.TripResponse;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class TripService {
@@ -102,9 +100,15 @@ public class TripService {
         return ResponseEntity.ok(tripResponses);
     }
 
+    @Transactional
     public ResponseEntity<String> postTrip(TripRequest tripRequest) throws JsonProcessingException, URISyntaxException {
-        if (tripRepository.existsByTripId(tripRequest.getId())) {
-            return ResponseEntity.badRequest().body("Trip already exist");
+        boolean updated = false;
+        ResponseEntity<String> responseDelete= deleteTrip(tripRequest.getId());
+        if (responseDelete.getStatusCode().equals(HttpStatus.OK)) {
+            tripRepository.flush();
+            stepRepository.flush();
+            leisureItemRepository.flush();
+            updated = true;
         }
         Trip trip = new Trip();
         trip.setTripId(tripRequest.getId());
@@ -149,6 +153,9 @@ public class TripService {
                 leisure.setLocation(leisureLocation);
                 leisureItemRepository.save(leisure);
             }
+        }
+        if (updated) {
+            return ResponseEntity.ok("Trip updated");
         }
         return ResponseEntity.created(new URI("/trips/" + tripRequest.getId())).body("Trip created");
     }

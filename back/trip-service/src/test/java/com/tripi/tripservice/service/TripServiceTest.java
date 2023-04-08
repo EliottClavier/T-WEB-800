@@ -37,6 +37,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -282,7 +284,7 @@ public class TripServiceTest {
     }
 
     @Test
-    public void testPostTripWhenAlreadyExist() throws JsonProcessingException, URISyntaxException {
+    public void testUpdateTrip() throws JsonProcessingException, URISyntaxException {
         // Arrange
         UserDto userDto = new UserDto();
         userDto.setId(1);
@@ -318,14 +320,63 @@ public class TripServiceTest {
         tripRequest.setSteps(Collections.singletonList(stepRequest));
         when(tripRepository.save(new Trip())).thenReturn(new Trip());
         when(tripRepository.existsByTripId(tripRequest.getId())).thenReturn(true);
+        doNothing().when(tripRepository).deleteByTripId(anyString());
 
         // Act
         ResponseEntity<String> response = tripService.postTrip(tripRequest);
 
         // Assert
         String tripResponse = response.getBody();
-        assertEquals("Trip already exist", tripResponse);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Trip updated", tripResponse);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateFailed() throws JsonProcessingException, URISyntaxException {
+        // Arrange
+        UserDto userDto = new UserDto();
+        userDto.setId(1);
+        userDto.setFirstname("John");
+        userDto.setLastname("Doe");
+        userDto.setEmail("test@gmil.com");
+        TripRequest tripRequest = new TripRequest();
+        tripRequest.setName("Trip 1");
+        tripRequest.setStartDate("2021-05-01");
+        tripRequest.setEndDate("2021-05-01");
+        tripRequest.setUser(userDto);
+        StepRequest stepRequest = new StepRequest();
+        stepRequest.setName("Step 1");
+        stepRequest.setStart("2021-05-01");
+        stepRequest.setEnd("2021-05-01");
+        stepRequest.setTravelMode(TravelMode.DRIVING);
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setName("Marseille");
+        locationRequest.setLat(43.296482);
+        locationRequest.setLng(5.36978);
+        stepRequest.setLocation(locationRequest);
+        LeisureItemRequest leisureItemRequest = new LeisureItemRequest();
+        leisureItemRequest.setTitle("Leisure Item 1");
+        leisureItemRequest.setSubtitle("Subtitle");
+        leisureItemRequest.setRating(4);
+        leisureItemRequest.setPrice(20.0);
+        leisureItemRequest.setDescription("Description");
+        leisureItemRequest.setImage("Image URL");
+        leisureItemRequest.setLocation(locationRequest);
+        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemRequest.setDate("2021-05-01");
+        stepRequest.setLeisures(Collections.singletonList(leisureItemRequest));
+        tripRequest.setSteps(Collections.singletonList(stepRequest));
+        when(tripRepository.save(new Trip())).thenReturn(new Trip());
+        when(tripRepository.existsByTripId(tripRequest.getId())).thenReturn(true);
+        doNothing().when(tripRepository).deleteByTripId(anyString());
+
+        // Act
+        ResponseEntity<String> response = tripService.postTrip(tripRequest);
+
+        // Assert
+        String tripResponse = response.getBody();
+        assertEquals("Trip updated", tripResponse);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
