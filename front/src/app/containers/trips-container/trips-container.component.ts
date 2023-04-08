@@ -51,7 +51,7 @@ export class TripsContainerComponent implements OnInit {
 
 
   tripToCardItem(item: TripModel) {
-    console.log(item.startDate + ' - ' + item.endDate);
+
     return new LeisureItemModel(
       item.id,
       item.name,
@@ -73,7 +73,6 @@ export class TripsContainerComponent implements OnInit {
   onUpdate(id: string) {
 
     const trip: TripModel = this.tripStore.getTripById(id);
-
     this.tripBuilderService.getTripFormFromTripModel(trip);
 
     console.log('onUpdate ->  trip : ', trip);
@@ -84,7 +83,6 @@ export class TripsContainerComponent implements OnInit {
     const end = this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length - 1].get('end')?.value ||
       this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length - 1].get('start')?.value;
 
-    console.log(location, start, end);
     let t = this.router.navigate(
       ['/', 'explore', location?.name],
       {

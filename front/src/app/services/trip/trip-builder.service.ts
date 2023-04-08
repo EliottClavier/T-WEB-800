@@ -100,7 +100,6 @@ export class TripBuilderService {
       this.searchFormsArray.controls[step?.index].get('name')?.patchValue(step?.name);
       this.searchFormsArray.controls[step?.index].get('leisures')?.patchValue(step?.leisures);
       this.searchFormsArray.controls[step?.index].get('travelMode')?.patchValue(step?.travelMode);
-      console.log('step form' + this.searchFormsArray.controls[step?.index].get('locationSearch')?.value)
     });
 
     return this._stepsForms as FormGroup;
@@ -119,8 +118,6 @@ export class TripBuilderService {
 
       let stepModel = new StepModel();
 
-      console.log('sratrt date ' + step.start);
-      console.log('end date ' + step.end);
       stepModel.id = step.id;
       stepModel.index = index;
       stepModel.name = step.locationSearch as string;
@@ -136,15 +133,12 @@ export class TripBuilderService {
 
     });
 
-    // console.log(this.getTripFormsInstance()?.controls['searchFormsArray'].value)
     return this._trip
   }
 
   private _getTripDates(): void {
     this._trip.startDate = this._trip.steps[0].start
     this._trip.endDate = this._trip.steps[this._trip.steps.length - 1].end || this._trip.steps[this._trip.steps.length - 1].start
-    console.log('start date ' + this._trip.startDate);
-    console.log('end date ' + this._trip.endDate);
   }
 
   public saveTrip(tripName: string) {
@@ -158,9 +152,6 @@ export class TripBuilderService {
   newTrip() {
     this._trip = new TripModel();
     this._stepsForms?.reset();
-
-    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value[0]);
-    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value.length);
     this._stepsForms?.controls['searchFormsArray'].reset();
     this._stepsForms =
       new FormGroup({
@@ -168,7 +159,6 @@ export class TripBuilderService {
           buildStepFormGroupControlsDetails(),
         ]),
       });
-    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value.length)
     this.setName("");
     this.getTripFormsInstance()
   }

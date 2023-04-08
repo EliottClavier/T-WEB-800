@@ -50,14 +50,6 @@ export class ExploreComponent implements OnInit {
     travelMode: google.maps.TravelMode.DRIVING,
   }
 
-  get searchFormsArray(): FormArray {
-    return this.searchForms.get('searchFormsArray') as FormArray;
-  }
-
-  get searchFormsArrayControls(): FormGroup[] {
-    return this.searchFormsArray.controls as FormGroup[];
-  }
-
   get selectedSearchForm(): FormGroup {
     return this.searchFormsArrayControls[this.activeSearchBar.index];
   }
@@ -88,12 +80,19 @@ export class ExploreComponent implements OnInit {
   public ngOnInit(): void {
     this._loadRouteParams();
 
+    // this.selectedSearchForm.get('start')?.valueChanges.subscribe((value: Date) => {
+    //   this.onActiveDateChange()
+    // });
+    this.selectedSearchForm.get('end')?.valueChanges.subscribe((value: Date) => {
+      this.onActiveDateChange()
+    });
+
     this._suggestionsStore.leisureItemToAdd$.subscribe((item: LeisureItemModel) => {
       if (item) {
         this.onAddingLeisureInStep(item);
       }
     });
-    this.getPreviewSuggestions(LeisureCategory.ACCOMMODATION);
+    this.getPreviewSuggestions(LeisureCategory.ACCOMMODATION, this.selectedLocation, this.selectedSearchForm.get('start')?.value, this.selectedSearchForm.get('end')?.value);
   }
 
   private _isValidDate(date: any): boolean {
@@ -106,7 +105,7 @@ export class ExploreComponent implements OnInit {
     let lat: string = this._route.snapshot.queryParams['lat'];
     let lng: string = this._route.snapshot.queryParams['lng'];
     if (lat && lng) {
-      this.searchFormsArrayControls[0].patchValue({
+      this._tripBuilderService.searchFormsArrayControls[0].patchValue({
         locationSearch: this._route.snapshot.params['location']!,
         location: new LocationModel(
           "",
@@ -152,6 +151,14 @@ export class ExploreComponent implements OnInit {
     }
   }
 
+  get searchFormsArray(): FormArray {
+    return this.searchForms.get('searchFormsArray') as FormArray;
+  }
+
+  get searchFormsArrayControls(): FormGroup[] {
+    return this.searchFormsArray.controls as FormGroup[];
+  }
+
   public onItineraryModeChange(itineraryMode: ItineraryMode): void {
     this.itineraryMode = itineraryMode;
     if (itineraryMode.transitMode) {
@@ -163,7 +170,7 @@ export class ExploreComponent implements OnInit {
 
   public onSelectedCategoryChange(value: LeisureCategory) {
     this._suggestionsStore.category = value;
-    this.getPreviewSuggestions(value);
+    this.getPreviewSuggestions(value, this.selectedLocation, this.selectedSearchForm.get('start')?.value, this.selectedSearchForm.get('end')?.value);
   }
 
   public onAddingLeisureInStep(item: LeisureItemModel): void {
@@ -177,8 +184,7 @@ export class ExploreComponent implements OnInit {
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this._suggestionsStore.category;
-    let location: LocationModel = this.selectedSearchForm.get('location')?.value
-    this._suggestionsService.getSuggestions(category, location, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
+    this._suggestionsService.getSuggestions(category, this.selectedLocation, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
         next: (suggestions) => {
           this._suggestionsStore.setSuggestionsData(suggestions);
         },
@@ -192,13 +198,11 @@ export class ExploreComponent implements OnInit {
 
     if (tripName != undefined) {
 
-      console.log('tripName != undefined');
       let trip = this._tripBuilderService.saveTrip(tripName);
       this._tripService.sendTripAndUpdateStore(trip)
 
     } else if (searchFormsArray?.length != 0) {
 
-      console.log('searchFormsArray?.length != 0');
       let trip = this._tripBuilderService.saveTrip(searchFormsArray);
       this._tripService.sendTripAndUpdateStore(trip);
 
@@ -220,7 +224,16 @@ export class ExploreComponent implements OnInit {
 
   newTripForm() {
     this._tripBuilderService.newTrip();
-   // console.log( this._tripBuilderService.searchFormsArray.value.length)
     this._router.navigate(['/']);
   }
+
+  onActiveDateChange() {
+    console.log('onActiveDateChange')
+    let location: LocationModel = this.selectedSearchForm.get('location')?.value;
+    let start: Date = this.selectedSearchForm.get('start')?.value;
+    let end: Date = this.selectedSearchForm.get('end')?.value;
+    let leisure: LeisureCategory = this._suggestionsStore.category;
+    this.getPreviewSuggestions(leisure, this.selectedLocation, start, end);
+  }
+
 }
