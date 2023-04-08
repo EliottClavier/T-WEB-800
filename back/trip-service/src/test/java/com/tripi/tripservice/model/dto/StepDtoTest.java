@@ -1,8 +1,7 @@
 package com.tripi.tripservice.model.dto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tripi.tripservice.enumeration.TravelMode;
-import com.tripi.tripservice.model.Trip;
+import com.tripi.common.model.location.LocationDto;
+import com.tripi.common.model.enumeration.TravelMode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StepDtoTest {
 

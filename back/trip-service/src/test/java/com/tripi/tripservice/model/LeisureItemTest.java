@@ -2,9 +2,9 @@ package com.tripi.tripservice.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tripi.tripservice.enumeration.LeisureCategory;
-import com.tripi.tripservice.enumeration.TravelMode;
-import com.tripi.tripservice.model.dto.LocationDto;
+import com.tripi.common.model.enumeration.LeisureCategory;
+import com.tripi.common.model.enumeration.TravelMode;
+import com.tripi.common.model.location.LocationDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.tripi.tripservice.model.dto;
+package com.tripi.common.model.location;
 
 import lombok.Getter;
 import lombok.Setter;

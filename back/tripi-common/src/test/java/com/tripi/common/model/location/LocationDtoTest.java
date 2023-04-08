@@ -1,5 +1,6 @@
-package com.tripi.tripservice.model.dto;
+package com.tripi.common.model.location;
 
+import com.tripi.common.model.location.LocationDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -2,12 +2,12 @@ package com.tripi.tripservice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripi.common.model.user.UserDto;
-import com.tripi.tripservice.enumeration.LeisureCategory;
-import com.tripi.tripservice.enumeration.TravelMode;
+import com.tripi.common.model.enumeration.LeisureCategory;
+import com.tripi.common.model.enumeration.TravelMode;
 import com.tripi.tripservice.model.LeisureItem;
 import com.tripi.tripservice.model.Step;
 import com.tripi.tripservice.model.Trip;
-import com.tripi.tripservice.model.dto.LocationDto;
+import com.tripi.common.model.location.LocationDto;
 import com.tripi.tripservice.repository.LeisureItemRepository;
 import com.tripi.tripservice.repository.StepRepository;
 import com.tripi.tripservice.repository.TripRepository;

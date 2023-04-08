@@ -1,6 +1,6 @@
 package com.tripi.tripservice.request;
 
-import com.tripi.tripservice.enumeration.TravelMode;
+import com.tripi.common.model.enumeration.TravelMode;
 import lombok.Getter;
 import lombok.Setter;
 

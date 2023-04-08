@@ -1,4 +1,4 @@
-package com.tripi.tripservice.enumeration;
+package com.tripi.common.model.enumeration;
 
 public enum TravelMode {
     DRIVING,

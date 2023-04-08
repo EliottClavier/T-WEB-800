@@ -1,6 +1,5 @@
 package com.tripi.tripservice.model.dto;
 
-import com.tripi.tripservice.enumeration.LeisureCategory;
 import lombok.Getter;
 import lombok.Setter;
 

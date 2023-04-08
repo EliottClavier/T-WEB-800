@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripi.tripservice.model.LeisureItem;
 import com.tripi.tripservice.model.Step;
 import com.tripi.tripservice.model.Trip;
-import com.tripi.tripservice.model.dto.LocationDto;
+import com.tripi.common.model.location.LocationDto;
 import com.tripi.tripservice.repository.LeisureItemRepository;
 import com.tripi.tripservice.repository.StepRepository;
 import com.tripi.tripservice.repository.TripRepository;

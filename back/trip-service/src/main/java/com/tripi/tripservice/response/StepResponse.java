@@ -1,7 +1,7 @@
 package com.tripi.tripservice.response;
 
-import com.tripi.tripservice.enumeration.TravelMode;
-import com.tripi.tripservice.model.dto.LocationDto;
+import com.tripi.common.model.enumeration.TravelMode;
+import com.tripi.common.model.location.LocationDto;
 import lombok.Getter;
 import lombok.Setter;
 
