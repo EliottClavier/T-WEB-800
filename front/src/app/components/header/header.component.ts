@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {LoginUserComponent} from "../../containers/login-user/login-user.component";
-import {NoopScrollStrategy} from "@angular/cdk/overlay";
-import {RegisterUserComponent} from "../../containers/register-user/register-user.component";
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
+import { LoginUserComponent } from "../../containers/login-user/login-user.component";
+import { NoopScrollStrategy } from "@angular/cdk/overlay";
+import { RegisterUserComponent } from "../../containers/register-user/register-user.component";
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-header',
