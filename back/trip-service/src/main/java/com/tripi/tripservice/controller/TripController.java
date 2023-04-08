@@ -35,4 +35,9 @@ public class TripController {
         return tripService.postTrip(tripRequest);
     }
 
+    @DeleteMapping()
+    public ResponseEntity<String> deleteTrip(@RequestParam("id") String id) {
+        return tripService.deleteTrip(id);
+    }
+
 }

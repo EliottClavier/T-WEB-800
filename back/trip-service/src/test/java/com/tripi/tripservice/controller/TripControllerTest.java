@@ -145,4 +145,18 @@ class TripControllerTest {
         // Arrange
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
+
+    @Test
+    public void testDeleteTrip() {
+        // Assert
+        String id = "123";
+
+        when(tripService.deleteTrip(id)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+
+        // Act
+        ResponseEntity<String> response = tripController.deleteTrip(id);
+
+        // Arrange
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }

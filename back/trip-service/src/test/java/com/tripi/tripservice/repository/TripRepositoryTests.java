@@ -43,4 +43,19 @@ public class TripRepositoryTests {
         assertThat(tripRepository.existsByTripId("testTripId")).isTrue();
     }
 
+    @Test
+    public void testDeleteByTripId() {
+        // Create a trip and save it to the repository
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Trip trip = new Trip("testTripId", "My Trip", null, startDate, endDate, 1);
+        tripRepository.save(trip);
+
+        // Delete the trip from the repository
+        tripRepository.deleteByTripId("testTripId");
+
+        // Assert that the trip no longer exists in the repository
+        assertThat(tripRepository.existsByTripId("testTripId")).isFalse();
+    }
+
 }

@@ -363,4 +363,32 @@ public class TripServiceTest {
         // Assert
         assertNull(result);
     }
+
+    @Test
+    public void testDeleteTrip() {
+        // Arrange
+        String id = "T001";
+        when(tripRepository.existsByTripId(id)).thenReturn(true);
+
+        // Act
+        ResponseEntity<String> response = tripService.deleteTrip(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Trip deleted", response.getBody());
+    }
+
+    @Test
+    public void testDeleteNonExistingTrip() {
+        // Arrange
+        String id = "T001";
+        when(tripRepository.existsByTripId(id)).thenReturn(false);
+
+        // Act
+        ResponseEntity<String> response = tripService.deleteTrip(id);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Trip does not exist", response.getBody());
+    }
 }
