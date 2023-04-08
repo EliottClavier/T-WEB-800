@@ -1,2 +1,2 @@
 rootProject.name = 'back'
-include 'tripi-common', 'gateway', 'accomodation-service', 'activity-service', 'auth-service', 'bar-service', 'discovery', 'localisation-service', 'restaurant-service', 'transport-service', 'trip-service', 'user-service'
+include 'tripi-common', 'gateway', 'accommodation-service', 'activity-service', 'auth-service', 'bar-service', 'discovery', 'location-service', 'restaurant-service', 'transport-service', 'trip-service', 'user-service'

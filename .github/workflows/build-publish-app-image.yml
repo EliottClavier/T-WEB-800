@@ -14,7 +14,6 @@ jobs:
     uses: ./.github/workflows/build-publish-image.yml
     with:
       context: 'front'
-      dockerfile: 'front/Dockerfile'
       image_name: 'tripi-app'
       tag_name: ${{ github.ref_name }}
     secrets:

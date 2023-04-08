@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "/api",
+    "target": "http://gateway:8080",
     "secure": false,
     "pathRewrite": {
       "^/api": ""
