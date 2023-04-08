@@ -127,8 +127,8 @@ public class AuthFilterTest {
         ServerWebExchange exchange = Mockito.mock(ServerWebExchange.class);
         ServerHttpRequest request = Mockito.mock(ServerHttpRequest.class);
         HttpHeaders headers = Mockito.mock(HttpHeaders.class);
-        String host = "localhost";
-        String frontAppHostName = "localhost:8080";
+        String host = "http://example.com";
+        String frontAppHostName = "example.com";
 
         when(exchange.getRequest()).thenReturn(request);
         when(request.getHeaders()).thenReturn(headers);
