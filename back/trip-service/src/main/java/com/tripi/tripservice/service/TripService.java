@@ -79,7 +79,7 @@ public class TripService {
                 }
                 for (LeisureItem leisureItem : step.getLeisures()) {
                     LeisureItemResponse leisureItemResponse = new LeisureItemResponse();
-                    leisureItemResponse.setId("");
+                    leisureItemResponse.setId(leisureItem.getLeisureItemId());
                     leisureItemResponse.setTitle(leisureItem.getTitle());
                     leisureItemResponse.setSubtitle(leisureItem.getSubtitle());
                     leisureItemResponse.setRating(leisureItem.getRating());
@@ -141,6 +141,7 @@ public class TripService {
                 leisureLocation.setLng(leisureItemRequest.getLocation().getLng());
 
                 LeisureItem leisure = new LeisureItem();
+                leisure.setLeisureItemId(leisureItemRequest.getId());
                 leisure.setRating(leisureItemRequest.getRating());
                 leisure.setPrice(leisureItemRequest.getPrice());
                 leisure.setStep(step);

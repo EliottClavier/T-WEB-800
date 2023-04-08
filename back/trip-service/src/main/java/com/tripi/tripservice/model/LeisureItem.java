@@ -20,6 +20,7 @@ public class LeisureItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String LeisureItemId;
     private String title;
     private String subtitle;
     private String description;

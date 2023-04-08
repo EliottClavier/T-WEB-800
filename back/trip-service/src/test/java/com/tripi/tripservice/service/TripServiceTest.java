@@ -261,6 +261,7 @@ public class TripServiceTest {
         locationRequest.setLng(5.36978);
         stepRequest.setLocation(locationRequest);
         LeisureItemRequest leisureItemRequest = new LeisureItemRequest();
+        leisureItemRequest.setId("L001");
         leisureItemRequest.setTitle("Leisure Item 1");
         leisureItemRequest.setSubtitle("Subtitle");
         leisureItemRequest.setRating(4);
@@ -307,6 +308,7 @@ public class TripServiceTest {
         locationRequest.setLng(5.36978);
         stepRequest.setLocation(locationRequest);
         LeisureItemRequest leisureItemRequest = new LeisureItemRequest();
+        leisureItemRequest.setId("L001");
         leisureItemRequest.setTitle("Leisure Item 1");
         leisureItemRequest.setSubtitle("Subtitle");
         leisureItemRequest.setRating(4);

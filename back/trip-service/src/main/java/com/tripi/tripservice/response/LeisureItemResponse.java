@@ -2,11 +2,9 @@ package com.tripi.tripservice.response;
 
 import com.tripi.tripservice.enumeration.LeisureCategory;
 import com.tripi.tripservice.model.dto.LocationDto;
-import com.tripi.tripservice.request.LocationRequest;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 
 @Getter
 @Setter

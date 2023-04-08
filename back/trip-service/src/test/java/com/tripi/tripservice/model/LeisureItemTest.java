@@ -61,6 +61,7 @@ class LeisureItemTest {
         Date date = new Date();
         LeisureItem leisureItem = new LeisureItem();
         leisureItem.setId(1L);
+        leisureItem.setLeisureItemId("LeisureItemId");
         leisureItem.setTitle("Title");
         leisureItem.setSubtitle("Subtitle");
         leisureItem.setDescription("Description");
@@ -72,6 +73,7 @@ class LeisureItemTest {
         leisureItem.setDate(date);
         leisureItem.setStep(step);
         Assertions.assertEquals(1L, leisureItem.getId());
+        Assertions.assertEquals("LeisureItemId", leisureItem.getLeisureItemId());
         Assertions.assertEquals("Title", leisureItem.getTitle());
         Assertions.assertEquals("Subtitle", leisureItem.getSubtitle());
         Assertions.assertEquals("Description", leisureItem.getDescription());
