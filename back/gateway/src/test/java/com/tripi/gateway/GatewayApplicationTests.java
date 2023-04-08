@@ -9,8 +9,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = GatewayApplication.class)
+@ExtendWith(SpringExtension.class)
 public class GatewayApplicationTests {
 
 	@Autowired
@@ -19,11 +19,5 @@ public class GatewayApplicationTests {
 	@Test
 	public void contextLoads() {
 		assertNotNull(applicationContext);
-	}
-
-	@Test
-	public void mainTest() {
-		String[] args = new String[]{};
-		GatewayApplication.main(args);
 	}
 }

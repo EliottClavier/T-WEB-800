@@ -1,0 +1,18 @@
+eureka:
+  client:
+    enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+data:
+  actives: google-maps
+  sources:
+    google-maps:
+      api-key: api-test-google
+  search:
+    input:
+      limit: 5
+  picture:
+    width: 400

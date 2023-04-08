@@ -1,23 +1,91 @@
 server:
-  port: ${GATEWAY_PORT}
-
-spring:
-  main:
-    web-application-type: reactive
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
+  port: ${GATEWAY_PORT:8080}
 
 eureka:
   instance:
-    preferIpAddress: true
+    prefer-ip-address: false
+    hostname: ${SERVICE_HOST:localhost}
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-        defaultZone: http://${DISCOVERY_HOST}:${DISCOVERY_PORT}/eureka/
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka/
 
+spring:
+  application:
+    name: gateway
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    gateway:
+      metrics:
+        enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: restaurant-service
+          uri: lb://restaurant-service
+          predicates:
+            - Path=/eat/**
 
+        - id: bar-service
+          uri: lb://bar-service
+          predicates:
+            - Path=/drink/**
 
+        - id: location-service
+          uri: lb://location-service
+          predicates:
+            - Path=/location/**
+
+        - id: activity-service
+          uri: lb://activity-service
+          predicates:
+            - Path=/enjoy/**
+
+        - id: transport-service
+          uri: lb://transport-service
+          predicates:
+            - Path=/transports/**
+
+        - id: accommodation-service
+          uri: lb://accommodation-service
+          predicates:
+            - Path=/sleep/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
+
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+    openfeign:
+      autoconfiguration:
+        jackson:
+          enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+
+frontend:
+  hostname: "${APP_VIRTUAL_HOST:localhost}"

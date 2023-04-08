@@ -13,8 +13,8 @@ jobs:
     name: Gateway image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/gateway'
-      dockerfile: 'back/gateway/Dockerfile'
+      context: 'back'
+      service_name: 'gateway'
       image_name: 'tripi-gateway'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -25,8 +25,8 @@ jobs:
     name: Discovery image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/discovery'
-      dockerfile: 'back/discovery/Dockerfile'
+      context: 'back'
+      service_name: 'discovery'
       image_name: 'tripi-discovery'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -37,8 +37,8 @@ jobs:
     name: Accommodation image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/accommodation-service'
-      dockerfile: 'back/accommodation-service/Dockerfile'
+      context: 'back'
+      service_name: 'accommodation-service'
       image_name: 'tripi-accommodation'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -49,8 +49,8 @@ jobs:
     name: Activity image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/activity-service'
-      dockerfile: 'back/activity-service/Dockerfile'
+      context: 'back'
+      service_name: 'activity-service'
       image_name: 'tripi-activity'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -61,8 +61,8 @@ jobs:
     name: Bar image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/bar-service'
-      dockerfile: 'back/bar-service/Dockerfile'
+      context: 'back'
+      service_name: 'bar-service'
       image_name: 'tripi-bar'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -73,8 +73,8 @@ jobs:
     name: Restaurant image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/restaurant-service'
-      dockerfile: 'back/restaurant-service/Dockerfile'
+      context: 'back'
+      service_name: 'restaurant-service'
       image_name: 'tripi-restaurant'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -85,8 +85,8 @@ jobs:
     name: Transport image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/transport-service'
-      dockerfile: 'back/transport-service/Dockerfile'
+      context: 'back'
+      service_name: 'transport-service'
       image_name: 'tripi-transport'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -97,8 +97,8 @@ jobs:
     name: Trip image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/trip-service'
-      dockerfile: 'back/trip-service/Dockerfile'
+      context: 'back'
+      service_name: 'trip-service'
       image_name: 'tripi-trip'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -109,8 +109,8 @@ jobs:
     name: Auth image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/auth-service'
-      dockerfile: 'back/auth-service/Dockerfile'
+      context: 'back'
+      service_name: 'auth-service'
       image_name: 'tripi-auth'
       tag_name: ${{ github.ref_name }}
     secrets:
@@ -121,9 +121,21 @@ jobs:
     name: User image
     uses: ./.github/workflows/build-publish-image.yml
     with:
-      context: 'back/user-service'
-      dockerfile: 'back/user-service/Dockerfile'
+      context: 'back'
+      service_name: 'user-service'
       image_name: 'tripi-user'
+      tag_name: ${{ github.ref_name }}
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build_and_push_localisation_image:
+    name: User image
+    uses: ./.github/workflows/build-publish-image.yml
+    with:
+      context: 'back'
+      service_name: 'localisation-service'
+      image_name: 'tripi-localisation'
       tag_name: ${{ github.ref_name }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

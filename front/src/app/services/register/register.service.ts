@@ -14,6 +14,8 @@ export class RegisterService {
   ) { }
 
   public postUserRegister(user: RegisterModel): Observable<UserModel> {
-    return this.http.post<UserModel>('/api/auth/register', user);
+    let any: any = user;
+    any["id"] = null;
+    return this.http.post<UserModel>('/api/auth/register', any);
   }
 }

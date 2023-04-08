@@ -1,3 +1,25 @@
 eureka:
   client:
     enabled: false
+
+# Spring Server setup
+server:
+  address: localhost
+  port: 8080
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+# Amadeus API Configuration
+amadeus:
+  enabled: true
+  apiKey: testAmadeusKey
+  apiSecret: testAmadeusSecret
+
+# Google Configuration
+google:
+  apiKey: testGoogleApiKey
+
+# Sources
+sources: GOOGLEMAPS,AMADEUS
