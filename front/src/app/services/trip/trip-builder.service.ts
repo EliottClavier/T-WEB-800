@@ -92,14 +92,14 @@ export class TripBuilderService {
 
     this._trip?.steps?.forEach((step: StepModel) => {
 
-      (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(step?.index)?.get('locationSearch')?.patchValue(step?.name);
-      this.searchFormsArray.controls[step?.index].get('location')?.patchValue(step?.location);
-      this.searchFormsArray.controls[step?.index].get('start')?.patchValue(new Date(step?.start));
-      this.searchFormsArray.controls[step?.index].get('end')?.patchValue(new Date(step?.end));
-      this.searchFormsArray.controls[step?.index].get('id')?.patchValue(step?.id);
-      this.searchFormsArray.controls[step?.index].get('name')?.patchValue(step?.name);
-      this.searchFormsArray.controls[step?.index].get('leisures')?.patchValue(step?.leisures);
-      this.searchFormsArray.controls[step?.index].get('travelMode')?.patchValue(step?.travelMode);
+      (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(step?.stepIndex)?.get('locationSearch')?.patchValue(step?.name);
+      this.searchFormsArray.controls[step?.stepIndex].get('location')?.patchValue(step?.location);
+      this.searchFormsArray.controls[step?.stepIndex].get('start')?.patchValue(new Date(step?.start));
+      this.searchFormsArray.controls[step?.stepIndex].get('end')?.patchValue(new Date(step?.end));
+      this.searchFormsArray.controls[step?.stepIndex].get('id')?.patchValue(step?.id);
+      this.searchFormsArray.controls[step?.stepIndex].get('name')?.patchValue(step?.name);
+      this.searchFormsArray.controls[step?.stepIndex].get('leisures')?.patchValue(step?.leisures);
+      this.searchFormsArray.controls[step?.stepIndex].get('travelMode')?.patchValue(step?.travelMode);
     });
 
     return this._stepsForms as FormGroup;
@@ -119,13 +119,13 @@ export class TripBuilderService {
       let stepModel = new StepModel();
 
       stepModel.id = step.id;
-      stepModel.index = index;
+      stepModel.stepIndex = index;
       stepModel.name = step.locationSearch as string;
       stepModel.location = step.location as LocationModel;
       stepModel.leisures = step.leisures as LeisureItemModel[];
       stepModel.start = getIsoStringFromDate(step.start);
       stepModel.end = getIsoStringFromDate(step.end || step.start);
-      stepModel.index = index++;
+      stepModel.stepIndex = index++;
 
       index == -travelLength ? stepModel.travelMode = undefined : (stepModel.travelMode = step.travelMode as TravelMode);
 

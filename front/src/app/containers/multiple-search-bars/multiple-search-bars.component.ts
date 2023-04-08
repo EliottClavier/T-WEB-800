@@ -59,11 +59,17 @@ export class MultipleSearchBarsComponent implements OnInit {
   }
 
   public addSearchBar(): void {
+    let day = 60 * 60 * 24 * 1000;
     let newFormGroup: FormGroup = buildStepFormGroupControlsDetails();
     if (this.lastSearchBar.get("end")?.value) {
       newFormGroup.setControl(
-        "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [Validators.required])
-      );
+        "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [Validators.required]),
+
+    ),newFormGroup.setControl(
+        "end", new FormControl<Date | null>(new Date((this.lastSearchBar.get("end")?.value).getTime() + day), [Validators.required]),
+
+      )
+      ;
     }
     this.tripBuilderService.searchFormsArray.push(newFormGroup);
 

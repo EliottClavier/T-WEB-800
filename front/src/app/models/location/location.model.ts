@@ -6,7 +6,7 @@ export class LocationModel {
   private _lng: number;
   private _lat: number;
 
-  constructor(id: string = uuidv4(), name: string = "", lat: number = 0, lng: number = 0) {
+  constructor(id: string = "", name: string = "", lat: number = 0, lng: number = 0) {
     this._id = id;
     this._name = name;
     this._lat = lat;

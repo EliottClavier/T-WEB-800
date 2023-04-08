@@ -40,7 +40,7 @@ export class LeisureCategoryFilterComponent implements OnInit {
         return LeisureCategory.SPORTING_EVENT
       default:
 
-        return LeisureCategory.ACCOMMODATION
+        return LeisureCategory.UNKNOWN
     }
   }
 

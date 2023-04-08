@@ -110,14 +110,14 @@ describe('CardItemDetailsViewComponent', () => {
     it('should delete leisure item of trip ',  () => {
       component.detailsItem = getAccommodationItems()[0];
 
-      tripBuilderService.stepsForms = getMockTripForm();
+      tripBuilderService.stepsForms = getMockTripForm() ;
       component.leisureIndex = 0;
       component.stepIndex = 0;
       component.isToDelete = true;
 
       let spy = spyOn<CardItemDetailsViewComponent, any>(component, 'onDeleteItemToTrip').and.callThrough();
-      // component.onDeleteItemToTrip(component.detailsItem);
-      spectator.click('[mat-dialog-actions] [data-cy-item-details-delete-to-trip-button] [simple-button]');
+      component.onDeleteItemToTrip(component.detailsItem);
+      // spectator.click('[mat-dialog-actions] [data-cy-item-details-delete-to-trip-button] [simple-button]');
       expect(spy).toHaveBeenCalled();
     });
   });

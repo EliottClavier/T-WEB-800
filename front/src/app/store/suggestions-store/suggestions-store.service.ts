@@ -48,11 +48,11 @@ export class SuggestionsStoreService {
     this._suggestions$.next(data);
   }
 
-  // get getCategory(): LeisureCategory {
-  //   return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
-  // }
+  get getCategory(): LeisureCategory {
+    return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
+  }
   get category(): LeisureCategory {
-    return this._category as LeisureCategory || LeisureCategory.UNKNOWN;
+    return this._category as LeisureCategory || LeisureCategory.ACCOMMODATION;
   }
   set category(value: LeisureCategory) {
     this._category = value as LeisureCategory;

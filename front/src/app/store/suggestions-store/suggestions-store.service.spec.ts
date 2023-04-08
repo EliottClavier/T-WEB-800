@@ -96,6 +96,7 @@ describe('SuggestionsStoreService', () => {
   });
 
   it('should get category of item', () => {
+    // store.category = LeisureCategory.BAR;
     store.suggestions$.next(getBarItems());
     expect(store.getCategory).toEqual(LeisureCategory.BAR);
   });
