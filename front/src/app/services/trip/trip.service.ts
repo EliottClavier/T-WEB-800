@@ -35,9 +35,9 @@ export class TripService {
 
     this._httpclient.post<TripModel>(`${this.url}`, data).subscribe((trip: TripModel) => {
 
-      this._tripStoreService.addTrip(trip)
+      this._tripStoreService.addOrUpdateTrip(trip)
     }, error => {
-      this._tripStoreService.addTrip(data)
+      this._tripStoreService.addOrUpdateTrip(data)
       console.log('error : ', error);
     });
   }

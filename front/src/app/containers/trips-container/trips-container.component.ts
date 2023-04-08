@@ -7,8 +7,6 @@ import {getPdf} from "../../utils/pdf/pdf.utils";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {Router} from "@angular/router";
 import {getIsoStringFromDate} from "../../utils/date.utils";
-import {LocationModel} from "../../models/location/location.model";
-import {FormArray, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-trips-container',
@@ -51,15 +49,16 @@ export class TripsContainerComponent implements OnInit {
 
 
   tripToCardItem(item: TripModel) {
+    console.log(item.startDate + ' - ' + item.endDate);
     return new LeisureItemModel(
       item.id,
       item.name,
-      "",
-      "",
-      undefined,
-      undefined,
-      undefined,
       item.startDate + ' - ' + item.endDate,
+      "",
+      undefined,
+      undefined,
+      undefined,
+      undefined,
       undefined,
       undefined);
 
@@ -71,40 +70,32 @@ export class TripsContainerComponent implements OnInit {
   }
 
   onUpdate(id: string) {
-    this.tripStore.getTrips().forEach((trip, index) => {
-      console.log(trip.name);
-      trip.steps.forEach((step, index) => {
-        console.log(step.name);
-      })
-    })
+
     const trip: TripModel = this.tripStore.getTripById(id);
-    console.log(trip );
+
 
     this.tripBuilderService.getTripFormFromTripModel(trip);
 
+    console.log('onUpdate ->  trip : ', trip);
+    console.log('onUpdate ->  form : ', this.tripBuilderService.searchFormsArray.value);
 
     const location = this.tripBuilderService.searchFormsArray.controls[0].get('location')?.value;
     const start = this.tripBuilderService.searchFormsArray.controls[0].get('start')?.value;
-    const end = this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length -1].get('end')?.value;
+    const end = this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length - 1].get('end')?.value ||
+      this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length - 1].get('start')?.value;
 
-   let t = this.router.navigate(
+    console.log(location, start, end);
+    let t = this.router.navigate(
       ['/', 'explore', location?.name],
       {
         queryParams: {
-          // start: getIsoStringFromDate(start),
-          // end: getIsoStringFromDate(end),
-
-          start:"2023-06-04",
-          end: "2023-06-05",
+          start: getIsoStringFromDate(start),
+          end: getIsoStringFromDate(end),
           lat: location?.lat,
           lng: location?.lng,
         }
       }
-    ).finally(
-      () => {
-        console.log(t);
-      }
-   );
+    );
   }
 
   onDelete(id: string) {

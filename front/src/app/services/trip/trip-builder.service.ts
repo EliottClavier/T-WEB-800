@@ -19,7 +19,7 @@ export class TripBuilderService {
   private _stepsForms?: FormGroup;
   private _trip: TripModel = new TripModel();
 
-  setTripFormsInstance(tripForm: FormGroup |undefined) {
+  setTripFormsInstance(tripForm: FormGroup | undefined) {
     this._stepsForms = tripForm;
   }
 
@@ -48,7 +48,7 @@ export class TripBuilderService {
     return this._stepsForms;
   }
 
-  setName(value: string ) {
+  setName(value: string) {
     this._trip.name = value;
 
   }
@@ -83,28 +83,36 @@ export class TripBuilderService {
     console.log('getTripFormFromTripModel ' + trip.name);
     console.log('getTripFormFromTripModel ' + trip.id);
     console.log('getTripFormFromTripModel ' + this._trip.id);
+
     let form = this.getTripFormsInstance();
+
     (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.patchValue(trip.id);
     console.log('getTripFormFromTripModel ' + (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('id')?.value);
-    // this._stepsForms?.reset();
-    this._trip.steps.forEach((step: StepModel) => {
-      console.log('step index ' + step.index);
-      (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(0)?.get('locationSearch')?.patchValue(step?.name);
-    this.searchFormsArray.controls[step?.index].get('location')?.patchValue(step?.location);
-    this.searchFormsArray.controls[step?.index].get('start')?.patchValue(new Date(step?.start));
-    this.searchFormsArray.controls[step?.index].get('end')?.patchValue(new Date(step?.end));
-    this.searchFormsArray.controls[step?.index].get('id')?.patchValue(step?.id);
-    this.searchFormsArray.controls[step?.index].get('name')?.patchValue(step?.name);
-    this.searchFormsArray.controls[step?.index].get('leisures')?.patchValue(step?.leisures);
-    this.searchFormsArray.controls[step?.index].get('travelMode')?.patchValue(step?.travelMode);
-      console.log('step form'+ this.searchFormsArray.controls[step?.index].get('locationSearch')?.value)
-    });
-    this.searchFormsArray.value.forEach((form: FormGroup) => {
 
-      console.log('form ' +  form.value);
-    })
+      let stepsLength: number = this._trip?.steps?.length;
+      for(let i = 0; i < stepsLength-1; i++) {
+        this.searchFormsArray.controls.push(buildStepFormGroupControlsDetails())
+      }
+
+    this._trip?.steps?.forEach((step: StepModel) => {
+      console.log('step index ' + step.index);
+      console.log('step name ' + step.name);
+      console.log('controls.length ' + this.searchFormsArray.controls.length);
+
+      (this._stepsForms?.get('searchFormsArray') as FormArray)?.at(step?.index)?.get('locationSearch')?.patchValue(step?.name);
+      this.searchFormsArray.controls[step?.index].get('location')?.patchValue(step?.location);
+      this.searchFormsArray.controls[step?.index].get('start')?.patchValue(new Date(step?.start));
+      this.searchFormsArray.controls[step?.index].get('end')?.patchValue(new Date(step?.end));
+      this.searchFormsArray.controls[step?.index].get('id')?.patchValue(step?.id);
+      this.searchFormsArray.controls[step?.index].get('name')?.patchValue(step?.name);
+      this.searchFormsArray.controls[step?.index].get('leisures')?.patchValue(step?.leisures);
+      this.searchFormsArray.controls[step?.index].get('travelMode')?.patchValue(step?.travelMode);
+      console.log('step form' + this.searchFormsArray.controls[step?.index].get('locationSearch')?.value)
+    });
+
     return this._stepsForms as FormGroup;
   }
+
   private _isValidDate(date: any): boolean {
     return date instanceof Date && !isNaN(date.getTime());
   }
@@ -118,6 +126,8 @@ export class TripBuilderService {
 
       let stepModel = new StepModel();
 
+      console.log('sratrt date ' + step.start);
+      console.log('end date ' + step.end);
       // stepModel.id = step.id;
       stepModel.index = index;
       stepModel.name = step.locationSearch as string;
@@ -140,6 +150,8 @@ export class TripBuilderService {
   private _getTripDates(): void {
     this._trip.startDate = this._trip.steps[0].start
     this._trip.endDate = this._trip.steps[this._trip.steps.length - 1].end || this._trip.steps[this._trip.steps.length - 1].start
+    console.log('start date ' + this._trip.startDate);
+    console.log('end date ' + this._trip.endDate);
   }
 
   public saveTrip(tripName: string) {
@@ -153,6 +165,17 @@ export class TripBuilderService {
   newTrip() {
     this._trip = new TripModel();
     this._stepsForms?.reset();
+
+    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value[0]);
+    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value.length);
+    this._stepsForms?.controls['searchFormsArray'].reset();
+    this._stepsForms =
+      new FormGroup({
+        searchFormsArray: new FormArray<FormGroup>([
+          buildStepFormGroupControlsDetails(),
+        ]),
+      });
+    console.log('new trip ' + this._stepsForms?.controls['searchFormsArray'].value.length)
     this.setName("");
     this.getTripFormsInstance()
   }

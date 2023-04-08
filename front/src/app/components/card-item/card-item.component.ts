@@ -14,7 +14,6 @@ export class CardItemComponent implements OnInit{
   @Input() cardItem: LeisureItemModel;
   @Output() onItem = new EventEmitter<LeisureItemModel>();
 
-
   onClickItem(cardItem: LeisureItemModel): void {
     this.onItem.emit(cardItem);
   };

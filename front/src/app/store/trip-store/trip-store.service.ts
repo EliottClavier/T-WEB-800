@@ -13,7 +13,7 @@ export class TripStoreService {
   private _trips$ = this._trips.asObservable();
 
 
-  addTrip(nextTrip: TripModel) {
+  addOrUpdateTrip(nextTrip: TripModel) {
 
     const index = this._trips.getValue().findIndex(trip => trip.id === nextTrip.id);
 

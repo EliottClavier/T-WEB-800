@@ -79,7 +79,7 @@ export class ExploreComponent implements OnInit {
     private _route: ActivatedRoute, private _router: Router,
     private _suggestionsService: SuggestionsService,
     private _suggestionsStore: SuggestionsStoreService,
-    private _tripBuilderService: TripBuilderService,
+    public _tripBuilderService: TripBuilderService,
     private _tripService: TripService,
     private _tripStore: TripStoreService,
     private _dialog: MatDialog) {
@@ -192,13 +192,17 @@ export class ExploreComponent implements OnInit {
     const searchFormsArray = this._tripBuilderService.getName();
 
     if (tripName != undefined) {
+
+      console.log('tripName != undefined');
       let trip = this._tripBuilderService.saveTrip(tripName);
-      // console.log('trip : ', trip);
       this._tripService.sendTripAndUpdateStore(trip)
 
     } else if (searchFormsArray?.length != 0) {
+
+      console.log('searchFormsArray?.length != 0');
       let trip = this._tripBuilderService.saveTrip(searchFormsArray);
       this._tripService.sendTripAndUpdateStore(trip);
+
     } else {
       this.dialogRef = this._dialog.open(SaveTripDialogComponent, {});
       this.dialogRef.afterClosed().subscribe(result => {
@@ -216,8 +220,8 @@ export class ExploreComponent implements OnInit {
   }
 
   newTripForm() {
-    // this._tripBuilderService.setTripFormsInstance(undefined);
     this._tripBuilderService.newTrip();
+   // console.log( this._tripBuilderService.searchFormsArray.value.length)
     this._router.navigate(['/']);
   }
 }

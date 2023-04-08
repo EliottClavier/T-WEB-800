@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
 import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {MapView} from "../../enums/map-view-const";
@@ -16,6 +16,7 @@ export class MultipleSearchBarsComponent implements OnInit {
 
   @Input() public hasLeisureNbr: number = 0;
   @Input() public searchForms: FormGroup = this.tripBuilderService.getTripFormsInstance();
+  // public searchForms: FormGroup = this.tripBuilderService.getTripFormsInstance();
 
   public leisuresLength: number[] = [];
 
@@ -26,36 +27,38 @@ export class MultipleSearchBarsComponent implements OnInit {
   @Output() public activeSearchBarChange: EventEmitter<SearchBarEvent> = new EventEmitter<SearchBarEvent>();
   @Output() public viewChange: EventEmitter<MapView> = new EventEmitter<MapView>();
 
-  constructor(private tripBuilderService: TripBuilderService) {
+  constructor(public tripBuilderService: TripBuilderService) {
   }
 
 
   ngOnInit(): void {
     this.hasLeisure();
+    this.searchForms = this.tripBuilderService.getTripFormsInstance();
+
   }
 
-  get searchFormsArray(): FormArray {
-    return this.searchForms.get('searchFormsArray') as FormArray;
-  }
+  // get searchFormsArray(): FormArray {
+  //   return this.searchForms.get('searchFormsArray') as FormArray;
+  // }
 
-  get searchFormsArrayControls(): FormGroup[] {
-    return this.searchFormsArray.controls as FormGroup[];
-  }
+  // get searchFormsArrayControls(): FormGroup[] {
+  //   return this.tripBuilderService.searchFormsArray.controls as FormGroup[];
+  // }
 
   get lastSearchBar(): FormGroup {
-    return this.searchFormsArrayControls[this.searchFormsArrayControls.length - 1];
+    return this.tripBuilderService.searchFormsArrayControls[this.tripBuilderService.searchFormsArrayControls.length - 1];
   }
 
   public isNextLocationValid(index: number): boolean {
-    let location = this.searchFormsArrayControls[index + 1]?.get("location")?.value as LocationModel;
+    let location = this.tripBuilderService.searchFormsArrayControls[index + 1]?.get("location")?.value as LocationModel;
     return Boolean(location) && location!.hasValidCoordinates();
   }
 
   public hasLeisure(): number[] {
     this.leisuresLength = [];
-    this.searchFormsArrayControls.forEach((step, index) => {
+    this.tripBuilderService.searchFormsArrayControls.forEach((step, index) => {
 
-      this.leisuresLength.push(step.get("leisures")?.value.length);
+      this.leisuresLength.push(step?.get("leisures")?.value?.length || 0);
     });
 
     return this.leisuresLength;
@@ -68,10 +71,10 @@ export class MultipleSearchBarsComponent implements OnInit {
         "start", new FormControl<Date | null>(this.lastSearchBar.get("end")?.value, [Validators.required])
       );
     }
-    this.searchFormsArray.push(newFormGroup);
+    this.tripBuilderService.searchFormsArray.push(newFormGroup);
 
     this.activeSearchBar = {
-      index: this.searchFormsArrayControls.length - 1,
+      index: this.tripBuilderService.searchFormsArrayControls.length - 1,
       isEditing: true,
     };
     this.activeSearchBarChange.emit(this.activeSearchBar);
@@ -88,7 +91,7 @@ export class MultipleSearchBarsComponent implements OnInit {
       index: index > 0 ? index - 1 : index,
       isEditing: false,
     };
-    this.searchFormsArrayControls.length > 1 && this.searchFormsArray.removeAt(index);
+    this.tripBuilderService.searchFormsArrayControls.length > 1 && this.tripBuilderService.searchFormsArray.removeAt(index);
     this.activeSearchBarChange.emit(this.activeSearchBar);
   }
 
@@ -105,17 +108,17 @@ export class MultipleSearchBarsComponent implements OnInit {
   }
 
   public onLocationOptionChange(event: LocationModel): void {
-    this.searchFormsArrayControls[this.activeSearchBar.index].patchValue({
+    this.tripBuilderService.searchFormsArrayControls[this.activeSearchBar.index].patchValue({
       locationSearch: event.name,
       location: new LocationModel(event.id, event.name, event.lat, event.lng)
     });
   }
 
   public accessTravelModeIcon(searchBarIndex: number): string {
-    if (this.searchFormsArrayControls.length === searchBarIndex + 1) {
+    if (this.tripBuilderService.searchFormsArrayControls.length === searchBarIndex + 1) {
       return 'outlined_flag';
     }
-    return getTravelModeIcon(this.searchFormsArrayControls[searchBarIndex].get("travelMode")?.value);
+    return getTravelModeIcon(this.tripBuilderService.searchFormsArrayControls[searchBarIndex].get("travelMode")?.value);
   }
 
 }
