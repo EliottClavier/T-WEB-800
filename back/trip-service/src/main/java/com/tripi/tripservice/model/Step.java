@@ -1,10 +1,15 @@
 package com.tripi.tripservice.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tripi.tripservice.enumeration.TravelMode;
+import com.tripi.tripservice.model.dto.LocationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,32 +21,44 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String stepId;
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
-    private Location location;
-    @OneToMany(mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval = true)
+    private String location;
+    @OneToMany(mappedBy = "step", cascade = CascadeType.ALL)
     private List<LeisureItem> leisures;
-    private String start;
-    private String end;
+    private Date start;
+    private Date end;
     private TravelMode travelMode;
-    private Integer index;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
     public Step() {}
 
-    public Step(String name, Location location, List<LeisureItem> leisures,
-                String start, String end, TravelMode travelMode, Integer index, Trip trip) {
+    public Step(String stepId, String name, String location, List<LeisureItem> leisures,
+                Date start, Date end, TravelMode travelMode, Trip trip) {
+        this.stepId = stepId;
         this.name = name;
         this.location = location;
         this.leisures = leisures;
         this.start = start;
         this.end = end;
         this.travelMode = travelMode;
-        this.index = index;
         this.trip = trip;
+    }
+
+    public LocationDto getLocation() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(location, LocationDto.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to deserialize location", e);
+        }
+    }
+
+    public void setLocation(LocationDto location) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        this.location = mapper.writeValueAsString(location);
     }
     
 }

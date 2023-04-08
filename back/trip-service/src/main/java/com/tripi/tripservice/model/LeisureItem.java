@@ -1,9 +1,15 @@
 package com.tripi.tripservice.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tripi.tripservice.enumeration.LeisureCategory;
+import com.tripi.tripservice.model.dto.LocationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.IOException;
+import java.util.Date;
 
 @Entity
 @Table(name = "leisureItem")
@@ -19,12 +25,10 @@ public class LeisureItem {
     private String description;
     private String image;
     private LeisureCategory category;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
-    private Location location;
+    private String location;
     private Integer rating;
     private Double price;
-    private String date;
+    private Date date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "step_id")
     private Step step;
@@ -32,7 +36,7 @@ public class LeisureItem {
     public LeisureItem() {}
 
     public LeisureItem(String title, String subtitle, String description, String image, LeisureCategory category,
-                            Location location, Integer rating, Double price, String date, Step step) {
+                            String location, Integer rating, Double price, Date date, Step step) {
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;
@@ -43,6 +47,20 @@ public class LeisureItem {
         this.price = price;
         this.date = date;
         this.step = step;
+    }
+
+    public LocationDto getLocation() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(location, LocationDto.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to deserialize location", e);
+        }
+    }
+
+    public void setLocation(LocationDto location) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        this.location = mapper.writeValueAsString(location);
     }
 
 }

@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "trip")
+@Table(name = "trip", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "tripId")})
 @Getter
 @Setter
 public class Trip {
@@ -15,16 +18,20 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    @NotNull
+    private String tripId;
     private String name;
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
     private List<Step> steps;
-    private String startDate;
-    private String endDate;
-    private Number userId;
+    private Date startDate;
+    private Date endDate;
+    private Integer userId;
 
     public Trip() {}
 
-    public Trip(String name, List<Step> steps, String startDate, String endDate, Number userId) {
+    public Trip(String tripId, String name, List<Step> steps, Date startDate, Date endDate, Integer userId) {
+        this.tripId = tripId;
         this.name = name;
         this.steps = steps;
         this.startDate = startDate;
