@@ -36,8 +36,3 @@ eureka:
   instance:
     hostname: ${SERVICE_HOST:localhost}
     prefer-ip-address: false
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web: DEBUG

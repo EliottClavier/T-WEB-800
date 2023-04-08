@@ -221,13 +221,13 @@ services:
           cpus: '0.125'
           memory: 256M
 
-  localisation-service:
-    container_name: localisation-service
-    image: eliottclavier/tripi-localisation:latest
+  location-service:
+    container_name: location-service
+    image: eliottclavier/tripi-location:latest
     restart: unless-stopped
-    command: /bin/bash -c "java $${JAVA_OPTS} -jar /localisation-service.jar"
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /location-service.jar"
     environment:
-      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=localisation-service"
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=location-service"
     expose:
       - "${DATA_SERVICE_PORT}"
     networks:

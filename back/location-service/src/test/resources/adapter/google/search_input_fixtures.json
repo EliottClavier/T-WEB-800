@@ -1,0 +1,116 @@
+{
+  "predictions": [
+    {
+    "description": "Nantes, France",
+    "matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "place_id": "ChIJra6o8IHuBUgRMO0NHlI3DQQ",
+    "reference": "ChIJra6o8IHuBUgRMO0NHlI3DQQ",
+    "structured_formatting": {
+    "main_text": "Nantes",
+    "main_text_matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "secondary_text": "France"
+    },
+    "terms": [
+    {
+    "offset": 0,
+    "value": "Nantes"
+    },
+    {
+    "offset": 8,
+    "value": "France"
+    }
+    ],
+    "types": [
+    "locality",
+    "political",
+    "geocode"
+    ]
+    },
+    {
+    "description": "Nancy, France",
+    "matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "place_id": "ChIJzZKmF26YlEcRjUmCDbFx1k4",
+    "reference": "ChIJzZKmF26YlEcRjUmCDbFx1k4",
+    "structured_formatting": {
+    "main_text": "Nancy",
+    "main_text_matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "secondary_text": "France"
+    },
+    "terms": [
+    {
+    "offset": 0,
+    "value": "Nancy"
+    },
+    {
+    "offset": 7,
+    "value": "France"
+    }
+    ],
+    "types": [
+    "locality",
+    "political",
+    "geocode"
+    ]
+    },
+    {
+    "description": "Nanded, Maharashtra, India",
+    "matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "place_id": "ChIJIRfTuWvW0TsR8dpVARgsiUM",
+    "reference": "ChIJIRfTuWvW0TsR8dpVARgsiUM",
+    "structured_formatting": {
+    "main_text": "Nanded",
+    "main_text_matched_substrings": [
+    {
+    "length": 3,
+    "offset": 0
+    }
+    ],
+    "secondary_text": "Maharashtra, India"
+    },
+    "terms": [
+    {
+    "offset": 0,
+    "value": "Nanded"
+    },
+    {
+    "offset": 8,
+    "value": "Maharashtra"
+    },
+    {
+    "offset": 21,
+    "value": "India"
+    }
+    ],
+    "types": [
+    "locality",
+    "political",
+    "geocode"
+    ]
+    }
+    ]
+}

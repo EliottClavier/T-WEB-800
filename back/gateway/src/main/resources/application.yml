@@ -82,14 +82,5 @@ management:
     gateway:
       enabled: true
 
-logging:
-  level:
-    root: INFO
-    org.springframework.web: DEBUG
-
 frontend:
   hostname: "${APP_VIRTUAL_HOST:localhost}"
-
-
-
-
