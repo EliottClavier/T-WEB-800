@@ -32,7 +32,6 @@ export class MultipleSearchBarsComponent implements OnInit {
 
   ngOnInit(): void {
     this.hasLeisure();
-    console.log(this.leisuresLength)
   }
 
   get searchFormsArray(): FormArray {

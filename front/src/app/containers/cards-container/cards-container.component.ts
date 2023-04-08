@@ -17,7 +17,6 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>();
 
   constructor( private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
-
   }
 
   ngOnInit() {

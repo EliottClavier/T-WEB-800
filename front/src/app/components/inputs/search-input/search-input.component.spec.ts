@@ -11,12 +11,18 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {EventEmitter} from "@angular/core";
 import {SearchBarEvent} from "../../../types/search-bar-event.type";
+import {DialogModule} from "@angular/cdk/dialog";
+import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {Overlay, ScrollStrategy} from "@angular/cdk/overlay";
 
 describe('SearchInputComponent', () => {
   let component: SearchInputComponent;
   let spectator: Spectator<SearchInputComponent>;
   let _locationService: LocationService;
-
+  const dialogMock = {
+    close: () => { }
+  };
   const createComponent = createComponentFactory({
     component: SearchInputComponent,
     imports: [
@@ -26,9 +32,21 @@ describe('SearchInputComponent', () => {
       MatInputModule,
       MatIconModule,
       ReactiveFormsModule,
-      FormsModule
+      FormsModule,
+      DialogModule,
+
     ],
-    providers: [ LocationService ],
+    providers: [ LocationService,  MatDialog,  {
+      provide: MatDialogRef, useValue: dialogMock
+    },{
+      provide: MAT_DIALOG_SCROLL_STRATEGY,
+      useFactory: (overlay: Overlay) => {
+        return (): ScrollStrategy => {
+          return overlay.scrollStrategies.block();
+        };
+      },
+      deps: [Overlay]
+    } ],
   });
 
   /* Fixtures */

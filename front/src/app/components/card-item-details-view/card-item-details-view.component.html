@@ -15,11 +15,21 @@
           <p data-cy-item-details-price>{{detailsItem?.price}}</p>
         </div>
         <div mat-dialog-actions class="content-button">
-          <app-simple-button 
-            [mat-dialog-close]="false" 
+          <app-simple-button
+            *ngIf="!isToDelete"
+            [mat-dialog-close]="false"
             (buttonClick)="detailsItem && onAddItemToTrip(detailsItem)"
-            [label]=" 'add_to_step' | translate" 
-            class="me-2" 
+            [label]=" 'add_to_step' | translate"
+            class="me-2"
+            data-cy-item-details-add-to-trip-button>
+          </app-simple-button>
+          <app-simple-button
+            *ngIf="isToDelete"
+            [color]="'warn'"
+            [mat-dialog-close]="false"
+            (buttonClick)="detailsItem && onDeleteItemToTrip(detailsItem)"
+            [label]=" 'delete_to_step' | translate"
+            class="me-2"
             data-cy-item-details-add-to-trip-button>
           </app-simple-button>
         </div>

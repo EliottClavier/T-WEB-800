@@ -1,11 +1,15 @@
-<div class="ng-container" *ngIf="cardItems.length > 0; else emptyState">
-  <div *ngFor="let item of cardItems; let i = index">
-    <app-card-item data-cy-card-component
-      [id]="'card-'+i"
-      [cardItem]="item"
-      (onItem)="onItemClicked($event)">
-    </app-card-item>
-  </div>
+<div class="ng-container"
+     *ngIf="cardItems.length > 0; else emptyState">
+  <ul
+    *ngFor="let item of cardItems; let i = index">
+    <li>
+      <app-card-item
+        [id]="'card-'+i"
+        [cardItem]="item"
+        (onItem)="onItemClicked(i)">
+        data-cy-card-component></app-card-item>
+    </li>
+  </ul>
 </div>
 
 <ng-template #emptyState>

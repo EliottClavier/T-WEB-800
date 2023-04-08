@@ -64,7 +64,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) throws EmailDoesNotExistException, JsonProcessingException {
         CredentialsDto credentialsDto = credentialsService.getCredentialsByEmail(authRequest.getEmail());
         if (passwordEncoder().matches(authRequest.getPassword(), credentialsDto.getPassword())) {
-            UserDto userDto = new UserDto(authRequest.getId(), authRequest.getFirstname(), authRequest.getLastname(), authRequest.getEmail());
+            UserDto userDto = new UserDto(authRequest.getId(), authRequest.getEmail(), authRequest.getFirstname(), authRequest.getLastname());
             String token = generateToken(userDto);
             AuthResponse authResponse = new AuthResponse(userDto, token);
             return ResponseEntity.ok(authResponse);

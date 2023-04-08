@@ -1,5 +1,5 @@
 server:
-  port: ${DISCOVERY_PORT}
+  port: ${DISCOVERY_PORT:8761}
 
 eureka:
   instance:
@@ -8,4 +8,21 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${DISCOVERY_HOST}:${DISCOVERY_PORT}/eureka/
+      defaultZone: http://localhost:8761/eureka/
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+
+spring:
+  cloud:
+    inetutils:
+      preferred-networks: 146.122,10.0
+
+logging:
+  level:
+    com.netflix.eureka: DEBUG
+    com.netflix.discovery: DEBUG
+  file:
+    name: eureka-server.log
+
+

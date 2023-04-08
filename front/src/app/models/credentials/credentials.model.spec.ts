@@ -1,4 +1,4 @@
-import {CredentialsModel} from "./credentialsModel";
+import {CredentialsModel} from "./credentials.model";
 
 describe('CredentialsTest', () => {
   it('should create a new credentials', () => {

@@ -1,14 +1,23 @@
-import { Component } from '@angular/core';
-import { RegisterModel } from "../../models/register/register.model";
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
-import { RegisterConst } from "../../enums/register-const";
-import { RegisterService } from "../../services/register/register.service";
-import { User } from "../../models/user/User.model";
-import { ApiResponseConst } from "../../enums/api-response-const";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { LoginUserComponent } from '../login-user/login-user.component';
+import {Component} from '@angular/core';
+import {RegisterModel} from "../../models/register/register.model";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormGroupDirective, NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {ErrorStateMatcher} from "@angular/material/core";
+import {RegisterConst} from "../../enums/register-const";
+import {RegisterService} from "../../services/register/register.service";
+import {UserModel} from "../../models/users/user.model";
+import {ApiResponseConst} from "../../enums/api-response-const";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {LoginUserComponent} from "../login-user/login-user.component";
 
 
 @Component({
@@ -20,7 +29,7 @@ import { LoginUserComponent } from '../login-user/login-user.component';
 export class RegisterUserComponent {
   public newUser: RegisterModel;
   public matcher: MyErrorStateMatcher;
-  public user: User;
+  public user: UserModel;
   public errorMessage: string;
 
   public INFO_MESSAGES = new RegisterConst().INFO_MESSAGES;
@@ -33,7 +42,7 @@ export class RegisterUserComponent {
   ) {
     this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
-    this.user = new User(0, '', '', '');
+    this.user = new UserModel(new UserInformationsModel(0, '', '', ''), '');
     this.errorMessage = '';
   }
 
@@ -47,8 +56,8 @@ export class RegisterUserComponent {
   }
 
   registerForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl(''),
@@ -56,10 +65,11 @@ export class RegisterUserComponent {
 
   createUser() {
     if (this.registerForm.valid) {
-      this.newUser = new RegisterModel(this.registerForm.get('firstName')?.value, this.registerForm.get('lastName')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
+      this.newUser = new RegisterModel(this.registerForm.get('firstname')?.value, this.registerForm.get('lastname')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value);
       this._registerService.postUserRegister(this.newUser).subscribe({
-        next: (value: any) => {
-          this.user = value['data'];
+        next: (result: any) => {
+          this.user = result;
+          localStorage.setItem('token', this.user.token);
           this._dialogRef.close();
         },
         error: () => {

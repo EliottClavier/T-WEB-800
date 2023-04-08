@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from "./layouts/main/main.component";
-import { ExploreComponent } from "./layouts/explore/explore.component";
+import {MainComponent} from "./layouts/main/main.component";
+import {ExploreComponent} from "./layouts/explore/explore.component";
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   { path: '', component: MainComponent },

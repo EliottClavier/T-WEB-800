@@ -6,10 +6,8 @@ import {Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
 import {TransportRequest} from "../../types/transport-request.type";
 import {getIsoStringFromDate} from "../../utils/date.utils";
-import {TransportOptions} from "../../types/transport-options.type";
+import {TransportDirections} from "../../types/transport-options.type";
 import {TransportService} from "../../services/transport/transport.service";
-import TravelMode = google.maps.TravelMode;
-import Polyline = google.maps.Polyline;
 import LatLng = google.maps.LatLng;
 
 @Component({
@@ -113,7 +111,7 @@ export class MapComponent implements OnChanges {
     return [google.maps.TravelMode.DRIVING, google.maps.TravelMode.WALKING, google.maps.TravelMode.BICYCLING, google.maps.TravelMode.TRANSIT].includes(travelMode)
   }
 
-  private _getDirections(request: TransportRequest): Observable<TransportOptions> {
+  private _getDirections(request: TransportRequest): Observable<TransportDirections> {
     return this._transportService.getTransportOptions(request);
   }
 
@@ -132,7 +130,7 @@ export class MapComponent implements OnChanges {
     }
 
     this._getDirections(transportRequest).subscribe((response) => {
-      this.directionsResults = response.routes;
+      this.directionsResults = response.directionsResult;
     });
   }
 
