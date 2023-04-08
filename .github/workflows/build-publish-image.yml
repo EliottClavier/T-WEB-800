@@ -1,0 +1,59 @@
+name: Build and publish image
+
+on:
+  workflow_call:
+    inputs:
+      context:
+        description: 'Docker build context'
+        required: true
+        type: string
+      service_name:
+        description: 'Service name'
+        required: false
+        type: string
+        default: ''
+      image_name:
+        description: 'Docker image name'
+        required: true
+        type: string
+      tag_name:
+        description: 'Docker image tag'
+        required: true
+        type: string
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
+
+jobs:
+  build_and_push_image:
+    name: Build and publish ${{ inputs.image_name }} image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.context }}/Dockerfile
+          push: true
+          build-args: |
+            SERVICE_NAME=${{ inputs.service_name }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.image_name }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag_name }}

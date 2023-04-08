@@ -1,0 +1,328 @@
+version: '3.3'
+
+services:
+
+  app:
+    container_name: app
+    image: eliottclavier/tripi-app:latest
+    command: /bin/bash -c "envsubst '$${APP_PORT},$${GATEWAY_PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    restart: unless-stopped
+    env_file:
+      - ./env/app.env
+    environment:
+      APP_PORT: ${APP_PORT}
+      GATEWAY_PORT: ${GATEWAY_PORT}
+      VIRTUAL_HOST: ${APP_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${APP_PORT}
+      LETSENCRYPT_HOST: ${APP_VIRTUAL_HOST}
+    expose:
+      - "${APP_PORT}"
+    volumes:
+      - ./front/nginx.conf:/etc/nginx/nginx.conf.template
+    networks:
+      - front-net
+      - nginx-proxy
+    depends_on:
+      - gateway
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 128M
+        reservations:
+          cpus: '0.125'
+          memory: 128M
+
+  gateway:
+    container_name: gateway
+    image: eliottclavier/tripi-gateway:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /gateway.jar"
+    env_file:
+      - ./env/gateway.env
+      - ./env/app.env
+    environment:
+      VIRTUAL_HOST: ${GATEWAY_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${GATEWAY_PORT}
+      LETSENCRYPT_HOST: ${GATEWAY_VIRTUAL_HOST}
+      JAVA_OPTS: "-DGATEWAY_PORT=${GATEWAY_PORT} -DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DSERVICE_HOST=gateway"
+    expose:
+      - "${GATEWAY_PORT}"
+    networks:
+      - front-net
+      - services-net
+      - nginx-proxy
+    depends_on:
+      - database
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  discovery:
+    container_name: discovery
+    image: eliottclavier/tripi-discovery:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /discovery.jar"
+    environment:
+      VIRTUAL_HOST: ${DISCOVERY_VIRTUAL_HOST}
+      VIRTUAL_PORT: ${DISCOVERY_PORT}
+      LETSENCRYPT_HOST: ${DISCOVERY_VIRTUAL_HOST}
+      JAVA_OPTS: "-DDISCOVERY_HOST=localhost -DDISCOVERY_PORT=${DISCOVERY_PORT}"
+    expose:
+      - "${DISCOVERY_PORT}"
+    networks:
+      - services-net
+      - nginx-proxy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  database:
+    container_name: database
+    image: mariadb:latest
+    restart: unless-stopped
+    env_file:
+      - ./env/database.env
+    volumes:
+      - /data/database:/var/lib/mysql
+    expose:
+      - "${MARIADB_PORT}"
+    networks:
+      - database-net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Data services
+  accommodation-service:
+    container_name: accommodation-service
+    image: eliottclavier/tripi-accommodation:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /accommodation-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}  -DSERVICE_HOST=accommodation-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  activity-service:
+    container_name: activity-service
+    image: eliottclavier/tripi-activity:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /activity-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY}  -DSERVICE_HOST=activity-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  bar-service:
+    container_name: bar-service
+    image: eliottclavier/tripi-bar:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /bar-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=bar-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  restaurant-service:
+    container_name: restaurant-service
+    image: eliottclavier/tripi-restaurant:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /restaurant-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=restaurant-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  transport-service:
+    container_name: transport-service
+    image: eliottclavier/tripi-transport:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /transport-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DAMADEUS_KEY=${AMADEUS_KEY} -DAMADEUS_SECRET=${AMADEUS_SECRET} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=transport-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  localisation-service:
+    container_name: localisation-service
+    image: eliottclavier/tripi-localisation:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /localisation-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DGOOGLE_KEY=${GOOGLE_KEY} -DSERVICE_HOST=localisation-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+    depends_on:
+      - discovery
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  trip-service:
+    container_name: trip-service
+    image: eliottclavier/tripi-trip:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /trip-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD} -DSERVICE_HOST=trip-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+      - database-net
+    depends_on:
+      - discovery
+      - database
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  auth-service:
+    container_name: auth-service
+    image: eliottclavier/tripi-auth:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /auth-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD} -DSERVICE_HOST=auth-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+      - database-net  
+    depends_on:
+      - discovery
+      - database
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+  user-service:
+    container_name: user-service
+    image: eliottclavier/tripi-user:latest
+    restart: unless-stopped
+    command: /bin/bash -c "java $${JAVA_OPTS} -jar /user-service.jar"
+    environment:
+      JAVA_OPTS: "-DDISCOVERY_HOST=${DISCOVERY_HOST} -DDISCOVERY_PORT=${DISCOVERY_PORT} -DDATA_SERVICE_PORT=${DATA_SERVICE_PORT} -DMARIADB_HOST=${MARIADB_HOST} -DMARIADB_PORT=${MARIADB_PORT} -DMARIADB_DATABASE=${MARIADB_DATABASE} -DMYSQL_USER=${MYSQL_USER} -DMYSQL_PASSWORD=${MYSQL_PASSWORD} -DSERVICE_HOST=user-service"
+    expose:
+      - "${DATA_SERVICE_PORT}"
+    networks:
+      - services-net
+      - database-net
+    depends_on:
+      - discovery
+      - database
+    deploy:
+      resources:
+        limits:
+          cpus: '0.125'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 256M
+
+volumes:
+  database:
+  nginx.conf:
+
+networks:
+  front-net:
+  services-net:
+  database-net:
+  nginx-proxy:
+    external:
+      name: nginx-proxy

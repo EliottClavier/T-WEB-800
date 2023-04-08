@@ -1,0 +1,45 @@
+name: Run App tests
+
+on:
+  workflow_call:
+
+jobs:
+  run_unit_tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 19.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 19.x
+
+      - name: Install front dependencies
+        working-directory: ./front
+        run: npm ci
+
+      - name: Run unit tests
+        working-directory: ./front
+        run: npm run test:prod
+
+  run_e2e_tests:
+    name: Run e2e tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 19.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 19.x
+
+      - name: Run e2e Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ./front
+          record: false
+          browser: chrome
+          spec: cypress/**/*.cy.ts
+          start: npm start

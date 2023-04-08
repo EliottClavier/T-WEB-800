@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Save your Trip</h1>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Name Trip</mat-label>
+    <input type="title"
+           matInput
+           required
+           name="title"
+           [(ngModel)]="dataDialog"
+           #titleInput="ngModel">
+    <mat-error *ngIf="titleInput?.invalid && titleInput?.touched">
+      <span *ngIf="titleInput?.errors?.['required']">Title is required.</span>
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-card-actions>
+  <div class="row mx-3 my-1">
+    <app-simple-button (buttonClick)="onNoClick()" [label]="'Cancel'"></app-simple-button>
+  </div>
+  <div class="row mx-3 my-2">
+    <button
+      class="w-100"
+      id = "saveButton"
+      simple-button
+      mat-flat-button
+      color="primary"
+      [mat-dialog-close]="dataDialog"
+      (click)="onOKClick()" cdkFocusInitial
+      [disabled]="titleInput?.invalid "
+    >Save
+    </button>
+
+    <!--    <app-simple-button-->
+    <!--      [mat-dialog-close]="dataDialog"-->
+    <!--      (click)="(titleInput?.invalid) && onOKClick()" cdkFocusInitial-->
+    <!--      [isDisabled]="true || titleInput?.invalid!"-->
+    <!--      [label]="'Save'">-->
+    <!--    </app-simple-button>-->
+  </div>
+</mat-card-actions>
+
+
+
+
+
+
+

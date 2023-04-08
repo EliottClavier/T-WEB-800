@@ -1,0 +1,42 @@
+<div class="close">
+  <mat-icon fontIcon="close icon" (click)="closeLoginDialog()"></mat-icon>
+</div>
+<h1 mat-dialog-title login-title [align]="'center'" class="m-0 my-3 title">{{ 'Hello again !' | uppercase }}</h1>
+<div mat-dialog-content login-dialog>
+  <form [formGroup]="loginForm" class="row justify-content-center">
+    <div class="col-12 pt-2">
+      <mat-form-field id="email" class="w-100" appearance="outline">
+        <mat-label for="email">Email </mat-label>
+        <input matInput login-email type="email" formControlName="email" name="email" [ngClass]="{
+            'is-invalid':
+              loginForm.controls['email'].hasError('required') ||
+              loginForm.controls['email'].hasError('email')
+          }">
+        <mat-icon matSuffix>person_outline</mat-icon>
+        <mat-error *ngIf="loginForm.hasError('required', 'email')">{{LOGIN_RESPONSE.EMPTY_EMAIL}}</mat-error>
+        <mat-error *ngIf="loginForm.hasError('email', 'email')">{{LOGIN_RESPONSE.INVALID_EMAIL}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12 pt-2">
+      <mat-form-field id="password" class="w-100" appearance="outline">
+        <mat-label for="password">Password </mat-label>
+        <input matInput login-password type="password" formControlName="password" name="password" [ngClass]="{
+            'is-invalid':
+              loginForm.controls['password'].hasError('required')
+          }">
+        <mat-icon matSuffix>lock_open</mat-icon>
+        <mat-error *ngIf="loginForm.hasError('required', 'password')">{{LOGIN_RESPONSE.EMPTY_PASSWORD}}</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-error login-error-request *ngIf="this.errorMessage !== ''">{{this.errorMessage}}</mat-error>
+  </form>
+  <div mat-dialog-actions class="px-0" [align]="'center'">
+    <app-simple-button class="w-100" login-button [label]="'LOGIN'" (buttonClick)="loginUser()">
+    </app-simple-button>
+  </div>
+  <div class="switch">
+    <div class="sign-in">
+      Already a member ?<span login-modal (click)="openRegisterDialog()">Sign-in</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<ng-container>
+  <mat-card
+    class="card-item"
+    data-cy-card-item
+  (click)="onClickItem(cardItem)">
+    <img
+      data-cy-card-item-image
+      mat-card-image
+      src="{{cardItem.image}}" alt="Photo of an item">
+    <div>
+      <mat-card-header>
+        <mat-card-title
+          data-cy-card-item-title>
+         {{cardItem.title}}
+        </mat-card-title>
+
+        <mat-card-subtitle
+          data-cy-card-item-subtitle>
+
+          {{cardItem.subtitle}}
+
+        </mat-card-subtitle>
+      </mat-card-header>
+    </div>
+  </mat-card>
+</ng-container>

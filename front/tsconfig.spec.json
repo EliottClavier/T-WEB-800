@@ -4,11 +4,16 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jasmine"
+      "jasmine",
+      "google.maps",
+      "@angular/localize"
     ]
   },
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "cypress.config.ts"
   ]
 }

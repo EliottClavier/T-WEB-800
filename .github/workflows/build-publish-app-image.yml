@@ -1,0 +1,21 @@
+name: Build and publish App image
+
+on:
+  workflow_call:
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
+
+jobs:
+  build_and_push_image:
+    name: App image
+    uses: ./.github/workflows/build-publish-image.yml
+    with:
+      context: 'front'
+      image_name: 'tripi-app'
+      tag_name: ${{ github.ref_name }}
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

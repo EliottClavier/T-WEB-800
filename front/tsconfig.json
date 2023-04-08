@@ -22,6 +22,9 @@
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "types": [
+      "google.maps",
     ]
   },
   "angularCompilerOptions": {
@@ -29,5 +32,10 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "exclude": [
+    "cypress/**/*",
+    "cypress.config.ts"
+  ]
+
 }

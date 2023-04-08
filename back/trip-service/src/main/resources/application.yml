@@ -1,0 +1,38 @@
+# Database Configuration
+spring:
+  datasource:
+    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MariaDBDialect
+  application:
+    name: trip-service
+
+# Spring Server setup
+server:
+  address: 0.0.0.0
+  port: ${DATA_SERVICE_PORT:8083}
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: ${SERVICE_HOST:localhost}
+    prefer-ip-address: false

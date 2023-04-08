@@ -1,22 +1,82 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.0.3'
-	id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id 'jacoco'
+    id 'wrapper'
 }
 
-group = 'com.tripi.back'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
-
-repositories {
-	mavenCentral()
+wrapper {
+    gradleVersion = '7.5.1'
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = "0.8.8"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = false
+            csv.required = false
+            html.outputLocation = layout.buildDirectory.dir("../../jacoco-coverage-reports/${project.name}")
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    tasks.named('test') {
+        finalizedBy jacocoTestReport
+    }
+
+}
+
+tasks.register('aggregateJacocoReports', JacocoReport) {
+    dependsOn(subprojects.jacocoTestReport)
+
+    sourceDirectories.from = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(subprojects.sourceSets.main.output)
+    executionData.from = fileTree(dir: '.', include: '**/build/jacoco/test.exec')
+
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("reports/aggregate")
+    }
+}
+
+tasks.register('aggregateTestReports') {
+
+    doLast {
+        def reportDir = file("/reports/tests/")
+        reportDir.mkdirs()
+
+        subprojects.each { subproject ->
+            def subprojectReportDir = subproject.file("build/reports/tests/")
+            if (subprojectReportDir.exists()) {
+                copy {
+                    from subprojectReportDir
+                    into reportDir
+                    include '**/*'
+                    rename "index.html", "${subproject.name}-tests.html"
+                }
+            }
+        }
+    }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    dependsOn aggregateTestReports
 }

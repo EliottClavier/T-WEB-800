@@ -1,0 +1,7 @@
+describe('Header', () => {
+  it('should open login dialog on click', () => {
+    cy.visit('/');
+    cy.get('[header-login]').click();
+    cy.get('[login-dialog]').should('exist');
+  });
+});

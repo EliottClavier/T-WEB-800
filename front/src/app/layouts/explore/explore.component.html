@@ -1,0 +1,85 @@
+<div class="container-fluid h-container">
+  <div class="row justify-content-center">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 h-container-fixed">
+      <div class="row position-relative">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
+          <app-multiple-search-bars
+            search-bar
+            [searchForms]="searchForms"
+            (activeSearchBarChange)="onActiveSearchBarChange($event)"
+            (viewChange)="onViewChange($event)"
+          ></app-multiple-search-bars>
+          <hr class="mx-2 my-4 border-lightgray-bottom">
+          <app-step-dates-filters
+            map-filters
+            *ngIf="activeSearchBar.index !== null"
+            [selectedSearchForm]="selectedSearchForm"
+          ></app-step-dates-filters>
+
+          <app-leisure-category-filter
+            (onSelectedCategory)="onSelectedCategoryChange($event)">
+          </app-leisure-category-filter>
+
+          <hr class="mx-2 my-4 border-lightgray-bottom">
+
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <app-simple-button
+                    data-cy-explorer-save-button
+                    *ngIf="activeSearchBar.index !== null"
+                    [label]="'Save my trip'"
+                    [icon]="'save'"
+                    (buttonClick)="onSaveTrip('tripName')">
+                  </app-simple-button>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <app-simple-button
+                    generate-pdf-button
+                    *ngIf="activeSearchBar.index !== null"
+                    [buttonType]="'stroked'"
+                    [label]="'Generate my trip summary'"
+                    [icon]="'save_alt'"
+                    (buttonClick)="generateSummary()">
+                  </app-simple-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border-lightgray-left">
+      <div class="row">
+        <div class="col-12 px-0">
+          <app-map
+            map
+            *ngIf="activeSearchBar.index !== null"
+            [itineraryView]="itineraryView"
+            [itineraryMode]="itineraryMode"
+            [selectedLocation]="selectedLocation"
+            [selectedMarkers]="selectedMarkers"
+            [nextLocation]="itineraryView ? nextLocation : undefined"
+          ></app-map>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <app-card-container
+            *ngIf="activeSearchBar.index !== null && !itineraryView"
+            (onGetSuggestions)="getLeisureSuggestions()"
+          ></app-card-container>
+          <app-map-travel-mode-selection
+            map-travel-mode-selection
+            *ngIf="activeSearchBar.index !== null && itineraryView"
+            [itineraryMode]="itineraryMode"
+            (itineraryModeChange)="onItineraryModeChange($event)"
+          ></app-map-travel-mode-selection>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

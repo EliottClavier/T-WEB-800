@@ -1,0 +1,36 @@
+<google-map
+  map
+  height="65vh"
+  width="100%"
+  (zoomChanged)="onMapBoundariesChange(true)"
+  (mapDragend)="onMapBoundariesChange()"
+  [zoom]="zoom"
+  [center]="center"
+  [options]="options"
+>
+  <map-marker
+    map-marker
+    *ngFor="let marker of markers"
+    (mapClick)="onMapMarkerClick(marker)"
+    [position]="{ lat: marker.location.lat, lng: marker.location.lng }"
+    [title]="marker.title"
+    [options]="{
+      animation: markerAnimation,
+      icon: {
+        url: getMarkerImage(marker),
+        scaledSize: markerSize
+      }
+     }"
+  ></map-marker>
+  <map-polyline
+    map-flight-polyline
+    *ngIf="itineraryView && itineraryMode.travelMode === castStringToTravelMode('FLIGHT')"
+    [path]="drawFlightPolyline()"
+    [options]="polylineOptions">
+  </map-polyline>
+  <map-directions-renderer
+    map-directions-renderer
+    *ngIf="itineraryView && directionsResults"
+    [directions]="directionsResults">
+  </map-directions-renderer>
+</google-map>
