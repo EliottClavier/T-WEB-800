@@ -4,6 +4,7 @@ server:
 eureka:
   instance:
     hostname: ${DISCOVERY_HOST:localhost}
+    prefer-ip-address: false
   client:
     registerWithEureka: false
     fetchRegistry: false

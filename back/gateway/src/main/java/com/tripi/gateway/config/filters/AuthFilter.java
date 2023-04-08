@@ -111,6 +111,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (host == null) {
             return false;
         }
-        return frontAppHostName.contains(host);
+        return host.contains(frontAppHostName);
     }
 }
