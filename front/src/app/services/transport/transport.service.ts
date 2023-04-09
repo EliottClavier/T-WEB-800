@@ -14,12 +14,12 @@ export class TransportService {
     private _http: HttpClient,
   ) { }
 
-  public getTransportOptions(transportRequest: TransportRequest): Observable<any> {
+  public getTransportOptions(transportRequest: TransportRequest): Observable<TransportDirections> {
     !transportRequest.startDate && (transportRequest.startDate = getIsoStringFromDate(new Date()));
-    return this._http.get<any>(
+    return this._http.get<TransportDirections[]>(
       `/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`
     ).pipe(
-      map((response: any) => {
+      map((response: TransportDirections[]) => {
         return response ? response[0] : response;
       })
     );

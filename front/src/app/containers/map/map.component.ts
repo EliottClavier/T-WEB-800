@@ -144,6 +144,11 @@ export class MapComponent implements OnChanges {
 
     // Formatting the response to match the google maps rendering API
     this._getDirections(transportRequest).subscribe((response) => {
+
+      console.log("allo", response)
+      console.log("allo", response)
+      console.log("allo", response)
+
       response.directionsResult.routes = response.directionsResult.routes.map((response: any) => {
         response.bounds = new google.maps.LatLngBounds(
           response.bounds.southwest,
@@ -177,6 +182,10 @@ export class MapComponent implements OnChanges {
       });
 
       response.directionsResult.request = request;
+
+      console.log("Test", response)
+      console.log("Test", response)
+      console.log("Test", response)
 
       this.directionsResults = response.directionsResult;
     });

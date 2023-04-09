@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Database Configuration
 spring:
   main:
@@ -20,6 +19,9 @@ spring:
             properties:
               hibernate.format_sql: true
               defer-datasource-initialization: true
+
+server:
+  port: 9083
 
 #Eureka Configuration
 eureka:

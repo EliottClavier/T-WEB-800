@@ -48,7 +48,10 @@ describe('MapComponent', () => {
     _transportService = spectator.inject(TransportService);
     spyOn<TransportService, any>(_transportService, "getTransportOptions").and.callFake((request: TransportRequest) => {
       return new BehaviorSubject<TransportDirections>({
-        directionsResult: {} as google.maps.DirectionsResult
+        directionsResult: {
+          routes: [],
+          geocoded_waypoints: [],
+        }
       });
     });
     component.selectedLocation = new LocationModel('', 'Nantes', 47.21121663814047, -1.5669571980709454)
@@ -364,6 +367,7 @@ describe('MapComponent', () => {
         }
 
         let date = new Date();
+        date.setDate(date.getDate() + 1);
 
         let transportRequest: TransportRequest = {
           directionRequest: request,
@@ -388,6 +392,7 @@ describe('MapComponent', () => {
         }
 
         let date = new Date();
+        date.setDate(date.getDate() + 1);
 
         let transportRequest: TransportRequest = {
           directionRequest: request,

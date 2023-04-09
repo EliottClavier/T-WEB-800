@@ -5,7 +5,7 @@ eureka:
 # Spring Server setup
 server:
   address: localhost
-  port: 8080
+  port: 9086
   compression:
     enabled: true
   http2:

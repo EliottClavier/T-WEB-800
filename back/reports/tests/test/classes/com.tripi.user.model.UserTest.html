@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - UserTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>UserTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tripi.user.model.html">com.tripi.user.model</a> &gt; UserTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">6</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">3.952s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">emailGetterShouldReturnEmail()</td>
+<td class="success">0.654s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">emailSetterShouldSetEmail()</td>
+<td class="success">0.636s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">firstnameGetterShouldReturnFirstname()</td>
+<td class="success">0.634s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">firstnameSetterShouldSetFirstname()</td>
+<td class="success">0.626s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">lastnameGetterShouldReturnLastname()</td>
+<td class="success">0.759s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">lastnameSetterShouldSetLastname()</td>
+<td class="success">0.643s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-04-06 01:39:33.315  INFO EliottPortable --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tripi.user.model.UserTest]: UserTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-04-06 01:39:33.319  INFO EliottPortable --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tripi.user.UserServiceApplication for test class com.tripi.user.model.UserTest
+2023-04-06 01:39:33.324  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:33.324  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-23 - Shutdown initiated...
+2023-04-06 01:39:33.325  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-23 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:33.522  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:33.522  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:33.639  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:33.645  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:33.699  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:33.731  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:33.737  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-24 - Starting...
+2023-04-06 01:39:33.738  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-24 - Added connection conn230: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:33.738  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-24 - Start completed.
+2023-04-06 01:39:33.739  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:33.766  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:33.766  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:33.808  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:33.812  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d66c3b6b-69cd-48f4-934d-c8070e98182a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:33.818  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5e837cc5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5f7a4b31, org.springframework.security.web.context.SecurityContextHolderFilter@3272f1ae, org.springframework.security.web.header.HeaderWriterFilter@6305e191, org.springframework.security.web.authentication.logout.LogoutFilter@5fdbd470, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@99de60f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3644c32f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@61b48cf8, org.springframework.security.web.access.ExceptionTranslationFilter@3db04ad1, org.springframework.security.web.access.intercept.AuthorizationFilter@29dd1dbc]
+2023-04-06 01:39:33.883  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:34.058  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:34.068  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:34.077  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.751 seconds (process running for 31.35)
+2023-04-06 01:39:34.083  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:34.084  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-24 - Shutdown initiated...
+2023-04-06 01:39:34.085  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-24 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:34.268  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:34.268  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:34.361  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:34.365  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:34.405  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:34.427  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:34.433  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-25 - Starting...
+2023-04-06 01:39:34.434  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-25 - Added connection conn240: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:34.434  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-25 - Start completed.
+2023-04-06 01:39:34.434  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:34.454  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:34.455  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:34.485  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:34.488  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e38043b0-3504-4ccc-b458-12cddef62693
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:34.493  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@dc0cd4e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2732a20a, org.springframework.security.web.context.SecurityContextHolderFilter@38154c71, org.springframework.security.web.header.HeaderWriterFilter@23c204ba, org.springframework.security.web.authentication.logout.LogoutFilter@7deae64a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f37bfc8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5cda61eb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@369c46f3, org.springframework.security.web.access.ExceptionTranslationFilter@29354b7e, org.springframework.security.web.access.intercept.AuthorizationFilter@101b20ea]
+2023-04-06 01:39:34.543  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:34.699  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:34.706  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:34.714  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.627 seconds (process running for 31.987)
+2023-04-06 01:39:34.721  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:34.721  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-25 - Shutdown initiated...
+2023-04-06 01:39:34.722  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-25 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:34.925  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:34.925  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:35.018  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:35.021  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:35.058  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:35.080  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:35.084  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-26 - Starting...
+2023-04-06 01:39:35.085  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-26 - Added connection conn250: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:35.086  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-26 - Start completed.
+2023-04-06 01:39:35.086  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:35.105  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:35.105  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:35.138  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:35.142  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: cba22c57-add0-40d9-b15c-fc26c1318412
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:35.146  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6cf916, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@782935c6, org.springframework.security.web.context.SecurityContextHolderFilter@27104021, org.springframework.security.web.header.HeaderWriterFilter@7fe64234, org.springframework.security.web.authentication.logout.LogoutFilter@5834013c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71468c4d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@30ba5424, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b9be912, org.springframework.security.web.access.ExceptionTranslationFilter@44e0bbaa, org.springframework.security.web.access.intercept.AuthorizationFilter@7f2ca669]
+2023-04-06 01:39:35.196  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:35.355  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:35.362  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:35.370  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.647 seconds (process running for 32.643)
+2023-04-06 01:39:35.374  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:35.375  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-26 - Shutdown initiated...
+2023-04-06 01:39:35.375  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-26 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:35.548  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:35.548  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:35.631  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:35.634  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:35.674  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:35.697  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:35.701  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-27 - Starting...
+2023-04-06 01:39:35.703  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-27 - Added connection conn260: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:35.703  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-27 - Start completed.
+2023-04-06 01:39:35.703  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:35.722  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:35.722  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:35.757  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:35.761  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 2a828025-ab52-4734-a8eb-16f509a53b59
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:35.766  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3b3636eb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3205762c, org.springframework.security.web.context.SecurityContextHolderFilter@9b9155f, org.springframework.security.web.header.HeaderWriterFilter@eb47bf0, org.springframework.security.web.authentication.logout.LogoutFilter@9501d5c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@33e3028e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@65c4665d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7403692f, org.springframework.security.web.access.ExceptionTranslationFilter@356c63ac, org.springframework.security.web.access.intercept.AuthorizationFilter@643cf518]
+2023-04-06 01:39:35.829  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:35.989  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:35.997  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:36.005  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.628 seconds (process running for 33.278)
+2023-04-06 01:39:36.010  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:36.010  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-27 - Shutdown initiated...
+2023-04-06 01:39:36.011  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-27 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:36.182  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:36.183  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:36.271  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:36.275  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:36.317  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:36.339  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:36.344  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-28 - Starting...
+2023-04-06 01:39:36.345  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-28 - Added connection conn270: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:36.345  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-28 - Start completed.
+2023-04-06 01:39:36.345  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:36.365  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:36.366  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:36.399  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:36.404  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 2c58b963-7d84-442f-a85c-42693f44e59d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:36.409  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e7a1268, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@775deac, org.springframework.security.web.context.SecurityContextHolderFilter@617f6d06, org.springframework.security.web.header.HeaderWriterFilter@1a190df7, org.springframework.security.web.authentication.logout.LogoutFilter@5b5849d2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ae565fe, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13f1ca8f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@754a0e0d, org.springframework.security.web.access.ExceptionTranslationFilter@2395410c, org.springframework.security.web.access.intercept.AuthorizationFilter@771b17ab]
+2023-04-06 01:39:36.462  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:36.617  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:36.624  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:36.632  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.62 seconds (process running for 33.905)
+2023-04-06 01:39:36.637  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:36.638  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-28 - Shutdown initiated...
+2023-04-06 01:39:36.639  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-28 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.3)
+
+2023-04-06 01:39:36.818  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Starting UserTest using Java 17.0.5 with PID 24200 (started by clavi in E:\Projets\Epitech\WEB\T-WEB-800\back\user-service)
+2023-04-06 01:39:36.819  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-06 01:39:36.906  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-06 01:39:36.910  INFO EliottPortable --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interfaces.
+2023-04-06 01:39:36.950  INFO EliottPortable --- [    Test worker] o.s.c.c.s.GenericScope                   : BeanFactory id=f16f2a32-e7e0-3970-b040-b358f75e8c78
+2023-04-06 01:39:36.974  INFO EliottPortable --- [    Test worker] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-06 01:39:36.979  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-29 - Starting...
+2023-04-06 01:39:36.980  INFO EliottPortable --- [    Test worker] c.z.h.p.HikariPool                       : HikariPool-29 - Added connection conn280: url=jdbc:h2:mem:db user=SA
+2023-04-06 01:39:36.980  INFO EliottPortable --- [    Test worker] c.z.h.HikariDataSource                   : HikariPool-29 - Start completed.
+2023-04-06 01:39:36.980  INFO EliottPortable --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    drop table if exists users cascade 
+Hibernate: 
+    
+    create table users (
+       id integer generated by default as identity,
+        email varchar(255),
+        firstname varchar(255),
+        lastname varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+2023-04-06 01:39:36.999  INFO EliottPortable --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-06 01:39:37.000  INFO EliottPortable --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-06 01:39:37.034  WARN EliottPortable --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-06 01:39:37.038  WARN EliottPortable --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6b8b2c22-9f2b-4460-97fa-99bc3b6c1bd5
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-04-06 01:39:37.044  INFO EliottPortable --- [    Test worker] o.s.s.w.DefaultSecurityFilterChain       : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7bdb1918, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@11c18e5c, org.springframework.security.web.context.SecurityContextHolderFilter@5db566f, org.springframework.security.web.header.HeaderWriterFilter@774dc243, org.springframework.security.web.authentication.logout.LogoutFilter@5c76c0c7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7eee8280, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1a870037, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@72befbd4, org.springframework.security.web.access.ExceptionTranslationFilter@328ad0ea, org.springframework.security.web.access.intercept.AuthorizationFilter@74228714]
+2023-04-06 01:39:37.098  INFO EliottPortable --- [    Test worker] o.s.b.a.h.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:db'
+2023-04-06 01:39:37.263  INFO EliottPortable --- [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2023-04-06 01:39:37.269  WARN EliottPortable --- [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-04-06 01:39:37.277  INFO EliottPortable --- [    Test worker] c.t.u.m.UserTest                         : Started UserTest in 0.635 seconds (process running for 34.549)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.5.1</a> at 6 avr. 2023, 01:39:56</p>
+</div>
+</div>
+</body>
+</html>
