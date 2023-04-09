@@ -45,10 +45,72 @@ describe('TripStoreService', () => {
     service.trip$.subscribe((trips: TripModel[]) => {
       expect(trips).toBeDefined();
       expect(trips.length).toEqual(1);
-      expect  (trips[0].name).toEqual(trip.name);
-    } );
-  } );
+      expect(trips[0].name).toEqual(trip.name);
+    });
+  });
 
-  it
+  it('should trigger when updating trip in store', () => {
+    const expectedValues = [1, 0];
+    let index = 0;
+    let trip = getMockTrips()[0];
+    service.addOrUpdateTrip(trip);
+
+    service.trip$.subscribe((trips: TripModel[]) => {
+      expect(trips).toBeDefined();
+      expect(trips[0].name).toEqual(trip.name);
+      expect(service.getTrips().length).toEqual(expectedValues[index]);
+      index++;
+    });
+    trip.name = "C'est le step 2";
+  });
+
+  it('should delete trip', () => {
+    let trip = getMockTrips()[0];
+    service.addOrUpdateTrip(trip);
+    expect(service.getTrips().length).toEqual(1);
+
+    service.deleteTrip(trip.id);
+    expect(service.getTrips().length).toEqual(0);
+  });
+
+  it('should trigger when deleting trip in store', () => {
+    const expectedValues = [1, 0];
+    let index = 0;
+    service.trip$.subscribe().unsubscribe()
+    let trip = getMockTrips()[1];
+    trip.id = "1";
+    service.addOrUpdateTrip(trip);
+    expect(service.getTrips().length).toEqual(1);
+    expect(service.getTrips()[0].id).toEqual(trip.id);
+
+    service.trip$.subscribe((trips: TripModel[]) => {
+      expect(trips).toBeDefined();
+      expect(service.getTrips().length).toEqual(expectedValues[index]);
+      index++;
+    });
+
+    service.deleteTrip(trip.id);
+    expect(service.getTrips().length).toEqual(0);
+  });
+
+
+  it('should get trip by id', () => {
+    let trip = getMockTrips()[0];
+    service.addOrUpdateTrip(trip);
+    expect(service.getTrips().length).toEqual(1);
+
+    let trip2 = service.getTripById(trip.id);
+    expect(trip2).toBeDefined();
+    expect(trip2.id).toEqual(trip.id);
+  });
+
+  it('should get new trip if id not found', () => {
+    // let trip = getMockTrips()[0];
+    // service.addOrUpdateTrip(trip);
+    // expect(service.getTrips().length).toEqual(1);
+
+    let trip2 = service.getTripById("2");
+    expect(trip2).toBeDefined();
+  });
 
 });

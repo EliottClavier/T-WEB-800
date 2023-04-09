@@ -2,7 +2,7 @@ import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {CardItemDetailsViewComponent} from "./card-item-details-view.component";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {AppModule} from "../../app.module";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {getMockTripForm} from "../../utils/trip.mock.utils";
@@ -16,6 +16,7 @@ describe('CardItemDetailsViewComponent', () => {
   let spectator: Spectator<CardItemDetailsViewComponent>;
   let component: CardItemDetailsViewComponent;
   let tripBuilderService: TripBuilderService;
+  let dialog: MatDialog;
   const createComponent = createComponentFactory({
     component: CardItemDetailsViewComponent,
     imports: [AppModule],
@@ -31,6 +32,7 @@ describe('CardItemDetailsViewComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     tripBuilderService = spectator.inject(TripBuilderService);
+    dialog = spectator.inject(MatDialog);
   });
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -119,6 +121,19 @@ describe('CardItemDetailsViewComponent', () => {
       component.onDeleteItemToTrip(component.detailsItem);
       // spectator.click('[mat-dialog-actions] [data-cy-item-details-delete-to-trip-button] [simple-button]');
       expect(spy).toHaveBeenCalled();
+    });
+
+    it('should call dialog.closeAll when leisures length is 0 after deletion', () => {
+      const item: LeisureItemModel = getAccommodationItems()  [0];
+      spyOn(dialog, 'closeAll');
+
+
+      spectator.component.stepIndex = 0;
+      spectator.component.leisureIndex = 0;
+
+      spectator.component.onDeleteItemToTrip(item);
+
+      expect(dialog.closeAll).toHaveBeenCalled();
     });
   });
 });

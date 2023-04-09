@@ -14,6 +14,7 @@ import {SuggestionsService} from "../../services/suggestions-service/suggestions
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
+import {buildStepFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 describe('SingleSearchBarComponent', () => {
 
@@ -159,7 +160,7 @@ describe('SingleSearchBarComponent', () => {
       const suggestions = new Array<LeisureItemModel>();
 
 
-       const mockCall = spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
+      spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
       suggestionStore.setSuggestionsData(suggestions)
 
       suggestionStore.suggestions$.subscribe({
@@ -171,6 +172,7 @@ describe('SingleSearchBarComponent', () => {
       });
     });
   });
+
 
 
 });
