@@ -2,6 +2,9 @@
 spring:
   application:
     name: accommodation-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 # Spring Server setup
 server:
@@ -29,3 +32,9 @@ google:
 
 # Sources
 sources: GOOGLEMAPS
+
+springdoc:
+  swagger-ui:
+    path: /accommodation/swagger-ui/index.html
+  api-docs:
+    path: /accommodation/swagger-ui/index.html

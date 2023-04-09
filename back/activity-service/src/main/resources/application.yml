@@ -1,5 +1,8 @@
 # Service name
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: activity-service
   main:
@@ -27,3 +30,10 @@ eureka:
 
 data:
   actives: ${DATA_ACTIVE:allevents}
+
+springdoc:
+  swagger-ui:
+    path: /enjoy/swagger-ui/index.html
+  api-docs:
+    path: /enjoy/swagger-ui/index.html
+

@@ -1,5 +1,8 @@
 # Database Configuration
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}?createDatabaseIfNotExist=true
     username: ${MYSQL_USER}
@@ -56,3 +59,9 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
+
+springdoc:
+  swagger-ui:
+    path: /auth/swagger-ui/index.html
+  api-docs:
+    path: /auth/swagger-ui/index.html
