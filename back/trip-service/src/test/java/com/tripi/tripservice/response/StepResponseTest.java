@@ -13,7 +13,7 @@ class StepResponseTest {
 
     @Test
     public void testSettersAndGetters() {
-        LocationDto locationDto = new  LocationDto("Marseille", 2.3522, 48.8566);
+        LocationDto locationDto = new  LocationDto("random_id","Marseille", 2.3522, 48.8566);
         List<LeisureItemResponse> leisureItems = new ArrayList<>();
         LeisureItemResponse leisureItem1 = new LeisureItemResponse();
         LeisureItemResponse leisureItem2 = new LeisureItemResponse();

@@ -76,6 +76,7 @@
             [selectedLocation]="selectedLocation"
             [selectedMarkers]="selectedMarkers"
             [nextLocation]="itineraryView ? nextLocation : undefined"
+            (onMarkerClick)="onMarkerClick($event)"
           ></app-map>
         </div>
       </div>

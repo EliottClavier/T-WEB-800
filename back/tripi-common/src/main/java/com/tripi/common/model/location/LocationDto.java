@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocationDto {
+    private String id;
     private String name;
     private Double lat;
     private Double lng;
@@ -13,7 +14,8 @@ public class LocationDto {
     public LocationDto() {
     }
 
-    public LocationDto(String name, Double lat, Double lng) {
+    public LocationDto(String id, String name, Double lat, Double lng) {
+        this.id = id;
         this.name = name;
         this.lat = lat;
         this.lng = lng;

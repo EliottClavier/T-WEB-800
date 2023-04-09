@@ -46,8 +46,8 @@ class LeisureItemsResponseTest {
     @Test
     void testSetAndGetCategory() {
         LeisureItemsResponse response = new LeisureItemsResponse();
-        response.setCategory(LeisureCategory.BAR);
-        assertEquals(LeisureCategory.BAR, response.getCategory());
+        response.setCategory(LeisureCategory.BARS);
+        assertEquals(LeisureCategory.BARS, response.getCategory());
     }
 
     @Test

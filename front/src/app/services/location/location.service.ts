@@ -14,9 +14,9 @@ export class LocationService {
   ) { }
 
   public getLocationSuggestions(search: string): Observable<LocationModel[]> {
-    return this.http.get<LocationModel[]>(`/api/locations/suggestion/${search}`)
+    return this.http.get<LocationModel[]>(`/api/locations/suggestions/${search}`)
       .pipe(
-        map((result: any) => result.location)
+        map((result: any) => result)
       );
   }
 

@@ -1,5 +1,6 @@
 export type TransportDirections = {
-  directionsResult: google.maps.DirectionsResult;
+  // Should be google.maps.DirectionsResult
+  directionsResult: any;
 }
 
 export type TransportData = {

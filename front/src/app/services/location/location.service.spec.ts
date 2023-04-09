@@ -66,12 +66,11 @@ describe('LocationService', () => {
       ));
     });
 
-    const req = httpMock.expectOne(`/api/locations/suggestion/${locationName}`);
+    const req = httpMock.expectOne(`/api/locations/suggestions/${locationName}`);
     expect(req.request.method).toEqual('GET');
-    req.flush({
-     location: testLocationOptions.filter(
+    req.flush(testLocationOptions.filter(
       (location: LocationModel) => location.name.toLowerCase().startsWith(locationName.toLowerCase())
-    )},
+    ),
       { status: 200, statusText: 'OK' });
   });
 

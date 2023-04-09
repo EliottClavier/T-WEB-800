@@ -12,9 +12,11 @@ describe('TransportService', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  let transportOptionsMock: TransportDirections = {
-    directionsResult: {} as google.maps.DirectionsResult
-  }
+  let transportOptionsMock: TransportDirections[] = [
+      {
+      directionsResult: {} as any,
+    }
+  ]
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,7 +51,7 @@ describe('TransportService', () => {
     }
 
     service.getTransportOptions(transportRequest).subscribe(data => {
-      expect(data).toEqual(transportOptionsMock);
+      expect(data).toEqual(transportOptionsMock[0]);
     });
 
     const req = httpMock.expectOne(`/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);
@@ -69,7 +71,7 @@ describe('TransportService', () => {
     }
 
     service.getTransportOptions(transportRequest).subscribe(data => {
-      expect(data).toEqual(transportOptionsMock);
+      expect(data).toEqual(transportOptionsMock[0]);
     });
 
     const req = httpMock.expectOne(`/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`);

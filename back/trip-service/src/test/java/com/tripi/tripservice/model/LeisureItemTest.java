@@ -27,7 +27,7 @@ class LeisureItemTest {
     public void setUp() throws JsonProcessingException {
         Date startDate = new Date();
         Date endDate = new Date();
-        location = new LocationDto("Marseille", 2.3522, 48.8566);
+        location = new LocationDto("random_id", "Marseille", 2.3522, 48.8566);
         LeisureItem leisureItem1 = new LeisureItem();
         LeisureItem leisureItem2 = new LeisureItem();
         leisureItems = new ArrayList<>();
@@ -41,12 +41,12 @@ class LeisureItemTest {
     @Test
     public void testStepConstructorAndGetters() throws JsonProcessingException {
         Date date = new Date();
-        LeisureItem leisureItem = new LeisureItem("Title", "Subtitle", "Description", "Image", LeisureCategory.BAR, mapper.writeValueAsString(location), 10, 12.99, date, step);
+        LeisureItem leisureItem = new LeisureItem("Title", "Subtitle", "Description", "Image", LeisureCategory.BARS, mapper.writeValueAsString(location), 10, 12.99, date, step);
         Assertions.assertEquals("Title", leisureItem.getTitle());
         Assertions.assertEquals("Subtitle", leisureItem.getSubtitle());
         Assertions.assertEquals("Description", leisureItem.getDescription());
         Assertions.assertEquals("Image", leisureItem.getImage());
-        Assertions.assertEquals(LeisureCategory.BAR, leisureItem.getCategory());
+        Assertions.assertEquals(LeisureCategory.BARS, leisureItem.getCategory());
         Assertions.assertEquals(location.getName(), leisureItem.getLocation().getName());
         Assertions.assertEquals(location.getLat(), leisureItem.getLocation().getLat());
         Assertions.assertEquals(location.getLng(), leisureItem.getLocation().getLng());
@@ -66,7 +66,7 @@ class LeisureItemTest {
         leisureItem.setSubtitle("Subtitle");
         leisureItem.setDescription("Description");
         leisureItem.setImage("Image");
-        leisureItem.setCategory(LeisureCategory.BAR);
+        leisureItem.setCategory(LeisureCategory.BARS);
         leisureItem.setLocation(location);
         leisureItem.setRating(10);
         leisureItem.setPrice(12.99);
@@ -78,7 +78,7 @@ class LeisureItemTest {
         Assertions.assertEquals("Subtitle", leisureItem.getSubtitle());
         Assertions.assertEquals("Description", leisureItem.getDescription());
         Assertions.assertEquals("Image", leisureItem.getImage());
-        Assertions.assertEquals(LeisureCategory.BAR, leisureItem.getCategory());
+        Assertions.assertEquals(LeisureCategory.BARS, leisureItem.getCategory());
         Assertions.assertEquals(location.getName(), leisureItem.getLocation().getName());
         Assertions.assertEquals(location.getLat(), leisureItem.getLocation().getLat());
         Assertions.assertEquals(location.getLng(), leisureItem.getLocation().getLng());
@@ -91,7 +91,7 @@ class LeisureItemTest {
     @Test
     void testGetLocationWithInvalidJson() {
         Date date = new Date();
-        LeisureItem leisureItem = new LeisureItem("Title", "Subtitle", "Description", "Image", LeisureCategory.BAR, "location", 10, 12.99, date, step);
+        LeisureItem leisureItem = new LeisureItem("Title", "Subtitle", "Description", "Image", LeisureCategory.BARS, "location", 10, 12.99, date, step);
 
         assertThrows(RuntimeException.class, () -> {
             leisureItem.getLocation();

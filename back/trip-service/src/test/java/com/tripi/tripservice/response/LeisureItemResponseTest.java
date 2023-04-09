@@ -10,7 +10,7 @@ class LeisureItemResponseTest {
 
     @Test
     public void testSettersAndGetters() {
-        LocationDto locationDto = new  LocationDto("Marseille", 2.3522, 48.8566);
+        LocationDto locationDto = new  LocationDto("random_id","Marseille", 2.3522, 48.8566);
         LeisureItemResponse leisureItemResponse = new LeisureItemResponse();
         leisureItemResponse.setId("id");
         leisureItemResponse.setDate("2023-06-05");
@@ -21,7 +21,7 @@ class LeisureItemResponseTest {
         leisureItemResponse.setPrice(10.0);
         leisureItemResponse.setRating(5);
         leisureItemResponse.setLocation(locationDto);
-        leisureItemResponse.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
 
         assertEquals("id", leisureItemResponse.getId());
         assertEquals("2023-06-05", leisureItemResponse.getDate());
@@ -34,7 +34,7 @@ class LeisureItemResponseTest {
         assertEquals(locationDto.getName(), leisureItemResponse.getLocation().getName());
         assertEquals(locationDto.getLat(), leisureItemResponse.getLocation().getLat());
         assertEquals(locationDto.getLng(), leisureItemResponse.getLocation().getLng());
-        assertEquals(LeisureCategory.ACCOMMODATION, leisureItemResponse.getCategory());
+        assertEquals(LeisureCategory.ACCOMMODATIONS, leisureItemResponse.getCategory());
     }
 
 }

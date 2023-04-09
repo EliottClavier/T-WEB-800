@@ -1,12 +1,12 @@
 # Service name
 spring:
   application:
-    name: bar-service
+    name: restaurant-service
 
 # Spring Server setup
 server:
-  address: 0.0.0.0
-  port: ${DATA_SERVICE_PORT}
+  address: ${DATA_SERVICE_HOST:localhost}
+  port: ${DATA_SERVICE_PORT:8089}
   compression:
     enabled: true
   http2:

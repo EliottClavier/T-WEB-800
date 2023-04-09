@@ -29,7 +29,7 @@ class AlleventsActivityAdapterTest {
 
     @Test
     void searchEvents() throws Exception {
-        String location = "12.9715987-77.5945627";
+        String location = "12.9715987,77.5945627";
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusDays(1);
         boolean preview = true;

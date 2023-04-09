@@ -32,22 +32,22 @@ spring:
         - id: restaurant-service
           uri: lb://restaurant-service
           predicates:
-            - Path=/eat/**
+            - Path=/restaurant/**
 
         - id: bar-service
           uri: lb://bar-service
           predicates:
-            - Path=/drink/**
+            - Path=/bar/**
 
         - id: location-service
           uri: lb://location-service
           predicates:
-            - Path=/location/**
+            - Path=/locations/**
 
         - id: activity-service
           uri: lb://activity-service
           predicates:
-            - Path=/enjoy/**
+            - Path=/sport/**, /culture/**
 
         - id: transport-service
           uri: lb://transport-service
@@ -57,7 +57,7 @@ spring:
         - id: accommodation-service
           uri: lb://accommodation-service
           predicates:
-            - Path=/sleep/**
+            - Path=/accommodation/**
 
         - id: user-service
           uri: lb://user-service

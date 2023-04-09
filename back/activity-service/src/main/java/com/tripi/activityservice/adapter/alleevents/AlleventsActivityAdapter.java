@@ -31,7 +31,7 @@ public class AlleventsActivityAdapter implements ActivityAdapter {
     @Override
     public List<ActivityDetails> searchEvents(String location, LocalDate start, LocalDate end, boolean preview, LeisureCategory category) throws JsonProcessingException {
         UriComponentsBuilder citySearchUriBuilder = UriComponentsBuilder.fromHttpUrl("https://allevents.in/api/index.php/organizer/web/city/list");
-        String locationName = getLocationName(location.split("-")[0], location.split("-")[1]);
+        String locationName = getLocationName(location.split(",")[0], location.split(",")[1]);
         String body = "{\"query\":\"" + locationName + "\"}";
 
         ResponseEntity<String> citySearchResponse = restTemplate.postForEntity(citySearchUriBuilder.toUriString(), body, String.class);
@@ -59,7 +59,7 @@ public class AlleventsActivityAdapter implements ActivityAdapter {
                 activityDetails.setImage(organizer.get("thumb_url").asText());
                 activityDetails.setDate(start.toString());
                 activityDetails.setCategory(category);
-                activityDetails.setLocation(new LocationDto(locationName, Double.parseDouble(location.split("-")[0]), Double.parseDouble(location.split("-")[1])));
+                activityDetails.setLocation(new LocationDto(organizer.get("organizer_id").asText(), locationName, Double.parseDouble(location.split(",")[0]), Double.parseDouble(location.split(",")[1])));
                 activityDetailsList.add(activityDetails);
             }
         } catch (JsonProcessingException e) {

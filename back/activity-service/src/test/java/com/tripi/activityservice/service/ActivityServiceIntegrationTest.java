@@ -29,7 +29,7 @@ class ActivityServiceIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        location = "12.9715987-77.5945627";
+        location = "12.9715987,77.5945627";
         start = LocalDate.now();
         end = start.plusDays(1);
         preview = true;

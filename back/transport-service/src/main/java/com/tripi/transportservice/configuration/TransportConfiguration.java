@@ -1,11 +1,8 @@
 package com.tripi.transportservice.configuration;
 
 import com.amadeus.Amadeus;
-import com.google.maps.DirectionsApi;
-import com.google.maps.DirectionsApiRequest;
 import com.tripi.transportservice.enumeration.Source;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -40,12 +37,6 @@ public class TransportConfiguration {
         return new GeoApiContext.Builder()
                 .apiKey(googleKey)
                 .build();
-    }
-
-    @Bean
-    public DirectionsApiRequest getDirectionsApi() {
-        GeoApiContext context = getGeoApiContext();
-        return DirectionsApi.newRequest(context);
     }
 
     @Bean

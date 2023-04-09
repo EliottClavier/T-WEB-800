@@ -122,6 +122,7 @@ public class TripService {
 
         for (StepRequest stepRequest : tripRequest.getSteps()) {
             LocationDto location = new LocationDto();
+            location.setId(stepRequest.getLocation().getId());
             location.setName(stepRequest.getLocation().getName());
             location.setLat(stepRequest.getLocation().getLat());
             location.setLng(stepRequest.getLocation().getLng());
@@ -139,6 +140,7 @@ public class TripService {
 
             for (LeisureItemRequest leisureItemRequest : stepRequest.getLeisures()) {
                 LocationDto leisureLocation = new LocationDto();
+                leisureLocation.setId(leisureItemRequest.getLocation().getId());
                 leisureLocation.setName(leisureItemRequest.getLocation().getName());
                 leisureLocation.setLat(leisureItemRequest.getLocation().getLat());
                 leisureLocation.setLng(leisureItemRequest.getLocation().getLng());

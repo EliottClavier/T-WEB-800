@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { LocationModel } from "../../models/location/location.model";
-import { SearchBarEvent } from "../../types/search-bar-event.type";
-import { ItineraryMode } from "../../types/itinerary-mode.type";
-import { SuggestionsService } from "../../services/suggestions-service/suggestions.service";
-import { LeisureCategory } from "../../enums/leisure-category";
-import { SuggestionsStoreService } from "../../store/suggestions-store/suggestions-store.service";
-import { getIsoStringFromDate } from "../../utils/date.utils";
-import { getAccommodationItems } from "../../utils/suggestions-mock.utils";
-import { LeisureItemModel } from "../../models/leisures/leisure-item.model";
-import { TripBuilderService } from "../../services/trip/trip-builder.service";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { SaveTripDialogComponent } from "../../containers/save-trip-dialog/save-trip-dialog.component";
-import { TripModel } from "../../models/trip/trip.model";
-import { TripService } from "../../services/trip/trip.service";
-import { TripStoreService } from "../../store/trip-store/trip-store.service";
-import { getPdf } from "../../utils/pdf/pdf.utils";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormArray, FormGroup,} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {LocationModel} from "../../models/location/location.model";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
+import {ItineraryMode} from "../../types/itinerary-mode.type";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {SaveTripDialogComponent} from "../../containers/save-trip-dialog/save-trip-dialog.component";
+import {TripModel} from "../../models/trip/trip.model";
+import {TripService} from "../../services/trip/trip.service";
+import {TripStoreService} from "../../store/trip-store/trip-store.service";
+import {getPdf} from "../../utils/pdf/pdf.utils";
+import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import { ExplorerFilterComponent } from 'src/app/components/explorer-filter/explorer-filter.component';
 
 @Component({
@@ -33,6 +35,8 @@ export class ExploreComponent implements OnInit {
     index: 0,
     isEditing: false,
   };
+
+  @ViewChild(CardsContainerComponent, { static: false }) public cardContainer?: CardsContainerComponent;
 
   onActiveSearchBarChange($event: SearchBarEvent) {
 
@@ -81,9 +85,6 @@ export class ExploreComponent implements OnInit {
   public ngOnInit(): void {
     this._loadRouteParams();
 
-    // this.selectedSearchForm.get('start')?.valueChanges.subscribe((value: Date) => {
-    //   this.onActiveDateChange()
-    // });
     this.selectedSearchForm.get('end')?.valueChanges.subscribe((value: Date) => {
       this.onActiveDateChange()
     });
@@ -207,7 +208,9 @@ export class ExploreComponent implements OnInit {
       this._tripService.sendTripAndUpdateStore(trip);
 
     } else {
-      this.dialogRef = this._dialog.open(SaveTripDialogComponent, {});
+      this.dialogRef = this._dialog.open(SaveTripDialogComponent, {
+        scrollStrategy: new NoopScrollStrategy()
+      });
       this.dialogRef.afterClosed().subscribe(result => {
         this._tripBuilderService.saveTrip(result)
         this.onSaveTrip(result);
@@ -221,13 +224,12 @@ export class ExploreComponent implements OnInit {
     await getPdf(trip);
   }
 
-  newTripForm() {
+  public newTripForm() {
     this._tripBuilderService.newTrip();
     this._router.navigate(['/']);
   }
 
-  onActiveDateChange() {
-
+  public onActiveDateChange() {
     let location: LocationModel = this.selectedSearchForm.get('location')?.value;
     let start: Date = this.selectedSearchForm.get('start')?.value;
     let end: Date = this.selectedSearchForm.get('end')?.value;
@@ -239,4 +241,8 @@ export class ExploreComponent implements OnInit {
     this._dialog.open(ExplorerFilterComponent, {
     });
   }
+  public onMarkerClick(event: LeisureItemModel) {
+    this.cardContainer?.onItemSelectedFromMap(event);
+  }
+
 }

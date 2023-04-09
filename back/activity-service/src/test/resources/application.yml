@@ -6,5 +6,8 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
+server:
+  port: 9087
+
 data:
   actives: allevents
