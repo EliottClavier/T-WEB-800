@@ -77,4 +77,16 @@ export class TripModel{
   set isSaved(value: boolean) {
     this._isSaved = value;
   }
+
+  toJson() {
+    return {
+      id: this.id,
+      name: this.name,
+      steps: this.steps,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      user: this.user,
+      isSaved: this.isSaved
+    };
+  }
 }

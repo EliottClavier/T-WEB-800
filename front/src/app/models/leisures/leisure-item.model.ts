@@ -161,5 +161,18 @@ export class LeisureItemModel {
           return 'unknown'.toString();
       }
   }
-
+  toJson() {
+    return {
+      id: this.id,
+      title: this.title,
+      subtitle: this.subtitle,
+      description: this.description,
+      image: this.image,
+      location: this.location,
+      category: this.category,
+      date: this.date,
+      rating: this.rating,
+      price: this.price
+    };
+  }
 }
