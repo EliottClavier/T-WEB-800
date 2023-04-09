@@ -1,7 +1,7 @@
 # Service name
 spring:
   application:
-    name: restaurant-service
+    name: bar-service
 
 # Spring Server setup
 server:
@@ -22,3 +22,12 @@ eureka:
   instance:
     hostname: ${SERVICE_HOST:localhost}
     prefer-ip-address: false
+
+
+# Google Configuration
+google:
+  apiKey: ${GOOGLE_KEY}
+
+# Sources
+sources: GOOGLEMAPS
+
