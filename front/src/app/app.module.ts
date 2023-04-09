@@ -38,7 +38,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CardsContainerComponent } from './containers/cards-container/cards-container.component';
 import { CardItemDetailsViewComponent } from './components/card-item-details-view/card-item-details-view.component';
-import { MapTravelModeSelectionComponent} from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
+import { MapTravelModeSelectionComponent } from './containers/map-travel-mode-selection/map-travel-mode-selection.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { LeisureCategoryFilterComponent } from './containers/leisure-category-filter/leisure-category-filter.component'
 import { RadioButtonComponent } from './components/inputs/radio-button/radio-button.component';
@@ -47,11 +47,10 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { SaveTripDialogComponent } from './containers/save-trip-dialog/save-trip-dialog.component';
-import {MatRadioModule} from "@angular/material/radio";
-import {TokenInterceptor} from "./interceptors/token.interceptor";
-import {AuthGuard} from "./guards/auth.guard";
+import { MatRadioModule } from "@angular/material/radio";
+import { TokenInterceptor } from "./interceptors/token.interceptor";
+import { AuthGuard } from "./guards/auth.guard";
 import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
