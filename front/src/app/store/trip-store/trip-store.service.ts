@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {TripModel} from "../../models/trip/trip.model";
-import {TripService} from "../../services/trip/trip.service";
+import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripStoreService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   private _trips = new BehaviorSubject<TripModel[]>(new Array<TripModel>());
   private _trips$ = this._trips.asObservable();
@@ -37,8 +41,15 @@ export class TripStoreService {
   getTrips(): TripModel[] {
     return this._trips.getValue();
   }
-  deleteTrip(id: string) {
 
+  getTripsAsync(): Observable<TripModel[]> {
+    if (this.authService.user) {
+      return this.http.get<TripModel[]>(`/api/trip/all?id=${this.authService.user.user.id}`)
+    }
+    return new Observable();
+  }
+
+  deleteTrip(id: string) {
     const trips = this._trips.getValue();
     const index = trips.findIndex(trip => trip.id === id);
     if (index !== -1) {

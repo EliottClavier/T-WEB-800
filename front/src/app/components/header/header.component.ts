@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { LoginUserComponent } from "../../containers/login-user/login-user.component";
-import { NoopScrollStrategy } from "@angular/cdk/overlay";
-import { AuthService } from "../../services/auth/auth.service";
-import { UserModel } from "../../models/users/user.model";
-import { tap } from "rxjs";
-import { Router } from "@angular/router";
-import { TripBuilderService } from "../../services/trip/trip-builder.service";
-import { FormArray } from "@angular/forms";
-import { getIsoStringFromDate } from "../../utils/date.utils";
-import { LocationModel } from "../../models/location/location.model";
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {LoginUserComponent} from "../../containers/login-user/login-user.component";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {AuthService} from "../../services/auth/auth.service";
+import {UserModel} from "../../models/users/user.model";
+import {Router} from "@angular/router";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {LocationModel} from "../../models/location/location.model";
+import {TripService} from "../../services/trip/trip.service";
 
 @Component({
   selector: 'app-header',
@@ -25,21 +24,27 @@ export class HeaderComponent implements OnInit {
     private _dialog: MatDialog,
     private _authService: AuthService,
     private tripBuilderService: TripBuilderService,
-    private router: Router
+    private router: Router,
+    private tripService: TripService
   ) { }
 
   public ngOnInit(): void {
-    if (this._authService.user) {
-      this.user = this._authService.user;
-    } else {
-      this._authService.checkTokenValidity();
-      this.user = this._authService.user;
-    }
+    let sub = this._authService.userObservable.subscribe(
+      (user: UserModel | undefined) => {
+        if (user) {
+          console.log(user)
+          this.user = user;
+          console.log(user)
+          sub.unsubscribe();
+        }
+      }
+    )
   }
 
   public disconnect(): void {
     this._authService.disconnect();
     this.user = undefined;
+    this.router.navigate(['/']);
   }
 
   public openLoginDialog(): void {

@@ -8,6 +8,8 @@ import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {Router} from "@angular/router";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TripService} from "../../services/trip/trip.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-trips-container',
@@ -29,13 +31,27 @@ export class TripsContainerComponent implements OnInit {
               public tripStore: TripStoreService,
               private tripBuilderService: TripBuilderService,
               private tripService: TripService,
+              private authService: AuthService,
               private router: Router) {
   }
 
 
-  ngOnInit(): void {
-    this.trips = this.tripStore.getTrips();
+  public ngOnInit(): void {
+    if (this.tripStore.getTrips) {
+      this.trips = this.tripStore.getTrips();
+    }
 
+    let sub = this.authService.userObservable.subscribe(
+      async (user) => {
+        if (user) {
+          this.tripStore.getTripsAsync().pipe(take(1)).subscribe(
+            (trips) => {
+              this.trips = trips;
+            }
+          );
+          sub.unsubscribe();
+        }
+      });
   }
 
   ngAfterContentChecked(): void {

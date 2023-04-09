@@ -1,3 +1,3 @@
 export const environment = {
-  googleApiKey: ''
+  googleApiKey: 'AIzaSyBX5kyLdFOLaJnyPK0NCE9YD_QdOw8rQ1I'
 }

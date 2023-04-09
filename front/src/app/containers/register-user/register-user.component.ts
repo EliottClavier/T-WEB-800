@@ -18,6 +18,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import {LoginUserComponent} from "../login-user/login-user.component";
+import {AuthService} from "../../services/auth/auth.service";
 
 
 @Component({
@@ -39,6 +40,7 @@ export class RegisterUserComponent {
     private _registerService: RegisterService,
     private _dialogRef: MatDialogRef<RegisterUserComponent>,
     private _dialog: MatDialog,
+    private _authService: AuthService,
   ) {
     this.newUser = new RegisterModel('', '', '', '');
     this.matcher = new MyErrorStateMatcher();
@@ -70,6 +72,12 @@ export class RegisterUserComponent {
         next: (result: any) => {
           this.user = result;
           localStorage.setItem('token', this.user.token);
+          this._authService.getUserByToken(result.token).subscribe(
+            (user: UserModel) => {
+              this._authService.user = this.user = user;
+              this._authService.userObservable.next(this.user);
+            }
+          );
           this._dialogRef.close();
         },
         error: () => {

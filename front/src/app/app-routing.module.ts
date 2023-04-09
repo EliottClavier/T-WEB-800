@@ -10,8 +10,7 @@ const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'explore/:location', component: ExploreComponent },
   { path: 'explore', component: ExploreComponent },
-  // { path: 'my-trips', component: TripsContainerComponent, canActivate: [AuthGuard] },
-  { path: 'my-trips', component: TripsContainerComponent},
+  { path: 'my-trips', component: TripsContainerComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 
