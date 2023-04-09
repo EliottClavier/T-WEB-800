@@ -37,8 +37,19 @@
 </div>
 
 <ng-template #emptyState>
-  <p
-    data-cy-card-component-empty>
-    {{emptyMessage}}
-  </p>
+  <div class="not-found">
+    <div class="not-found-status">
+      whOops !
+    </div>
+    <div class="not-found-text">
+      it seems that you don’t have any trip for the moment !
+    </div>
+    <div class="not-found-button">
+        <app-simple-button home-page-redirection
+            (buttonClick)="homePageRedirection()"
+            [label]="'HOME'"
+            data-cy-show-more-item-button>
+        </app-simple-button>
+    </div>
+</div>
 </ng-template>

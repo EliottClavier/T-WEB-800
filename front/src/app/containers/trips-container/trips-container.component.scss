@@ -1,0 +1,57 @@
+.not-found {
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    color: #484848;
+}
+
+.not-found-status {
+    font-size: 8rem;
+    margin-bottom: 5rem;
+}
+
+.not-found-text {
+    font-size: 3rem;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 4rem;
+    width: 40%;
+}
+
+@media screen and (max-width: 1024px) {
+    .not-found.status {
+        font-size: 5rem;
+        margin-bottom: 8rem;
+    }
+
+    .not-found-text {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .not-found {
+        height: 110vh;
+    }
+
+    .not-found-status {
+        font-size: 4.5rem;
+    }
+
+    .not-found-text {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .not-found-status {
+        font-size: 4rem;
+    }
+
+    .not-found-text {
+        font-size: 2.5rem;
+    }
+}
