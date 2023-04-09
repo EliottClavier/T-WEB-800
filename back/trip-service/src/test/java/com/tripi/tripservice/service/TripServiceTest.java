@@ -45,7 +45,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:application.yml")
 @ActiveProfiles("test")
 public class TripServiceTest {
 
