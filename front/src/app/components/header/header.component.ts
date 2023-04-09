@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {LoginUserComponent} from "../../containers/login-user/login-user.component";
-import {NoopScrollStrategy} from "@angular/cdk/overlay";
-import {AuthService} from "../../services/auth/auth.service";
-import {UserModel} from "../../models/users/user.model";
-import {tap} from "rxjs";
-import {Router} from "@angular/router";
-import {TripBuilderService} from "../../services/trip/trip-builder.service";
-import {FormArray} from "@angular/forms";
-import {getIsoStringFromDate} from "../../utils/date.utils";
-import {LocationModel} from "../../models/location/location.model";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { LoginUserComponent } from "../../containers/login-user/login-user.component";
+import { NoopScrollStrategy } from "@angular/cdk/overlay";
+import { AuthService } from "../../services/auth/auth.service";
+import { UserModel } from "../../models/users/user.model";
+import { tap } from "rxjs";
+import { Router } from "@angular/router";
+import { TripBuilderService } from "../../services/trip/trip-builder.service";
+import { FormArray } from "@angular/forms";
+import { getIsoStringFromDate } from "../../utils/date.utils";
+import { LocationModel } from "../../models/location/location.model";
 
 @Component({
   selector: 'app-header',
@@ -17,9 +17,8 @@ import {LocationModel} from "../../models/location/location.model";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  public opened: boolean = false;
   public user: UserModel | undefined = undefined;
-
   public showFiller: boolean = false;
 
   constructor(
@@ -51,7 +50,6 @@ export class HeaderComponent implements OnInit {
 
   myTrips() {
     this.router.navigate(['/my-trips']);
-
   }
 
   home() {

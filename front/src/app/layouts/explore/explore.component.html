@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 h-container-fixed">
       <div class="row position-relative">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
+        <div class="left-side-elements col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 py-3 position-fixed h-container-fixed">
           <div class="row mb-4">
             <div class="col-12">
               <app-simple-button (buttonClick)="newTripForm()" [label]="'New Trip'" [icon]="'add_circle_outline'"></app-simple-button>
@@ -57,8 +57,16 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border-lightgray-left">
-      <div class="row">
+    <div class="filter-button">
+      <app-simple-button 
+        (click)="openFilters()"
+        data-cy-explorer-filters-button
+        [label]="'FILTERS'"
+        [icon]="'search'" >
+      </app-simple-button>
+    </div>
+    <div class=" map-element col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border-lightgray-left">
+      <div class="map row" >
         <div class="col-12 px-0">
           <app-map
             map
