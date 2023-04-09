@@ -11,8 +11,7 @@ import {Observable} from "rxjs";
 })
 export class SuggestionsService {
 
-  private preview_suggestions_url: string = '/api/preview/';
-  private suggestions_url: string = '/api/suggestions/';
+  private base_url: string = '/api';
 
   constructor(private _httpclient: HttpClient, private suggestionStore: SuggestionsStoreService) {
   }
@@ -20,12 +19,31 @@ export class SuggestionsService {
   getPreviewSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
     !end && (end = start);
     category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
-    return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+    return this._httpclient.get<LeisureItemModel[]>(`${this.base_url}/${this.getCategoryNormalizedName(category)}/preview/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
   }
 
   getSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string = start): Observable<LeisureItemModel[]> {
     !end && (end = start);
     category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
-    return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+    return this._httpclient.get<LeisureItemModel[]>(`${this.base_url}/${this.getCategoryNormalizedName(category)}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+  }
+
+  getCategoryNormalizedName(category: LeisureCategory): string {
+    switch (category) {
+      case LeisureCategory.ACCOMMODATION:
+        return 'accommodation';
+      case LeisureCategory.BAR:
+        return 'bar';
+      case LeisureCategory.SPORTING_EVENT:
+        return 'sport';
+      case LeisureCategory.CULTURAL_EVENT:
+        return 'culture';
+      case LeisureCategory.RESTAURANT:
+        return 'restaurant';
+      case LeisureCategory.UNKNOWN:
+        return 'accommodation';
+      default:
+        return 'accommodation';
+    }
   }
 }
