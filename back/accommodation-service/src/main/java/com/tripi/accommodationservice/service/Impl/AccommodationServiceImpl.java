@@ -22,6 +22,17 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
+    public List<DataResponse> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException {
+        List<DataResponse> dataResponses = new ArrayList<>();
+        for (DataAdapter dataAdapter : dataAdapters) {
+            if (activeSources.contains(dataAdapter.getSource())) {
+                dataResponses.addAll(dataAdapter.getPreviewData(location));
+            }
+        }
+        return dataResponses;
+    }
+
+    @Override
     public List<DataResponse> getAccommodations(String location) throws IOException, InterruptedException, ApiException {
         List<DataResponse> dataResponses = new ArrayList<>();
         for (DataAdapter dataAdapter : dataAdapters) {

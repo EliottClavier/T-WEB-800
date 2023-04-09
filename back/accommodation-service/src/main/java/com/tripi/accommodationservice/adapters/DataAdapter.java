@@ -10,6 +10,7 @@ import java.util.List;
 public interface DataAdapter {
 
     Source getSource();
+    List<DataResponse> getPreviewData(String location) throws IOException, InterruptedException, ApiException;
     List<DataResponse> getData(String location) throws IOException, InterruptedException, ApiException;
 
 }

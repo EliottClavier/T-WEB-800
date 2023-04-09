@@ -6,7 +6,7 @@ spring:
 # Spring Server setup
 server:
   address: localhost
-  port: ${DATA_SERVICE_PORT}
+  port: ${DATA_SERVICE_PORT:8085}
   compression:
     enabled: true
   http2:

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface AccommodationService {
 
+    List<DataResponse> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException;
     List<DataResponse> getAccommodations(String location) throws IOException, InterruptedException, ApiException;
 
 }

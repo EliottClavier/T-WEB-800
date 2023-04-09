@@ -23,7 +23,12 @@ public class AccommodationController {
     }
 
     @GetMapping("/preview/search")
-    public List<DataResponse> getDirections(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+    public List<DataResponse> getPreviewAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+        return accommodationService.getPreviewAccommodations(location);
+    }
+
+    @GetMapping("/search")
+    public List<DataResponse> getAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
         return accommodationService.getAccommodations(location);
     }
 
