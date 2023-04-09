@@ -123,10 +123,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return false;
         }
 
-        System.out.println("Host: " + host);
-        System.out.println("FrontAppHostName: " + frontAppHostName);
-        System.out.println("Contains: " + host.contains(frontAppHostName));
-
         return host.contains(frontAppHostName);
     }
 }

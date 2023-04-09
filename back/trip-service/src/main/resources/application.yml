@@ -20,7 +20,7 @@ spring:
 
 # Spring Server setup
 server:
-  address: ${DATA_SERVICE_HOST:localhost}
+  address: ${DOCKER_SERVICE_HOST:localhost}
   port: ${DATA_SERVICE_PORT:8082}
   compression:
     enabled: true
@@ -36,3 +36,8 @@ eureka:
   instance:
     hostname: ${SERVICE_HOST:localhost}
     prefer-ip-address: false
+
+logging:
+    level:
+        root: INFO
+        org.springframework.web: TRACE

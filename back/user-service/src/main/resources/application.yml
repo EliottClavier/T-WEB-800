@@ -20,7 +20,7 @@ spring:
 
 # Spring Server setup
 server:
-  address: ${DATA_SERVICE_HOST:localhost}
+  address: ${DOCKER_SERVICE_HOST:localhost}
   port: ${DATA_SERVICE_PORT:8083}
   compression:
     enabled: true
