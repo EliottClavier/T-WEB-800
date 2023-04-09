@@ -1,31 +1,27 @@
-import {ExploreComponent} from "./explore.component";
-import {createComponentFactory, mockProvider, Spectator} from "@ngneat/spectator";
-import {By} from "@angular/platform-browser";
-import {MultipleSearchBarsComponent} from "../../containers/multiple-search-bars/multiple-search-bars.component";
-import {AppModule} from "../../app.module";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {MapComponent} from "../../containers/map/map.component";
-import {FormArray, FormGroup} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LocationModel} from "../../models/location/location.model";
-import {LocationService} from "../../services/location/location.service";
-import {BehaviorSubject, of} from "rxjs";
-import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
-import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
-import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
-import {
-  MapTravelModeSelectionComponent
-} from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
-import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {getAccommodationItems, getSportingItems} from "../../utils/suggestions-mock.utils";
-import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
-import {LeisureCategory} from "../../enums/leisure-category";
-import {
-  LeisureCategoryFilterComponent
-} from "../../containers/leisure-category-filter/leisure-category-filter.component";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import { ExploreComponent } from "./explore.component";
+import { createComponentFactory, mockProvider, Spectator } from "@ngneat/spectator";
+import { By } from "@angular/platform-browser";
+import { MultipleSearchBarsComponent } from "../../containers/multiple-search-bars/multiple-search-bars.component";
+import { AppModule } from "../../app.module";
+import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { MapComponent } from "../../containers/map/map.component";
+import { FormArray, FormGroup } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LocationModel } from "../../models/location/location.model";
+import { LocationService } from "../../services/location/location.service";
+import { BehaviorSubject, of } from "rxjs";
+import { StepDatesFiltersComponent } from "../../containers/step-dates-filter/step-dates-filters.component";
+import { SuggestionsStoreService } from "../../store/suggestions-store/suggestions-store.service";
+import { SearchBarEvent } from "../../types/search-bar-event.type";
+import { buildStepFormGroupControlsDetails } from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import { MapTravelModeSelectionComponent } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
+import { SuggestionsService } from "../../services/suggestions-service/suggestions.service";
+import { getAccommodationItems, getSportingItems } from "../../utils/suggestions-mock.utils";
+import { CardsContainerComponent } from "../../containers/cards-container/cards-container.component";
+import { LeisureCategory } from "../../enums/leisure-category";
+import { LeisureCategoryFilterComponent } from "../../containers/leisure-category-filter/leisure-category-filter.component";
+import { LeisureItemModel } from "../../models/leisures/leisure-item.model";
+import { TripBuilderService } from "../../services/trip/trip-builder.service";
 import {
   AddSummaryHeader,
   AddSummaryLeisures,
@@ -34,9 +30,9 @@ import {
   BuildCanvas,
   SavePdf
 } from "../../utils/pdf/pdf.utils";
-import {TripModel} from "../../models/trip/trip.model";
-import {getIsoStringFromDate} from "../../utils/date.utils";
-import {StepModel} from "../../models/step/step.model";
+import { TripModel } from "../../models/trip/trip.model";
+import { getIsoStringFromDate } from "../../utils/date.utils";
+import { StepModel } from "../../models/step/step.model";
 import TravelMode = google.maps.TravelMode;
 
 describe('ExploreComponent', () => {
@@ -59,20 +55,20 @@ describe('ExploreComponent', () => {
       getPreviewSuggestions: () => of(sportingItems)
     }),
       TripBuilderService,
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          snapshot: {
-            params: {
-              location: "Nan"
-            },
-            queryParams: {
-              start: "2023-01-01",
-              end: "2023-01-02",
-            }
+    {
+      provide: ActivatedRoute,
+      useValue: {
+        snapshot: {
+          params: {
+            location: "Nan"
           },
-        }
-      },
+          queryParams: {
+            start: "2023-01-01",
+            end: "2023-01-02",
+          }
+        },
+      }
+    },
       SuggestionsStoreService,
       MultipleSearchBarsComponent
     ],
@@ -332,19 +328,19 @@ describe('ExploreComponent', () => {
 
     describe("Itinerary change", () => {
       it('should change itinerary mode to driving', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.DRIVING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.DRIVING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.DRIVING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.DRIVING);
       });
 
       it('should change itinerary mode to walking', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.WALKING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.WALKING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.WALKING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
       });
 
       it('should change itinerary mode to bicycling', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.BICYCLING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
       });
@@ -370,7 +366,7 @@ describe('ExploreComponent', () => {
       });
 
       it('should change itinerary mode to flight', () => {
-        component.onItineraryModeChange({travelMode: "FLIGHT" as google.maps.TravelMode});
+        component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
         expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
       });
@@ -382,7 +378,7 @@ describe('ExploreComponent', () => {
   it('should getSuggestions has been call when i called onActiveSearchBar', () => {
 
     let suggestionSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
-    component.onActiveSearchBarChange({index: 0, isEditing: true});
+    component.onActiveSearchBarChange({ index: 0, isEditing: true });
     expect(suggestionSpy).toHaveBeenCalled();
 
   });

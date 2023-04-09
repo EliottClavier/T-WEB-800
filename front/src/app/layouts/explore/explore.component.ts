@@ -1,22 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormGroup,} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LocationModel} from "../../models/location/location.model";
-import {SearchBarEvent} from "../../types/search-bar-event.type";
-import {ItineraryMode} from "../../types/itinerary-mode.type";
-import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LeisureCategory} from "../../enums/leisure-category";
-import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
-import {getIsoStringFromDate} from "../../utils/date.utils";
-import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {TripBuilderService} from "../../services/trip/trip-builder.service";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {SaveTripDialogComponent} from "../../containers/save-trip-dialog/save-trip-dialog.component";
-import {TripModel} from "../../models/trip/trip.model";
-import {TripService} from "../../services/trip/trip.service";
-import {TripStoreService} from "../../store/trip-store/trip-store.service";
-import {getPdf} from "../../utils/pdf/pdf.utils";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormGroup, } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LocationModel } from "../../models/location/location.model";
+import { SearchBarEvent } from "../../types/search-bar-event.type";
+import { ItineraryMode } from "../../types/itinerary-mode.type";
+import { SuggestionsService } from "../../services/suggestions-service/suggestions.service";
+import { LeisureCategory } from "../../enums/leisure-category";
+import { SuggestionsStoreService } from "../../store/suggestions-store/suggestions-store.service";
+import { getIsoStringFromDate } from "../../utils/date.utils";
+import { getAccommodationItems } from "../../utils/suggestions-mock.utils";
+import { LeisureItemModel } from "../../models/leisures/leisure-item.model";
+import { TripBuilderService } from "../../services/trip/trip-builder.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { SaveTripDialogComponent } from "../../containers/save-trip-dialog/save-trip-dialog.component";
+import { TripModel } from "../../models/trip/trip.model";
+import { TripService } from "../../services/trip/trip.service";
+import { TripStoreService } from "../../store/trip-store/trip-store.service";
+import { getPdf } from "../../utils/pdf/pdf.utils";
 
 @Component({
   selector: 'app-explore',
@@ -180,15 +180,14 @@ export class ExploreComponent implements OnInit {
   }
 
   public getLeisureSuggestions() {
-
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this._suggestionsStore.category;
     this._suggestionsService.getSuggestions(category, this.selectedLocation, getIsoStringFromDate(start), getIsoStringFromDate(end)).subscribe({
-        next: (suggestions) => {
-          this._suggestionsStore.setSuggestionsData(suggestions);
-        },
-      }
+      next: (suggestions) => {
+        this._suggestionsStore.setSuggestionsData(suggestions);
+      },
+    }
     );
   }
 
@@ -217,7 +216,6 @@ export class ExploreComponent implements OnInit {
   }
 
   public async generateSummary() {
-
     let trip: TripModel = this._tripBuilderService.saveTrip('tripname');
     await getPdf(trip);
   }
@@ -235,5 +233,4 @@ export class ExploreComponent implements OnInit {
     let leisure: LeisureCategory = this._suggestionsStore.category;
     this.getPreviewSuggestions(leisure, this.selectedLocation, start, end);
   }
-
 }

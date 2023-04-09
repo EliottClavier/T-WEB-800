@@ -30,7 +30,7 @@
               <div class="navigation">
                 <app-simple-icon-button (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span>History</span>
                 <app-simple-icon-button (buttonClick)="home()" [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
-                <app-simple-icon-button [icon]="user ? 'exit_to_app' : 'perm_identity'" header-login (buttonClick)="user ? disconnect() : openLoginDialog()"></app-simple-icon-button><span>{{ user ? 'Logout' : 'Login' }}</span>
+                <app-simple-icon-button [icon]="user ? 'exit_to_app' : 'perm_identity'" header-login (buttonClick)="user ? disconnect() : openLoginDialog()"></app-simple-icon-button><span style="margin-right: 2rem;">{{ user ? 'Logout' : 'Login' }}</span>
               </div>
             </div>
           </div>
