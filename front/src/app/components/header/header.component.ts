@@ -48,6 +48,9 @@ export class HeaderComponent implements OnInit {
       scrollStrategy: new NoopScrollStrategy()
     });
   }
+  public isUserConnected(): boolean {
+    return this._authService.isLoggedIn();
+  }
 
   myTrips() {
     this.router.navigate(['/my-trips']);

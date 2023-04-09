@@ -87,5 +87,15 @@ describe('CardItemsComponent', () => {
 
       expect(spectator.component.itemSelected).toBeUndefined();
     });
+
+    it('should emit cardItemClicked event when onItemFromMapClicked is called', () => {
+      const item: LeisureItemModel = getAccommodationItems()[0];
+      spyOn(component.cardItemClicked, 'emit');
+
+      component.onItemFromMapClicked(item);
+
+      expect(component.itemSelected).toEqual(item);
+      expect(component.cardItemClicked.emit).toHaveBeenCalledWith(item);
+    });
   });
 });

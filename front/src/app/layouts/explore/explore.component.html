@@ -33,7 +33,7 @@
                 <div class="col-12">
                   <app-simple-button
                     data-cy-explorer-save-button
-                    *ngIf="activeSearchBar.index !== null"
+                    *ngIf="activeSearchBar.index !== null && authService.isLoggedIn()"
                     [label]="'Save my trip'"
                     [icon]="'save'"
                     (buttonClick)="onSaveTrip(undefined)">

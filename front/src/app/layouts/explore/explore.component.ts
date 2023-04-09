@@ -19,6 +19,7 @@ import {TripStoreService} from "../../store/trip-store/trip-store.service";
 import {getPdf} from "../../utils/pdf/pdf.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-explore',
@@ -77,7 +78,8 @@ export class ExploreComponent implements OnInit {
     public _tripBuilderService: TripBuilderService,
     private _tripService: TripService,
     private _tripStore: TripStoreService,
-    private _dialog: MatDialog) {
+    private _dialog: MatDialog,
+    public authService: AuthService,) {
 
   }
 
