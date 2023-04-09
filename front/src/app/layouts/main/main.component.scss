@@ -1,3 +1,28 @@
 app-single-search-bar {
     margin-top: 0.5rem;
 }
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: auto;
+}
+
+@media screen and (max-width: 1440px) {
+    .cards {
+        height: 20vh;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .cards {
+        height: 30vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cards {
+        height: 20vh;
+    }
+}

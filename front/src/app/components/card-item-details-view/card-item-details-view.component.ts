@@ -31,9 +31,8 @@ export class CardItemDetailsViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCloseDetailsView() {
-    this.onClose.emit();
-    this.detailsItem = undefined;
+  public closeDetailCardDialog(): void {
+    this.dialog.closeAll();
   }
 
   onAddItemToTrip(item: LeisureItemModel) {

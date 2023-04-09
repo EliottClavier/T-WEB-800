@@ -117,4 +117,8 @@ export class TripsContainerComponent implements OnInit {
     const trip: TripModel | undefined = this.tripStore.getTripById(id);
     trip && getPdf(trip);
   }
+
+  public homePageRedirection() : void {
+    this.router.navigate( ['/']);
+  }
 }

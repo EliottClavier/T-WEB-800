@@ -1,7 +1,9 @@
 .footer-element {
+    text-align: center;
+    background-color: #11765E;
+    color: #fff;
+    padding: 16px;
+    width: 100%;
     position: fixed;
     bottom: 0%;
-    height: 10vh;
-    width: 100vw;
-    background-color: #11765E;
 }

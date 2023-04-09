@@ -1,8 +1,8 @@
 <header class="sticky-top h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none border-bottom"
   style="z-index: 1;">
-  <div class="row justify-content-between align-items-center p-3 m-0">
+  <div class="align-items-center p-1 m-0 header-elements">
     <h1 class="col-2 text-center">TRIPI</h1>
-    <div class="col-2">
+    <div class="col-2.5">
       <div class="navigation">
         <app-simple-icon-button (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span>History</span>
         <app-simple-icon-button (buttonClick)="home()" [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
@@ -13,3 +13,7 @@
     </div>
   </div>
 </header>
+
+<div class="menu-hamburger">
+  <mat-icon>menu</mat-icon>
+</div>

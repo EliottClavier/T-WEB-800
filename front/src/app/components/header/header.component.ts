@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit {
 
   public user: UserModel | undefined = undefined;
 
+  public showFiller: boolean = false;
+
   constructor(
     private _dialog: MatDialog,
     private _authService: AuthService,
