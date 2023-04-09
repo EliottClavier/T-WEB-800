@@ -117,6 +117,14 @@ To deploy the application, you need to run the following command in the root fol
 
 #### Swagger
 
-Swagger is available on http://gateway.epitech-projects.me/swagger-ui.html for the online documentation   
+Swagger is available on :
+- accommodation-service: http://gateway.epitech-projects.me/accommodation/swagger-ui.html
+- activity-service: http://gateway.epitech-projects.me/enjoy/swagger-ui.html
+- auth-service: http://gateway.epitech-projects.me/auth/swagger-ui.html
+- bar-service: http://gateway.epitech-projects.me/bar/swagger-ui.html
+- location-service: http://gateway.epitech-projects.me/locations/swagger-ui.html
+- restaurant-service: http://gateway.epitech-projects.me/restaurant/swagger-ui.html
+- transport-service: http://gateway.epitech-projects.me/transports/swagger-ui.html
+- trip-service: http://gateway.epitech-projects.me/trip/swagger-ui.html
 
 ## Client application
