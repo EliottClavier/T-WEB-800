@@ -10,7 +10,15 @@
           [searchForms]="searchForms"
           (activeSearchBarChange)="onActiveSearchBarChange($event)"
           (viewChange)="onViewChange($event)"
-        ></app-multiple-search-bars>
+        ></app-multiple-search-bars> 
+
+        <app-map-travel-mode-selection
+            map-travel-mode-selection
+            *ngIf="activeSearchBar.index !== null && itineraryView"
+            [itineraryMode]="itineraryMode"
+            (itineraryModeChange)="onItineraryModeChange($event)"
+          ></app-map-travel-mode-selection>
+          
         <hr class="mx-2 my-4 border-lightgray-bottom">
         <app-step-dates-filters class="col-8"
           map-filters
