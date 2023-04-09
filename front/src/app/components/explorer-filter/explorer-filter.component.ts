@@ -224,4 +224,8 @@ export class ExplorerFilterComponent implements OnInit {
     let leisure: LeisureCategory = this._suggestionsStore.category;
     this.getPreviewSuggestions(leisure, this.selectedLocation, start, end);
   }
+
+  public closeDetailCardDialog(): void {
+    this._dialog.closeAll();
+  }
 }

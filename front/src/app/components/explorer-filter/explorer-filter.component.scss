@@ -1,5 +1,11 @@
-
 .button-new-trip {
     margin-left: 16%;
+    margin-top: 16px;
+}
+
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 16px;
     margin-top: 16px;
 }
