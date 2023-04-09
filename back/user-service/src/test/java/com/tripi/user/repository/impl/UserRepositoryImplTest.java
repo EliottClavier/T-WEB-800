@@ -12,10 +12,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 
 @ExtendWith(MockitoExtension.class)
-@TestPropertySource(locations = "classpath:application.properties")
 @SpringBootTest
 public class UserRepositoryImplTest {
 

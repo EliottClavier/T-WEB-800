@@ -51,6 +51,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { TokenInterceptor } from "./interceptors/token.interceptor";
 import { AuthGuard } from "./guards/auth.guard";
 import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
+import { TripsContainerComponent } from './containers/trips-container/trips-container.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -87,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotFoundComponent,
     SaveTripDialogComponent,
     UserLeisuresDialogComponent,
+    TripsContainerComponent,
   ],
   imports: [
     GoogleMapsModule,

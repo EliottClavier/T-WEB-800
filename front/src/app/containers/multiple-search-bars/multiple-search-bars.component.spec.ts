@@ -54,50 +54,50 @@ describe('MultipleSearchBarsComponent', () => {
   });
 
   it('should have searchFormsArray FormArray inside searchForms FormGroup', () => {
-    expect(component.searchFormsArray).toBeDefined();
-    expect(component.searchFormsArray).toBeInstanceOf(FormArray);
-    expect(component.searchFormsArray!.value).toBeInstanceOf(Array<FormGroup>);
+    expect(component.tripBuilderService.searchFormsArray).toBeDefined();
+    expect(component.tripBuilderService.searchFormsArray).toBeInstanceOf(FormArray);
+    expect(component.tripBuilderService.searchFormsArray!.value).toBeInstanceOf(Array<FormGroup>);
   });
 
   it('should have searchFormsArray FormArray initialized with one FormGroup', () => {
-    expect(component.searchFormsArrayControls!.length).toBe(1);
+    expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
   });
 
   describe('Add and remove search bars', () => {
 
     it('should add a search bar to searchFormsArray', () => {
       component.addSearchBar();
-      expect(component.searchFormsArrayControls!.length).toBe(2);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(2);
     });
 
     it('should not add a start date to the new search bar initialized if previous search bar has end date', () => {
       component.addSearchBar();
       spectator.detectChanges();
-      let length: number = component.searchFormsArrayControls!.length;
-      expect(component.searchFormsArrayControls![length - 1].get('start')!.value).toBeNull();
+      let length: number = component.tripBuilderService.searchFormsArrayControls!.length;
+      expect(component.tripBuilderService.searchFormsArrayControls![length - 1].get('start')!.value).toBeNull();
     });
 
     it('should add a start date to the new search bar initialized if previous search bar has end date', () => {
       component.lastSearchBar.get('end')!.setValue(new Date());
       component.addSearchBar();
       spectator.detectChanges();
-      let length: number = component.searchFormsArrayControls!.length;
-      expect(component.searchFormsArrayControls![length - 1].get('start')!.value).toBe(component.searchFormsArrayControls![length - 2].get('end')!.value);
+      let length: number = component.tripBuilderService.searchFormsArrayControls!.length;
+      expect(component.tripBuilderService.searchFormsArrayControls![length - 1].get('start')!.value).toBe(component.tripBuilderService.searchFormsArrayControls![length - 2].get('end')!.value);
     });
 
     it('should remove a search bar to searchFormsArray', () => {
-      component.searchFormsArray.push(new FormGroup({}));
-      expect(component.searchFormsArrayControls!.length).toBe(2);
-      let index: number = Math.floor(Math.random() * component.searchFormsArrayControls.length);
+      component.tripBuilderService.searchFormsArray.push(new FormGroup({}));
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(2);
+      let index: number = Math.floor(Math.random() * component.tripBuilderService.searchFormsArrayControls.length);
       component.removeSearchBar(index);
-      expect(component.searchFormsArrayControls!.length).toBe(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
     });
 
     it('should not remove search bar in searchFormsArray if there is only one available', () => {
-      expect(component.searchFormsArrayControls!.length).toBe(1);
-      let index: number = Math.floor(Math.random() * component.searchFormsArrayControls.length);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
+      let index: number = Math.floor(Math.random() * component.tripBuilderService.searchFormsArrayControls.length);
       component.removeSearchBar(index);
-      expect(component.searchFormsArrayControls!.length).toBe(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
     });
 
     it('should have add search bar button', () => {
@@ -106,7 +106,7 @@ describe('MultipleSearchBarsComponent', () => {
     });
 
     it('should add search bar when search-bar-add button is clicked', () => {
-      let length: number = component.searchFormsArrayControls!.length;
+      let length: number = component.tripBuilderService.searchFormsArrayControls!.length;
 
       spyOn(component, 'addSearchBar').and.callThrough();
       spectator.click(spectator.query("app-simple-icon-button[search-bar-add] [simple-icon-button]")!);
@@ -116,12 +116,12 @@ describe('MultipleSearchBarsComponent', () => {
     });
 
     it('should not have remove search bar button when there is only one search bar', () => {
-      expect(component.searchFormsArrayControls!.length).toBe(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
       expect(spectator.query("app-simple-button[search-bar-remove]")).toBeFalsy();
     });
 
     it('should have disabled remove search bar when there is only one search bar', () => {
-      expect(component.searchFormsArrayControls!.length).toBe(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeTruthy();
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!).toBeDisabled();
     });
@@ -130,7 +130,7 @@ describe('MultipleSearchBarsComponent', () => {
       component.addSearchBar();
       spectator.detectChanges();
 
-      expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBe(component.searchFormsArrayControls!.length);
+      expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBe(component.tripBuilderService.searchFormsArrayControls!.length);
       expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBeGreaterThan(1);
       spectator.queryAll("app-simple-icon-button[search-bar-remove]").map((button: Element) => {
         expect(button).toHaveText("delete");
@@ -140,14 +140,14 @@ describe('MultipleSearchBarsComponent', () => {
     it('should remove search bar when a search-bar-remove button is clicked', () => {
       component.addSearchBar();
       spectator.detectChanges();
-      expect(component.searchFormsArrayControls!.length).toBeGreaterThan(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBeGreaterThan(1);
       expect(spectator.queryAll("app-simple-icon-button[search-bar-remove]").length).toBeGreaterThan(1);
 
       spyOn(component, 'removeSearchBar').and.callThrough();
       spectator.click(spectator.queryLast("app-simple-icon-button[search-bar-remove] [simple-icon-button]")!);
       spectator.detectChanges();
       expect(component.removeSearchBar).toHaveBeenCalled();
-      expect(component.searchFormsArrayControls!.length).toBe(1);
+      expect(component.tripBuilderService.searchFormsArrayControls!.length).toBe(1);
 
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeTruthy();
       expect(spectator.query("app-simple-icon-button[search-bar-remove] [simple-icon-button]")).toBeDisabled();
@@ -158,13 +158,13 @@ describe('MultipleSearchBarsComponent', () => {
   describe('Search bars display', () => {
 
     it('should have divs rendered in a ngFor looping over searchFormsArray', () => {
-      let length: number = component.searchFormsArrayControls.length;
+      let length: number = component.tripBuilderService.searchFormsArrayControls.length;
       expect(spectator.queryAll("div[search-bars]").length).toBe(length);
       component.addSearchBar();
       spectator.detectChanges();
       expect(spectator.queryAll("div[search-bars]").length).toBe(length + 1);
 
-      component.removeSearchBar(Math.floor(Math.random() * component.searchFormsArrayControls.length));
+      component.removeSearchBar(Math.floor(Math.random() * component.tripBuilderService.searchFormsArrayControls.length));
       spectator.detectChanges();
       expect(spectator.queryAll("div[search-bars]").length).toBe(length);
     });
@@ -193,8 +193,8 @@ describe('MultipleSearchBarsComponent', () => {
       let location: LocationModel = new LocationModel("1", locationName);
       component.onLocationOptionChange(location);
       spectator.detectChanges();
-      expect(component.searchFormsArrayControls[0].get("locationSearch")!.value).toEqual(locationName);
-      expect(component.searchFormsArrayControls[0].get("location")!.value).toEqual(location);
+      expect(component.tripBuilderService.searchFormsArrayControls[0].get("locationSearch")!.value).toEqual(locationName);
+      expect(component.tripBuilderService.searchFormsArrayControls[0].get("location")!.value).toEqual(location);
     });
 
   });
@@ -239,7 +239,7 @@ describe('MultipleSearchBarsComponent', () => {
         component.removeSearchBar(0);
         spectator.detectChanges();
         let searchBarEvent: SearchBarEvent = {
-          index: component.searchFormsArrayControls.length - 1,
+          index: component.tripBuilderService.searchFormsArrayControls.length - 1,
           isEditing: false
         }
         expect(component.activeSearchBar).toEqual(searchBarEvent);
@@ -251,7 +251,7 @@ describe('MultipleSearchBarsComponent', () => {
         component.addSearchBar();
         spectator.detectChanges();
         let searchBarEvent: SearchBarEvent = {
-          index: component.searchFormsArrayControls.length - 1,
+          index: component.tripBuilderService.searchFormsArrayControls.length - 1,
           isEditing: true
         }
         expect(component.activeSearchBar).toEqual(searchBarEvent);
@@ -283,7 +283,7 @@ describe('MultipleSearchBarsComponent', () => {
 
       it('should have only one active search bar input at most', () => {
         expect(spectator.queryAll("[search-bar-input] [search-input]:not([readonly])").length).toBe(1);
-        expect(spectator.queryAll("[search-bar-input] [search-input][readonly]").length).toBe(component.searchFormsArrayControls.length - 1);
+        expect(spectator.queryAll("[search-bar-input] [search-input][readonly]").length).toBe(component.tripBuilderService.searchFormsArrayControls.length - 1);
       });
     });
 
@@ -292,7 +292,7 @@ describe('MultipleSearchBarsComponent', () => {
 
       beforeEach(() => {
         searchForm = buildStepFormGroupControlsDetails();
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           searchForm
         );
         spectator.detectChanges();
@@ -305,17 +305,17 @@ describe('MultipleSearchBarsComponent', () => {
       });
 
       it('should have as much itinerary arrows as search bars', () => {
-        expect(spectator.queryAll("app-simple-icon-button[search-bar-itinerary-arrow]").length).toBe(component.searchFormsArrayControls.length);
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-itinerary-arrow]").length).toBe(component.tripBuilderService.searchFormsArrayControls.length);
       });
 
       it('should have as much itinerary travel mode bubbles as search bars', () => {
-        expect(spectator.queryAll("app-simple-icon-button[search-bar-travel-mode]").length).toBe(component.searchFormsArrayControls.length);
+        expect(spectator.queryAll("app-simple-icon-button[search-bar-travel-mode]").length).toBe(component.tripBuilderService.searchFormsArrayControls.length);
       });
 
       it('should return the correct travel mode icon depending on additional conditions', () => {
         let searchForm: FormGroup = buildStepFormGroupControlsDetails();
         searchForm.get("travelMode")!.setValue(google.maps.TravelMode.DRIVING);
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           searchForm,
           buildStepFormGroupControlsDetails(),
         );
@@ -323,9 +323,9 @@ describe('MultipleSearchBarsComponent', () => {
         // 0 is the default search bar which has no travel mode
         expect(component.accessTravelModeIcon(0)).toBe("panorama_fish_eye");
         // This one matches with searchForm variable
-        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 2)).toBe("directions_car");
+        expect(component.accessTravelModeIcon(component.tripBuilderService.searchFormsArrayControls.length - 2)).toBe("directions_car");
         // This one matches with the last search bar of the list
-        expect(component.accessTravelModeIcon(component.searchFormsArrayControls.length - 1)).toBe("outlined_flag");
+        expect(component.accessTravelModeIcon(component.tripBuilderService.searchFormsArrayControls.length - 1)).toBe("outlined_flag");
       });
 
       it('should return true if the location is the search bar after the selected search bar is valid', () => {
@@ -351,7 +351,7 @@ describe('MultipleSearchBarsComponent', () => {
 
       it('should emit the view change to location event when removing search bar when conditions match', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           buildStepFormGroupControlsDetails(),
           buildStepFormGroupControlsDetails(),
         );
@@ -366,7 +366,7 @@ describe('MultipleSearchBarsComponent', () => {
 
       it('should not emit the view change to location event when removing search bar when index isn\'t in range', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           buildStepFormGroupControlsDetails(),
           buildStepFormGroupControlsDetails(),
         );
@@ -375,13 +375,13 @@ describe('MultipleSearchBarsComponent', () => {
           isEditing: false
         }
         spectator.detectChanges();
-        component.removeSearchBar(component.searchFormsArrayControls.length - 1);
+        component.removeSearchBar(component.tripBuilderService.searchFormsArrayControls.length - 1);
         expect(component.viewChange.emit).not.toHaveBeenCalled();
       });
 
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           buildStepFormGroupControlsDetails(),
           buildStepFormGroupControlsDetails(),
         );
@@ -394,7 +394,7 @@ describe('MultipleSearchBarsComponent', () => {
 
       it('should emit the view change to location event when selecting a search bar', () => {
         spyOn<EventEmitter<MapView>, any>(component.viewChange, 'emit');
-        component.searchFormsArrayControls.push(
+        component.tripBuilderService.searchFormsArrayControls.push(
           buildStepFormGroupControlsDetails(),
           buildStepFormGroupControlsDetails(),
         );

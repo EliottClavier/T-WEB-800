@@ -1,0 +1,36 @@
+server:
+  port: ${LOCATION_PORT:8084}
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${DISCOVERY_HOST:localhost}
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka/
+
+spring:
+  application:
+    name: location-service
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+
+data:
+  actives: ${DATA_ACTIVE:google-maps}
+  sources:
+    google-maps:
+      api-key: ${GOOGLE_KEY}
+  search:
+    input:
+      limit: 5
+  picture:
+    width: 400
+
+

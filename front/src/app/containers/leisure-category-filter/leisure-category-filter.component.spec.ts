@@ -47,25 +47,25 @@ describe('LeisureCategoryFilterComponent', () => {
       emitted = event;
       expect(emitted).toBe(LeisureCategory.BAR);
     });
-    component.onSelectedLeisureCategory(0);
+    component.onSelectedLeisureCategory(1);
   });
-  it('Should emit selected accommodation category', async () => {
+  it('Should emit selected accommodation category',  () => {
     let emitted: LeisureCategory = LeisureCategory.ACCOMMODATION
     component.onSelectedCategory.subscribe((event: LeisureCategory) => {
       emitted = event;
       expect(emitted).toBe(LeisureCategory.ACCOMMODATION);
     });
-    component.onSelectedLeisureCategory(2);
+    component.onSelectedLeisureCategory(0);
   });
-  it('Should emit selected restaurant category', async () => {
+  it('Should emit selected restaurant category',  () => {
     let emitted: LeisureCategory = LeisureCategory.RESTAURANT
     component.onSelectedCategory.subscribe((event: LeisureCategory) => {
       emitted = event;
       expect(emitted).toBe(LeisureCategory.RESTAURANT);
     });
-    component.onSelectedLeisureCategory(1);
+    component.onSelectedLeisureCategory(3);
   });
-  it('Should emit selected sport category', async () => {
+  it('Should emit selected sport category',  () => {
     let emitted: LeisureCategory = LeisureCategory.SPORTING_EVENT
     component.onSelectedCategory.subscribe((event: LeisureCategory) => {
       emitted = event;
@@ -79,7 +79,7 @@ describe('LeisureCategoryFilterComponent', () => {
       emitted = event;
       expect(emitted).toBe(LeisureCategory.CULTURAL_EVENT);
     });
-    component.onSelectedLeisureCategory(3);
+    component.onSelectedLeisureCategory(2);
   });
 
 

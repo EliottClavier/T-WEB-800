@@ -1,0 +1,44 @@
+<div class="ng-container container"
+     *ngIf="trips.length > 0; else emptyState">
+  <ul
+    *ngFor="let item of trips; let i = index">
+    <li>
+      <app-card-item
+        [id]="'card-'+i"
+        [cardItem]="tripToCardItem(item)"
+        (onItem)="onItemClicked(i)">
+        data-cy-trip-component></app-card-item>
+      <app-simple-icon-button
+        trip-remove
+        class="col-2 px-0"
+        [icon]="'delete'"
+        [color]="'warn'"
+        [isDisabled]="false"
+        (buttonClick)="onDelete(item.id)">
+      </app-simple-icon-button>
+      <app-simple-icon-button
+        trip-update
+        class="col-2 px-0"
+        [icon]="'map icon'"
+        [color]="'primary'"
+        [isDisabled]="false"
+        (buttonClick)="onUpdate(item.id)">
+      </app-simple-icon-button>
+      <app-simple-icon-button
+        trip-pdf
+        class="col-2 px-0"
+        [icon]="'picture_as_pdf'"
+        [color]="'primary'"
+        [isDisabled]="false"
+        (buttonClick)="onPdf(item.id)">
+      </app-simple-icon-button>
+    </li>
+  </ul>
+</div>
+
+<ng-template #emptyState>
+  <p
+    data-cy-card-component-empty>
+    {{emptyMessage}}
+  </p>
+</ng-template>

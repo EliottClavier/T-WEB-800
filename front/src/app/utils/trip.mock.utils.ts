@@ -5,6 +5,7 @@ import {TripModel} from "../models/trip/trip.model";
 import {StepModel} from "../models/step/step.model";
 import {LocationModel} from "../models/location/location.model";
 import TravelMode = google.maps.TravelMode;
+import {LeisureItemModel} from "../models/leisures/leisure-item.model";
 
 export function tripsTest() {
   return {
@@ -49,12 +50,12 @@ export function tripsTest() {
 }
 export function getMockTrip() : TripModel {
 
-  let date = getIsoStringFromDate(new Date());
-  let leisures = getAccommodationItems();
-  let tripModel = new TripModel();
-  let stepModel = new StepModel('0', 'step1', new LocationModel(), leisures, date, date);
+  let date : string = getIsoStringFromDate(new Date());
+  let leisures : LeisureItemModel[] = getAccommodationItems();
+  let tripModel : TripModel = new TripModel();
+  let stepModel : StepModel = new StepModel('0', 'step1', new LocationModel(), leisures, date, date);
   stepModel.travelMode = TravelMode.DRIVING;
-  let step2Model = new StepModel('1', 'step2', new LocationModel(), leisures, date, date);
+  let step2Model : StepModel = new StepModel('1', 'step2', new LocationModel(), leisures, date, date);
   step2Model.travelMode = TravelMode.DRIVING;
   tripModel.steps.push(stepModel);
   tripModel.steps.push(step2Model);
@@ -74,9 +75,9 @@ export function getMockTripForm() {
   let builder = new FormBuilder();
   let forms : FormGroup;
 
-let tripModel = getMockTrip();
-let stepModel = tripModel.steps[0];
-let step2Model = tripModel.steps[1];
+let tripModel : TripModel = getMockTrip();
+let stepModel : StepModel = tripModel.steps[0];
+let step2Model : StepModel= tripModel.steps[1];
 
 
    forms = builder.group({
@@ -87,7 +88,7 @@ let step2Model = tripModel.steps[1];
         travelMode: step2Model.travelMode,
         start: new Date(step2Model.start),
         end: new Date(step2Model.end),
-        leisures: step2Model.leisures,
+        leisures: [step2Model.leisures],
       }),
       builder.group({
         locationSearch: stepModel.name,

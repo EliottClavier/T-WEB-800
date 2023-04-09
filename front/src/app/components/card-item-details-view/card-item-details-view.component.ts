@@ -41,7 +41,8 @@ export class CardItemDetailsViewComponent implements OnInit {
 
   onDeleteItemToTrip(item: LeisureItemModel) {
 
-    let leisures = this.tripBuilderService.searchFormsArrayControls[this.stepIndex]?.get("leisures")?.value as LeisureItemModel[];
+    let leisures : LeisureItemModel[] = this.tripBuilderService.searchFormsArrayControls[this.stepIndex]?.get("leisures")?.value ;
+    console .log('leisures : ',leisures);
     leisures.splice(this.leisureIndex, 1);
     this.tripBuilderService.searchFormsArrayControls[this.stepIndex]?.get("leisures")?.setValue(leisures);
     if (leisures.length === 0) {

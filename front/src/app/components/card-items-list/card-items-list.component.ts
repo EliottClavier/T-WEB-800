@@ -54,4 +54,6 @@ export class CardItemsListComponent implements AfterContentChecked, OnDestroy {
   ngOnDestroy(): void {
 
   }
+
+
 }
