@@ -118,13 +118,13 @@ To deploy the application, you need to run the following command in the root fol
 #### Swagger
 
 Swagger is available on :
-- accommodation-service: http://gateway.epitech-projects.me/accommodation/swagger-ui.html
-- activity-service: http://gateway.epitech-projects.me/enjoy/swagger-ui.html
-- auth-service: http://gateway.epitech-projects.me/auth/swagger-ui.html
-- bar-service: http://gateway.epitech-projects.me/bar/swagger-ui.html
-- location-service: http://gateway.epitech-projects.me/locations/swagger-ui.html
-- restaurant-service: http://gateway.epitech-projects.me/restaurant/swagger-ui.html
-- transport-service: http://gateway.epitech-projects.me/transports/swagger-ui.html
+- accommodation-service: http://gateway.epitech-projects.me/accommodation/swagger-ui/index.html
+- activity-service: http://gateway.epitech-projects.me/enjoy/swagger-ui/index.html
+- auth-service: http://gateway.epitech-projects.me/auth/swagger-ui/index.html
+- bar-service: http://gateway.epitech-projects.me/bar/swagger-ui/index.html
+- location-service: http://gateway.epitech-projects.me/locations/swagger-ui/index.html
+- restaurant-service: http://gateway.epitech-projects.me/restaurant/swagger-ui/index.html
+- transport-service: http://gateway.epitech-projects.me/transports/swagger-ui/index.html
 
 ## Client application
 The client application is an Angular-based front-end for the Trippi platform. It consumes the REST API provided by the server application to display and manage user data, trip planning, and various other travel-related features.
