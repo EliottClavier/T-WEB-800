@@ -6,6 +6,7 @@ import com.tripi.accommodationservice.enumeration.Source;
 import com.tripi.common.model.leisureItems.LeisureItemsResponse;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.accommodationservice.service.AccommodationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,25 +24,25 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public List<LeisureItemsResponse> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException {
+    public ResponseEntity<List<LeisureItemsResponse>> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException {
         List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (DataAdapter dataAdapter : dataAdapters) {
             if (activeSources.contains(dataAdapter.getSource())) {
                 dataResponses.addAll(dataAdapter.getPreviewData(location));
             }
         }
-        return dataResponses;
+        return ResponseEntity.ok(dataResponses);
     }
 
     @Override
-    public List<LeisureItemsResponse> getAccommodations(String location) throws IOException, InterruptedException, ApiException {
+    public ResponseEntity<List<LeisureItemsResponse>> getAccommodations(String location) throws IOException, InterruptedException, ApiException {
         List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (DataAdapter dataAdapter : dataAdapters) {
             if (activeSources.contains(dataAdapter.getSource())) {
                 dataResponses = dataAdapter.getData(location);
             }
         }
-        return dataResponses;
+        return ResponseEntity.ok(dataResponses);
     }
 
 }

@@ -5,6 +5,7 @@ import com.tripi.common.model.leisureItems.LeisureItemsResponse;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.accommodationservice.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,12 +25,12 @@ public class AccommodationController {
     }
 
     @GetMapping("/preview/search")
-    public List<LeisureItemsResponse> getPreviewAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+    public ResponseEntity<List<LeisureItemsResponse>> getPreviewAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
         return accommodationService.getPreviewAccommodations(location);
     }
 
     @GetMapping("/search")
-    public List<LeisureItemsResponse> getAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+    public ResponseEntity<List<LeisureItemsResponse>> getAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
         return accommodationService.getAccommodations(location);
     }
 
