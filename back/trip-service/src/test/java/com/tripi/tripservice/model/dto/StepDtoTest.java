@@ -19,7 +19,7 @@ class StepDtoTest {
 
     @BeforeEach
     public void setUp() {
-        locationDto = new LocationDto("Marseille", 2.3522, 48.8566);
+        locationDto = new LocationDto("random_id", "Marseille", 2.3522, 48.8566);
         LeisureItemDto leisureItem1 = new LeisureItemDto();
         LeisureItemDto leisureItem2 = new LeisureItemDto();
         leisureItems = new ArrayList<>();

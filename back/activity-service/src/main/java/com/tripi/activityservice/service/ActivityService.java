@@ -31,7 +31,7 @@ public class ActivityService {
     }
 
     public ResponseEntity<List<ActivityDetails>> searchEvents(String location, String start, String end, boolean preview, LeisureCategory category) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale( Locale.FRANCE );
         LocalDate startDate = LocalDate.parse(start, formatter);
         LocalDate endDate = LocalDate.parse(end, formatter);

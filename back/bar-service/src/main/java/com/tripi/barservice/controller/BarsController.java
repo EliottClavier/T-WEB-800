@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bars")
+@RequestMapping("/bar")
 public class BarsController {
 
     private final BarsService barsService;

@@ -23,7 +23,7 @@ class LeisureItemRequestTest {
         leisureItemRequest.setPrice(10.0);
         leisureItemRequest.setRating(5);
         leisureItemRequest.setLocation(locationRequest);
-        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATIONS);
 
         assertEquals("id", leisureItemRequest.getId());
         assertEquals("2023-06-05", leisureItemRequest.getDate());
@@ -36,7 +36,7 @@ class LeisureItemRequestTest {
         assertEquals(locationRequest.getName(), leisureItemRequest.getLocation().getName());
         assertEquals(locationRequest.getLat(), leisureItemRequest.getLocation().getLat());
         assertEquals(locationRequest.getLng(), leisureItemRequest.getLocation().getLng());
-        assertEquals(LeisureCategory.ACCOMMODATION, leisureItemRequest.getCategory());
+        assertEquals(LeisureCategory.ACCOMMODATIONS, leisureItemRequest.getCategory());
     }
 
 }

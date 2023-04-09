@@ -23,9 +23,6 @@ public class TransportConfigurationTest {
     private GeoApiContext geoApiContext;
 
     @Autowired
-    private DirectionsApiRequest directionsApiRequest;
-
-    @Autowired
     private List<Source> activeSources;
 
     @Test
@@ -36,11 +33,6 @@ public class TransportConfigurationTest {
     @Test
     public void testGeoApiContextBean() {
         assertNotNull(geoApiContext);
-    }
-
-    @Test
-    public void testDirectionsApiRequestBean() {
-        assertNotNull(directionsApiRequest);
     }
 
     @Test

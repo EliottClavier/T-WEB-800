@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormGroup,} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
@@ -17,6 +17,8 @@ import {TripModel} from "../../models/trip/trip.model";
 import {TripService} from "../../services/trip/trip.service";
 import {TripStoreService} from "../../store/trip-store/trip-store.service";
 import {getPdf} from "../../utils/pdf/pdf.utils";
+import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-explore',
@@ -32,6 +34,8 @@ export class ExploreComponent implements OnInit {
     index: 0,
     isEditing: false,
   };
+
+  @ViewChild(CardsContainerComponent, { static: false }) public cardContainer?: CardsContainerComponent;
 
   onActiveSearchBarChange($event: SearchBarEvent) {
 
@@ -80,9 +84,6 @@ export class ExploreComponent implements OnInit {
   public ngOnInit(): void {
     this._loadRouteParams();
 
-    // this.selectedSearchForm.get('start')?.valueChanges.subscribe((value: Date) => {
-    //   this.onActiveDateChange()
-    // });
     this.selectedSearchForm.get('end')?.valueChanges.subscribe((value: Date) => {
       this.onActiveDateChange()
     });
@@ -207,7 +208,9 @@ export class ExploreComponent implements OnInit {
       this._tripService.sendTripAndUpdateStore(trip);
 
     } else {
-      this.dialogRef = this._dialog.open(SaveTripDialogComponent, {});
+      this.dialogRef = this._dialog.open(SaveTripDialogComponent, {
+        scrollStrategy: new NoopScrollStrategy()
+      });
       this.dialogRef.afterClosed().subscribe(result => {
         this._tripBuilderService.saveTrip(result)
         this.onSaveTrip(result);
@@ -222,18 +225,21 @@ export class ExploreComponent implements OnInit {
     await getPdf(trip);
   }
 
-  newTripForm() {
+  public newTripForm() {
     this._tripBuilderService.newTrip();
     this._router.navigate(['/']);
   }
 
-  onActiveDateChange() {
-
+  public onActiveDateChange() {
     let location: LocationModel = this.selectedSearchForm.get('location')?.value;
     let start: Date = this.selectedSearchForm.get('start')?.value;
     let end: Date = this.selectedSearchForm.get('end')?.value;
     let leisure: LeisureCategory = this._suggestionsStore.category;
     this.getPreviewSuggestions(leisure, this.selectedLocation, start, end);
+  }
+
+  public onMarkerClick(event: LeisureItemModel) {
+    this.cardContainer?.onItemSelectedFromMap(event);
   }
 
 }

@@ -4,10 +4,11 @@
     *ngFor="let item of cardItems; let i = index">
     <li>
       <app-card-item
+        data-cy-card-component
         [id]="'card-'+i"
         [cardItem]="item"
-        (onItem)="onItemClicked(i)">
-        data-cy-card-component></app-card-item>
+        (onItem)="onItemClicked(i)"
+      ></app-card-item>
     </li>
   </ul>
 </div>

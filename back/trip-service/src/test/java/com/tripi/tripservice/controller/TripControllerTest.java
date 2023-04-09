@@ -75,7 +75,7 @@ class TripControllerTest {
         leisureItemResponse.setDescription("Test Description");
         leisureItemResponse.setImage("http://example.com/image.jpg");
         leisureItemResponse.setLocation(locationDto);
-        leisureItemResponse.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
         leisureItemResponse.setDate("2023-01-02");
         leisureItems.add(leisureItemResponse);
 

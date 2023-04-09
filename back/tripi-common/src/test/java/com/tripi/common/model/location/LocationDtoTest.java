@@ -9,7 +9,7 @@ class LocationDtoTest {
 
     @Test
     public void testStepDtoConstructorAndGetters() {
-        LocationDto locationDto = new LocationDto("Marseille", 2.3522, 48.8566);
+        LocationDto locationDto = new LocationDto("random_id", "Marseille", 2.3522, 48.8566);
         assertEquals("Marseille", locationDto.getName());
         assertEquals(2.3522, locationDto.getLat());
         assertEquals(48.8566, locationDto.getLng());

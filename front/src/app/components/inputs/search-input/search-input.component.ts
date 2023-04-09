@@ -7,6 +7,7 @@ import {isLocation} from "../../../utils/search-bar-form-group/search-bar-form-g
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {SaveTripDialogComponent} from "../../../containers/save-trip-dialog/save-trip-dialog.component";
 import {UserLeisuresDialogComponent} from "../../../containers/user-leisures/user-leisures-dialog.component";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-search-input',
@@ -94,7 +95,10 @@ export class SearchInputComponent implements OnInit {
     let dialogRef = this._dialog.open(UserLeisuresDialogComponent, {
       autoFocus: false,
       maxHeight: '90vh',
-        data: {index: this.id}
+      data: {
+        index: this.id
+      },
+      scrollStrategy: new NoopScrollStrategy()
     });
 
 

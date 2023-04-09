@@ -1,3 +1,19 @@
 eureka:
   client:
     enabled: false
+
+# Spring Server setup
+server:
+  address: localhost
+  port: 9080
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+# Google Configuration
+google:
+  apiKey: testGoogleApiKey
+
+# Sources
+sources: GOOGLEMAPS

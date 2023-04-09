@@ -9,7 +9,7 @@ import static com.tripi.common.model.enumeration.LeisureCategory.CULTURAL_EVENT;
 import static com.tripi.common.model.enumeration.LeisureCategory.SPORTING_EVENT;
 
 @RestController
-@RequestMapping("/enjoy")
+@RequestMapping("")
 public class ActivityController {
 
     private final ActivityService activityService;
