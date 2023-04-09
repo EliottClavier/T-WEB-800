@@ -120,6 +120,76 @@ describe('SuggestionsService', () => {
     });
 
   }));
+
+  it('should return the correct normalized name for each LeisureCategory', () => {
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.ACCOMMODATION)).toEqual('accommodation');
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.BAR)).toEqual('bar');
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.SPORTING_EVENT)).toEqual('sport');
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.CULTURAL_EVENT)).toEqual('culture');
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.RESTAURANT)).toEqual('restaurant');
+    expect(spectator.service.getCategoryNormalizedName(LeisureCategory.UNKNOWN)).toEqual('accommodation');
+    expect(spectator.service.getCategoryNormalizedName('non_existent_category' as any)).toEqual('accommodation');
+  });
+
+  it('should make a request with start and end equal when end is not provided', () => {
+    const testCategory = LeisureCategory.ACCOMMODATION;
+    const testLocation = new LocationModel();
+    const testStart = '2023-05-01';
+
+    service.getSuggestions(testCategory, testLocation, testStart).subscribe();
+
+    const req = spectatorHttp.expectOne(
+      `${(service as any).base_url}/accommodation/search?location=${testLocation.getCoordinates()}&start=${testStart}&end=${testStart}`
+    , HttpMethod.GET);
+    expect(req.request.method).toEqual('GET');
+  });
+
+  it('should make a request with the default category when category is UNKNOWN', () => {
+    const testCategory = LeisureCategory.UNKNOWN;
+    const testLocation = new LocationModel(/* Your location data */);
+    const testStart = '2023-05-01';
+    const testEnd = '2023-05-02';
+
+    service.getSuggestions(testCategory, testLocation, testStart, testEnd).subscribe();
+
+    const req = spectatorHttp.expectOne(
+      `${(service as any).base_url}/accommodation/search?location=${testLocation.getCoordinates()}&start=${testStart}&end=${testEnd}`
+    , HttpMethod.GET);
+    expect(req.request.method).toEqual('GET');
+  });
+
+
+  it('should make a request with start and end equal when end is not provided for preview suggestions', () => {
+    const testCategory = LeisureCategory.ACCOMMODATION;
+    const testLocation = new LocationModel();
+    const testStart = '2023-05-01';
+    const testEnd = '';
+
+    service.getPreviewSuggestions(testCategory, testLocation, testStart, testEnd).subscribe();
+
+    const req = spectatorHttp.expectOne(
+      `${(service as any).base_url}/accommodation/preview/search?location=${testLocation.getCoordinates()}&start=${testStart}&end=${testStart}`
+    , HttpMethod.GET);
+    expect(req.request.method).toEqual('GET');
+  });
+
+  it('should make a request with the default category when category is UNKNOWN for preview suggestions', () => {
+    const testCategory = LeisureCategory.UNKNOWN;
+    const testLocation = new LocationModel();
+    const testStart = '2023-05-01';
+    const testEnd = '';
+
+    service.getPreviewSuggestions(testCategory, testLocation, testStart, testEnd).subscribe();
+
+    const req = spectatorHttp.expectOne(
+      `${(service as any).base_url}/accommodation/preview/search?location=${testLocation.getCoordinates()}&start=${testStart}&end=${testStart}`
+    , HttpMethod.GET);
+    expect(req.request.method).toEqual('GET');
+  });
+
+
+
+
 });
   function getBarItems$() {
     let data = new Array<LeisureItemModel>();
@@ -143,50 +213,5 @@ describe('SuggestionsService', () => {
     }
     return data;
   };
-//
-// let testItemModelInformations: LeisureItemModel[] = [
-//   {
-//     "id": "1",
-//     "title": "firstAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//   },
-//   {
-//     "id": "2",
-//     "title": "secondAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//   },
-//   {
-//     "id": "3",
-//     "title": "thirdAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//   },
-//   {
-//     "id": "4",
-//     "title": "fourthAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//   },
-//   {
-//     "id": "5",
-//     "title": "fifthAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//     c
-//   },
-//   {
-//     "id": "6",
-//     "title": "sixthAccommodation",
-//     "description": "this is a description",
-//     "image": './assets/images/default_image.jpg',
-//     "category": LeisureCategory.ACCOMMODATION,
-//   },
-// ]
+
 

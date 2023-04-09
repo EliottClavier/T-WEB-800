@@ -1,5 +1,7 @@
 import {TripModel} from "./trip.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {UserModel} from "../users/user.model";
+import {UserInformationsModel} from "../user-informations/user-informations.model";
 
 describe('TripModel', () => {
   let trip: TripModel;
@@ -22,7 +24,7 @@ describe('TripModel', () => {
     expect(trip.name).toEqual('');
     trip.name = 'myTrip';
     expect(trip.name).toEqual('myTrip');
-  } );
+  });
 
 
   it('should set and get the start property', () => {
@@ -37,7 +39,7 @@ describe('TripModel', () => {
     expect(trip.endDate).toEqual(end);
     trip.endDate = getIsoStringFromDate(new Date());
     expect(trip.endDate).toEqual(getIsoStringFromDate(new Date()));
-  } );
+  });
 
   it('should set and get the steps property', () => {
     let steps = trip.steps;
@@ -51,6 +53,14 @@ describe('TripModel', () => {
     expect(trip.isSaved).toEqual(isSaved);
     trip.isSaved = true;
     expect(trip.isSaved).toEqual(true);
+  });
+  it('should return the correct user instance', () => {
+    let trip = new TripModel();
+    let userInfo = new UserInformationsModel(1, "john", "doe", "jd@jd.fr")
+    const testUser = new UserModel(userInfo, "token");
+    trip.user = testUser;
+
+    expect(trip.user).toEqual(testUser);
   });
 
 

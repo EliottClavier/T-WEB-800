@@ -30,7 +30,7 @@ export class TripService {
 
   sendTripAndUpdateStore(data: TripModel): void {
 
-    console.log('json : ', JSON.stringify(data));
+
     data.user = this.authService?.user ;
     this._httpclient.post<TripModel>(`${this.url}`, data).subscribe({
       next: trip => {
