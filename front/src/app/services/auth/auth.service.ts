@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, catchError, Observable, tap} from "rxjs";
 import {UserModel} from "../../models/users/user.model";
@@ -10,6 +10,7 @@ import jwt_decode from 'jwt-decode';
 export class AuthService {
 
   private _user: UserModel | undefined;
+  public userObservable = new BehaviorSubject<UserModel | undefined>(undefined);
 
   constructor(private http: HttpClient) { }
 
@@ -21,12 +22,13 @@ export class AuthService {
     }
 
     // Token exists, check its validity
-    return this.http.get(`/api/auth/valid-token?token=${token}`).pipe(
-      tap(() => {
+    return this.http.get(`/api/auth/validate-token?token=${token}`).pipe(
+      tap( () => {
         // Token is valid, retrieve UserModel object
         this.getUserByToken(token).subscribe(
           (user: UserModel) => {
             this.user = user;
+            this.userObservable.next(user);
           }
         );
       }),

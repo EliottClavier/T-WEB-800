@@ -15,6 +15,7 @@ sourceCompatibility = '17'
 repositories {
 	mavenCentral()
 	maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+	jcenter()
 }
 
 ext {
@@ -31,7 +32,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	implementation project(':tripi-common')
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
+	testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
 }
 
 dependencyManagement {

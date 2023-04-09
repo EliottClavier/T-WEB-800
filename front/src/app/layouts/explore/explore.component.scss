@@ -2,7 +2,46 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .save-button {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.filter-button {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .left-side-elements {
+    display: none;
+    position: relative;
+  }
+
+  .map-element {
+    position: absolute;
+  }
+
+  .map {
+    margin-top: 6rem;
+  }
+
+  .filter-button {
+    position: absolute;
+    top: 4rem;
+    left: 40%;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .filter-button {
+    left: 35%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .filter-button {
+    left: 29%;
+  }
 }

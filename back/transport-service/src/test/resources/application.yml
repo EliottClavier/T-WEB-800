@@ -23,3 +23,8 @@ google:
 
 # Sources
 sources: GOOGLEMAPS,AMADEUS
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

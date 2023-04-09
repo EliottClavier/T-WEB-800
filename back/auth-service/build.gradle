@@ -24,6 +24,7 @@ repositories {
 	mavenCentral()
 	maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
 	maven { url 'https://repo.spring.io/milestone' }
+	jcenter()
 }
 
 dependencies {
@@ -50,6 +51,8 @@ dependencies {
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation 'org.jetbrains:annotations:23.0.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 
 	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 
@@ -58,6 +61,7 @@ dependencies {
 	implementation project(':tripi-common')
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
 }
 
 dependencyManagement {
@@ -101,6 +105,17 @@ jacocoTestReport {
 		xml.required = false
 		csv.required = false
 		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
+configurations.configureEach {
+	resolutionStrategy {
+		eachDependency { details ->
+			if (details.requested.group == 'io.swagger.core.v3') {
+				details.useVersion("2.2.8")
+				details.because('Swagger ui and Kafka Avro serializer incoptable dependency io.swagger.core.v3:swagger-annotations')
+			}
+		}
 	}
 }
 

@@ -117,6 +117,32 @@ To deploy the application, you need to run the following command in the root fol
 
 #### Swagger
 
-Swagger is available on http://gateway.epitech-projects.me/swagger-ui.html for the online documentation   
+Swagger is available on :
+- accommodation-service: http://gateway.epitech-projects.me/accommodation/swagger-ui.html
+- activity-service: http://gateway.epitech-projects.me/enjoy/swagger-ui.html
+- auth-service: http://gateway.epitech-projects.me/auth/swagger-ui.html
+- bar-service: http://gateway.epitech-projects.me/bar/swagger-ui.html
+- location-service: http://gateway.epitech-projects.me/locations/swagger-ui.html
+- restaurant-service: http://gateway.epitech-projects.me/restaurant/swagger-ui.html
+- transport-service: http://gateway.epitech-projects.me/transports/swagger-ui.html
 
 ## Client application
+The client application is an Angular-based front-end for the Trippi platform. It consumes the REST API provided by the server application to display and manage user data, trip planning, and various other travel-related features.
+
+### Getting started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+#### Prerequisites
+- Node.js
+- Angular CLI
+- A modern web browser (e.g., Google Chrome)
+#### Installing
+1. Clone the repository `git clone https://github.com/EliottClavier/T-WEB-800.git`
+2. Navigate to the client application directory `cd front`
+3. Install the required dependencies by running `npm install`
+4. Set up environment variables for the client application by creating an `.env` file in the root of the client application directory, based on the `.env.example` file provided.
+5. Update the environment variables with the appropriate API keys and secrets for the Google Maps and Amadeus APIs.
+### Running the client application
+1. In the client application directory, run `ng serve` to start the development server.
+2. Open your web browser and navigate to `http://localhost:4200/` to access the client application.
+`ng test`
+This command will run the unit tests using the default test runner (Karma) and the testing framework (Jasmine) configured for the Angular project. The test results will be displayed in the terminal, and a browser window will open to show the test execution progress.

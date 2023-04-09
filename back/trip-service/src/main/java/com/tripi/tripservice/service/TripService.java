@@ -122,10 +122,16 @@ public class TripService {
 
         for (StepRequest stepRequest : tripRequest.getSteps()) {
             LocationDto location = new LocationDto();
-            location.setId(stepRequest.getLocation().getId());
-            location.setName(stepRequest.getLocation().getName());
-            location.setLat(stepRequest.getLocation().getLat());
-            location.setLng(stepRequest.getLocation().getLng());
+            if (stepRequest.getLocation() != null) {
+                if (stepRequest.getLocation().getId() != null) {
+                    location.setId(stepRequest.getLocation().getId());
+                } else {
+                    location.setId("ID");
+                }
+                location.setName(stepRequest.getLocation().getName());
+                location.setLat(stepRequest.getLocation().getLat());
+                location.setLng(stepRequest.getLocation().getLng());
+            }
 
             Step step = new Step();
             step.setTrip(trip);
@@ -138,26 +144,28 @@ public class TripService {
             step.setLocation(location);
             stepRepository.save(step);
 
-            for (LeisureItemRequest leisureItemRequest : stepRequest.getLeisures()) {
-                LocationDto leisureLocation = new LocationDto();
-                leisureLocation.setId(leisureItemRequest.getLocation().getId());
-                leisureLocation.setName(leisureItemRequest.getLocation().getName());
-                leisureLocation.setLat(leisureItemRequest.getLocation().getLat());
-                leisureLocation.setLng(leisureItemRequest.getLocation().getLng());
+            if (stepRequest.getLeisures() != null) {
+                for (LeisureItemRequest leisureItemRequest : stepRequest.getLeisures()) {
+                    LocationDto leisureLocation = new LocationDto();
+                    leisureLocation.setId(leisureItemRequest.getLocation().getId());
+                    leisureLocation.setName(leisureItemRequest.getLocation().getName());
+                    leisureLocation.setLat(leisureItemRequest.getLocation().getLat());
+                    leisureLocation.setLng(leisureItemRequest.getLocation().getLng());
 
-                LeisureItem leisure = new LeisureItem();
-                leisure.setLeisureItemId(leisureItemRequest.getId());
-                leisure.setRating(leisureItemRequest.getRating());
-                leisure.setPrice(leisureItemRequest.getPrice());
-                leisure.setStep(step);
-                leisure.setTitle(leisureItemRequest.getTitle());
-                leisure.setSubtitle(leisureItemRequest.getSubtitle());
-                leisure.setImage(leisureItemRequest.getImage());
-                leisure.setCategory(leisureItemRequest.getCategory());
-                leisure.setDescription(leisureItemRequest.getDescription());
-                leisure.setDate(convertStringToDate(leisureItemRequest.getDate()));
-                leisure.setLocation(leisureLocation);
-                leisureItemRepository.save(leisure);
+                    LeisureItem leisure = new LeisureItem();
+                    leisure.setLeisureItemId(leisureItemRequest.getId());
+                    leisure.setRating(leisureItemRequest.getRating());
+                    leisure.setPrice(leisureItemRequest.getPrice());
+                    leisure.setStep(step);
+                    leisure.setTitle(leisureItemRequest.getTitle());
+                    leisure.setSubtitle(leisureItemRequest.getSubtitle());
+                    leisure.setImage(leisureItemRequest.getImage());
+                    leisure.setCategory(leisureItemRequest.getCategory());
+                    leisure.setDescription(leisureItemRequest.getDescription());
+                    leisure.setDate(convertStringToDate(leisureItemRequest.getDate()));
+                    leisure.setLocation(leisureLocation);
+                    leisureItemRepository.save(leisure);
+                }
             }
         }
         if (updated) {

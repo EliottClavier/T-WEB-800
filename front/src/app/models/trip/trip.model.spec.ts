@@ -57,10 +57,9 @@ describe('TripModel', () => {
   it('should return the correct user instance', () => {
     let trip = new TripModel();
     let userInfo = new UserInformationsModel(1, "john", "doe", "jd@jd.fr")
-    const testUser = new UserModel(userInfo, "token");
-    trip.user = testUser;
+    trip.user = userInfo;
 
-    expect(trip.user).toEqual(testUser);
+    expect(trip.user).toEqual(userInfo);
   });
 
 
