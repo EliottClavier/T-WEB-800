@@ -1,0 +1,28 @@
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: -8px;
+}
+
+mat-icon:hover {
+    cursor: pointer;
+}
+
+.card-component {
+    display: flex;
+}
+
+.item-details img {
+    margin-right: 2rem;
+    width: 600px;
+}
+
+.content-text {
+    margin-top: 30px;
+}
+
+.content-button {
+    position: absolute;
+    bottom: 12px;
+    right: 0px;
+}

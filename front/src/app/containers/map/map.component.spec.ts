@@ -99,7 +99,7 @@ describe('MapComponent', () => {
     });
 
     it('should take all width available and relative height', () => {
-      expect(spectator.query('google-map[map]')?.getAttribute('height')).toEqual('65vh');
+      expect(spectator.query('google-map[map]')?.getAttribute('height')).toEqual('60vh');
       expect(spectator.query('google-map[map]')?.getAttribute('width')).toEqual('100%');
     });
 

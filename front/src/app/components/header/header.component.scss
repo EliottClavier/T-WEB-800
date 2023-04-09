@@ -11,20 +11,33 @@ h1 {
   margin: 0;
 }
 
+.header-elements {
+  display: flex;
+  justify-content: space-between;
+}
+
 .navigation {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
   align-items: center;
   color: #484848;
+}
 
-    span {
-      margin-left: -3rem;
-    }
+.menu-hamburger {
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {
   .navigation span {
     display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .menu-hamburger {
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    display: flex;
+    
   }
 }
