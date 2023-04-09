@@ -2,14 +2,8 @@ eureka:
   client:
     enabled: false
 
-# Spring Server setup
 server:
-  address: localhost
-  port: 9080
-  compression:
-    enabled: true
-  http2:
-    enabled: true
+  port: 9088
 
 # Google Configuration
 google:
