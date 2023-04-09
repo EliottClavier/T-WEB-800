@@ -54,6 +54,7 @@ export class LoginUserComponent {
           this._authService.getUserByToken(result.token).subscribe(
             (user: UserModel) => {
               this._authService.user = this.user = user;
+              this._authService.userObservable.next(this.user);
             }
           );
           this._dialogRef.close();

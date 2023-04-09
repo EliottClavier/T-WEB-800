@@ -15,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
-    if (request.url.includes('/api/trips') || request.url.includes('/api/trips')) {
+    if (request.url.includes('/api/trip')) {
       // Only apply the TokenInterceptor to requests that include '/api/secure'
       return this._authService.checkTokenValidity().pipe(
         switchMap(() => {
@@ -28,7 +28,7 @@ export class TokenInterceptor implements HttpInterceptor {
           return next.handle(authReq);
         }),
         catchError((err: HttpErrorResponse) => {
-          if (err.status === 401) {
+          if (err.status === 401 || err.status === 400) {
             // Redirect to login page if token is not valid
             this._router.navigate(['/']);
           }

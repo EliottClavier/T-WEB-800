@@ -21,18 +21,33 @@ export class TripService {
     return this._httpclient.get<TripModel[]>(`${this.url}/all?id=${this.authService?.user?.user.id}`);
   }
 
-  sendTripData(data: TripModel): Observable<TripModel> {
-    data.user = this.authService?.user ;
-    console.log(JSON.stringify(data));
-
-    return this._httpclient.post<TripModel>(`${this.url}`, data);
+  sendTripData(data: TripModel | any): Observable<TripModel> {
+    data.user = this.authService?.user?.user ;
+    // for each attribute of data, remove the first char which is underscore
+    let trip = Object.keys(data).reduce((acc: any, key: any) => {
+       acc[key.slice(1)] = data[key];
+       return acc;
+     }, {});
+    return this._httpclient.post<TripModel>(`${this.url}`, trip);
   }
 
-  sendTripAndUpdateStore(data: TripModel): void {
+  sendTripAndUpdateStore(data: TripModel | any): void {
+    data.user = this.authService?.user?.user;
 
+    // for each attribute of data, remove the first char which is underscore
+    let trip = Object.keys(data).reduce((acc: any, key: any) => {
+      acc[key.slice(1)] = data[key];
+      return acc;
+    }, {});
 
-    data.user = this.authService?.user ;
-    this._httpclient.post<TripModel>(`${this.url}`, data).subscribe({
+    trip.steps = trip.steps.map((step: any) => {
+      return Object.keys(step).reduce((acc: any, key: any) => {
+        acc[key.slice(1)] = data[key];
+        return acc;
+      }, {});
+    });
+
+    this._httpclient.post<TripModel>(`${this.url}`, trip).subscribe({
       next: trip => {
         this._tripStoreService.addOrUpdateTrip(trip)
       },

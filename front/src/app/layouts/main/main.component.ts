@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { LeisureCategory } from 'src/app/enums/leisure-category';
 import { LeisureItemModel } from 'src/app/models/leisures/leisure-item.model';
 import { LocationModel } from 'src/app/models/location/location.model';
+import {UserModel} from "../../models/users/user.model";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-main',
