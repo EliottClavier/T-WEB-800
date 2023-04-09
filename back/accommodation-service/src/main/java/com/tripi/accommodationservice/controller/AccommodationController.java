@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accommodation")
+@RequestMapping("/accommodations")
 public class AccommodationController {
 
     private final AccommodationService accommodationService;

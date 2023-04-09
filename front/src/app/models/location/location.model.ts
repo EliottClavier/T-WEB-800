@@ -52,6 +52,6 @@ export class LocationModel {
   }
 
   getCoordinates(): string {
-    return this.lng + "-" + this.lat;
+    return this.lat + "," + this.lng;
   }
 }

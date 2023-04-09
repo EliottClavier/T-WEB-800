@@ -5,6 +5,7 @@ import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TransitMode;
 import com.google.maps.model.TravelMode;
 import com.tripi.transportservice.adapters.DirectionsAdapter;
 import com.tripi.transportservice.enumeration.Source;
@@ -21,8 +22,9 @@ import java.util.List;
 
 @Component
 public class GoogleAdapter implements DirectionsAdapter {
+
     @Autowired
-    private DirectionsApiRequest directionsApiRequest;
+    private GeoApiContext geoApiContext;
 
     @Override
     public Source getSource() {
@@ -31,11 +33,11 @@ public class GoogleAdapter implements DirectionsAdapter {
 
     @Override
     public DirectionsResult getDirections(String origin, String destination, String travelMode, Date startDate) throws IOException, InterruptedException, ApiException {
-        DirectionsResult directionsResult = directionsApiRequest.mode(TravelMode.valueOf(travelMode.toUpperCase()))
+        DirectionsApiRequest directionsApiRequest = DirectionsApi.newRequest(geoApiContext);
+        return directionsApiRequest.mode(TravelMode.valueOf(travelMode.toUpperCase()))
                 .origin(origin)
                 .destination(destination)
-                .departureTime(startDate.toInstant()).await();
-
-        return directionsResult;
+                .departureTime(startDate.toInstant())
+                .await();
     }
 }

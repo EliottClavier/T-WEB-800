@@ -4,7 +4,7 @@ import {LeisureCategory} from "../../enums/leisure-category";
 import {HttpClient} from "@angular/common/http";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {LocationModel} from "../../models/location/location.model";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,22 @@ export class SuggestionsService {
   getPreviewSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string): Observable<LeisureItemModel[]> {
     !end && (end = start);
     category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
-    return this._httpclient.get<LeisureItemModel[]>(`${this.preview_suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+    return this._httpclient.get<LeisureItemModel[]>(`/api/${category.toLowerCase()}/preview/search?location=${location.getCoordinates()}&start=${start}&end=${end}`)
+      .pipe(
+        map((items: LeisureItemModel[]) => {
+          return items.map((item: LeisureItemModel) => Object.assign(new LeisureItemModel(), item));
+        })
+      )
   }
 
   getSuggestions(category: LeisureCategory, location: LocationModel, start: string, end: string = start): Observable<LeisureItemModel[]> {
     !end && (end = start);
     category === LeisureCategory.UNKNOWN && (category = LeisureCategory.ACCOMMODATION);
-    return this._httpclient.get<LeisureItemModel[]>(`${this.suggestions_url}${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`);
+    return this._httpclient.get<LeisureItemModel[]>(`/api${category.toLowerCase()}/search?location=${location.getCoordinates()}&start=${start}&end=${end}`)
+      .pipe(
+        map((items: LeisureItemModel[]) => {
+          return items.map((item: LeisureItemModel) => Object.assign(new LeisureItemModel(), item));
+        })
+      );
   }
 }

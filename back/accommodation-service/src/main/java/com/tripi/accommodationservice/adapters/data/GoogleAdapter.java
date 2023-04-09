@@ -5,9 +5,11 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.tripi.accommodationservice.adapters.DataAdapter;
 import com.tripi.accommodationservice.enumeration.Source;
+import com.tripi.common.model.enumeration.LeisureCategory;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.common.model.location.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Component
 public class GoogleAdapter implements DataAdapter {
+
+    @Value("${google.apiKey}")
+    private String googleKey;
 
     @Autowired
     private GeoApiContext geoApiContext;
@@ -56,18 +61,17 @@ public class GoogleAdapter implements DataAdapter {
                     .await();
 
             dataResponse = new DataResponse();
+            dataResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
             dataResponse.setId(placeDetails.placeId);
             dataResponse.setTitle(placeDetails.name);
             dataResponse.setSubtitle(placeDetails.formattedAddress);
             dataResponse.setDescription("");
 
             if (placeDetails.photos != null && placeDetails.photos.length > 0) {
-                ImageResult photo = new PhotoRequest(geoApiContext)
-                        .photoReference(placeDetails.photos[0].photoReference)
-                        .maxHeight(225)
-                        .maxWidth(400)
-                        .await();
-                dataResponse.setImage(Arrays.toString(photo.imageData));
+                String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=225";
+                url += "&photoreference=" + placeDetails.photos[0].photoReference;
+                url += "&key=" + googleKey;
+                dataResponse.setImage(url);
             } else {
                 dataResponse.setImage("");
             }
@@ -124,18 +128,17 @@ public class GoogleAdapter implements DataAdapter {
                     .await();
 
             dataResponse = new DataResponse();
+            dataResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
             dataResponse.setId(placeDetails.placeId);
             dataResponse.setTitle(placeDetails.name);
             dataResponse.setSubtitle(placeDetails.formattedAddress);
             dataResponse.setDescription("");
 
             if (placeDetails.photos != null && placeDetails.photos.length > 0) {
-                ImageResult photo = new PhotoRequest(geoApiContext)
-                        .photoReference(placeDetails.photos[0].photoReference)
-                        .maxHeight(225)
-                        .maxWidth(400)
-                        .await();
-                dataResponse.setImage(Arrays.toString(photo.imageData));
+                String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=225";
+                url += "&photoreference=" + placeDetails.photos[0].photoReference;
+                url += "&key=" + googleKey;
+                dataResponse.setImage(url);
             } else {
                 dataResponse.setImage("");
             }

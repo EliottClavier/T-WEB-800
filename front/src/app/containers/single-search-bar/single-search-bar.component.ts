@@ -29,6 +29,10 @@ export class SingleSearchBarComponent {
     this.searchForm.setValue({
       locationSearch: location.name,
       location: new LocationModel(location.id, location.name, location.lat, location.lng),
+      start: this.searchForm.get('start')!.value,
+      end: this.searchForm.get('end')!.value,
+      id: this.searchForm.get('id')!.value,
+      name: this.searchForm.get('name')!.value,
     });
   }
 

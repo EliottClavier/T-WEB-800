@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {TransportRequest} from "../../types/transport-request.type";
 import {TransportDirections} from "../../types/transport-options.type";
 import {getIsoStringFromDate} from "../../utils/date.utils";
@@ -14,10 +14,14 @@ export class TransportService {
     private _http: HttpClient,
   ) { }
 
-  public getTransportOptions(transportRequest: TransportRequest): Observable<TransportDirections> {
+  public getTransportOptions(transportRequest: TransportRequest): Observable<any> {
     !transportRequest.startDate && (transportRequest.startDate = getIsoStringFromDate(new Date()));
     return this._http.get<any>(
       `/api/transports/directions?origin=${transportRequest.directionRequest.origin}&destination=${transportRequest.directionRequest.destination}&travelMode=${transportRequest.directionRequest.travelMode}&startDate=${transportRequest.startDate}`
+    ).pipe(
+      map((response: any) => {
+        return response ? response[0] : response;
+      })
     );
   }
 }
