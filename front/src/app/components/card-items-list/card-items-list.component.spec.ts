@@ -5,7 +5,9 @@ import {AppModule} from "../../app.module";
 import {TranslateService} from "@ngx-translate/core";
 import {getAccommodationItems} from "../../utils/suggestions-mock.utils";
 import {OverlayContainer} from "@angular/cdk/overlay";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {CardItemDetailsViewComponent} from "../card-item-details-view/card-item-details-view.component";
+import {Observable, of} from "rxjs";
 
 
 describe('CardItemsComponent', () => {
@@ -13,6 +15,7 @@ describe('CardItemsComponent', () => {
   let threeCardItems: LeisureItemModel[];
   let component: CardItemsListComponent;
   let overlayContainer: OverlayContainer;
+  let dialog: MatDialog;
 
   const createComponent = createComponentFactory({
     component: CardItemsListComponent,
@@ -23,6 +26,7 @@ describe('CardItemsComponent', () => {
     spectator = createComponent();
     component = spectator.component;
     overlayContainer = spectator.inject(OverlayContainer);
+    dialog = spectator.inject(MatDialog);
   })
   afterEach(() => {
     // Ensure that the overlay container is cleared after each test
@@ -72,6 +76,16 @@ describe('CardItemsComponent', () => {
       spectator.detectChanges();
 
     });
+    it('should reset itemSelected when dialogRef is closed', () => {
+      const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<CardItemDetailsViewComponent>>({
+        afterClosed: of(null),
+      });
+      spyOn(dialog, 'open').and.returnValue(dialogRefSpy);
+      spectator.component.itemSelected = getAccommodationItems()[0];
 
+      spectator.component.openDialog();
+
+      expect(spectator.component.itemSelected).toBeUndefined();
+    });
   });
 });

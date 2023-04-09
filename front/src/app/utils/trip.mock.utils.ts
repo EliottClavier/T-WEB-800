@@ -7,52 +7,53 @@ import {LocationModel} from "../models/location/location.model";
 import TravelMode = google.maps.TravelMode;
 import {LeisureItemModel} from "../models/leisures/leisure-item.model";
 
-export function tripsTest() {
-  return {
-    "id": 0,
-    "name": "string",
-    "description": "string",
-    "startDate": "2020-10-15T00:00:00.000Z",
-    "endDate": "2020-10-15T00:00:00.000Z",
-    "location": {
-      "id": 0,
-      "name": "string",
-      "country": "string",
-      "city": "string",
-      "address": "string",
-      "zipCode": "string",
-      "latitude": 0,
-      "longitude": 0,
-      "type": "string"
-    },
-    "leisureItems": [
-      {
-        "id": 0,
-        "name": "string",
-        "description": "string",
-        "startDate": "2020-10-15T00:00:00.000Z",
-        "endDate": "2020-10-15T00:00:00.000Z",
-        "location": {
-          "id": 0,
-          "name": "string",
-          "country": "string",
-          "city": "string",
-          "address": "string",
-          "zipCode": "string",
-          "latitude": 0,
-          "longitude": 0,
-          "type": "string"
-        },
-        "type": "string"
-      }
-    ]
-  };
-}
+// export function tripsTest() {
+//   return {
+//     "id": 0,
+//     "name": "string",
+//     "description": "string",
+//     "startDate": "2020-10-15T00:00:00.000Z",
+//     "endDate": "2020-10-15T00:00:00.000Z",
+//     "location": {
+//       "id": 0,
+//       "name": "string",
+//       "country": "string",
+//       "city": "string",
+//       "address": "string",
+//       "zipCode": "string",
+//       "latitude": 0,
+//       "longitude": 0,
+//       "type": "string"
+//     },
+//     "leisureItems": [
+//       {
+//         "id": 0,
+//         "name": "string",
+//         "description": "string",
+//         "startDate": "2020-10-15T00:00:00.000Z",
+//         "endDate": "2020-10-15T00:00:00.000Z",
+//         "location": {
+//           "id": 0,
+//           "name": "string",
+//           "country": "string",
+//           "city": "string",
+//           "address": "string",
+//           "zipCode": "string",
+//           "latitude": 0,
+//           "longitude": 0,
+//           "type": "string"
+//         },
+//         "type": "string"
+//       }
+//     ]
+//   };
+// }
 export function getMockTrip() : TripModel {
 
   let date : string = getIsoStringFromDate(new Date());
   let leisures : LeisureItemModel[] = getAccommodationItems();
   let tripModel : TripModel = new TripModel();
+  tripModel.name = 'Trip 1';
   let stepModel : StepModel = new StepModel('0', 'step1', new LocationModel(), leisures, date, date);
   stepModel.travelMode = TravelMode.DRIVING;
   let step2Model : StepModel = new StepModel('1', 'step2', new LocationModel(), leisures, date, date);
@@ -102,3 +103,4 @@ let step2Model : StepModel= tripModel.steps[1];
   });
   return forms;
 }
+

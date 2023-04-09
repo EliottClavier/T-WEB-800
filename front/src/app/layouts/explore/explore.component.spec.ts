@@ -1,27 +1,31 @@
-import { ExploreComponent } from "./explore.component";
-import { createComponentFactory, mockProvider, Spectator } from "@ngneat/spectator";
-import { By } from "@angular/platform-browser";
-import { MultipleSearchBarsComponent } from "../../containers/multiple-search-bars/multiple-search-bars.component";
-import { AppModule } from "../../app.module";
-import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { MapComponent } from "../../containers/map/map.component";
-import { FormArray, FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { LocationModel } from "../../models/location/location.model";
-import { LocationService } from "../../services/location/location.service";
-import { BehaviorSubject, of } from "rxjs";
-import { StepDatesFiltersComponent } from "../../containers/step-dates-filter/step-dates-filters.component";
-import { SuggestionsStoreService } from "../../store/suggestions-store/suggestions-store.service";
-import { SearchBarEvent } from "../../types/search-bar-event.type";
-import { buildStepFormGroupControlsDetails } from "../../utils/search-bar-form-group/search-bar-form-group.utils";
-import { MapTravelModeSelectionComponent } from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
-import { SuggestionsService } from "../../services/suggestions-service/suggestions.service";
-import { getAccommodationItems, getSportingItems } from "../../utils/suggestions-mock.utils";
-import { CardsContainerComponent } from "../../containers/cards-container/cards-container.component";
-import { LeisureCategory } from "../../enums/leisure-category";
-import { LeisureCategoryFilterComponent } from "../../containers/leisure-category-filter/leisure-category-filter.component";
-import { LeisureItemModel } from "../../models/leisures/leisure-item.model";
-import { TripBuilderService } from "../../services/trip/trip-builder.service";
+import {ExploreComponent} from "./explore.component";
+import {createComponentFactory, mockProvider, Spectator} from "@ngneat/spectator";
+import {By} from "@angular/platform-browser";
+import {MultipleSearchBarsComponent} from "../../containers/multiple-search-bars/multiple-search-bars.component";
+import {AppModule} from "../../app.module";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {MapComponent} from "../../containers/map/map.component";
+import {FormArray, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {LocationModel} from "../../models/location/location.model";
+import {LocationService} from "../../services/location/location.service";
+import {BehaviorSubject, of, throwError} from "rxjs";
+import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
+import {SearchBarEvent} from "../../types/search-bar-event.type";
+import {buildStepFormGroupControlsDetails} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
+import {
+  MapTravelModeSelectionComponent
+} from "../../containers/map-travel-mode-selection/map-travel-mode-selection.component";
+import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {getAccommodationItems, getSportingItems} from "../../utils/suggestions-mock.utils";
+import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
+import {LeisureCategory} from "../../enums/leisure-category";
+import {
+  LeisureCategoryFilterComponent
+} from "../../containers/leisure-category-filter/leisure-category-filter.component";
+import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {
   AddSummaryHeader,
   AddSummaryLeisures,
@@ -34,6 +38,8 @@ import { TripModel } from "../../models/trip/trip.model";
 import { getIsoStringFromDate } from "../../utils/date.utils";
 import { StepModel } from "../../models/step/step.model";
 import TravelMode = google.maps.TravelMode;
+import {TripService} from "../../services/trip/trip.service";
+import {MatDialog} from "@angular/material/dialog";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -624,6 +630,99 @@ describe('ExploreComponent', () => {
       await component.generateSummary();
       expect(SavePdf.savePdf).toHaveBeenCalled();
     });
+  });
+
+  it('should save trip and send it if tripName is provided', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const tripService = spectator.inject(TripService);
+    const tripName = 'Test Trip';
+
+    spyOn(tripBuilderService, 'saveTrip').and.callThrough();
+    spyOn(tripService, 'sendTripAndUpdateStore');
+
+    spectator.component.onSaveTrip(tripName);
+
+    expect(tripBuilderService.saveTrip).toHaveBeenCalledWith(tripName);
+    expect(tripService.sendTripAndUpdateStore).toHaveBeenCalled();
+  });
+
+  it('should save trip and send it if searchFormsArray has length', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const tripService = spectator.inject(TripService);
+    const tripName = undefined;
+    // tripBuilderService.setName('Test Trip');
+
+    spyOn(tripBuilderService, 'getName').and.returnValue('Test Trip');
+    spyOn(tripBuilderService, 'saveTrip').and.callThrough();
+    spyOn(tripService, 'sendTripAndUpdateStore');
+
+    spectator.component.onSaveTrip(tripName);
+
+    expect(tripBuilderService.getName).toHaveBeenCalled();
+    expect(tripBuilderService.saveTrip).toHaveBeenCalledWith('Test Trip');
+    expect(tripService.sendTripAndUpdateStore).toHaveBeenCalled();
+  });
+
+  it('should open SaveTripDialogComponent if tripName is not provided and searchFormsArray is empty', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const dialog = spectator.inject(MatDialog);
+
+    spyOn(tripBuilderService, 'getName').and.returnValue('');
+    spyOn(dialog, 'open').and.callThrough();
+
+    spectator.component.onSaveTrip();
+
+    expect(tripBuilderService.getName).toHaveBeenCalled();
+    expect(dialog.open).toHaveBeenCalled();
+  });
+
+  it('should call newTrip and navigate to the root path', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const router = spectator.inject(Router);
+
+    spyOn(tripBuilderService, 'newTrip');
+    spyOn(router, 'navigate');
+
+    spectator.component.newTripForm();
+
+    expect(tripBuilderService.newTrip).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
+  });
+  it('should get preview suggestions and set suggestions data', () => {
+    const suggestionsService = spectator.inject(SuggestionsService);
+    const suggestionsStore = spectator.inject(SuggestionsStoreService);
+    const testData = [{ id: '1', name: 'Test Item 1' }, { id: '2', name: 'Test Item 2' }];
+
+    spyOn(suggestionsService, 'getPreviewSuggestions').and.returnValue(of(testData));
+    spyOn(suggestionsStore, 'setSuggestionsData');
+
+    const leisure = LeisureCategory.ACCOMMODATION;
+    const location = new LocationModel('', 'Nantes', 42.555, 37.444);
+    const startInterval = new Date();
+    const endInterval = new Date();
+
+    spectator.component.getPreviewSuggestions(leisure, location, startInterval, endInterval);
+
+    expect(suggestionsService.getPreviewSuggestions).toHaveBeenCalledWith(leisure, location, getIsoStringFromDate(startInterval), getIsoStringFromDate(endInterval));
+    expect(suggestionsStore.setSuggestionsData).toHaveBeenCalledWith(testData);
+  });
+
+  it('should handle error and set default suggestions data', () => {
+    const suggestionsService = spectator.inject(SuggestionsService);
+    const suggestionsStore = spectator.inject(SuggestionsStoreService);
+
+    spyOn(suggestionsService, 'getPreviewSuggestions').and.returnValue(throwError('error'));
+    spyOn(suggestionsStore, 'setSuggestionsData');
+
+    const leisure = LeisureCategory.ACCOMMODATION;
+    const location = new LocationModel('', 'Nantes', 42.555, 37.444);
+    const startInterval = new Date();
+    const endInterval = new Date();
+
+    spectator.component.getPreviewSuggestions(leisure, location, startInterval, endInterval);
+
+    expect(suggestionsService.getPreviewSuggestions).toHaveBeenCalledWith(leisure, location, getIsoStringFromDate(startInterval), getIsoStringFromDate(endInterval));
+    expect(suggestionsStore.setSuggestionsData).toHaveBeenCalledWith(getAccommodationItems());
   });
 
 });
