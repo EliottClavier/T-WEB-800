@@ -97,16 +97,5 @@ export class StepModel {
   set stepIndex(value: number) {
     this._stepIndex = value;
   }
-  toJson() {
-    return {
-      id: this.id,
-      name: this.name,
-      location: this.location,
-      leisures: this.leisures,
-      start: this.start,
-      end: this.end,
-      travelMode: this.travelMode,
-      stepIndex: this.stepIndex
-    };
-  }
+
 }

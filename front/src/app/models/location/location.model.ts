@@ -55,12 +55,5 @@ export class LocationModel {
     return this.lat + "," + this.lng;
   }
 
-  toJson() {
-    return {
-      id: this.id,
-      name: this.name,
-      lat: this.lat,
-      lng: this.lng
-    }
-  }
+
 }
