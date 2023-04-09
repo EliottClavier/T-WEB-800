@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripi.activityservice.config.ActivityConfig;
 import com.tripi.activityservice.factory.ActivityAdapterFactory;
 import com.tripi.activityservice.model.ActivityDetails;
-import com.tripi.common.model.leisureitem.LeisureItemCategoryEnum;
+import com.tripi.common.model.enumeration.LeisureCategory;
 import com.tripi.common.model.source.enums.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class ActivityService {
         this.activityAdapterFactory = activityAdapterFactory;
     }
 
-    public ResponseEntity<List<ActivityDetails>> searchEvents(String location, String start, String end, boolean preview, LeisureItemCategoryEnum category) {
+    public ResponseEntity<List<ActivityDetails>> searchEvents(String location, String start, String end, boolean preview, LeisureCategory category) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         formatter = formatter.withLocale( Locale.FRANCE );
         LocalDate startDate = LocalDate.parse(start, formatter);

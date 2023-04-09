@@ -65,9 +65,9 @@ describe('StepModel', () => {
   });
 
   it('should set and get the index property', () => {
-    expect(step.index).toEqual(0);
-    step.index = 1;
-    expect(step.index).toEqual(1);
+    expect(step.stepIndex).toEqual(0);
+    step.stepIndex = 1;
+    expect(step.stepIndex).toEqual(1);
   });
 
 

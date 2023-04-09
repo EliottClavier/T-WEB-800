@@ -1,5 +1,6 @@
 package com.tripi.common.model.leisureitem;
 
+import com.tripi.common.model.location.LocationDetails;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

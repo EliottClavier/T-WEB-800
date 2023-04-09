@@ -2,7 +2,7 @@ package com.tripi.activityservice.adapter.alleevents;
 
 
 import com.tripi.activityservice.model.ActivityDetails;
-import com.tripi.common.model.leisureitem.LeisureItemCategoryEnum;
+import com.tripi.common.model.enumeration.LeisureCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -44,7 +44,7 @@ class AlleventsActivityAdapterTest {
         when(restTemplate.postForEntity(eq("https://allevents.in/api/index.php/geo/nearby_locations"), anyString(), eq(String.class)))
                 .thenReturn(ResponseEntity.ok(locationResponse));
 
-        List<ActivityDetails> activityDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureItemCategoryEnum.SPORTING_EVENT);
+        List<ActivityDetails> activityDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureCategory.SPORTING_EVENT);
 
         assertEquals(1, activityDetailsList.size());
 
@@ -53,7 +53,7 @@ class AlleventsActivityAdapterTest {
         assertEquals("1", activityDetails.getId());
         assertEquals("Test description", activityDetails.getDescription());
         assertEquals("http://example.com/test.jpg", activityDetails.getImage());
-        assertEquals(LeisureItemCategoryEnum.SPORTING_EVENT, activityDetails.getCategory());
+        assertEquals(LeisureCategory.SPORTING_EVENT, activityDetails.getCategory());
         assertEquals(start.toString(), activityDetails.getDate());
     }
 

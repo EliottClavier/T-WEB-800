@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tripi.activityservice.adapter.ActivityAdapter;
 import com.tripi.activityservice.model.ActivityDetails;
-import com.tripi.common.model.leisureitem.LeisureItemCategoryEnum;
-import com.tripi.common.model.leisureitem.LocationDetails;
+import com.tripi.common.model.enumeration.LeisureCategory;
+import com.tripi.common.model.location.LocationDetails;
+import com.tripi.common.model.location.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class AlleventsActivityAdapter implements ActivityAdapter {
     }
 
     @Override
-    public List<ActivityDetails> searchEvents(String location, LocalDate start, LocalDate end, boolean preview, LeisureItemCategoryEnum category) throws JsonProcessingException {
+    public List<ActivityDetails> searchEvents(String location, LocalDate start, LocalDate end, boolean preview, LeisureCategory category) throws JsonProcessingException {
         UriComponentsBuilder citySearchUriBuilder = UriComponentsBuilder.fromHttpUrl("https://allevents.in/api/index.php/organizer/web/city/list");
         String locationName = getLocationName(location.split("-")[0], location.split("-")[1]);
         String body = "{\"query\":\"" + locationName + "\"}";
@@ -58,7 +59,7 @@ public class AlleventsActivityAdapter implements ActivityAdapter {
                 activityDetails.setImage(organizer.get("thumb_url").asText());
                 activityDetails.setDate(start.toString());
                 activityDetails.setCategory(category);
-                activityDetails.setLocation(new LocationDetails(organizer.get("organizer_id").asText(), locationName, Double.parseDouble(location.split("-")[0]), Double.parseDouble(location.split("-")[1]), organizer.get("thumb_url").asText()));
+                activityDetails.setLocation(new LocationDto(locationName, Double.parseDouble(location.split("-")[0]), Double.parseDouble(location.split("-")[1])));
                 activityDetailsList.add(activityDetails);
             }
         } catch (JsonProcessingException e) {

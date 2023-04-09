@@ -2,7 +2,7 @@ package com.tripi.activityservice.service;
 
 import com.tripi.activityservice.adapter.alleevents.AlleventsActivityAdapter;
 import com.tripi.activityservice.model.ActivityDetails;
-import com.tripi.common.model.leisureitem.LeisureItemCategoryEnum;
+import com.tripi.common.model.enumeration.LeisureCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,13 +37,13 @@ class ActivityServiceIntegrationTest {
 
     @Test
     void searchEvents_integration() throws Exception {
-        List<ActivityDetails> eventDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureItemCategoryEnum.CULTURAL_EVENT);
+        List<ActivityDetails> eventDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureCategory.CULTURAL_EVENT);
 
         assertFalse(eventDetailsList.isEmpty());
 
         ActivityDetails eventDetails = eventDetailsList.get(0);
 
-        assertEquals(LeisureItemCategoryEnum.CULTURAL_EVENT, eventDetails.getCategory());
+        assertEquals(LeisureCategory.CULTURAL_EVENT, eventDetails.getCategory());
         assertNotNull(eventDetails.getId());
         assertNotNull(eventDetails.getDescription());
         assertNotNull(eventDetails.getImage());

@@ -63,6 +63,7 @@ public class BasicStrategy implements AuthStrategy {
                 .flatMap(response -> {
                     try {
                         RegisterRequest registerRequest = objectMapper.readValue(requestBodyMono.block(), RegisterRequest.class);
+
                         registerRequest.setId(response.getUserDto().getId());
                         String newBody = objectMapper.writeValueAsString(registerRequest);
 

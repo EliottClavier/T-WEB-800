@@ -19,6 +19,10 @@ export class LeisureCategoryFilterComponent implements OnInit {
   ngOnInit(): void {
     this.leisureCategoryList = Object.values(LeisureCategory).map((value) => LeisureItemModel.categoryTranslateKey(value).toString());
     this.leisureCategoryList = this.leisureCategoryList.filter((value) => value != "unknown");
+    this.leisureCategoryList = this.leisureCategoryList.sort(function (x, y) {
+      return x.toString().localeCompare(y.toString());
+    });
+
   }
 
   getCategoryEnum(value: string): LeisureCategory {
@@ -36,7 +40,7 @@ export class LeisureCategoryFilterComponent implements OnInit {
         return LeisureCategory.SPORTING_EVENT
       default:
 
-        return LeisureCategory.ACCOMMODATION
+        return LeisureCategory.UNKNOWN
     }
   }
 

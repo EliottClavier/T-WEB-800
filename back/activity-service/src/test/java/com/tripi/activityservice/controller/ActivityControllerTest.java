@@ -7,11 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
-import static com.tripi.common.model.leisureitem.LeisureItemCategoryEnum.CULTURAL_EVENT;
-import static com.tripi.common.model.leisureitem.LeisureItemCategoryEnum.SPORTING_EVENT;
-import static org.mockito.ArgumentMatchers.*;
+import static com.tripi.common.model.enumeration.LeisureCategory.CULTURAL_EVENT;
+import static com.tripi.common.model.enumeration.LeisureCategory.SPORTING_EVENT;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)

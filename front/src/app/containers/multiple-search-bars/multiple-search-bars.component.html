@@ -1,7 +1,7 @@
 <form [formGroup]="searchForms" class="row justify-content-center">
   <div formArrayName="searchFormsArray" class="col-12">
     <div search-bars class="row m-0"
-         *ngFor="let searchForm of searchFormsArrayControls; let i = index"
+         *ngFor="let searchForm of this.tripBuilderService.searchFormsArrayControls; let i = index"
          [formGroupName]="i">
       <div class="row justify-content-between mx-0 p-0">
         <app-simple-icon-button
@@ -29,7 +29,7 @@
           class="col-2 px-0"
           [icon]="'delete'"
           [color]="'warn'"
-          [isDisabled]="searchFormsArrayControls.length === 1"
+          [isDisabled]="this.tripBuilderService.searchFormsArrayControls.length === 1"
           (buttonClick)="removeSearchBar(i)">
         </app-simple-icon-button>
       </div>
@@ -39,7 +39,7 @@
           class="col-2 px-0"
           [icon]="accessTravelModeIcon(i)"
           [isDisabled]="!isNextLocationValid(i)"
-          [noInteraction]="searchFormsArrayControls.length === i + 1"
+          [noInteraction]="this.tripBuilderService.searchFormsArrayControls.length === i + 1"
           (click)="isNextLocationValid(i) && (onItinerarySelect({ index: i, isEditing: false }))">
         </app-simple-icon-button>
         <div class="col-10 px-0 w-100"></div>

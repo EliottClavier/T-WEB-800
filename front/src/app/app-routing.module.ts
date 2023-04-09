@@ -4,10 +4,14 @@ import {MainComponent} from "./layouts/main/main.component";
 import {ExploreComponent} from "./layouts/explore/explore.component";
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import {AuthGuard} from "./guards/auth.guard";
+import {TripsContainerComponent} from "./containers/trips-container/trips-container.component";
 
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'explore/:location', component: ExploreComponent },
+  { path: 'explore', component: ExploreComponent },
+  // { path: 'my-trips', component: TripsContainerComponent, canActivate: [AuthGuard] },
+  { path: 'my-trips', component: TripsContainerComponent},
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 

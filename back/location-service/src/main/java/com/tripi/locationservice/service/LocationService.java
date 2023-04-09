@@ -1,6 +1,6 @@
 package com.tripi.locationservice.service;
 
-import com.tripi.common.model.leisureitem.LocationDetails;
+import com.tripi.common.model.location.LocationDetails;
 import com.tripi.common.model.source.enums.Source;
 import com.tripi.locationservice.adapter.LocationAdapter;
 import com.tripi.locationservice.config.LocationConfig;

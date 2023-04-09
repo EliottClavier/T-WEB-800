@@ -10,7 +10,6 @@ import {LocationModel} from "../../models/location/location.model";
 import {Observable} from "rxjs";
 import {addMatchers} from 'jasmine-marbles';
 
-
 describe('SuggestionsService', () => {
 
   let spectator: SpectatorService<SuggestionsService>;
@@ -59,7 +58,7 @@ describe('SuggestionsService', () => {
       }
     );
     let date = items[0].date;
-    let req = spectatorHttp.expectOne(`/api/preview/accommodations/search?location=${location.getCoordinates()}&start=&end=`, HttpMethod.GET);
+    let req = spectatorHttp.expectOne(`/api/accommodation/preview/search?location=${location.getCoordinates()}&start=&end=`, HttpMethod.GET);
     req.flush(getBarItems());
     expect(req.request.method).toEqual('GET');
 
@@ -95,7 +94,7 @@ describe('SuggestionsService', () => {
       }
     );
     let date = items[0].date;
-    let req = spectatorHttp.expectOne(`/api/suggestions/accommodations/search?location=${location.getCoordinates()}&start=&end=`, HttpMethod.GET);
+    let req = spectatorHttp.expectOne(`/api/accommodation/search?location=${location.getCoordinates()}&start=&end=`, HttpMethod.GET);
     req.flush(getBarItems());
     expect(req.request.method).toEqual('GET');
   });

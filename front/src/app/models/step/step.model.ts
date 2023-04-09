@@ -13,7 +13,7 @@ export class StepModel {
   private _start: string;
   private _end: string;
   private _travelMode?: TravelMode;
-  private _index: number = 0;
+  private _stepIndex: number = 0;
 
   constructor(
     id: string = uuidv4(), name: string = "",
@@ -90,11 +90,11 @@ export class StepModel {
     this._travelMode = value;
   }
 
-  get index(): number {
-    return this._index;
+  get stepIndex(): number {
+    return this._stepIndex;
   }
 
-  set index(value: number) {
-    this._index = value;
+  set stepIndex(value: number) {
+    this._stepIndex = value;
   }
 }

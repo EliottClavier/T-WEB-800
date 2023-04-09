@@ -1,6 +1,6 @@
 package com.tripi.locationservice.model.google;
 
-import com.tripi.common.model.leisureitem.LocationDetails;
+import com.tripi.common.model.location.LocationDetails;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

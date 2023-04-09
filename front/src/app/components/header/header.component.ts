@@ -5,6 +5,11 @@ import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserModel} from "../../models/users/user.model";
 import {tap} from "rxjs";
+import {Router} from "@angular/router";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
+import {FormArray} from "@angular/forms";
+import {getIsoStringFromDate} from "../../utils/date.utils";
+import {LocationModel} from "../../models/location/location.model";
 
 @Component({
   selector: 'app-header',
@@ -17,7 +22,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private tripBuilderService: TripBuilderService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -40,4 +47,30 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  myTrips() {
+    this.router.navigate(['/my-trips']);
+
+  }
+
+  home() {
+
+    let location : LocationModel  = this.tripBuilderService?.searchFormsArray.value[0].location;
+    let start : Date = this.tripBuilderService?.searchFormsArray.value[0].start;
+    let end : Date = this.tripBuilderService?.searchFormsArray.value[0].end;
+    console.log('header location : ', location);
+
+    location && this.router.navigate(
+      ['/', 'explore', location.name],
+      {
+        queryParams: {
+          start: getIsoStringFromDate(start),
+          end: getIsoStringFromDate(end),
+          lat: location.lat,
+          lng: location.lng,
+        }
+      }
+    );
+
+    this.router.navigate(['/']);
+  }
 }

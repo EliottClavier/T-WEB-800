@@ -2,7 +2,7 @@ package com.tripi.activityservice.service;
 
 import com.tripi.activityservice.adapter.alleevents.AlleventsActivityAdapter;
 import com.tripi.activityservice.model.ActivityDetails;
-import com.tripi.common.model.leisureitem.LeisureItemCategoryEnum;
+import com.tripi.common.model.enumeration.LeisureCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,7 +54,7 @@ class ActivityServiceTest {
         when(restTemplate.postForEntity(eq("https://allevents.in/api/index.php/geo/nearby_locations"), anyString(), eq(String.class)))
                 .thenReturn(ResponseEntity.ok(locationResponse));
 
-        List<ActivityDetails> eventDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureItemCategoryEnum.CULTURAL_EVENT);
+        List<ActivityDetails> eventDetailsList = alleventsEventAdapter.searchEvents(location, start, end, preview, LeisureCategory.CULTURAL_EVENT);
 
         assertEquals(1, eventDetailsList.size());
 
@@ -63,7 +63,7 @@ class ActivityServiceTest {
         assertEquals("1", eventDetails.getId());
         assertEquals("Test description", eventDetails.getDescription());
         assertEquals("http://example.com/test.jpg", eventDetails.getImage());
-        assertEquals(LeisureItemCategoryEnum.CULTURAL_EVENT, eventDetails.getCategory());
+        assertEquals(LeisureCategory.CULTURAL_EVENT, eventDetails.getCategory());
         assertEquals(start.toString(), eventDetails.getDate());
     }
 

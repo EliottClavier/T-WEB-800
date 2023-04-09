@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transport")
+@RequestMapping("/transports")
 public class TransportController {
 
     private final TransportService transportService;

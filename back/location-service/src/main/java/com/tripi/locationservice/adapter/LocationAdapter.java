@@ -1,6 +1,6 @@
 package com.tripi.locationservice.adapter;
 
-import com.tripi.common.model.leisureitem.LocationDetails;
+import com.tripi.common.model.location.LocationDetails;
 import jakarta.annotation.Nullable;
 
 import java.io.IOException;

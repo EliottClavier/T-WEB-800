@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.tripi.common.model.leisureitem.LeisureItemCategoryEnum.CULTURAL_EVENT;
-import static com.tripi.common.model.leisureitem.LeisureItemCategoryEnum.SPORTING_EVENT;
+import static com.tripi.common.model.enumeration.LeisureCategory.CULTURAL_EVENT;
+import static com.tripi.common.model.enumeration.LeisureCategory.SPORTING_EVENT;
 
 @RestController
 @RequestMapping("/enjoy")
