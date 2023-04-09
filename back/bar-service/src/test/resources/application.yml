@@ -1,3 +1,10 @@
 eureka:
   client:
     enabled: false
+
+# Google Configuration
+google:
+  apiKey: testGoogleApiKey
+
+# Sources
+sources: GOOGLEMAPS

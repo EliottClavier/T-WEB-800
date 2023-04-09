@@ -2,9 +2,9 @@ package com.tripi.locationservice.adapter.google;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tripi.common.model.location.LocationDetails;
+import com.tripi.common.model.source.enums.Source;
 import com.tripi.locationservice.adapter.LocationAdapter;
-import com.tripi.locationservice.model.LocationDetails;
-import com.tripi.locationservice.model.enums.Source;
 import com.tripi.locationservice.model.google.GoogleMapsLocationDetails;
 import com.tripi.locationservice.model.google.GoogleMapsLocationSearchResponse;
 import jakarta.annotation.Nullable;

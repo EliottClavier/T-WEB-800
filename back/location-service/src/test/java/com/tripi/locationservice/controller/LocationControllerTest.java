@@ -1,6 +1,6 @@
 package com.tripi.locationservice.controller;
 
-import com.tripi.locationservice.model.LocationDetails;
+import com.tripi.common.model.location.LocationDetails;
 import com.tripi.locationservice.service.LocationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

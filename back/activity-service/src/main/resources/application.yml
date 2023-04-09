@@ -2,6 +2,8 @@
 spring:
   application:
     name: activity-service
+  main:
+    allow-bean-definition-overriding: true
 
 # Spring Server setup
 server:
@@ -22,3 +24,6 @@ eureka:
   instance:
     hostname: ${SERVICE_HOST:localhost}
     prefer-ip-address: false
+
+data:
+  actives: ${DATA_ACTIVE:allevents}
