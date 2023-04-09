@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
-
+    this.tripBuilderService.newTrip()
     this.router.navigate(['/']);
   }
 }
