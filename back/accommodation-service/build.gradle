@@ -15,6 +15,7 @@ sourceCompatibility = '17'
 repositories {
 	mavenCentral()
 	maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+	jcenter()
 }
 
 ext {
@@ -22,11 +23,25 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'com.google.code.gson:gson:2.10.1'
+	implementation 'com.h2database:h2'
+	implementation 'org.projectlombok:lombok:1.18.26'
+	implementation 'com.google.maps:google-maps-services:0.19.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation project(path: ':tripi-common')
 	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-spring-webflux:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
 }
 
 dependencyManagement {
@@ -35,6 +50,37 @@ dependencyManagement {
 	}
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
+}
+
+tasks.named('test') {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
+configurations.configureEach {
+	resolutionStrategy {
+		eachDependency { details ->
+			if (details.requested.group == 'io.swagger.core.v3') {
+				details.useVersion("2.2.8")
+				details.because('Swagger ui and Kafka Avro serializer incoptable dependency io.swagger.core.v3:swagger-annotations')
+			}
+		}
+	}
 }

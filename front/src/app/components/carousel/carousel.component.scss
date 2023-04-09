@@ -4,6 +4,12 @@
 
 .carousel img {
     width: 100vw;
-    height: 45vh;
+    height: 40vh;
     object-fit: cover;
+}
+
+@media screen and (max-width: 1024px) {
+    .carousel img {
+        height: 30vh;
+    }
 }

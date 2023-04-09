@@ -3,4 +3,11 @@
     <div class="row justify-content-center">
         <app-single-search-bar search-bar></app-single-search-bar>
     </div>
+    <div class="cards">
+        <div *ngFor="let item of cardItems; let i = index">
+            <app-card-item [routerLink]="['/explore']" data-cy-card-component [id]="'card-'+i" [cardItem]="item"></app-card-item>
+        </div>
+    </div>
 </div>
+
+<app-footer></app-footer>

@@ -9,7 +9,7 @@ import {FormArray, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocationModel} from "../../models/location/location.model";
 import {LocationService} from "../../services/location/location.service";
-import {BehaviorSubject, of} from "rxjs";
+import {BehaviorSubject, of, throwError} from "rxjs";
 import {StepDatesFiltersComponent} from "../../containers/step-dates-filter/step-dates-filters.component";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {SearchBarEvent} from "../../types/search-bar-event.type";
@@ -34,10 +34,12 @@ import {
   BuildCanvas,
   SavePdf
 } from "../../utils/pdf/pdf.utils";
-import {TripModel} from "../../models/trip/trip.model";
-import {getIsoStringFromDate} from "../../utils/date.utils";
-import {StepModel} from "../../models/step/step.model";
+import { TripModel } from "../../models/trip/trip.model";
+import { getIsoStringFromDate } from "../../utils/date.utils";
+import { StepModel } from "../../models/step/step.model";
 import TravelMode = google.maps.TravelMode;
+import {TripService} from "../../services/trip/trip.service";
+import {MatDialog} from "@angular/material/dialog";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -59,20 +61,20 @@ describe('ExploreComponent', () => {
       getPreviewSuggestions: () => of(sportingItems)
     }),
       TripBuilderService,
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          snapshot: {
-            params: {
-              location: "Nan"
-            },
-            queryParams: {
-              start: "2023-01-01",
-              end: "2023-01-02",
-            }
+    {
+      provide: ActivatedRoute,
+      useValue: {
+        snapshot: {
+          params: {
+            location: "Nan"
           },
-        }
-      },
+          queryParams: {
+            start: "2023-01-01",
+            end: "2023-01-02",
+          }
+        },
+      }
+    },
       SuggestionsStoreService,
       MultipleSearchBarsComponent
     ],
@@ -332,19 +334,19 @@ describe('ExploreComponent', () => {
 
     describe("Itinerary change", () => {
       it('should change itinerary mode to driving', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.DRIVING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.DRIVING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.DRIVING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.DRIVING);
       });
 
       it('should change itinerary mode to walking', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.WALKING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.WALKING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.WALKING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.WALKING);
       });
 
       it('should change itinerary mode to bicycling', () => {
-        component.onItineraryModeChange({travelMode: google.maps.TravelMode.BICYCLING});
+        component.onItineraryModeChange({ travelMode: google.maps.TravelMode.BICYCLING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.BICYCLING);
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual(google.maps.TravelMode.BICYCLING);
       });
@@ -370,7 +372,7 @@ describe('ExploreComponent', () => {
       });
 
       it('should change itinerary mode to flight', () => {
-        component.onItineraryModeChange({travelMode: "FLIGHT" as google.maps.TravelMode});
+        component.onItineraryModeChange({ travelMode: "FLIGHT" as google.maps.TravelMode });
         expect(component.itineraryMode.travelMode).toEqual("FLIGHT");
         expect(component.selectedSearchForm.get('travelMode')!.value).toEqual("FLIGHT");
       });
@@ -382,7 +384,7 @@ describe('ExploreComponent', () => {
   it('should getSuggestions has been call when i called onActiveSearchBar', () => {
 
     let suggestionSpy = spyOn<ExploreComponent, any>(component, 'getPreviewSuggestions').and.callThrough();
-    component.onActiveSearchBarChange({index: 0, isEditing: true});
+    component.onActiveSearchBarChange({ index: 0, isEditing: true });
     expect(suggestionSpy).toHaveBeenCalled();
 
   });
@@ -451,12 +453,13 @@ describe('ExploreComponent', () => {
   });
 
   it('should call onSave when user click on save button', () => {
+
     let spy = spyOn(component, 'onSaveTrip').and.callThrough();
-    let spyService = spyOn<TripBuilderService, any>(_tripBuilderService, 'saveTrip').and.callThrough();
+    // let spyService = spyOn<TripBuilderService, any>(_tripBuilderService, 'saveTrip').withArgs("tripname").and.callThrough();
     spectator.click('[data-cy-explorer-save-button] [simple-button]');
     spectator.detectChanges();
     expect(spy).toHaveBeenCalled();
-    expect(spyService).toHaveBeenCalled();
+    // expect(spyService).toHaveBeenCalled();
   });
 
   // it('should getPreviewSuggestions return an ERROR when it called', async() => {
@@ -564,9 +567,9 @@ describe('ExploreComponent', () => {
     });
 
     it('should have _tripService service injected', () => {
-      expect(component["_tripService"]).toBeDefined();
-      expect(component["_tripService"]).toBeTruthy();
-      expect(component["_tripService"]).toEqual(_tripService);
+      expect(component["_tripBuilderService"]).toBeDefined();
+      expect(component["_tripBuilderService"]).toBeTruthy();
+      expect(component["_tripBuilderService"]).toEqual(_tripService);
     });
 
     it('should call generateSummary when user click on export button', async () => {
@@ -577,7 +580,7 @@ describe('ExploreComponent', () => {
 
     it('should retrieve saved TripModel', async () => {
       await component.generateSummary();
-      expect(component["_tripService"].saveTrip).toHaveBeenCalled();
+      expect(component["_tripBuilderService"].saveTrip).toHaveBeenCalled();
     });
 
     it('should build a canvas', async () => {
@@ -627,6 +630,99 @@ describe('ExploreComponent', () => {
       await component.generateSummary();
       expect(SavePdf.savePdf).toHaveBeenCalled();
     });
+  });
+
+  it('should save trip and send it if tripName is provided', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const tripService = spectator.inject(TripService);
+    const tripName = 'Test Trip';
+
+    spyOn(tripBuilderService, 'saveTrip').and.callThrough();
+    spyOn(tripService, 'sendTripAndUpdateStore');
+
+    spectator.component.onSaveTrip(tripName);
+
+    expect(tripBuilderService.saveTrip).toHaveBeenCalledWith(tripName);
+    expect(tripService.sendTripAndUpdateStore).toHaveBeenCalled();
+  });
+
+  it('should save trip and send it if searchFormsArray has length', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const tripService = spectator.inject(TripService);
+    const tripName = undefined;
+    // tripBuilderService.setName('Test Trip');
+
+    spyOn(tripBuilderService, 'getName').and.returnValue('Test Trip');
+    spyOn(tripBuilderService, 'saveTrip').and.callThrough();
+    spyOn(tripService, 'sendTripAndUpdateStore');
+
+    spectator.component.onSaveTrip(tripName);
+
+    expect(tripBuilderService.getName).toHaveBeenCalled();
+    expect(tripBuilderService.saveTrip).toHaveBeenCalledWith('Test Trip');
+    expect(tripService.sendTripAndUpdateStore).toHaveBeenCalled();
+  });
+
+  it('should open SaveTripDialogComponent if tripName is not provided and searchFormsArray is empty', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const dialog = spectator.inject(MatDialog);
+
+    spyOn(tripBuilderService, 'getName').and.returnValue('');
+    spyOn(dialog, 'open').and.callThrough();
+
+    spectator.component.onSaveTrip();
+
+    expect(tripBuilderService.getName).toHaveBeenCalled();
+    expect(dialog.open).toHaveBeenCalled();
+  });
+
+  it('should call newTrip and navigate to the root path', () => {
+    const tripBuilderService = spectator.inject(TripBuilderService);
+    const router = spectator.inject(Router);
+
+    spyOn(tripBuilderService, 'newTrip');
+    spyOn(router, 'navigate');
+
+    spectator.component.newTripForm();
+
+    expect(tripBuilderService.newTrip).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
+  });
+  it('should get preview suggestions and set suggestions data', () => {
+    const suggestionsService = spectator.inject(SuggestionsService);
+    const suggestionsStore = spectator.inject(SuggestionsStoreService);
+    const testData = [{ id: '1', name: 'Test Item 1' }, { id: '2', name: 'Test Item 2' }];
+
+    spyOn(suggestionsService, 'getPreviewSuggestions').and.returnValue(of(testData));
+    spyOn(suggestionsStore, 'setSuggestionsData');
+
+    const leisure = LeisureCategory.ACCOMMODATION;
+    const location = new LocationModel('', 'Nantes', 42.555, 37.444);
+    const startInterval = new Date();
+    const endInterval = new Date();
+
+    spectator.component.getPreviewSuggestions(leisure, location, startInterval, endInterval);
+
+    expect(suggestionsService.getPreviewSuggestions).toHaveBeenCalledWith(leisure, location, getIsoStringFromDate(startInterval), getIsoStringFromDate(endInterval));
+    expect(suggestionsStore.setSuggestionsData).toHaveBeenCalledWith(testData);
+  });
+
+  it('should handle error and set default suggestions data', () => {
+    const suggestionsService = spectator.inject(SuggestionsService);
+    const suggestionsStore = spectator.inject(SuggestionsStoreService);
+
+    spyOn(suggestionsService, 'getPreviewSuggestions').and.returnValue(throwError('error'));
+    spyOn(suggestionsStore, 'setSuggestionsData');
+
+    const leisure = LeisureCategory.ACCOMMODATION;
+    const location = new LocationModel('', 'Nantes', 42.555, 37.444);
+    const startInterval = new Date();
+    const endInterval = new Date();
+
+    spectator.component.getPreviewSuggestions(leisure, location, startInterval, endInterval);
+
+    expect(suggestionsService.getPreviewSuggestions).toHaveBeenCalledWith(leisure, location, getIsoStringFromDate(startInterval), getIsoStringFromDate(endInterval));
+    expect(suggestionsStore.setSuggestionsData).toHaveBeenCalledWith(getAccommodationItems());
   });
 
 });

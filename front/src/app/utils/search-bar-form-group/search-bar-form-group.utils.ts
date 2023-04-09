@@ -1,6 +1,7 @@
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {LocationModel} from "../../models/location/location.model";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {v4 as uuidv4} from "uuid";
 
 export const isLocation = (): ValidatorFn => {
   return (control: AbstractControl) : ValidationErrors | null => {
@@ -28,6 +29,12 @@ export const buildStepFormGroupControls = (): FormGroup => {
   );
   formGroup.addControl(
     "end", new FormControl<Date | null>(null, [ Validators.required ])
+  );
+  formGroup.addControl(
+    "id", new FormControl<string>( uuidv4(), [ ] )
+  );
+  formGroup.addControl(
+    "name", new FormControl<string>("" )
   );
   return formGroup;
 }

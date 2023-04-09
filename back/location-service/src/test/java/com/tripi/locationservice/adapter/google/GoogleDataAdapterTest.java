@@ -1,8 +1,8 @@
 package com.tripi.locationservice.adapter.google;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tripi.locationservice.model.LocationDetails;
-import com.tripi.locationservice.model.enums.Source;
+import com.tripi.common.model.location.LocationDetails;
+import com.tripi.common.model.source.enums.Source;
 import com.tripi.locationservice.model.google.GoogleMapsLocationDetails;
 import com.tripi.locationservice.model.google.GoogleMapsLocationSearchResponse;
 import org.junit.jupiter.api.Test;

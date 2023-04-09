@@ -5,9 +5,8 @@ import {LocationModel} from "../../models/location/location.model";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {buildStepFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
-import {LeisureCategory} from "../../enums/leisure-category";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
-import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
+import {TripBuilderService} from "../../services/trip/trip-builder.service";
 
 @Component({
   selector: 'app-single-search-bar',
@@ -26,18 +25,21 @@ export class SingleSearchBarComponent {
   }
 
   public onLocationOptionClick(location: LocationModel): void {
-    this.searchForm.patchValue({
+    this.searchForm.setValue({
       locationSearch: location.name,
       location: new LocationModel(location.id, location.name, location.lat, location.lng),
+      start: this.searchForm.get('start')!.value,
+      end: this.searchForm.get('end')!.value,
+      id: this.searchForm.get('id')!.value,
+      name: this.searchForm.get('name')!.value,
     });
-
   }
-
 
   public validate(): void {
     let location: LocationModel = this.searchForm.get('location')!.value;
     let start: Date = this.searchForm.get('start')!.value;
     let end: Date = this.searchForm.get('end')!.value;
+
 
     if (this.searchForm.valid) {
       this._router.navigate(

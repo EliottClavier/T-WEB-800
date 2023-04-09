@@ -1,13 +1,16 @@
 
 # Service name
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: transport-service
 
 # Spring Server setup
 server:
-  address: 0.0.0.0
-  port: ${DATA_SERVICE_PORT}
+  address: ${DATA_SERVICE_HOST:localhost}
+  port: ${DATA_SERVICE_PORT:8086}
   compression:
     enabled: true
   http2:
@@ -36,4 +39,10 @@ google:
 
 # Sources
 sources: GOOGLEMAPS,AMADEUS
+
+springdoc:
+  swagger-ui:
+    path: /transports/swagger-ui/index.html
+  api-docs:
+    path: /transports/swagger-ui/index.html
 

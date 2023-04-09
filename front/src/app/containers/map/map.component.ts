@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {LocationModel} from "../../models/location/location.model";
-import {GoogleMap, MapDirectionsResponse, MapDirectionsService} from "@angular/google-maps";
+import {GoogleMap} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {Observable} from 'rxjs';
 import {ItineraryMode} from "../../types/itinerary-mode.type";
@@ -9,6 +9,7 @@ import {getIsoStringFromDate} from "../../utils/date.utils";
 import {TransportDirections} from "../../types/transport-options.type";
 import {TransportService} from "../../services/transport/transport.service";
 import LatLng = google.maps.LatLng;
+import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 
 @Component({
   selector: 'app-map',
@@ -89,7 +90,16 @@ export class MapComponent implements OnChanges {
     }],
   }
 
-  constructor(private _transportService: TransportService) {}
+  constructor(
+    private _transportService: TransportService,
+    private _suggestionsStore: SuggestionsStoreService,
+  ) {}
+
+  public ngOnInit(): void {
+    this._suggestionsStore?.suggestions$?.subscribe((suggestions) => {
+      this.markers = this.itineraryView ? [] : suggestions;
+    });
+  }
 
   public ngOnChanges(): void {
     if (this.selectedLocation && this.selectedLocation.hasValidCoordinates()) {
@@ -123,12 +133,56 @@ export class MapComponent implements OnChanges {
 
     transitMode && (request.transitOptions = { modes: [transitMode] });
 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
     let transportRequest: TransportRequest = {
       directionRequest: request,
-      startDate: getIsoStringFromDate(startDate)
+      // If the start date is before tomorrow, we set it to tomorrow
+      startDate: getIsoStringFromDate(startDate <= tomorrow ? tomorrow : startDate),
     }
 
+    // Formatting the response to match the google maps rendering API
     this._getDirections(transportRequest).subscribe((response) => {
+
+      response.directionsResult.routes = response.directionsResult.routes.map((response: any) => {
+        response.bounds = new google.maps.LatLngBounds(
+          response.bounds.southwest,
+          response.bounds.northeast,
+        );
+        response.overview_path =
+          google.maps.geometry.encoding.decodePath(response.overviewPolyline.encodedPath);
+
+        response.legs = response.legs.map((leg: any) => {
+          leg.start_location =
+            new google.maps.LatLng(leg.startLocation.lat, leg.startLocation.lng);
+          leg.end_location =
+            new google.maps.LatLng(leg.endLocation.lat, leg.endLocation.lng);
+          leg.steps = leg.steps.map((step: any) => {
+            step.path = google.maps.geometry.encoding.decodePath(step.polyline.encodedPath);
+            step.start_location = new google.maps.LatLng(
+              step.startLocation.lat,
+              step.startLocation.lng,
+            );
+            step.end_location = new google.maps.LatLng(
+              step.endLocation.lat,
+              step.endLocation.lng,
+            );
+            step.travel_mode = step.travelMode;
+            return step;
+          });
+          return leg;
+        });
+
+        return response;
+      });
+
+      response.directionsResult.request = request;
+
+      console.log("Test", response)
+      console.log("Test", response)
+      console.log("Test", response)
+
       this.directionsResults = response.directionsResult;
     });
   }

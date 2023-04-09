@@ -1,7 +1,10 @@
 # Database Configuration
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
+    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}?createDatabaseIfNotExist=true
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -20,7 +23,7 @@ spring:
 
 # Spring Server setup
 server:
-  address: 0.0.0.0
+  address: ${DATA_SERVICE_HOST:localhost}
   port: ${DATA_SERVICE_PORT:8081}
   compression:
     enabled: true
@@ -56,3 +59,9 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
+
+springdoc:
+  swagger-ui:
+    path: /auth/swagger-ui/index.html
+  api-docs:
+    path: /auth/swagger-ui/index.html

@@ -1,15 +1,40 @@
-<header class="sticky-top h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none border-bottom"
-  style="z-index: 1;">
-  <div class="row justify-content-between align-items-center p-3 m-0">
-    <h1 class="col-2 text-center">TRIPI</h1>
-    <div class="col-2">
-      <div class="navigation">
-        <app-simple-icon-button [icon]="'history icon'"></app-simple-icon-button><span>History</span>
-        <app-simple-icon-button [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
-        <app-simple-icon-button [icon]="user ? 'exit_to_app' : 'perm_identity'" header-login
-          (buttonClick)="user ? disconnect() : openLoginDialog()">
-        </app-simple-icon-button><span>{{ user ? 'Logout' : 'Login' }}</span>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [(opened)]="opened">
+    <div class="close">
+      <mat-icon fontIcon="close icon" (click)="sidenav.close()"></mat-icon>
+    </div>
+    <div class="align-items-center p-1 m-0 header-elements">
+      <div class="navigation-sidebar">
+        <div class="sidebar-element">
+          <app-simple-icon-button (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span>History</span>
+        </div>
+        <div class="separation"></div>
+        <div class="sidebar-element">
+        <app-simple-icon-button (buttonClick)="home()" [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
+        </div>
+        <div class="separation"></div>
+        <div class="sidebar-element">
+        <app-simple-icon-button [icon]="user ? 'exit_to_app' : 'perm_identity'" header-login (buttonClick)="user ? disconnect() : openLoginDialog()"></app-simple-icon-button><span>{{ user ? 'Logout' : 'Login' }}</span>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <div class="menu-hamburger" (click)="sidenav.open()">
+          <mat-icon>menu</mat-icon>
+      </div>
+      <header class="sticky-top h-header m-0 p-0 d-xl-block d-lg-block d-md-none d-sm-none d-none border-bottom" style="z-index: 1;">
+          <div class="align-items-center p-1 m-0 header-elements">
+            <h1 class="col-2 text-center">TRIPI</h1>
+            <div class="col-2.5">
+              <div class="navigation">
+                <app-simple-icon-button (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span>History</span>
+                <app-simple-icon-button (buttonClick)="home()" [icon]="'map icon'"></app-simple-icon-button><span>Map</span>
+                <app-simple-icon-button [icon]="user ? 'exit_to_app' : 'perm_identity'" header-login (buttonClick)="user ? disconnect() : openLoginDialog()"></app-simple-icon-button><span style="margin-right: 2rem;">{{ user ? 'Logout' : 'Login' }}</span>
+              </div>
+            </div>
+          </div>
+      </header>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

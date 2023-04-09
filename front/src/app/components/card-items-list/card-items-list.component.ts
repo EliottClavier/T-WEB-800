@@ -3,6 +3,7 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {TranslateService} from "@ngx-translate/core";
 import {CardItemDetailsViewComponent} from "../card-item-details-view/card-item-details-view.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {NoopScrollStrategy} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-card-items',
@@ -36,6 +37,12 @@ export class CardItemsListComponent implements AfterContentChecked, OnDestroy {
     this.cardItemClicked.emit(this.itemSelected);
   }
 
+  onItemFromMapClicked(item: LeisureItemModel) {
+    this.itemSelected = item;
+    this.openDialog();
+    this.cardItemClicked.emit(this.itemSelected);
+  }
+
   openDialog() {
     this.dialogRef = this.dialog.open(CardItemDetailsViewComponent, {
       id: 'leisure-detail-dialog-id',
@@ -44,7 +51,8 @@ export class CardItemsListComponent implements AfterContentChecked, OnDestroy {
         isToDelete: this.isToDelete,
         stepIndex: this.stepIndex,
         leisureIndex: this.leisureIndex
-      }
+      },
+      scrollStrategy: new NoopScrollStrategy()
     });
     this.dialogRef.afterClosed().subscribe(result => {
       this.itemSelected = undefined;
@@ -54,4 +62,6 @@ export class CardItemsListComponent implements AfterContentChecked, OnDestroy {
   ngOnDestroy(): void {
 
   }
+
+
 }

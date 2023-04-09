@@ -22,7 +22,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthFilter implements GlobalFilter, Ordered {
@@ -53,6 +56,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
             if (isAuthRoute(cachedExchange)) {
                 return authStrategy.login(cachedExchange, chain);
+            }
+
+            if (isValidSwaggerRoute(cachedExchange)) {
+                return chain.filter(cachedExchange);
             }
 
             if(isDataServiceRoute(cachedExchange) && isFrontAppRoute(cachedExchange)) {
@@ -101,8 +108,12 @@ public class AuthFilter implements GlobalFilter, Ordered {
         return exchange.getRequest().getURI().getPath().startsWith("/auth/register");
     }
 
+    boolean isValidSwaggerRoute(ServerWebExchange exchange) {
+        return exchange.getRequest().getURI().getPath().contains("/swagger-ui/") || exchange.getRequest().getURI().getPath().startsWith("/v3/api-docs/");
+    }
+
     boolean isDataServiceRoute(ServerWebExchange exchange) {
-        List<String> dataServicesPaths = List.of("/eat", "/drink", "/sleep", "/travel", "/enjoy", "/location");
+        List<String> dataServicesPaths = List.of("/restaurant", "/bar", "/accommodation", "/culture", "/sport", "/locations", "/transports");
         return dataServicesPaths.stream().anyMatch(exchange.getRequest().getURI().getPath()::startsWith);
     }
 

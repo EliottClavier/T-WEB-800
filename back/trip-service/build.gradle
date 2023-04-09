@@ -25,8 +25,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2'
+	implementation 'junit:junit:4.13.1'
+	implementation 'org.projectlombok:lombok:1.18.22'
+	implementation 'javax.xml:jaxb-api:2.1'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+
 	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation project(':tripi-common')
+
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 dependencyManagement {
@@ -34,7 +47,26 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+test {
+	useJUnitPlatform()
+}
 
 tasks.named('test') {
-	useJUnitPlatform()
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
 }

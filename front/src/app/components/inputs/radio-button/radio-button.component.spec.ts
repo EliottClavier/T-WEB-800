@@ -72,4 +72,14 @@ describe('RadioButtonComponent', () => {
 
   });
 
+  it('should set _selectedOption and emit selectedOptionChange event', () => {
+    const value = 1;
+    spyOn(spectator.component.selectedOptionChange, 'emit');
+
+    spectator.component.selectedOption = value;
+
+    expect(spectator.component['_selectedOption']).toBe(value);
+    expect(spectator.component.selectedOptionChange.emit).toHaveBeenCalledWith(value);
+  });
+
 })

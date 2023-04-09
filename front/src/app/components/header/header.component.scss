@@ -11,20 +11,56 @@ h1 {
   margin: 0;
 }
 
+.header-elements {
+  display: flex;
+  justify-content: space-between;
+}
+
 .navigation {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
   align-items: center;
   color: #484848;
+}
 
-    span {
-      margin-left: -3rem;
-    }
+.sidebar-element {
+  display: flex;
+  align-items: center;
+}
+
+.separation {
+  border: 1px solid #484848;
+  width: 150px;
+}
+
+.menu-hamburger {
+  display: none;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  padding: 16px;
+  width: 200px;
+}
+
+.navigation-sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
 }
 
 @media screen and (max-width: 1024px) {
   .navigation span {
     display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .menu-hamburger {
+    margin-top: 16px;
+    margin-left: 24px;
+    display: flex;
   }
 }

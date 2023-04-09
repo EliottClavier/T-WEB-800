@@ -3,6 +3,7 @@ import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {BehaviorSubject, Subject} from "rxjs";
 import {LeisureCategory} from "../../enums/leisure-category";
 import {LocationModel} from "../../models/location/location.model";
+import {TripModel} from "../../models/trip/trip.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class SuggestionsStoreService {
 
   private _suggestions$: BehaviorSubject<LeisureItemModel[]> = new BehaviorSubject<LeisureItemModel[]>(new Array<LeisureItemModel>());
 
-  private _getCategory?: LeisureCategory;
+  private _category?: LeisureCategory;
   private _getLocation?: LocationModel;
   private _leisureItemToAdd$?: Subject<LeisureItemModel> = new Subject<LeisureItemModel>();
 
@@ -50,9 +51,16 @@ export class SuggestionsStoreService {
   get getCategory(): LeisureCategory {
     return this.getSuggestionsData()[0]?.category as LeisureCategory || LeisureCategory.UNKNOWN;
   }
+  get category(): LeisureCategory {
+    return this._category as LeisureCategory || LeisureCategory.ACCOMMODATION;
+  }
+  set category(value: LeisureCategory) {
+    this._category = value as LeisureCategory;
+  }
 
   get getLocation(): LocationModel {
     return this.getSuggestionsData()[0]?.location as LocationModel;
   }
+
 
 }

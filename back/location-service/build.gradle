@@ -16,6 +16,7 @@ repositories {
 	mavenCentral()
 	maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
 	maven { url 'https://repo.spring.io/milestone' }
+	jcenter()
 }
 
 ext {
@@ -34,7 +35,11 @@ dependencies {
 	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.google.maps:google-maps-services:0.19.0'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation project(':tripi-common')
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
 
+	testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
@@ -50,4 +55,15 @@ configurations.all {
 
 test {
 	useJUnitPlatform()
+}
+
+configurations.configureEach {
+	resolutionStrategy {
+		eachDependency { details ->
+			if (details.requested.group == 'io.swagger.core.v3') {
+				details.useVersion("2.2.8")
+				details.because('Swagger ui and Kafka Avro serializer incoptable dependency io.swagger.core.v3:swagger-annotations')
+			}
+		}
+	}
 }

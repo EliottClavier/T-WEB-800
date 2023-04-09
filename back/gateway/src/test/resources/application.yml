@@ -6,3 +6,6 @@ spring:
     main:
       allow-bean-definition-overriding: true
       web-application-type: reactive
+
+server:
+  port: 9080

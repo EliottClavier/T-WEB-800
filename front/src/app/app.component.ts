@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import {UserModel} from "./models/users/user.model";
+import {AuthService} from "./services/auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,18 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class AppComponent {
   title = 'front';
-  constructor() {
 
-}
+  constructor(private _authService: AuthService) {
+  }
+
+
+  public ngOnInit(): void {
+    this._authService.checkTokenValidity().subscribe(
+      (user: UserModel | undefined) => {
+        if (user) {
+          this._authService.user = user;
+        }
+      }
+    );
+  }
 }

@@ -1,7 +1,7 @@
 # Database Configuration
 spring:
   datasource:
-    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
+    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}?createDatabaseIfNotExist=true
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -20,7 +20,7 @@ spring:
 
 # Spring Server setup
 server:
-  address: 0.0.0.0
+  address: ${DATA_SERVICE_HOST:localhost}
   port: ${DATA_SERVICE_PORT:8083}
   compression:
     enabled: true

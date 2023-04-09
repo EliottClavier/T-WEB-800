@@ -1,3 +1,18 @@
 eureka:
   client:
     enabled: false
+
+server:
+  port: 9088
+
+# Google Configuration
+google:
+  apiKey: testGoogleApiKey
+
+# Sources
+sources: GOOGLEMAPS
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

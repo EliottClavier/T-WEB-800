@@ -111,7 +111,7 @@ public class AuthFilterTest {
     public void testIsDataServiceRoute() {
         ServerWebExchange exchange = Mockito.mock(ServerWebExchange.class);
         ServerHttpRequest request = Mockito.mock(ServerHttpRequest.class);
-        URI uri = URI.create("http://localhost:8080/eat/test");
+        URI uri = URI.create("http://localhost:8080/restaurant/test");
 
         when(exchange.getRequest()).thenReturn(request);
         when(request.getURI()).thenReturn(uri);

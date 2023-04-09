@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from "uuid";
+
 export class LocationModel {
   private _id: string;
   private _name: string;
@@ -50,6 +52,6 @@ export class LocationModel {
   }
 
   getCoordinates(): string {
-    return this.lng + "-" + this.lat;
+    return this.lat + "," + this.lng;
   }
 }

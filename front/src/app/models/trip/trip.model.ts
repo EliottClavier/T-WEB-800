@@ -1,5 +1,7 @@
 import {StepModel} from "../step/step.model";
 import {v4 as uuidv4} from "uuid";
+import {UserModel} from "../users/user.model";
+import {UserInformationsModel} from "../user-informations/user-informations.model";
 
 
 export class TripModel{
@@ -9,6 +11,7 @@ export class TripModel{
   private _steps: StepModel[];
   private _startDate: string = '';
   private _endDate: string = '';
+  private _user? : UserInformationsModel;
   private _isSaved: boolean = false;
 
   constructor(id: string = uuidv4(), name : string= '' ,steps: StepModel[]= []) {
@@ -57,6 +60,16 @@ export class TripModel{
   set endDate(value: string) {
     this._endDate = value;
   }
+
+
+  get user(): UserInformationsModel {
+    return this._user as UserInformationsModel;
+  }
+
+  set user(value: UserInformationsModel | undefined) {
+    this._user = value;
+  }
+
 
   get isSaved(): boolean {
     return this._isSaved;

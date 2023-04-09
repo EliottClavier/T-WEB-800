@@ -1,6 +1,7 @@
 package com.tripi.auth;
 
 import com.tripi.auth.configuration.WebSecurityConfiguration;
+import com.tripi.common.configuration.swagger.SwaggerConfig;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Log4j2
 @SpringBootApplication(scanBasePackages = {"com.tripi", "com.tripi.auth"})
-@Import({ WebSecurityConfiguration.class })
+@Import({ WebSecurityConfiguration.class, SwaggerConfig.class })
 @EnableJpaRepositories(basePackages = "com.tripi.auth.repository")
 @EnableDiscoveryClient
 public class AuthServiceApplication extends SpringBootServletInitializer {

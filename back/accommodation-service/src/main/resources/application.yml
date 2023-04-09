@@ -2,11 +2,14 @@
 spring:
   application:
     name: accommodation-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 # Spring Server setup
 server:
-  address: localhost
-  port: ${DATA_SERVICE_PORT}
+  address: ${DATA_SERVICE_HOST:localhost}
+  port: ${DATA_SERVICE_PORT:8085}
   compression:
     enabled: true
   http2:
@@ -22,3 +25,16 @@ eureka:
   instance:
     hostname: ${SERVICE_HOST:localhost}
     prefer-ip-address: false
+
+# Google Configuration
+google:
+  apiKey: ${GOOGLE_KEY}
+
+# Sources
+sources: GOOGLEMAPS
+
+springdoc:
+  swagger-ui:
+    path: /accommodation/swagger-ui/index.html
+  api-docs:
+    path: /accommodation/swagger-ui/index.html

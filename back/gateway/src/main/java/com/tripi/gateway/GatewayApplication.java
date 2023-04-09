@@ -1,5 +1,6 @@
 package com.tripi.gateway;
 
+import com.tripi.common.configuration.swagger.SwaggerConfig;
 import com.tripi.gateway.config.security.LoggingGlobalFilter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;

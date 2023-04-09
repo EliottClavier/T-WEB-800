@@ -64,7 +64,7 @@ describe('AuthService', () => {
           expect(service["user"]).toEqual(user);
       });
 
-      const req = httpMock.expectOne(`/api/auth/valid-token?token=${fakeToken}`);
+      const req = httpMock.expectOne(`/api/auth/validate-token?token=${fakeToken}`);
       expect(req.request.method).toEqual('GET');
       req.flush(
         {}, {
@@ -90,7 +90,7 @@ describe('AuthService', () => {
         expect(data).toEqual('Token is not valid');
     });
 
-    const req = httpMock.expectOne(`/api/auth/valid-token?token=${fakeToken}`);
+    const req = httpMock.expectOne(`/api/auth/validate-token?token=${fakeToken}`);
     expect(req.request.method).toEqual('GET');
     req.flush(
       {}, {

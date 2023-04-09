@@ -1,3 +1,16 @@
 eureka:
   client:
     enabled: false
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 9087
+
+data:
+  actives: allevents

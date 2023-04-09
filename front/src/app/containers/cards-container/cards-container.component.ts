@@ -1,8 +1,9 @@
-import {AfterContentChecked, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterContentChecked, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
+import {CardItemsListComponent} from "../../components/card-items-list/card-items-list.component";
 
 @Component({
   selector: 'app-card-container',
@@ -15,6 +16,8 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
   category: string = "";
   private _itemsSelected?: LeisureItemModel;
   @Output() onGetSuggestions: EventEmitter<void> = new EventEmitter<void>();
+
+  @ViewChild(CardItemsListComponent, {static: false}) cardItemsListComponent?: CardItemsListComponent;
 
   constructor( private _suggestionsStore: SuggestionsStoreService, private _translateService: TranslateService, private _suggestionsService: SuggestionsService) {
   }
@@ -59,7 +62,11 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
   onItemSelected($event: any) {
     this._itemsSelected = $event as LeisureItemModel;
+  }
 
+  onItemSelectedFromMap($event: any) {
+    this._itemsSelected = $event as LeisureItemModel;
+    this.cardItemsListComponent?.onItemFromMapClicked(this._itemsSelected);
   }
 
   onCloseDetails() {
@@ -68,8 +75,5 @@ export class CardsContainerComponent implements OnInit, AfterContentChecked {
 
   onShowMoreItems() {
     this.onGetSuggestions.emit();
-
   }
-
-
 }

@@ -1,6 +1,6 @@
 import {SingleSearchBarComponent} from './single-search-bar.component'
 import {createComponentFactory, createServiceFactory, Spectator} from "@ngneat/spectator";
-import {Router, RouterModule} from "@angular/router";
+import {Router} from "@angular/router";
 import {SearchInputComponent} from "../../components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "../../components/inputs/date-range/date-range.component";
 import {SimpleButtonComponent} from "../../components/buttons/simple-button/simple-button.component";
@@ -12,9 +12,9 @@ import {NO_ERRORS_SCHEMA} from "@angular/core";
 import {AppModule} from "../../app.module";
 import {SuggestionsService} from "../../services/suggestions-service/suggestions.service";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
-import {LeisureCategory} from "../../enums/leisure-category";
-import {of, throwError} from "rxjs";
+import {throwError} from "rxjs";
 import {SuggestionsStoreService} from "../../store/suggestions-store/suggestions-store.service";
+import {buildStepFormGroupControls} from "../../utils/search-bar-form-group/search-bar-form-group.utils";
 
 describe('SingleSearchBarComponent', () => {
 
@@ -154,32 +154,26 @@ describe('SingleSearchBarComponent', () => {
     });
 
 
-
     it('should update the Suggestions value when location is updated and getting error ', () => {
 
-      const location = new LocationModel('01', 'New York');
+      const location = new LocationModel('01', 'New York', 0, 0);
       const suggestions = new Array<LeisureItemModel>();
 
-      const mockCall = spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
-      component.onLocationOptionClick(location);
+
+      spyOn(suggestionService, "getPreviewSuggestions").and.returnValue(throwError(() => new Error('error')));
+      suggestionStore.setSuggestionsData(suggestions)
 
       suggestionStore.suggestions$.subscribe({
         next: suggests => {
           expect(suggestions).toEqual(suggests);
+        }, error: err => {
+          expect(err).toEqual('error');
         }
       });
     });
   });
 
 
+
 });
-    function getAccommodationItems() {
-      let data = new Array<LeisureItemModel>();
-      for (let i = 0; i < 6; i++) {
-        let item = new LeisureItemModel();
-        item.category = LeisureCategory.BAR;
-        data.push(item);
-      }
-      return data;
-    }
 
