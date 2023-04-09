@@ -194,7 +194,7 @@ export class ExploreComponent implements OnInit {
   }
 
   public onSaveTrip(tripName?: string) {
-    console.log(this._tripBuilderService.getTripFormsInstance().value[0]?.id);
+
     const searchFormsArray = this._tripBuilderService.getName();
 
     if (tripName != undefined) {

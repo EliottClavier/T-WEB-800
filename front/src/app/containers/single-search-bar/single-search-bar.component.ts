@@ -21,7 +21,6 @@ export class SingleSearchBarComponent {
     private _router: Router,
     private _suggestionService: SuggestionsService,
     private _suggestionStoreService: SuggestionsStoreService,
-    private tripBuilderService: TripBuilderService,
   ) {
   }
 

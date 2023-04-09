@@ -105,10 +105,6 @@ export class TripBuilderService {
     return this._stepsForms as FormGroup;
   }
 
-  private _isValidDate(date: any): boolean {
-    return date instanceof Date && !isNaN(date.getTime());
-  }
-
   private _getStepModelFromTripFormGroup(): TripModel {
 
     let index = 0;

@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
     let location : LocationModel  = this.tripBuilderService?.searchFormsArray.value[0].location;
     let start : Date = this.tripBuilderService?.searchFormsArray.value[0].start;
     let end : Date = this.tripBuilderService?.searchFormsArray.value[0].end;
-    console.log('header location : ', location);
+
 
     location && this.router.navigate(
       ['/', 'explore', location.name],
@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
-
+    this.tripBuilderService.newTrip()
     this.router.navigate(['/']);
   }
 }

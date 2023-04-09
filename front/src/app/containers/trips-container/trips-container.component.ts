@@ -119,6 +119,7 @@ export class TripsContainerComponent implements OnInit {
   }
 
   public homePageRedirection() : void {
+    this.tripBuilderService.newTrip()
     this.router.navigate( ['/']);
   }
 }
