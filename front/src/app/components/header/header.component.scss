@@ -22,8 +22,33 @@ h1 {
   color: #484848;
 }
 
+.sidebar-element {
+  display: flex;
+  align-items: center;
+}
+
+.separation {
+  border: 1px solid #484848;
+  width: 150px;
+}
+
 .menu-hamburger {
   display: none;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  padding: 16px;
+  width: 200px;
+}
+
+.navigation-sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
 }
 
 @media screen and (max-width: 1024px) {
@@ -34,10 +59,8 @@ h1 {
 
 @media screen and (max-width: 992px) {
   .menu-hamburger {
-    position: absolute;
-    top: 16px;
-    left: 24px;
+    margin-top: 16px;
+    margin-left: 24px;
     display: flex;
-    
   }
 }
