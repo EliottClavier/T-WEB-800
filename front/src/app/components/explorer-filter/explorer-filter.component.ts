@@ -1,31 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { LocationModel } from "../../models/location/location.model";
-import { SearchBarEvent } from "../../types/search-bar-event.type";
-import { ItineraryMode } from "../../types/itinerary-mode.type";
-import { SuggestionsService } from "../../services/suggestions-service/suggestions.service";
-import { LeisureCategory } from "../../enums/leisure-category";
-import { SuggestionsStoreService } from "../../store/suggestions-store/suggestions-store.service";
-import { getIsoStringFromDate } from "../../utils/date.utils";
-import { getAccommodationItems } from "../../utils/suggestions-mock.utils";
-import { LeisureItemModel } from "../../models/leisures/leisure-item.model";
-import { TripBuilderService } from "../../services/trip/trip-builder.service";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { SaveTripDialogComponent } from "../../containers/save-trip-dialog/save-trip-dialog.component";
-import { TripModel } from "../../models/trip/trip.model";
-import { TripService } from "../../services/trip/trip.service";
-import { TripStoreService } from "../../store/trip-store/trip-store.service";
-import { getPdf } from "../../utils/pdf/pdf.utils";
-import { ExplorerFilterComponent } from 'src/app/components/explorer-filter/explorer-filter.component';
+import { FormGroup, FormArray } from '@angular/forms';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SaveTripDialogComponent } from 'src/app/containers/save-trip-dialog/save-trip-dialog.component';
+import { LeisureCategory } from 'src/app/enums/leisure-category';
+import { LeisureItemModel } from 'src/app/models/leisures/leisure-item.model';
+import { LocationModel } from 'src/app/models/location/location.model';
+import { TripModel } from 'src/app/models/trip/trip.model';
+import { SuggestionsService } from 'src/app/services/suggestions-service/suggestions.service';
+import { TripBuilderService } from 'src/app/services/trip/trip-builder.service';
+import { TripService } from 'src/app/services/trip/trip.service';
+import { SuggestionsStoreService } from 'src/app/store/suggestions-store/suggestions-store.service';
+import { TripStoreService } from 'src/app/store/trip-store/trip-store.service';
+import { ItineraryMode } from 'src/app/types/itinerary-mode.type';
+import { SearchBarEvent } from 'src/app/types/search-bar-event.type';
+import { getIsoStringFromDate } from 'src/app/utils/date.utils';
+import { getPdf } from 'src/app/utils/pdf/pdf.utils';
+import { getAccommodationItems } from 'src/app/utils/suggestions-mock.utils';
 
 @Component({
-  selector: 'app-explore',
-  templateUrl: './explore.component.html',
-  styleUrls: ['./explore.component.scss']
+  selector: 'app-explorer-filter',
+  templateUrl: './explorer-filter.component.html',
+  styleUrls: ['./explorer-filter.component.scss']
 })
-export class ExploreComponent implements OnInit {
-
+export class ExplorerFilterComponent implements OnInit {
   private dialogRef?: MatDialogRef<SaveTripDialogComponent>;
   public searchForms: FormGroup = this._tripBuilderService.getTripFormsInstance()
 
@@ -80,10 +78,6 @@ export class ExploreComponent implements OnInit {
 
   public ngOnInit(): void {
     this._loadRouteParams();
-
-    // this.selectedSearchForm.get('start')?.valueChanges.subscribe((value: Date) => {
-    //   this.onActiveDateChange()
-    // });
     this.selectedSearchForm.get('end')?.valueChanges.subscribe((value: Date) => {
       this.onActiveDateChange()
     });
@@ -131,7 +125,6 @@ export class ExploreComponent implements OnInit {
         this._suggestionsStore.setSuggestionsData(data);
       },
       error: (error) => {
-        // alert("error");
         this._suggestionsStore.setSuggestionsData(getAccommodationItems());
       }
     });
@@ -197,12 +190,10 @@ export class ExploreComponent implements OnInit {
     const searchFormsArray = this._tripBuilderService.getName();
 
     if (tripName != undefined) {
-
       let trip = this._tripBuilderService.saveTrip(tripName);
       this._tripService.sendTripAndUpdateStore(trip)
 
     } else if (searchFormsArray?.length != 0) {
-
       let trip = this._tripBuilderService.saveTrip(searchFormsArray);
       this._tripService.sendTripAndUpdateStore(trip);
 
@@ -227,16 +218,10 @@ export class ExploreComponent implements OnInit {
   }
 
   onActiveDateChange() {
-
     let location: LocationModel = this.selectedSearchForm.get('location')?.value;
     let start: Date = this.selectedSearchForm.get('start')?.value;
     let end: Date = this.selectedSearchForm.get('end')?.value;
     let leisure: LeisureCategory = this._suggestionsStore.category;
     this.getPreviewSuggestions(leisure, this.selectedLocation, start, end);
-  }
-
-  public openFilters(): void {
-    this._dialog.open(ExplorerFilterComponent, {
-    });
   }
 }

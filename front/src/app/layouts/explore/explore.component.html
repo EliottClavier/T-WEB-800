@@ -58,14 +58,15 @@
       </div>
     </div>
     <div class="filter-button">
-      <app-simple-button
+      <app-simple-button 
+        (click)="openFilters()"
         data-cy-explorer-filters-button
         [label]="'FILTERS'"
-        [icon]="'search'">
+        [icon]="'search'" >
       </app-simple-button>
     </div>
     <div class=" map-element col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 border-lightgray-left">
-      <div class="map row">
+      <div class="map row" >
         <div class="col-12 px-0">
           <app-map
             map
