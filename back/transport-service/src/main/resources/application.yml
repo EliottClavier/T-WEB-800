@@ -1,6 +1,9 @@
 
 # Service name
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: transport-service
 
@@ -36,4 +39,10 @@ google:
 
 # Sources
 sources: GOOGLEMAPS,AMADEUS
+
+springdoc:
+  swagger-ui:
+    path: /transports/swagger-ui/index.html
+  api-docs:
+    path: /transports/swagger-ui/index.html
 

@@ -47,7 +47,7 @@ spring:
         - id: activity-service
           uri: lb://activity-service
           predicates:
-            - Path=/sport/**, /culture/**
+            - Path=/sport/**, /culture/**, /enjoy/**
 
         - id: transport-service
           uri: lb://transport-service

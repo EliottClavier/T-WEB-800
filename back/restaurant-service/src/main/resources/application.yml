@@ -1,5 +1,8 @@
 # Service name
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: restaurant-service
 
@@ -30,4 +33,10 @@ google:
 
 # Sources
 sources: GOOGLEMAPS
+
+springdoc:
+  swagger-ui:
+    path: /restaurant/swagger-ui/index.html
+  api-docs:
+    path: /restaurant/swagger-ui/index.html
 

@@ -1,5 +1,8 @@
 # Service name
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: bar-service
 
@@ -30,4 +33,10 @@ google:
 
 # Sources
 sources: GOOGLEMAPS
+
+springdoc:
+  swagger-ui:
+    path: /bar/swagger-ui/index.html
+  api-docs:
+    path: /bar/swagger-ui/index.html
 
