@@ -41,6 +41,7 @@ describe('Explore', () => {
 
     describe('Search bars', () => {
       it("should add 'Paris' in search bar when searching 'Par'", () => {
+        cy.intercept('GET', '/api/accommodation/**', req => req.destroy());
         cy.intercept('GET', '/api/locations/suggestions/Par', {fixture: '../fixtures/explore/200_search-bar_suggestion', statusCode: 200}).as('200_search-bar_suggestion');
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').find('button[search-input-suffix]').click();
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').find('input').clear().type('Par');
@@ -70,6 +71,7 @@ describe('Explore', () => {
 
       it('should switch to itinerary view', () => {
         cy.get('app-map-travel-mode-selection[map-travel-mode-selection]').should('not.exist');
+        cy.intercept('GET', '/api/accommodation/**', req => req.destroy());
         cy.intercept('GET', '/api/locations/suggestions/Nan', {fixture: '../fixtures/explore/200_search-bar_suggestion', statusCode: 200}).as('200_search-bar_suggestion');
 
         cy.get('app-multiple-search-bars[search-bar] app-simple-icon-button[search-bar-add]').find('button').click();
