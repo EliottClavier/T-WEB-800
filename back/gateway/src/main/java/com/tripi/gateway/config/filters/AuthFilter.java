@@ -102,7 +102,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     }
 
     boolean isDataServiceRoute(ServerWebExchange exchange) {
-        List<String> dataServicesPaths = List.of("/restaurant", "/bar", "/accommodation", "/activity", "/locations", "/transports");
+        List<String> dataServicesPaths = List.of("/restaurant", "/bar", "/accommodation", "/culture", "/sport", "/locations", "/transports");
         return dataServicesPaths.stream().anyMatch(exchange.getRequest().getURI().getPath()::startsWith);
     }
 

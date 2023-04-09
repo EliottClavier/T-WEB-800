@@ -1,9 +1,9 @@
-<form [formGroup]="searchForms" class="row justify-content-center">
+<form [formGroup]="searchForms" class="row justify-content-center search-bar-overflow">
   <div formArrayName="searchFormsArray" class="col-12">
     <div search-bars class="row m-0"
          *ngFor="let searchForm of this.tripBuilderService.searchFormsArrayControls; let i = index"
          [formGroupName]="i">
-      <div class="row justify-content-between mx-0 p-0">
+      <div class="row justify-content-between mx-0 p-0 ">
         <app-simple-icon-button
           search-bar-itinerary-arrow
           class="col-2 mx-0 px-0"

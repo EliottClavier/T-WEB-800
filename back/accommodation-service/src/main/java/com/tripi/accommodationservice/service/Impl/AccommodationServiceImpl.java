@@ -3,6 +3,7 @@ package com.tripi.accommodationservice.service.Impl;
 import com.google.maps.errors.ApiException;
 import com.tripi.accommodationservice.adapters.DataAdapter;
 import com.tripi.accommodationservice.enumeration.Source;
+import com.tripi.common.model.leisureItems.LeisureItemsResponse;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.accommodationservice.service.AccommodationService;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public List<DataResponse> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException {
-        List<DataResponse> dataResponses = new ArrayList<>();
+    public List<LeisureItemsResponse> getPreviewAccommodations(String location) throws IOException, InterruptedException, ApiException {
+        List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (DataAdapter dataAdapter : dataAdapters) {
             if (activeSources.contains(dataAdapter.getSource())) {
                 dataResponses.addAll(dataAdapter.getPreviewData(location));
@@ -33,8 +34,8 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public List<DataResponse> getAccommodations(String location) throws IOException, InterruptedException, ApiException {
-        List<DataResponse> dataResponses = new ArrayList<>();
+    public List<LeisureItemsResponse> getAccommodations(String location) throws IOException, InterruptedException, ApiException {
+        List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (DataAdapter dataAdapter : dataAdapters) {
             if (activeSources.contains(dataAdapter.getSource())) {
                 dataResponses = dataAdapter.getData(location);

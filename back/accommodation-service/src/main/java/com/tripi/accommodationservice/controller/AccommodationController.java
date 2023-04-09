@@ -1,6 +1,7 @@
 package com.tripi.accommodationservice.controller;
 
 import com.google.maps.errors.ApiException;
+import com.tripi.common.model.leisureItems.LeisureItemsResponse;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.accommodationservice.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accommodations")
+@RequestMapping("/accommodation")
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
@@ -23,12 +24,12 @@ public class AccommodationController {
     }
 
     @GetMapping("/preview/search")
-    public List<DataResponse> getPreviewAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+    public List<LeisureItemsResponse> getPreviewAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
         return accommodationService.getPreviewAccommodations(location);
     }
 
     @GetMapping("/search")
-    public List<DataResponse> getAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
+    public List<LeisureItemsResponse> getAccommodations(@RequestParam("location") String location) throws IOException, InterruptedException, ApiException {
         return accommodationService.getAccommodations(location);
     }
 

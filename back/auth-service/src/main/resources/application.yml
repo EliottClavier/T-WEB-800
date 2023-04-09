@@ -20,7 +20,7 @@ spring:
 
 # Spring Server setup
 server:
-  address: 0.0.0.0
+  address: ${DATA_SERVICE_HOST:localhost}
   port: ${DATA_SERVICE_PORT:8081}
   compression:
     enabled: true

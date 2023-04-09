@@ -6,6 +6,7 @@ import com.google.maps.model.*;
 import com.tripi.accommodationservice.adapters.DataAdapter;
 import com.tripi.accommodationservice.enumeration.Source;
 import com.tripi.common.model.enumeration.LeisureCategory;
+import com.tripi.common.model.leisureItems.LeisureItemsResponse;
 import com.tripi.common.model.response.DataResponse;
 import com.tripi.common.model.location.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class GoogleAdapter implements DataAdapter {
     }
 
     @Override
-    public List<DataResponse> getPreviewData(String location) throws IOException, InterruptedException, ApiException {
+    public List<LeisureItemsResponse> getPreviewData(String location) throws IOException, InterruptedException, ApiException {
         double[] latLngStrings = Arrays.stream(location.split(","))
                 .mapToDouble(Double::parseDouble)
                 .toArray();
@@ -44,9 +45,9 @@ public class GoogleAdapter implements DataAdapter {
                 .rankby(RankBy.PROMINENCE)
                 .await();
 
-        List<DataResponse> dataResponses = new ArrayList<>();
+        List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            DataResponse dataResponse;
+            LeisureItemsResponse dataResponse;
 
             PlaceDetails placeDetails = PlacesApi.placeDetails(geoApiContext, placesSearchResponse.results[i].placeId)
                     .fields(
@@ -60,7 +61,7 @@ public class GoogleAdapter implements DataAdapter {
                     )
                     .await();
 
-            dataResponse = new DataResponse();
+            dataResponse = new LeisureItemsResponse();
             dataResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
             dataResponse.setId(placeDetails.placeId);
             dataResponse.setTitle(placeDetails.name);
@@ -99,7 +100,7 @@ public class GoogleAdapter implements DataAdapter {
     }
 
     @Override
-    public List<DataResponse> getData(String location) throws IOException, InterruptedException, ApiException {
+    public List<LeisureItemsResponse> getData(String location) throws IOException, InterruptedException, ApiException {
         double[] latLngStrings = Arrays.stream(location.split(","))
                 .mapToDouble(Double::parseDouble)
                 .toArray();
@@ -111,9 +112,9 @@ public class GoogleAdapter implements DataAdapter {
                 .rankby(RankBy.PROMINENCE)
                 .await();
 
-        List<DataResponse> dataResponses = new ArrayList<>();
+        List<LeisureItemsResponse> dataResponses = new ArrayList<>();
         for (int i = 0; i < placesSearchResponse.results.length; i++) {
-            DataResponse dataResponse;
+            LeisureItemsResponse dataResponse;
 
             PlaceDetails placeDetails = PlacesApi.placeDetails(geoApiContext, placesSearchResponse.results[i].placeId)
                     .fields(
@@ -127,7 +128,7 @@ public class GoogleAdapter implements DataAdapter {
                     )
                     .await();
 
-            dataResponse = new DataResponse();
+            dataResponse = new LeisureItemsResponse();
             dataResponse.setCategory(LeisureCategory.ACCOMMODATIONS);
             dataResponse.setId(placeDetails.placeId);
             dataResponse.setTitle(placeDetails.name);

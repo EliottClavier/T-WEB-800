@@ -1,8 +1,8 @@
 package com.tripi.locationservice.factory;
 
+import com.tripi.common.model.source.enums.Source;
 import com.tripi.locationservice.adapter.LocationAdapter;
 import com.tripi.locationservice.adapter.google.GoogleDataAdapter;
-import com.tripi.locationservice.model.enums.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
