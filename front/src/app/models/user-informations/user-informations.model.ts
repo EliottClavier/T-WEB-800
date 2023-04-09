@@ -44,4 +44,12 @@ export class UserInformationsModel {
   set email(email: string) {
     this._email = email;
   }
+  toJson() {
+    return {
+      id: this.id,
+      firstname: this.firstname,
+      lastname: this.lastname,
+      email: this.email,
+    };
+  }
 }
