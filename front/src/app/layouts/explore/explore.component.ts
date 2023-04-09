@@ -193,7 +193,7 @@ export class ExploreComponent implements OnInit {
   }
 
   public onSaveTrip(tripName?: string) {
-    console.log(this._tripBuilderService.getTripFormsInstance().value[0]?.id);
+
     const searchFormsArray = this._tripBuilderService.getName();
 
     if (tripName != undefined) {
@@ -228,7 +228,7 @@ export class ExploreComponent implements OnInit {
   }
 
   onActiveDateChange() {
-    console.log('onActiveDateChange')
+
     let location: LocationModel = this.selectedSearchForm.get('location')?.value;
     let start: Date = this.selectedSearchForm.get('start')?.value;
     let end: Date = this.selectedSearchForm.get('end')?.value;
