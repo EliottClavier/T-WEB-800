@@ -57,7 +57,7 @@ spring:
         - id: accommodation-service
           uri: lb://accommodation-service
           predicates:
-            - Path=/sleep/**
+            - Path=/accommodation/**
 
         - id: user-service
           uri: lb://user-service

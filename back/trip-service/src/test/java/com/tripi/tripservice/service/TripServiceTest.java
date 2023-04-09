@@ -96,7 +96,7 @@ public class TripServiceTest {
         leisureItem.setDescription("Description");
         leisureItem.setImage("Image URL");
         leisureItem.setLocation(locationDto);
-        leisureItem.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItem.setCategory(LeisureCategory.ACCOMMODATIONS);
         leisureItem.setDate(startDate);
         step.setLeisures(Collections.singletonList(leisureItem));
         trip.setSteps(Collections.singletonList(step));
@@ -137,7 +137,7 @@ public class TripServiceTest {
         assertEquals("Marseille", leisureItemResponse.getLocation().getName());
         assertEquals(43.296482, leisureItemResponse.getLocation().getLat());
         assertEquals(5.36978, leisureItemResponse.getLocation().getLng());
-        assertEquals(LeisureCategory.ACCOMMODATION, leisureItemResponse.getCategory());
+        assertEquals(LeisureCategory.ACCOMMODATIONS, leisureItemResponse.getCategory());
         assertEquals(startDateString, leisureItemResponse.getDate());
     }
 
@@ -195,6 +195,7 @@ public class TripServiceTest {
         String startDateString = tripService.convertDateToString(startDate);
         String endDateString = tripService.convertDateToString(endDate);
         LocationDto locationDto = new LocationDto();
+        locationDto.setId("random_id");
         locationDto.setName("Marseille");
         locationDto.setLat(43.296482);
         locationDto.setLng(5.36978);
@@ -276,7 +277,7 @@ public class TripServiceTest {
         leisureItemRequest.setDescription("Description");
         leisureItemRequest.setImage("Image URL");
         leisureItemRequest.setLocation(locationRequest);
-        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATIONS);
         leisureItemRequest.setDate("2021-05-01");
         stepRequest.setLeisures(Collections.singletonList(leisureItemRequest));
         tripRequest.setSteps(Collections.singletonList(stepRequest));
@@ -323,7 +324,7 @@ public class TripServiceTest {
         leisureItemRequest.setDescription("Description");
         leisureItemRequest.setImage("Image URL");
         leisureItemRequest.setLocation(locationRequest);
-        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATIONS);
         leisureItemRequest.setDate("2021-05-01");
         stepRequest.setLeisures(Collections.singletonList(leisureItemRequest));
         tripRequest.setSteps(Collections.singletonList(stepRequest));
@@ -371,7 +372,7 @@ public class TripServiceTest {
         leisureItemRequest.setDescription("Description");
         leisureItemRequest.setImage("Image URL");
         leisureItemRequest.setLocation(locationRequest);
-        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATION);
+        leisureItemRequest.setCategory(LeisureCategory.ACCOMMODATIONS);
         leisureItemRequest.setDate("2021-05-01");
         stepRequest.setLeisures(Collections.singletonList(leisureItemRequest));
         tripRequest.setSteps(Collections.singletonList(stepRequest));
