@@ -4,10 +4,8 @@ import {LoginUserComponent} from "../../containers/login-user/login-user.compone
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserModel} from "../../models/users/user.model";
-import {take, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
-import {FormArray} from "@angular/forms";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {LocationModel} from "../../models/location/location.model";
 import {TripService} from "../../services/trip/trip.service";
@@ -18,9 +16,8 @@ import {TripService} from "../../services/trip/trip.service";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  public opened: boolean = false;
   public user: UserModel | undefined = undefined;
-
   public showFiller: boolean = false;
 
   constructor(
@@ -58,7 +55,6 @@ export class HeaderComponent implements OnInit {
 
   myTrips() {
     this.router.navigate(['/my-trips']);
-
   }
 
   home() {

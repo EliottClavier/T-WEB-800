@@ -125,7 +125,6 @@ Swagger is available on :
 - location-service: http://gateway.epitech-projects.me/locations/swagger-ui.html
 - restaurant-service: http://gateway.epitech-projects.me/restaurant/swagger-ui.html
 - transport-service: http://gateway.epitech-projects.me/transports/swagger-ui.html
-- trip-service: http://gateway.epitech-projects.me/trip/swagger-ui.html
 
 ## Client application
 The client application is an Angular-based front-end for the Trippi platform. It consumes the REST API provided by the server application to display and manage user data, trip planning, and various other travel-related features.

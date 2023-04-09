@@ -52,6 +52,7 @@ import { TokenInterceptor } from "./interceptors/token.interceptor";
 import { AuthGuard } from "./guards/auth.guard";
 import { UserLeisuresDialogComponent } from './containers/user-leisures/user-leisures-dialog.component';
 import { TripsContainerComponent } from './containers/trips-container/trips-container.component';
+import { ExplorerFilterComponent } from './components/explorer-filter/explorer-filter.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -89,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SaveTripDialogComponent,
     UserLeisuresDialogComponent,
     TripsContainerComponent,
+    ExplorerFilterComponent,
   ],
   imports: [
     GoogleMapsModule,
