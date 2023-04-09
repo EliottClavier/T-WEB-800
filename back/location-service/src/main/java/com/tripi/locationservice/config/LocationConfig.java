@@ -1,7 +1,7 @@
 package com.tripi.locationservice.config;
 
 import com.google.maps.GeoApiContext;
-import com.tripi.locationservice.model.enums.Source;
+import com.tripi.common.model.source.enums.Source;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.tripi.locationservice.config;
 
-import com.tripi.locationservice.model.enums.Source;
 import com.google.maps.GeoApiContext;
+import com.tripi.common.model.source.enums.Source;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

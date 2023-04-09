@@ -1,8 +1,9 @@
-package com.tripi.locationservice.model.enums;
+package com.tripi.common.model.source.enums;
 
 public enum Source {
 
-    GOOGLE_MAPS("google-maps");
+    GOOGLE_MAPS("google-maps"),
+    ALLEVENTS("allevents");
 
     private final String source;
 

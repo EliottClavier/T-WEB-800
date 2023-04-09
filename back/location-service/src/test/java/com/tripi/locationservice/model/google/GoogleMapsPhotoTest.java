@@ -1,8 +1,9 @@
 package com.tripi.locationservice.model.google;
 
+import com.tripi.common.model.leisureitem.LocationDetails;
 import org.junit.jupiter.api.Test;
-import com.tripi.locationservice.model.LocationDetails;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GoogleMapsPhotoTest {
 
@@ -14,9 +15,9 @@ class GoogleMapsPhotoTest {
         assertEquals("test-name", locationDetails.getName());
         assertEquals(12.34, locationDetails.getLat(), 0.001);
         assertEquals(56.78, locationDetails.getLng(), 0.001);
-        assertEquals("test-photo-url", locationDetails.getPhotoUrl());
+        assertEquals("test-photo-url", locationDetails.getImage());
 
-        locationDetails.setPhotoUrl("new-test-photo-url");
-        assertEquals("new-test-photo-url", locationDetails.getPhotoUrl());
+        locationDetails.setImage("new-test-photo-url");
+        assertEquals("new-test-photo-url", locationDetails.getImage());
     }
 }

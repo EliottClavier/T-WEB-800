@@ -1,6 +1,6 @@
 package com.tripi.locationservice.model.google;
 
-import com.tripi.locationservice.model.LocationDetails;
+import com.tripi.common.model.leisureitem.LocationDetails;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class GoogleMapsLocationDetailsTest {
         assertEquals("test-name", locationDetails.getName());
         assertEquals(123.456, locationDetails.getLat());
         assertEquals(789.012, locationDetails.getLng());
-        assertEquals("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=test-photo-reference&key=test-api-key", locationDetails.getPhotoUrl());
+        assertEquals("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=test-photo-reference&key=test-api-key", locationDetails.getImage());
     }
 
     @Test

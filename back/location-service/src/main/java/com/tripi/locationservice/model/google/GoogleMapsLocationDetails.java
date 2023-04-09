@@ -1,7 +1,7 @@
 package com.tripi.locationservice.model.google;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tripi.locationservice.model.LocationDetails;
+import com.tripi.common.model.leisureitem.LocationDetails;
 
 import java.util.List;
 

@@ -1,19 +1,19 @@
-package com.tripi.locationservice.model;
+package com.tripi.common.model.leisureitem;
 
 public class LocationDetails {
 
     private String id;
     private String name;
-    private String photoUrl;
+    private String image;
     private double lat;
     private double lng;
 
-    public LocationDetails(String externalId, String name, double lat, double lng, String photoUrl) {
+    public LocationDetails(String externalId, String name, double lat, double lng, String image) {
         this.id = externalId;
         this.name = name;
         this.lat = lat;
         this.lng = lng;
-        this.photoUrl = photoUrl;
+        this.image = image;
     }
 
     public String getId() {
@@ -32,11 +32,11 @@ public class LocationDetails {
         return lng;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
