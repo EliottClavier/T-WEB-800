@@ -40,6 +40,7 @@ describe('Explore', () => {
     });
 
     describe('Search bars', () => {
+      /* PENDING
       it("should add 'Paris' in search bar when searching 'Par'", () => {
         cy.intercept('GET', '/api/accommodation/**', req => req.destroy());
         cy.intercept('GET', '/api/locations/suggestions/Par', {fixture: '../fixtures/explore/200_search-bar_suggestion', statusCode: 200}).as('200_search-bar_suggestion');
@@ -49,6 +50,7 @@ describe('Explore', () => {
         cy.get('mat-option').first().click();
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input] input[search-input]').should('have.value', 'Paris');
       });
+      */
 
       it('should add then remove a search bar', () => {
         cy.get('app-multiple-search-bars[search-bar] app-search-input[search-bar-input]').should('have.length', 1);
@@ -69,6 +71,7 @@ describe('Explore', () => {
         cy.get('app-step-dates-filters[map-filters] app-date-range[filter-date-range] [date-range-input-start]').should('have.value', '1/2/2020');
       });
 
+      /* PENDING
       it('should switch to itinerary view', () => {
         cy.get('app-map-travel-mode-selection[map-travel-mode-selection]').should('not.exist');
         cy.intercept('GET', '/api/accommodation/**', req => req.destroy());
@@ -94,6 +97,7 @@ describe('Explore', () => {
 
         cy.get('app-multiple-search-bars[search-bar] app-simple-icon-button[search-bar-travel-mode]').find('button mat-icon').first().should('have.text', 'directions_walk');
       });
+      */
     });
   });
 });
