@@ -1,4 +1,4 @@
-package com.tripi.locationservice.model.enums;
+package com.tripi.common.model.source.enums;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
-package com.tripi.locationservice.config;
+package com.tripi.activityservice.config;
 
-import com.google.maps.GeoApiContext;
 import com.tripi.common.model.source.enums.Source;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +8,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class LocationConfigTest {
+class ActivityConfigTest {
 
     @Autowired
     private List<Source> activeSources;
-
-    @Autowired
-    private GeoApiContext geoApiContext;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -26,11 +22,6 @@ public class LocationConfigTest {
     @Test
     public void testActiveSourcesBean() {
         assertNotNull(activeSources);
-    }
-
-    @Test
-    public void testGeoApiContextBean() {
-        assertNotNull(geoApiContext);
     }
 
     @Test

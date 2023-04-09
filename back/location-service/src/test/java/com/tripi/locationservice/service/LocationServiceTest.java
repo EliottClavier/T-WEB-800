@@ -1,10 +1,10 @@
 package com.tripi.locationservice.service;
 
+import com.tripi.common.model.location.LocationDetails;
+import com.tripi.common.model.source.enums.Source;
 import com.tripi.locationservice.adapter.LocationAdapter;
 import com.tripi.locationservice.config.LocationConfig;
 import com.tripi.locationservice.factory.LocationAdapterFactory;
-import com.tripi.locationservice.model.LocationDetails;
-import com.tripi.locationservice.model.enums.Source;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
