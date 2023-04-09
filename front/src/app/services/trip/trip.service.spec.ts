@@ -141,7 +141,7 @@ describe('TripService', () => {
     const testUserInformation: UserInformationsModel = new UserInformationsModel(1, 'Doe', 'John', 'jd@jd.fr  ');
     const testUser = new UserModel(testUserInformation, 'test-token');
     const testData: TripModel = getMockTrips()[0];
-    testData.user = testUser;
+    testData.user = testUserInformation;
     const expectedTrip: TripModel = new TripModel(testData.id, testData.name, testData.steps);
 
     authService.user = testUser;
@@ -159,7 +159,7 @@ describe('TripService', () => {
     const testUserInformation: UserInformationsModel = new UserInformationsModel(1, 'Doe', 'John', 'jd@jd.fr  ');
     const testUser = new UserModel(testUserInformation, 'test-token');
     const testData: TripModel = getMockTrips()[0];
-    testData.user = testUser;
+    testData.user = testUserInformation;
 
     authService.user = testUser;
     spyOn(httpClient, 'post').and.returnValue(throwError('Error'));
