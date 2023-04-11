@@ -6,7 +6,7 @@
     <div class="align-items-center p-1 m-0 header-elements">
       <div class="navigation-sidebar">
         <div class="sidebar-element">
-          <app-simple-icon-button (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span>History</span>
+          <app-simple-icon-button *ngIf="isUserConnected()"  (buttonClick)="myTrips()" [icon]="'history icon'"></app-simple-icon-button><span *ngIf="isUserConnected()">History</span>
         </div>
         <div class="separation"></div>
         <div class="sidebar-element">

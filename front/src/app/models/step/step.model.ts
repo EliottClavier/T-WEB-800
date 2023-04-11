@@ -97,4 +97,5 @@ export class StepModel {
   set stepIndex(value: number) {
     this._stepIndex = value;
   }
+
 }

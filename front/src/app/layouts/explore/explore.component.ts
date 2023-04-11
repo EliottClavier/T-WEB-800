@@ -19,6 +19,7 @@ import {TripStoreService} from "../../store/trip-store/trip-store.service";
 import {getPdf} from "../../utils/pdf/pdf.utils";
 import {CardsContainerComponent} from "../../containers/cards-container/cards-container.component";
 import {NoopScrollStrategy} from "@angular/cdk/overlay";
+import {AuthService} from "../../services/auth/auth.service";
 import { ExplorerFilterComponent } from 'src/app/components/explorer-filter/explorer-filter.component';
 
 @Component({
@@ -78,7 +79,8 @@ export class ExploreComponent implements OnInit {
     public _tripBuilderService: TripBuilderService,
     private _tripService: TripService,
     private _tripStore: TripStoreService,
-    private _dialog: MatDialog) {
+    private _dialog: MatDialog,
+    public authService: AuthService,) {
 
   }
 
@@ -182,6 +184,7 @@ export class ExploreComponent implements OnInit {
   }
 
   public getLeisureSuggestions() {
+
     let start: Date = this.selectedSearchForm.get('start')?.value
     let end: Date = this.selectedSearchForm.get('end')?.value
     let category: LeisureCategory = this._suggestionsStore.category;

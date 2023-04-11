@@ -14,7 +14,8 @@ import {SearchBarEvent} from "../../../types/search-bar-event.type";
 import {DialogModule} from "@angular/cdk/dialog";
 import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import {Overlay, ScrollStrategy} from "@angular/cdk/overlay";
+import {NoopScrollStrategy, Overlay, ScrollStrategy} from "@angular/cdk/overlay";
+import {UserLeisuresDialogComponent} from "../../../containers/user-leisures/user-leisures-dialog.component";
 
 describe('SearchInputComponent', () => {
   let component: SearchInputComponent;
@@ -373,6 +374,22 @@ describe('SearchInputComponent', () => {
     component.noMarginBottom = true;
     spectator.detectChanges();
     expect(spectator.query('[search-input-form-field]')!.classList).toContain("no-margin-bottom");
+  });
+
+  it('should open the UserLeisuresDialogComponent when showLeisures is called', () => {
+    const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['open']);
+    const dialogSpy = spyOn(spectator.inject(MatDialog), 'open').and.returnValue(dialogRefSpy);
+
+    component.showLeisures();
+
+    expect(dialogSpy).toHaveBeenCalledOnceWith(UserLeisuresDialogComponent, {
+      autoFocus: false,
+      maxHeight: '90vh',
+      data: {
+        index: component.id,
+      },
+      scrollStrategy: jasmine.any(NoopScrollStrategy),
+    });
   });
 
 });

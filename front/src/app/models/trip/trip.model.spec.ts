@@ -61,6 +61,4 @@ describe('TripModel', () => {
 
     expect(trip.user).toEqual(userInfo);
   });
-
-
 });

@@ -146,6 +146,12 @@ describe('LoginUserComponent', () => {
     expect(component.openRegisterDialog).toHaveBeenCalled();
     expect(component["_dialog"].open).toHaveBeenCalled();
   });
+
+  it('should close the dialog when closeLoginDialog is called', () => {
+    spyOn(_dialogRef, 'close');
+    spectator.component.closeLoginDialog();
+    expect(_dialogRef.close).toHaveBeenCalled();
+  });
 });
 
 

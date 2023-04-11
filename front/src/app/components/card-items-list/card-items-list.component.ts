@@ -37,7 +37,7 @@ export class CardItemsListComponent implements AfterContentChecked, OnDestroy {
     this.cardItemClicked.emit(this.itemSelected);
   }
 
-  onItemFromMapClicked(item: LeisureItemModel) {
+  onItemFromMapClicked(item: LeisureItemModel): void {
     this.itemSelected = item;
     this.openDialog();
     this.cardItemClicked.emit(this.itemSelected);

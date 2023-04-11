@@ -173,7 +173,31 @@ describe('SingleSearchBarComponent', () => {
     });
   });
 
+  it('should set the searchForm values when onLocationOptionClick is called', () => {
+    const location: LocationModel = new LocationModel()
+    const startValue = '2023-05-01';
+    const endValue = '2023-05-10';
+    const idValue = '123';
+    const nameValue = 'Sample name';
 
+    component.searchForm.patchValue({
+      start: startValue,
+      end: endValue,
+      id: idValue,
+      name: nameValue,
+    });
 
+    component.onLocationOptionClick(location);
+
+    expect(component.searchForm.value).toEqual({
+      locationSearch: location.name,
+      location: new LocationModel(location.id, location.name, location.lat, location.lng),
+      start: startValue,
+      end: endValue,
+      id: idValue,
+      name: nameValue,
+    });
+
+  });
 });
 

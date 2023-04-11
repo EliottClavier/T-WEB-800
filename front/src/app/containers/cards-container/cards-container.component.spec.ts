@@ -39,7 +39,7 @@ describe('Card container', () => {
     declarations: [CardItemsListComponent, CardItemDetailsViewComponent],
     providers: [
       CardItemDetailsViewComponent,
-
+      CardItemsListComponent,
       {provide: MatDialogRef, useValue: dialogMock},
       {provide: MAT_DIALOG_DATA, useValue: new LeisureItemModel()},
 
@@ -246,6 +246,9 @@ describe('Card container', () => {
         expect(component.translateService).toEqual(translateService);
       });
     });
+
+
+
     // it('should emit a add leisure item event when clicking on the add leisure item button', () => {
     //   let item = getBarItems()[0];
     //   component.itemsSelected = item;

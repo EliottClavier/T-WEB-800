@@ -78,4 +78,5 @@ export class TripModel{
   set isSaved(value: boolean) {
     this._isSaved = value;
   }
+
 }

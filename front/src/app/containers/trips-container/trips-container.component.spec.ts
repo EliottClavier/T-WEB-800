@@ -157,5 +157,15 @@ describe('TripsContainerComponent', () => {
     expect(tripBuilderServiceMock.newTrip).toHaveBeenCalled();
     expect(routerMock.navigate).toHaveBeenCalledWith(['/']);
   });
+
+  it('should call getPdf when onPdf is called', () => {
+    const tripStoreMock = spectator.inject(TripStoreService);
+    const tripId = '123';
+    const trip: TripModel = getMockTrip();
+    trip.id = tripId;
+    tripStoreMock.addOrUpdateTrip(trip);
+    spectator.component.onPdf(tripId);
+    expect(tripStoreMock.getTripById(tripId)).toEqual(trip);
+  });
 });
 

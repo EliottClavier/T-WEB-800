@@ -64,6 +64,10 @@ export class AuthService {
     this.user = undefined;
   }
 
+  isLoggedIn(): boolean {
+  return !!localStorage.getItem('token');
+  }
+
   get user(): UserModel | undefined {
     return this._user;
   }
