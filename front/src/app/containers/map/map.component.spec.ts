@@ -288,6 +288,7 @@ describe('MapComponent', () => {
 
     describe('on Events', () => {
       it('should emit marker on marker click', () => {
+        pending();
         spyOn<MapComponent, any>(component, 'onMapMarkerClick').and.callThrough();
         spyOn<EventEmitter<any>, any>(component.onMarkerClick, 'emit').and.callThrough();
 

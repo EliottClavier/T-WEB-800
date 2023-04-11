@@ -40,6 +40,7 @@ import { StepModel } from "../../models/step/step.model";
 import TravelMode = google.maps.TravelMode;
 import {TripService} from "../../services/trip/trip.service";
 import {MatDialog} from "@angular/material/dialog";
+import {AuthService} from "../../services/auth/auth.service";
 
 describe('ExploreComponent', () => {
   let component: ExploreComponent;
@@ -51,6 +52,7 @@ describe('ExploreComponent', () => {
   let _suggestionStoreService: SuggestionsStoreService;
   let _multipleSearchComponent: MultipleSearchBarsComponent;
   let _tripBuilderService: TripBuilderService;
+  let _authService: AuthService;
   let accommodationItems = getAccommodationItems();
   let sportingItems = getSportingItems();
 
@@ -98,6 +100,7 @@ describe('ExploreComponent', () => {
     _tripBuilderService = spectator.inject(TripBuilderService);
     _route = spectator.inject(ActivatedRoute);
     _router = spectator.inject(Router);
+    _authService = spectator.inject(AuthService);
 
     _multipleSearchComponent = spectator.inject(MultipleSearchBarsComponent);
     _route.snapshot.params = {
@@ -461,7 +464,8 @@ describe('ExploreComponent', () => {
 
     let spy = spyOn(component, 'onSaveTrip').and.callThrough();
     // let spyService = spyOn<TripBuilderService, any>(_tripBuilderService, 'saveTrip').withArgs("tripname").and.callThrough();
-    spectator.click('[data-cy-explorer-save-button] button[simple-button]');
+    spyOn<AuthService, any>(_authService, 'isLoggedIn').and.returnValue(true);
+    spectator.click('[data-cy-explorer-save-button] [simple-button]');
     spectator.detectChanges();
     expect(spy).toHaveBeenCalled();
     // expect(spyService).toHaveBeenCalled();

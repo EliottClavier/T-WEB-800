@@ -418,7 +418,7 @@ describe('ExplorerFilterComponent', () => {
 
     let spy = spyOn(component, 'onSaveTrip').and.callThrough();
     // let spyService = spyOn<TripBuilderService, any>(_tripBuilderService, 'saveTrip').withArgs("tripname").and.callThrough();
-    spectator.click('[data-cy-explorer-save-button] [simple-button]');
+    spectator.click('[data-cy-explorer-save-button] button[simple-button]');
     spectator.detectChanges();
     expect(spy).toHaveBeenCalled();
     // expect(spyService).toHaveBeenCalled();
