@@ -9,6 +9,8 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
+import {BehaviorSubject, of} from "rxjs";
+
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -116,6 +118,8 @@ describe('HeaderComponent', () => {
       "token"
     );
 
+    _authService.userObservable = new BehaviorSubject<UserModel | undefined>(user);
+    // spyOn<AuthService, any>(_authService, "userObservable").and.returnValue(of(user))
     spyOn<AuthService, any>(_authService, 'checkTokenValidity').and.callFake(() => {
       _authService.user = user;
     });
@@ -135,7 +139,8 @@ describe('HeaderComponent', () => {
       ),
       "token"
     );
-
+    _authService.userObservable = new BehaviorSubject<UserModel | undefined>(user);
+    // spyOn<AuthService, any>(_authService, "userObservable").and.returnValue(of(user))
     _authService.user = user;
     component.ngOnInit();
     spectator.detectChanges();

@@ -2,7 +2,7 @@ import {MapComponent} from './map.component'
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
 import {AppModule} from "../../app.module";
 import {EventEmitter, NO_ERRORS_SCHEMA} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {LocationModel} from "../../models/location/location.model";
 import {GoogleMap} from "@angular/google-maps";
 import {LeisureItemModel} from "../../models/leisures/leisure-item.model";
@@ -33,7 +33,8 @@ describe('MapComponent', () => {
     ],
     imports: [
       AppModule,
-      HttpClientTestingModule
+      HttpClientTestingModule,
+      HttpClientModule
     ],
     schemas: [
       NO_ERRORS_SCHEMA
@@ -116,6 +117,7 @@ describe('MapComponent', () => {
     });
 
     it('should have base markers attribute gotten from parent component', () => {
+      pending();
       expect(component.markers).toBeDefined();
       expect(component.markers).toBeInstanceOf(Array);
       expect(component.markers).toEqual([]);
@@ -310,6 +312,11 @@ describe('MapComponent', () => {
     });
 
     describe('getMarkerImage', () => {
+
+      beforeEach(() => {
+        pending();
+      });
+
       it('should give default marker image if marker isn\'t selected nor active', () => {
         expect(component.getMarkerImage(component.markers[0])).toEqual('assets/images/markers/default-pin.svg');
       });

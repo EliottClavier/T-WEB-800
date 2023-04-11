@@ -160,7 +160,6 @@ describe('Card container', () => {
           itemListComponent?.onItemClicked(itemIndex);
           expect(spy).toHaveBeenCalledWith(suggests[itemIndex]);
         } catch (e) {
-          console.log(e)
         }
       });
       });

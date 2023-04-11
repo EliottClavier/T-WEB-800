@@ -14,6 +14,7 @@ import {UserModel} from "../../models/users/user.model";
 import {ApiResponseConst} from "../../enums/api-response-const";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserInformationsModel} from "../../models/user-informations/user-informations.model";
+import {AuthService} from "../../services/auth/auth.service";
 
 describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
@@ -25,6 +26,7 @@ describe('RegisterUserComponent', () => {
   let _registerService: RegisterService;
   let userMock: UserModel;
   let _dialogRef: MatDialogRef<RegisterUserComponent>;
+  let _authService: AuthService;
 
   const API_RESPONSE = new ApiResponseConst().INFO_MESSAGES;
 
@@ -48,13 +50,21 @@ describe('RegisterUserComponent', () => {
     form = new FormGroupDirective([], []);
     matcher = new MyErrorStateMatcher();
     formGroup = new FormGroup({
+      firstname: new FormControl(''),
+      lastname: new FormControl(''),
+      email: new FormControl(''),
       password: new FormControl(''),
       confirmPassword: new FormControl('')
     });
     spectator = createComponent();
     component = spectator.component;
     _registerService = spectator.inject(RegisterService);
+    _authService = spectator.inject(AuthService);
     _dialogRef = spectator.inject(MatDialogRef);
+
+    spyOn<AuthService, any>(_authService, "getUserByToken").and.callFake((token: string) => {
+      return new BehaviorSubject<UserModel>(userMock);
+    });
 
     spectator.detectChanges()
   });
@@ -71,19 +81,19 @@ describe('RegisterUserComponent', () => {
     )
 
     spyOn<RegisterService, any>(_registerService, "postUserRegister").and.callFake((user: string) => {
+      component.user = userResponseMock;
+      expect(component.newUser.firstname).toEqual('Albert');
+      expect(component.newUser.lastname).toEqual('Test');
+      expect(component.newUser.email).toEqual('test@gmail.com');
+      expect(component.newUser.password).toEqual('Password123');
+      expect(component.user.user.id).toEqual(1);
+      expect(component.user.user.firstname).toEqual('Albert');
+      expect(component.user.user.lastname).toEqual('Test');
+      expect(component.user.user.email).toEqual('test@gmail.com');
       return new BehaviorSubject<UserModel>(userResponseMock);
     });
 
     component.createUser();
-
-    expect(component.newUser.firstname).toEqual('Albert');
-    expect(component.newUser.lastname).toEqual('Test');
-    expect(component.newUser.email).toEqual('test@gmail.com');
-    expect(component.newUser.password).toEqual('Password123');
-    expect(component.user.user.id).toEqual(1);
-    expect(component.user.user.firstname).toEqual('Albert');
-    expect(component.user.user.lastname).toEqual('Test');
-    expect(component.user.user.email).toEqual('test@gmail.com');
   });
 
   it('should create a new user with all informations but is bad request', () => {

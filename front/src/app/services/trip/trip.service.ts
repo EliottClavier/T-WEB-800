@@ -53,7 +53,6 @@ export class TripService {
       },
       error: error => {
         this._tripStoreService.addOrUpdateTrip(data)
-        console.log('error : ', error);
       }
     });
   }

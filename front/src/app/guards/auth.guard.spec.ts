@@ -60,11 +60,6 @@ describe('Auth Guard', () => {
     let res: any = authGuard.canActivate()
 
     expect(auth.checkTokenValidity).toHaveBeenCalled();
-    res.subscribe((data: any) => {
-      console.log(data)
-      console.log(data)
-      console.log(data)
-    });
   });
 
   it('should return true when token is valid', () => {

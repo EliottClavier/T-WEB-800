@@ -91,9 +91,6 @@ export class TripsContainerComponent implements OnInit {
     const trip: TripModel = this.tripStore.getTripById(id);
     this.tripBuilderService.getTripFormFromTripModel(trip);
 
-    console.log('onUpdate ->  trip : ', trip);
-    console.log('onUpdate ->  form : ', this.tripBuilderService.searchFormsArray.value);
-
     const location = this.tripBuilderService.searchFormsArray.controls[0].get('location')?.value;
     const start = this.tripBuilderService.searchFormsArray.controls[0].get('start')?.value;
     const end = this.tripBuilderService.searchFormsArray.controls[this.tripBuilderService.searchFormsArray.controls.length - 1].get('end')?.value ||
@@ -118,11 +115,9 @@ export class TripsContainerComponent implements OnInit {
     if (index !== -1) {
       this.tripService.deleteTrip(id).subscribe({
         next: () => {
-          console.log('Trip deleted');
           this.tripStore.deleteTrip(id);
         },
         error: (err) => {
-          console.log(err);
           this.tripStore.deleteTrip(id);
         }
       });

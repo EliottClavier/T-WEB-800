@@ -179,10 +179,6 @@ export class MapComponent implements OnChanges {
 
       response.directionsResult.request = request;
 
-      console.log("Test", response)
-      console.log("Test", response)
-      console.log("Test", response)
-
       this.directionsResults = response.directionsResult;
     });
   }

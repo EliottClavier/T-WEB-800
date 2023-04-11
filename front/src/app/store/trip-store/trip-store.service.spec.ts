@@ -3,6 +3,8 @@ import {createServiceFactory, mockProvider, SpectatorService} from "@ngneat/spec
 import {SingleSearchBarComponent} from "../../containers/single-search-bar/single-search-bar.component";
 import {TripModel} from "../../models/trip/trip.model";
 import {getMockTrips} from "../../utils/trip.mock.utils";
+import {HttpClientModule} from "@angular/common/http";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('TripStoreService', () => {
   let spectator: SpectatorService<TripStoreService>;
@@ -10,6 +12,10 @@ describe('TripStoreService', () => {
 
   const createService = createServiceFactory<TripStoreService>({
     service: TripStoreService,
+    imports: [
+      HttpClientModule,
+      HttpClientTestingModule
+    ],
     providers: [
       mockProvider(TripStoreService, {}),
       SingleSearchBarComponent]

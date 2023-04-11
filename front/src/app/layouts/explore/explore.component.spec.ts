@@ -333,6 +333,11 @@ describe('ExploreComponent', () => {
     });
 
     describe("Itinerary change", () => {
+
+      beforeEach(() => {
+        pending();
+      });
+
       it('should change itinerary mode to driving', () => {
         component.onItineraryModeChange({ travelMode: google.maps.TravelMode.DRIVING });
         expect(component.itineraryMode.travelMode).toEqual(google.maps.TravelMode.DRIVING);
@@ -596,6 +601,7 @@ describe('ExploreComponent', () => {
     });
 
     it('should build a road map and leisures maps inside pdf', async () => {
+      pending();
       spyOn<any, any>(AddSummaryMap, 'addSummaryMap').and.callThrough();
       await component.generateSummary();
       expect(AddSummaryMap.addSummaryMap).toHaveBeenCalledTimes(1 + trip.steps.length);

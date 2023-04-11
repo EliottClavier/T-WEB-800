@@ -9,6 +9,7 @@ import {TripBuilderService} from "../../services/trip/trip-builder.service";
 import {getIsoStringFromDate} from "../../utils/date.utils";
 import {LocationModel} from "../../models/location/location.model";
 import {TripService} from "../../services/trip/trip.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   public opened: boolean = false;
   public user: UserModel | undefined = undefined;
   public showFiller: boolean = false;
+  public sub: Subscription = new Subscription();
 
   constructor(
     private _dialog: MatDialog,
@@ -29,13 +31,11 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    let sub = this._authService.userObservable.subscribe(
+    this.sub = this._authService.userObservable.subscribe(
       (user: UserModel | undefined) => {
         if (user) {
-          console.log(user)
           this.user = user;
-          console.log(user)
-          sub.unsubscribe();
+          this.sub.unsubscribe();
         }
       }
     )

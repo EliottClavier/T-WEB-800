@@ -117,12 +117,9 @@ describe('TripBuilderService', () => {
     const testTrip: TripModel = getMockTrip();
     (spectator.service as any)._trip = testTrip;
     // tripModel.steps[testTrip.steps.length - 1].end = '';
-    console.log(tripModel.steps[testTrip.steps.length - 1].end);
-    console.log(testTrip.endDate);
     // Call the private method using the bracket notation
     expect(testTrip.endDate).not.toEqual(testTrip.steps[testTrip.steps.length - 1].end);
     (spectator.service as any)._getTripDates();
-    console.log(testTrip.endDate);
     expect(testTrip.startDate).toEqual(testTrip.steps[0].start);
     expect(testTrip.endDate).toEqual(testTrip.steps[testTrip.steps.length - 1].start);
     // expect(1).toEqual(0);
